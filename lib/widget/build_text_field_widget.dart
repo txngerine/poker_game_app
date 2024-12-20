@@ -2,46 +2,79 @@ import 'package:flutter/material.dart';
 
 class BuildTextFieldWidget extends StatelessWidget {
   final bool obscureText;
+  final String? hintText;
   final Widget? suffixIcon;
-  const BuildTextFieldWidget(
-      {super.key, this.obscureText = false, this.suffixIcon});
+  final TextEditingController controller;
+  final String labelText;
+  final TextInputType? keyboardType;
+
+  const BuildTextFieldWidget({
+    super.key,
+    this.obscureText = false,
+    this.suffixIcon,
+    required this.controller,
+    required this.labelText,
+    this.keyboardType,
+    this.hintText,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 86,
-      width: 646,
-      child: TextField(
-        style: TextStyle(fontSize: 30),
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: BorderSide(color: Colors.black),
-          ),
-          // hintStyle: TextStyle(color: Colors.black38),
-          suffixIcon: suffixIcon,
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 24,
-            horizontal: 12,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(
-              color: Colors.black26,
-              width: 2,
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: 110,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            keyboardType: keyboardType,
+            controller: controller,
+            style: const TextStyle(fontSize: 23),
+            obscureText: obscureText,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: const Color(0xFF5F6368),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
+              suffixIcon: suffixIcon,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 24, horizontal: 60),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(color: Colors.black26, width: 2),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: const BorderSide(color: Colors.black26, width: 2),
+              ),
+              filled: true,
+              fillColor: Colors.white70,
+              errorStyle: const TextStyle(
+                fontSize: 14,
+                color: Colors.red,
+                height: 1, // Ensure error message does not push other content
+              ),
+              alignLabelWithHint: true,
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter $labelText';
+              }
+              if (labelText == "Email" &&
+                  !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+                      .hasMatch(value)) {
+                return 'Please enter a valid email address';
+              }
+              return null;
+            },
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(
-              color: Colors.black26,
-              width: 2,
-            ),
-          ),
-          filled: true,
-          fillColor: Colors.white70,
-        ),
+        ],
       ),
     );
   }

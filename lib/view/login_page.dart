@@ -1,11 +1,11 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/constants/screen_size.dart';
 import 'package:pokerpad/view/register_page.dart';
-import 'package:pokerpad/widget/build_heading_text.dart';
+import 'package:pokerpad/view/text_page.dart';
+import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
-import 'package:pokerpad/widget/build_page_transition_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,10 +17,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.orange[300],
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -44,32 +46,52 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset("assets/images/welcome.jpg"),
-                    // const BuildHeadingText(text: "WELCOME TO POKERPAD"),
+                    Image.asset(
+                      "assets/images/welcome_to_pokerpad.png",
+                    ),
                     const SizedBox(height: 12),
                     const BuildTextWidget(
                       text: "Login to your account",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30,
                     ),
                     const SizedBox(height: 24),
                     // Login Fields
-                    const BuildTextFieldWidget(),
-                    const SizedBox(height: 20),
-                    BuildTextFieldWidget(
-                      obscureText: passwordVisible,
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            passwordVisible = !passwordVisible;
-                          });
-                        },
-                        child: passwordVisible
-                            ? Image.asset("assets/images/Artboard 28.png")
-                            : Image.asset("assets/images/Artboard 29.png"),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          BuildTextFieldWidget(
+                            controller: emailController,
+                            hintText: "Email",
+                            labelText: 'email',
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          BuildTextFieldWidget(
+                            labelText: "password",
+                            hintText: "password",
+                            controller: passwordController,
+                            obscureText: passwordVisible,
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              child: passwordVisible
+                                  ? Image.asset(
+                                      "assets/images/Artboard 28.png",
+                                      width: 77,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/Artboard 29.png",
+                                    ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -84,37 +106,56 @@ class _LoginPageState extends State<LoginPage> {
                               child: rememberButton
                                   ? Image.asset(
                                       "assets/images/empty checkmark.png",
-                                      width: 53,
-                                      height: 54,
+                                      width: 50,
                                     )
                                   : Image.asset(
-                                      "assets/images/Artboard 41.png"),
+                                      "assets/images/Artboard 41.png",
+                                      width: 40,
+                                    ),
+                            ),
+                            SizedBox(
+                              height: 50,
                             ),
                             const BuildTextWidget(
                               text: "Remember me",
-                              fontSize: 20,
                             )
                           ],
                         ),
-                        const BuildTextWidget(
-                            text: "Forgot password?", fontSize: 20),
+                        const BuildBoldTextWidget(text: "Forgot password")
                       ],
                     ),
                     const SizedBox(height: 54),
                     GestureDetector(
                         onTap: () {
-                          print("Login button tapped");
+                          if (_formKey.currentState?.validate() ?? false) {
+                            print("Login button tapped");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TextPage(),
+                                ));
+                          } else {
+                            print("Form is not valid");
+                          }
                         },
                         child: Image.asset("assets/images/login button.png")),
                     const SizedBox(height: 24),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        BuildTextWidget(
-                            text: "Don’t have an account? ", fontSize: 20),
-                        BuildPageTransitionButton(
-                            buttonText: "Sign up",
-                            destinationPage: RegisterPage())
+                        const BuildTextWidget(
+                          text: "Don’t have an account? ",
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      child: const RegisterPage(),
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade));
+                            },
+                            child: const BuildBoldTextWidget(text: " Sign up")),
                       ],
                     ),
                   ],
