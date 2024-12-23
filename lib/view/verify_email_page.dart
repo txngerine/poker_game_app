@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/view/avatar_page.dart';
+import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import '../constants/screen_size.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({super.key});
@@ -21,6 +24,13 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("OTP Verified Successfully")),
       );
+      setState(() {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AvatarPage(),
+            ));
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Invalid OTP")),
@@ -37,21 +47,37 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+      resizeToAvoidBottomInset: false,
+      body: Stack(
         children: [
+          Container(
+            height: ScreenSize.screenHeight,
+            width: ScreenSize.screenWidth,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                // opacity: 0.14,
+                image: AssetImage(
+                  "assets/images/background.jpg",
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           Center(
             child: SizedBox(
               height: 550,
               width: 600,
               child: Card(
-                shadowColor: Colors.white,
+                shadowColor: const Color(0xffB7B7B7),
                 elevation: 30,
-                color: Colors.white70,
+                color: const Color(0xffB7B7B7),
                 shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+                  borderSide: const BorderSide(
+                    color: Color(0xffB7B7B7),
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    50,
+                  ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -105,29 +131,21 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      ElevatedButton(
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.black)),
-                        onPressed: verifyOtp,
-                        child: const Text(
-                          "    Verify    ",
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      ),
+                      GestureDetector(
+                          onTap: () {
+                            resendOtp();
+                          },
+                          child: Image.asset(
+                              "assets/images/resend code button.png")),
                       const SizedBox(
                         height: 20,
                       ),
-                      TextButton(
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.grey)),
-                        onPressed: resendOtp,
-                        child: const Text(
-                          "     Resend OTP    ",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
+                      GestureDetector(
+                          onTap: () {
+                            verifyOtp();
+                          },
+                          child:
+                              Image.asset("assets/images/verify button.png")),
                     ],
                   ),
                 ),

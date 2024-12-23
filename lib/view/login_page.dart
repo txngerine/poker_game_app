@@ -17,8 +17,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = true;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController =
+      TextEditingController(text: "user@gmail.com");
+  TextEditingController passwordController =
+      TextEditingController(text: "User@123");
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: 'email',
                             keyboardType: TextInputType.emailAddress,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           BuildTextFieldWidget(
@@ -113,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                                       width: 40,
                                     ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             const BuildTextWidget(
@@ -129,6 +131,12 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           if (_formKey.currentState?.validate() ?? false) {
                             print("Login button tapped");
+                            Navigator.pushReplacement(
+                                context,
+                                PageTransition(
+                                    child: TextPage(),
+                                    type: PageTransitionType
+                                        .rightToLeftWithFade));
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

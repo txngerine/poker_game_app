@@ -18,9 +18,12 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController emailController =
+      TextEditingController(text: "user@gmail.com");
+  TextEditingController passwordController =
+      TextEditingController(text: "User@123");
+  TextEditingController confirmPasswordController =
+      TextEditingController(text: "User@123");
   final _formKey = GlobalKey<FormState>();
 
   @override
