@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/login_page.dart';
-import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/view/verify_email_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';

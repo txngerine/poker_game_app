@@ -11,7 +11,7 @@ class _TextPageState extends State<TextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
           height: double.infinity,
           width: double.infinity,
           child:

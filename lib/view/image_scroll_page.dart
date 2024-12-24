@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/front_camera_page.dart';
-import 'package:pokerpad/view/text_page.dart';
+import 'package:pokerpad/widget/build_heading_text.dart';
 
 import '../constants/screen_size.dart';
 
@@ -43,7 +43,7 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Image.asset("assets/images/welcome_to_pokerpad.png"),
+                  const BuildHeadingText(text: "Instructions"),
                   Expanded(
                     child: PageView(
                       controller: _pageController,

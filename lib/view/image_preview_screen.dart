@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/view/dob_page.dart';
 
 import '../constants/screen_size.dart';
-import '../widget/build_elevated_button.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
   final String imagePath;
@@ -78,7 +79,16 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                       height: 800,
                     ),
                     const SizedBox(height: 10),
-                    Image.asset("assets/images/confirm.png"),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const DobPage(),
+                                  type:
+                                      PageTransitionType.rightToLeftWithFade));
+                        },
+                        child: Image.asset("assets/images/confirm.png")),
                   ],
                 )
               : const Text("No image captured."),

@@ -21,7 +21,7 @@ class BuildTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
         maxHeight: 110,
       ),
       child: Column(
@@ -35,8 +35,8 @@ class BuildTextFieldWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(
-                color: const Color(0xFF5F6368),
+              hintStyle: const TextStyle(
+                color: Color(0xFF5F6368),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),

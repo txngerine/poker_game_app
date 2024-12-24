@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../widget/build_elevated_button.dart';
 import 'image_preview_screen.dart';
 
 class FrontCameraPage extends StatefulWidget {
@@ -87,7 +86,7 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
       body: _isCameraInitialized
           ? Stack(
               children: [
-                Container(
+                SizedBox(
                     height: 870,
                     width: 800,
                     child: CameraPreview(_cameraController)),
@@ -119,7 +118,7 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
                               initializeCamera();
                             },
                             child: Image.asset("assets/images/retake.png")),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         )
                       ],

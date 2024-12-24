@@ -1,9 +1,6 @@
 import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:pokerpad/view/front_camera_page.dart';
-import 'package:pokerpad/view/image_scroll_page.dart';
 import 'package:pokerpad/view/login_page.dart';
-import 'package:pokerpad/view/verify_email_page.dart';
 
 void main() {
   runApp(DevicePreview(
@@ -30,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

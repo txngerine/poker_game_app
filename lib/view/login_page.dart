@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/constants/screen_size.dart';
+import 'package:pokerpad/view/lobby_page.dart';
 import 'package:pokerpad/view/register_page.dart';
-import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
@@ -131,17 +131,12 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           if (_formKey.currentState?.validate() ?? false) {
                             print("Login button tapped");
-                            Navigator.pushReplacement(
-                                context,
-                                PageTransition(
-                                    child: TextPage(),
-                                    type: PageTransitionType
-                                        .rightToLeftWithFade));
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => TextPage(),
-                                ));
+                                PageTransition(
+                                    child: const LobbyPage(),
+                                    type: PageTransitionType
+                                        .rightToLeftWithFade));
                           } else {
                             print("Form is not valid");
                           }

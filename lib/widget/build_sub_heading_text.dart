@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
-class BuildHeadingText extends StatelessWidget {
+class BuildSubHeadingText extends StatefulWidget {
   final String text;
-  const BuildHeadingText({super.key, required this.text});
+  const BuildSubHeadingText({super.key, required this.text});
 
+  @override
+  State<BuildSubHeadingText> createState() => _BuildSubHeadingTextState();
+}
+
+class _BuildSubHeadingTextState extends State<BuildSubHeadingText> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      widget.text,
       style: const TextStyle(
-        fontWeight: FontWeight.w900,
         fontFamily: "CustomFont",
-        fontSize: 40,
+        fontSize: 30,
         shadows: [
           Shadow(
             color: Colors.black38,

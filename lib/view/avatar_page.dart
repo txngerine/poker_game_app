@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/image_scroll_page.dart';
-import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
+import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
 import '../constants/screen_size.dart';
@@ -39,14 +39,14 @@ class _AvatarPageState extends State<AvatarPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/welcome_to_pokerpad.png"),
+                const BuildHeadingText(text: "Create Your Avatar"),
                 SizedBox(
                   height: 800,
                   width: 630,
                   child: Card(
                     shadowColor: const Color(0xffB7B7B7),
                     elevation: 30,
-                    color: Color(0xffE4E0E1),
+                    color: const Color(0xffE4E0E1),
                     shape: OutlineInputBorder(
                       borderSide: const BorderSide(
                         color: Color(0xffB7B7B7),
@@ -98,7 +98,7 @@ class _AvatarPageState extends State<AvatarPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Image.asset("assets/images/gender.png"),
-                              Spacer(),
+                              const Spacer(),
                               Row(
                                 children: [
                                   GestureDetector(
@@ -118,15 +118,15 @@ class _AvatarPageState extends State<AvatarPage> {
                                             width: 40,
                                           ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 20,
                                   ),
-                                  BuildTextWidget(text: "Female")
+                                  const BuildTextWidget(text: "Female")
                                 ],
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -135,7 +135,7 @@ class _AvatarPageState extends State<AvatarPage> {
                               BuildTextWidget(text: "Receive your Avatar")
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Row(
                             children: [
                               Container(
@@ -157,7 +157,7 @@ class _AvatarPageState extends State<AvatarPage> {
                                   ),
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
@@ -179,10 +179,10 @@ class _AvatarPageState extends State<AvatarPage> {
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             decoration: BoxDecoration(
-                                color: Color(0xffFFC94A),
+                                color: const Color(0xffFFC94A),
                                 borderRadius: BorderRadius.circular(30)),
                             height: 250,
                             width: 580,
@@ -205,7 +205,7 @@ class _AvatarPageState extends State<AvatarPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 GestureDetector(

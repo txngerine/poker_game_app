@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/view/avatar_page.dart';
-import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import '../constants/screen_size.dart';
@@ -85,7 +84,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const BuildHeadingText(text: "VERIFY EMAIL"),
+                      const BuildHeadingText(text: "Verify Email"),
                       const SizedBox(height: 20),
                       const BuildTextWidget(
                         align: TextAlign.center,
