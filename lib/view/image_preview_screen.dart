@@ -1,8 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/dob_page.dart';
+import 'package:pokerpad/view/front_camera_page.dart';
 
 import '../constants/screen_size.dart';
 
@@ -71,14 +73,14 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
         Center(
           child: _imageFile.path.isNotEmpty
               ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.file(
+                      fit: BoxFit.cover,
                       _imageFile,
-                      width: 600,
-                      height: 800,
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height / 1.3,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -89,6 +91,15 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                                       PageTransitionType.rightToLeftWithFade));
                         },
                         child: Image.asset("assets/images/confirm.png")),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pop(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FrontCameraPage(),
+                              ));
+                        },
+                        child: Image.asset("assets/images/retake.png")),
                   ],
                 )
               : const Text("No image captured."),

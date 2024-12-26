@@ -17,8 +17,7 @@ class DobPage extends StatefulWidget {
 class _DobPageState extends State<DobPage> {
   bool rememberButton = true;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController dobController =
-      TextEditingController(text: "10/12/2024");
+  TextEditingController dobController = TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
     return Scaffold(

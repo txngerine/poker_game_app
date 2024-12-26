@@ -74,7 +74,7 @@ class _UserViewPageState extends State<UserViewPage> {
                       Navigator.push(
                           context,
                           PageTransition(
-                              child: LobbyPage(),
+                              child: const LobbyPage(),
                               type: PageTransitionType.rightToLeftWithFade));
                     },
                     child: Image.asset("assets/images/pokerpad_nt_button.png")),
