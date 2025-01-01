@@ -49,7 +49,7 @@ class _LobbyPageState extends State<LobbyPage> {
           TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text(
-                "OK.",
+                "OK",
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
               ))
