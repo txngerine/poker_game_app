@@ -1,7 +1,6 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/widget/build_button_image_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
@@ -16,57 +15,6 @@ class LobbyPage extends StatefulWidget {
 }
 
 class _LobbyPageState extends State<LobbyPage> {
-  String _deviceDetails = "Device information";
-
-  Future<void> _getDeviceInfo() async {
-    final device = DeviceInfoPlugin();
-    String deviceDetails = "";
-    if (Platform.isAndroid) {
-      var androidInfo = await device.androidInfo;
-      deviceDetails =
-          "Device Name: ${androidInfo.brand}\nDevice Model: ${androidInfo.model}\nDevice ID: ${androidInfo.id}";
-    } else if (Platform.isIOS) {
-      var iosInfo = await device.iosInfo;
-      deviceDetails =
-          "Device Name: ${iosInfo.name}\nDevice ID: ${iosInfo.identifierForVendor}";
-    } else {
-      deviceDetails = "Unsupported Platform";
-    }
-
-    setState(() {
-      _deviceDetails = deviceDetails;
-    });
-    _showDeviceInfoDialog(deviceDetails);
-  }
-
-  void _showDeviceInfoDialog(String details) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const BuildSubHeadingText(text: "Device Information"),
-        content: Text(details),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                "OK",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
-              ))
-        ],
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getDeviceInfo();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,8 +78,8 @@ class _LobbyPageState extends State<LobbyPage> {
                         width: 380,
                         height: 370,
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Color(0xff3C3D37), width: 6),
+                            border: Border.all(
+                                color: const Color(0xff3C3D37), width: 6),
                             borderRadius: BorderRadius.circular(40),
                             color: Colors.grey),
                         child: ClipRRect(
@@ -149,8 +97,8 @@ class _LobbyPageState extends State<LobbyPage> {
                         width: 380,
                         height: 370,
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Color(0xff3C3D37), width: 5),
+                            border: Border.all(
+                                color: const Color(0xff3C3D37), width: 5),
                             borderRadius: BorderRadius.circular(40),
                             color: Colors.grey),
                         child: ClipRRect(
@@ -167,22 +115,31 @@ class _LobbyPageState extends State<LobbyPage> {
                 Image.asset("assets/images/lobby/table header.png"),
                 Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          fit: BoxFit.fill,
-                          "assets/images/lobby/100 jeton.png",
-                          width: 390,
-                          height: 200,
-                        ),
-                        Image.asset(
-                          "assets/images/lobby/200 jeton.png",
-                          fit: BoxFit.fill,
-                          width: 390,
-                          height: 200,
-                        )
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const GameView(),
+                                type: PageTransitionType.rightToLeftWithFade));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            fit: BoxFit.fill,
+                            "assets/images/lobby/100 jeton.png",
+                            width: 390,
+                            height: 200,
+                          ),
+                          Image.asset(
+                            "assets/images/lobby/200 jeton.png",
+                            fit: BoxFit.fill,
+                            width: 390,
+                            height: 200,
+                          )
+                        ],
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

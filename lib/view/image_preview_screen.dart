@@ -96,7 +96,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                           Navigator.pop(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FrontCameraPage(),
+                                builder: (context) => const FrontCameraPage(),
                               ));
                         },
                         child: Image.asset("assets/images/retake.png")),
