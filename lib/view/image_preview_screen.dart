@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/dob_page.dart';
 import 'package:pokerpad/view/front_camera_page.dart';
+import 'package:pokerpad/view/kyc_complete_page.dart';
 
 import '../constants/screen_size.dart';
 
@@ -86,7 +86,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: const DobPage(),
+                                  child: KycCompletePage(),
                                   type:
                                       PageTransitionType.rightToLeftWithFade));
                         },
