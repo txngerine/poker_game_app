@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/login_page.dart';
@@ -19,11 +21,33 @@ class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
   TextEditingController emailController =
       TextEditingController(text: "user@gmail.com");
-  TextEditingController passwordController =
-      TextEditingController(text: "User@123");
-  TextEditingController confirmPasswordController =
-      TextEditingController(text: "User@123");
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty';
+    }
+    const pattern =
+        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$';
+    final regex = RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Password must be at least 8 characters long and include\n'
+          '1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol.';
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String? confirmPassword, String? password) {
+    if (confirmPassword == null || confirmPassword.isEmpty) {
+      return 'Please confirm your password';
+    }
+    if (confirmPassword != password) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +60,6 @@ class _RegisterPageState extends State<RegisterPage> {
             width: ScreenSize.screenWidth,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                // opacity: 0.14,
                 image: AssetImage(
                   "assets/images/background.jpg",
                 ),
@@ -58,7 +81,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       "assets/images/register.png",
                       width: 200,
                     ),
-
                     const BuildTextWidget(
                       text: "Create your new account",
                     ),
@@ -74,9 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: emailController,
                             labelText: 'email',
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5),
                           BuildTextFieldWidget(
                             hintText: "password",
                             labelText: "password",
@@ -98,25 +118,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                       width: 77,
                                     ),
                             ),
+                            validator: validatePassword,
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5),
                           BuildTextFieldWidget(
                             controller: confirmPasswordController,
                             labelText: "confirm password",
                             hintText: "confirm password",
                             obscureText: true,
-                            suffixIcon: GestureDetector(
-                                onTap: () {
-                                  confirmPasswordController.clear();
-                                },
-                                child: Image.asset(
-                                    "assets/images/Artboard 30.png")),
+                            validator: (value) => validateConfirmPassword(
+                                passwordController.text, value ?? ""),
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5),
                         ],
                       ),
                     ),
@@ -181,26 +194,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 100,
-                    ),
+                    const SizedBox(height: 100),
                     GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            print("button press");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const VerifyEmailPage(),
-                                ));
-                          } else {
-                            print("Form is not valid");
-                          }
-                        },
-                        child: Image.asset("assets/images/sign up button.png")),
-                    const SizedBox(
-                      height: 20,
+                      onTap: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const VerifyEmailPage(),
+                            ),
+                          );
+                        }
+                      },
+                      child: Image.asset("assets/images/sign up button.png"),
                     ),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -208,20 +216,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           text: "Already have an account? ",
                         ),
                         GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: const LoginPage(),
-                                      type: PageTransitionType
-                                          .leftToRightWithFade));
-                            },
-                            child: const BuildBoldTextWidget(text: "Login")),
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                child: const LoginPage(),
+                                type: PageTransitionType.leftToRightWithFade,
+                              ),
+                            );
+                          },
+                          child: const BuildBoldTextWidget(text: "Login"),
+                        ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 30,
-                    )
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),

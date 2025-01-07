@@ -7,6 +7,7 @@ class BuildTextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   const BuildTextFieldWidget({
     super.key,
@@ -16,6 +17,7 @@ class BuildTextFieldWidget extends StatelessWidget {
     required this.labelText,
     this.keyboardType,
     this.hintText,
+    this.validator,
   });
 
   @override
@@ -62,17 +64,18 @@ class BuildTextFieldWidget extends StatelessWidget {
               ),
               alignLabelWithHint: true,
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter $labelText';
-              }
-              if (labelText == "Email" &&
-                  !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
-                      .hasMatch(value)) {
-                return 'Please enter a valid email address';
-              }
-              return null;
-            },
+            validator: validator,
+            // validator: (value) {
+            //   if (value == null || value.isEmpty) {
+            //     return 'Please enter $labelText';
+            //   }
+            //   if (labelText == "Email" &&
+            //       !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+            //           .hasMatch(value)) {
+            //     return 'Please enter a valid email address';
+            //   }
+            //   return null;
+            // },
           ),
         ],
       ),
