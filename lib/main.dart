@@ -1,4 +1,3 @@
-import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/game_view_model.dart';
 import 'package:pokerpad/view/splash_page.dart';
@@ -7,11 +6,13 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(DevicePreview(
-      enabled: true,
-      builder: (context) {
-        return const MyApp();
-      }));
+  runApp(const MyApp());
+
+  // runApp(DevicePreview(
+  //     enabled: true,
+  //     builder: (context) {
+  //       return const MyApp();
+  //     }));
 }
 
 class MyApp extends StatelessWidget {

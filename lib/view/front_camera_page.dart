@@ -87,13 +87,16 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
           ? Stack(
               children: [
                 SizedBox(
-                    height: 870,
+                    height: 670,
                     width: 800,
                     child: CameraPreview(_cameraController)),
-                Image.asset(
-                  'assets/images/person outline.png',
-                  fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width,
+                Padding(
+                  padding: const EdgeInsets.only(top: 83),
+                  child: Image.asset(
+                    'assets/images/person outline.png',
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width,
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

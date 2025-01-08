@@ -84,10 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                               child: passwordVisible
                                   ? Image.asset(
                                       "assets/images/Artboard 28.png",
-                                      width: 77,
+                                      width: 57,
                                     )
                                   : Image.asset(
                                       "assets/images/Artboard 29.png",
+                                      width: 57,
                                     ),
                             ),
                           ),
@@ -108,11 +109,11 @@ class _LoginPageState extends State<LoginPage> {
                               child: rememberButton
                                   ? Image.asset(
                                       "assets/images/empty checkmark.png",
-                                      width: 50,
+                                      width: 30,
                                     )
                                   : Image.asset(
                                       "assets/images/Artboard 41.png",
-                                      width: 40,
+                                      width: 30,
                                     ),
                             ),
                             const SizedBox(

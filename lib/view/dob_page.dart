@@ -21,6 +21,7 @@ class _DobPageState extends State<DobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -35,8 +36,8 @@ class _DobPageState extends State<DobPage> {
           ),
           Center(
             child: Container(
-              height: 600,
-              width: 670,
+              height: 430,
+              width: 400,
               decoration: BoxDecoration(
                   color: const Color(0xffB7B7B7),
                   borderRadius: BorderRadius.circular(50)),
@@ -79,11 +80,11 @@ class _DobPageState extends State<DobPage> {
                           child: rememberButton
                               ? Image.asset(
                                   "assets/images/empty checkmark.png",
-                                  width: 40,
+                                  width: 30,
                                 )
                               : Image.asset(
                                   "assets/images/Artboard 41.png",
-                                  width: 40,
+                                  width: 30,
                                 ),
                         ),
                         const SizedBox(
@@ -91,12 +92,13 @@ class _DobPageState extends State<DobPage> {
                         ),
                         const BuildTextWidget(
                             align: TextAlign.center,
+                            fontSize: 15,
                             text:
                                 "I confirm that this is my real date of birth")
                       ],
                     ),
                     const SizedBox(
-                      height: 120,
+                      height: 50,
                     ),
                     GestureDetector(
                         onTap: () {

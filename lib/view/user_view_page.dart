@@ -17,6 +17,7 @@ class _UserViewPageState extends State<UserViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -45,8 +46,8 @@ class _UserViewPageState extends State<UserViewPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.grey),
-                  height: 650,
-                  width: 490,
+                  height: 450,
+                  width: 390,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ClipRRect(

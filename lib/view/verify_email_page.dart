@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokerpad/view/avatar_page.dart';
 import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+
 import '../constants/screen_size.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -64,8 +65,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           ),
           Center(
             child: SizedBox(
-              height: 550,
-              width: 600,
+              height: 510,
+              width: 400,
               child: Card(
                 shadowColor: const Color(0xffB7B7B7),
                 elevation: 30,

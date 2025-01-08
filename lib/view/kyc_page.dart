@@ -32,12 +32,12 @@ class _KycPageState extends State<KycPage> {
             ),
           ),
           Positioned(
-              bottom: 30,
-              left: 100,
+              bottom: 66,
+              left: 60,
               child: Row(
                 children: [
                   SizedBox(
-                      width: 240,
+                      width: 140,
                       child: GestureDetector(
                           onTap: () {
                             Navigator.of(context).pop();
@@ -45,7 +45,7 @@ class _KycPageState extends State<KycPage> {
                           child:
                               Image.asset("assets/images/kyc/no button.png"))),
                   SizedBox(
-                      width: 240,
+                      width: 140,
                       child: GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -86,36 +86,42 @@ class _KycPageState extends State<KycPage> {
               fit: BoxFit.cover,
             ),
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/kyc/kyc verify identity.png"),
-                Image.asset("assets/images/kyc/proof of residence.png"),
-                const SizedBox(
-                  height: 65,
-                ),
-                Image.asset("assets/images/kyc/step 2 take a photo.png"),
-                const SizedBox(
-                  height: 35,
-                ),
-                GestureDetector(
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 65,
+                  ),
+                  Image.asset("assets/images/kyc/kyc verify identity.png"),
+                  Image.asset("assets/images/kyc/proof of residence.png"),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Image.asset("assets/images/kyc/step 2 take a photo.png"),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const KycVerifyCameraPage(),
+                                type: PageTransitionType.rightToLeftWithFade));
+                      },
+                      child:
+                          Image.asset("assets/images/kyc/Artboard 40 (1).png")),
+                  GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const KycVerifyCameraPage(),
-                              type: PageTransitionType.rightToLeftWithFade));
+                      showAlertDialogSkip(context);
                     },
-                    child:
-                        Image.asset("assets/images/kyc/Artboard 40 (1).png")),
-                GestureDetector(
-                  onTap: () {
-                    showAlertDialogSkip(context);
-                  },
-                  child: Image.asset("assets/images/kyc/skip button 2.png"),
-                ),
-              ],
+                    child: Image.asset("assets/images/kyc/skip button 2.png"),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

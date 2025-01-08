@@ -101,26 +101,29 @@ class _KycIdentityCameraPageState extends State<KycIdentityCameraPage> {
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  height: 650,
-                  width: 490,
+                  height: 490,
+                  width: 450,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color: Colors.white70,
+                    border: Border.all(color: Colors.white70),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: _isCameraInitialized
                       ? Stack(
                           children: [
-                            SizedBox(
-                                height: 870,
-                                width: 800,
-                                child: CameraPreview(_cameraController)),
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: SizedBox(
+                                  height: 490,
+                                  width: 450,
+                                  child: CameraPreview(_cameraController)),
+                            ),
                           ],
                         )
                       : const Center(
                           child: CircularProgressIndicator(color: Colors.white),
                         ),
                 ),
-                const SizedBox(height: 20),
                 // ElevatedButton(
                 //   onPressed: () async {
                 //     if (_isCameraInitialized) {
@@ -146,16 +149,12 @@ class _KycIdentityCameraPageState extends State<KycIdentityCameraPage> {
                           });
                         },
                         child: Image.asset("assets/images/confirm.png")),
-                    const SizedBox(height: 10),
                     GestureDetector(
                         onTap: () {
                           _cameraController.dispose();
                           initializeCamera();
                         },
                         child: Image.asset("assets/images/retake.png")),
-                    const SizedBox(
-                      height: 10,
-                    )
                   ],
                 ),
               ],

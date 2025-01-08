@@ -32,8 +32,8 @@ class _TermsPageState extends State<TermsPage> {
           ),
           Center(
             child: Container(
-              width: 600,
-              height: 800,
+              width: 400,
+              height: 540,
               decoration: BoxDecoration(
                 boxShadow: const [
                   BoxShadow(
@@ -52,29 +52,30 @@ class _TermsPageState extends State<TermsPage> {
                   ),
                   const BuildSubHeadingText(text: "TERMS OF SERVICE"),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   const BuildTextWidget(
                       text: "Read to the end to confirm the Terms of Service"),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white),
-                    width: 500,
-                    height: 400,
-                    child: const SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(18.0),
-                            child: BuildTextWidget(
-                                text:
-                                    "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, , comes from a line in section 1.10.32."),
-                          )
-                        ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white70),
+                      width: 400,
+                      height: 300,
+                      child: const SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(18.0),
+                              child: BuildTextWidget(
+                                  fontSize: 15,
+                                  text:
+                                      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, , comes from a line in section 1.10.32."),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -92,26 +93,33 @@ class _TermsPageState extends State<TermsPage> {
                             });
                           },
                           child: checker
-                              ? Image.asset("assets/images/empty checkmark.png")
-                              : Image.asset("assets/images/Artboard 41.png")),
+                              ? Image.asset(
+                                  "assets/images/empty checkmark.png",
+                                  width: 30,
+                                )
+                              : Image.asset(
+                                  "assets/images/Artboard 41.png",
+                                  width: 30,
+                                )),
                       const SizedBox(
                         width: 19,
                       ),
                       const BuildTextWidget(
-                          text: "I confirm that i fully read the TOS Agreement")
+                        text: "I confirm that i fully read the TOS Agreement",
+                        fontSize: 14,
+                      )
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 10,
                   ),
-                  const Spacer(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 270,
-                        height: 60,
+                        width: 170,
+                        height: 40,
                         child: ElevatedButton(
                             onPressed: () {},
                             style: const ButtonStyle(
@@ -126,8 +134,8 @@ class _TermsPageState extends State<TermsPage> {
                         width: 20,
                       ),
                       SizedBox(
-                        width: 270,
-                        height: 60,
+                        width: 170,
+                        height: 40,
                         child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
@@ -145,9 +153,6 @@ class _TermsPageState extends State<TermsPage> {
                               style: TextStyle(color: Colors.black),
                             )),
                       ),
-                      const SizedBox(
-                        height: 150,
-                      )
                     ],
                   )
                 ],

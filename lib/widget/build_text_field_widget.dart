@@ -22,14 +22,12 @@ class BuildTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(
-        maxHeight: 110,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 80,
+          child: TextFormField(
             keyboardType: keyboardType,
             controller: controller,
             style: const TextStyle(fontSize: 23),
@@ -41,12 +39,14 @@ class BuildTextFieldWidget extends StatelessWidget {
                 color: Color(0xFF5F6368),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(60),
                 borderSide: const BorderSide(color: Colors.black),
               ),
               suffixIcon: suffixIcon,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 24, horizontal: 60),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 60,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
                 borderSide: const BorderSide(color: Colors.black26, width: 2),
@@ -57,28 +57,32 @@ class BuildTextFieldWidget extends StatelessWidget {
               ),
               filled: true,
               fillColor: Colors.white70,
-              errorStyle: const TextStyle(
-                fontSize: 14,
-                color: Colors.red,
-                height: 1, // Ensure error message does not push other content
-              ),
-              alignLabelWithHint: true,
             ),
             validator: validator,
-            // validator: (value) {
-            //   if (value == null || value.isEmpty) {
-            //     return 'Please enter $labelText';
-            //   }
-            //   if (labelText == "Email" &&
-            //       !RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
-            //           .hasMatch(value)) {
-            //     return 'Please enter a valid email address';
-            //   }
-            //   return null;
-            // },
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+            height: 2), // Spacing between TextFormField and error text
+        // SizedBox(
+        //   height: 20, // Reserve space for the error message
+        //   child: Builder(
+        //     builder: (context) {
+        //       final errorText = Form.of(context)
+        //               ?.getFieldError(controller.text.trim())
+        //               ?.call(controller.text) ??
+        //           null;
+        //       return Text(
+        //         errorText ?? '',
+        //         style: const TextStyle(
+        //           fontSize: 14,
+        //           color: Colors.red,
+        //           height: 1,
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ),
+      ],
     );
   }
 }

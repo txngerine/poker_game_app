@@ -98,7 +98,7 @@ class _KycVerifyCameraPageState extends State<KycVerifyCameraPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset("assets/images/kyc/proof of rewsidence.png"),
-                const SizedBox(height: 20),
+                const SizedBox(height: 5),
                 const Text(
                   "Make sure that everything is clearly readable in this photo.\nMake sure all four corners of the document are visible.",
                   textAlign: TextAlign.center,
@@ -106,19 +106,23 @@ class _KycVerifyCameraPageState extends State<KycVerifyCameraPage> {
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  height: 650,
-                  width: 490,
+                  height: 490,
+                  width: 450,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color: Colors.white70,
+                    border: Border.all(color: Colors.white70),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: _isCameraInitialized
                       ? Stack(
                           children: [
-                            SizedBox(
-                                height: 870,
-                                width: 800,
-                                child: CameraPreview(_cameraController)),
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: SizedBox(
+                                  height: 490,
+                                  width: 450,
+                                  child: CameraPreview(_cameraController)),
+                            ),
                             // Align(
                             //   alignment: Alignment.bottomCenter,
                             //   child: Container(
@@ -160,16 +164,12 @@ class _KycVerifyCameraPageState extends State<KycVerifyCameraPage> {
                           });
                         },
                         child: Image.asset("assets/images/confirm.png")),
-                    const SizedBox(height: 10),
                     GestureDetector(
                         onTap: () {
                           _cameraController.dispose();
                           initializeCamera();
                         },
                         child: Image.asset("assets/images/retake.png")),
-                    const SizedBox(
-                      height: 10,
-                    )
                   ],
                 ),
               ],

@@ -15,7 +15,7 @@ class _BuildBoldTextWidgetState extends State<BuildBoldTextWidget> {
     return Text(
       widget.text,
       style: const TextStyle(
-          fontSize: 24,
+          fontSize: 18,
           fontFamily: AutofillHints.birthday,
           color: Colors.black87,
           fontWeight: FontWeight.w900),

@@ -21,7 +21,7 @@ class BuildTextWidget extends StatelessWidget {
       text,
       textAlign: align,
       style: GoogleFonts.roboto(
-        fontSize: 24,
+        fontSize: fontSize ?? 17,
         fontWeight: FontWeight.w400,
         color: const Color(0xFF5F6368),
       ),

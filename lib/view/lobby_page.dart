@@ -17,23 +17,25 @@ class LobbyPage extends StatefulWidget {
 class _LobbyPageState extends State<LobbyPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: ScreenSize.screenHeight,
-            width: ScreenSize.screenWidth,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/lobby/lobby pattern.png"),
-                fit: BoxFit.cover,
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              height: ScreenSize.screenHeight,
+              width: ScreenSize.screenWidth,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/lobby/lobby pattern.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Column(
+            Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const BuildIconImageWidget(
                         imgName: "assets/images/lobby/Lobby music ON.png"),
@@ -43,7 +45,10 @@ class _LobbyPageState extends State<LobbyPage> {
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        Image.asset("assets/images/lobby/balance holder.png"),
+                        Image.asset(
+                          "assets/images/lobby/balance holder.png",
+                          width: 300,
+                        ),
                         const Center(
                             child: BuildSubHeadingText(text: "\$13,678.00"))
                       ],
@@ -75,8 +80,8 @@ class _LobbyPageState extends State<LobbyPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        width: 380,
-                        height: 370,
+                        width: 250,
+                        height: 290,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: const Color(0xff3C3D37), width: 6),
@@ -94,8 +99,8 @@ class _LobbyPageState extends State<LobbyPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        width: 380,
-                        height: 370,
+                        width: 250,
+                        height: 290,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: const Color(0xff3C3D37), width: 5),
@@ -129,14 +134,14 @@ class _LobbyPageState extends State<LobbyPage> {
                           Image.asset(
                             fit: BoxFit.fill,
                             "assets/images/lobby/100 jeton.png",
-                            width: 390,
-                            height: 200,
+                            width: 265,
+                            height: 150,
                           ),
                           Image.asset(
                             "assets/images/lobby/200 jeton.png",
                             fit: BoxFit.fill,
-                            width: 390,
-                            height: 200,
+                            width: 265,
+                            height: 150,
                           )
                         ],
                       ),
@@ -146,24 +151,24 @@ class _LobbyPageState extends State<LobbyPage> {
                       children: [
                         Image.asset(
                           "assets/images/lobby/500 jeton.png",
-                          width: 390,
+                          width: 265,
                           fit: BoxFit.fill,
-                          height: 200,
+                          height: 150,
                         ),
                         Image.asset(
                           "assets/images/lobby/1000 jeton.png",
-                          width: 390,
+                          width: 265,
                           fit: BoxFit.fill,
-                          height: 200,
+                          height: 150,
                         )
                       ],
                     ),
                   ],
                 )
               ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

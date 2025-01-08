@@ -19,6 +19,7 @@ class _NamePageState extends State<NamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -37,8 +38,8 @@ class _NamePageState extends State<NamePage> {
                 borderRadius: BorderRadius.circular(50),
                 color: const Color(0xffB7B7B7),
               ),
-              height: 500,
-              width: 600,
+              height: 400,
+              width: 420,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -46,9 +47,11 @@ class _NamePageState extends State<NamePage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    const BuildSubHeadingText(text: "CHOOSE YOUR NICKNAME"),
+                    const BuildSubHeadingText(
+                      text: "CHOOSE YOUR NICKNAME",
+                    ),
                     const SizedBox(
-                      height: 60,
+                      height: 20,
                     ),
                     Form(
                       key: _formKey,
@@ -59,32 +62,33 @@ class _NamePageState extends State<NamePage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 100,
+                      height: 50,
                     ),
                     SizedBox(
-                      width: 270,
-                      height: 60,
+                      width: 170,
+                      height: 40,
                       child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState?.validate() == true) {
-                              print("form validated");
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: const UserViewPage(),
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade));
-                            } else {
-                              print("error in form state");
-                            }
-                          },
-                          style: const ButtonStyle(
-                              backgroundColor:
-                                  WidgetStatePropertyAll(Colors.white)),
-                          child: const Text(
-                            "  Continue  ",
-                            style: TextStyle(color: Colors.black),
-                          )),
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() == true) {
+                            print("form validated");
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: const UserViewPage(),
+                                    type: PageTransitionType
+                                        .rightToLeftWithFade));
+                          } else {
+                            print("error in form state");
+                          }
+                        },
+                        style: const ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.white)),
+                        child: const Text(
+                          "  Continue  ",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
                     ),
                   ],
                 ),
