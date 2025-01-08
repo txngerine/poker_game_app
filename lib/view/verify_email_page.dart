@@ -136,7 +136,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                             resendOtp();
                           },
                           child: Image.asset(
-                              "assets/images/resend code button.png")),
+                            "assets/images/resend code button.png",
+                            height: 60,
+                          )),
                       const SizedBox(
                         height: 20,
                       ),

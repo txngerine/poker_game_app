@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/login_page.dart';
@@ -19,10 +20,12 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
-  TextEditingController emailController =
-      TextEditingController(text: "user@gmail.com");
-  TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
   final _formKey = GlobalKey<FormState>();
 
   String? validatePassword(String? value) {
@@ -49,6 +52,77 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
+  Future<void> signup() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final response = await Dio().post(
+        'http://3.6.170.253:1080/server.php/api/v1/player/signup',
+        data: {
+          "email": emailController.text,
+          "password": passwordController.text,
+          "deviceId": 1,
+          "account_no": "A020241027101417",
+        },
+      );
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response.data != null && response.data['status'] == "OK") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Signup successful!")),
+        );
+
+        if (response.data['data']['step'] == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const VerifyEmailPage()),
+          );
+        }
+      } else if (response.data != null && response.data['status'] == "FAIL") {
+        // Handle failure response
+        String errorMessage =
+            response.data['messages']['common'] ?? 'Signup failed';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      } else {
+        throw Exception('Unexpected response from the server');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (e is DioException) {
+        if (e.response != null) {
+          print('API Response: ${e.response?.data}');
+          String errorMessage =
+              e.response?.data['messages']?['common'] ?? 'Signup failed';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(errorMessage)),
+          );
+        } else {
+          print('API Error: ${e.message}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Signup failed: ${e.message}")),
+          );
+        }
+      } else {
+        print('Unexpected error: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Signup failed: Unexpected error")),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,9 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
             width: ScreenSize.screenWidth,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/background.jpg",
-                ),
+                image: AssetImage("assets/images/background.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -78,10 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        "assets/images/register.png",
-                        width: 200,
-                      ),
+                      Image.asset("assets/images/register.png", width: 200),
                       const BuildTextWidget(
                         text: "Create your new account",
                       ),
@@ -112,12 +181,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 child: passwordVisible
                                     ? Image.asset(
                                         "assets/images/Artboard 28.png",
-                                        width: 57,
-                                      )
+                                        width: 57)
                                     : Image.asset(
                                         "assets/images/Artboard 29.png",
-                                        width: 57,
-                                      ),
+                                        width: 57),
                               ),
                               validator: validatePassword,
                             ),
@@ -196,19 +263,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       const SizedBox(height: 70),
-                      GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const VerifyEmailPage(),
-                              ),
-                            );
-                          }
-                        },
-                        child: Image.asset("assets/images/sign up button.png"),
-                      ),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : GestureDetector(
+                              onTap: () {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  signup();
+                                }
+                              },
+                              child: Image.asset(
+                                  "assets/images/sign up button.png"),
+                            ),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
