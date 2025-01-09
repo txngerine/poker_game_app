@@ -86,7 +86,10 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
                                   type:
                                       PageTransitionType.rightToLeftWithFade));
                         },
-                        child: Image.asset("assets/images/take a selfie.png")),
+                        child: Image.asset(
+                          "assets/images/take a selfie.png",
+                          height: 55,
+                        )),
                   const SizedBox(
                     height: 15,
                   ),

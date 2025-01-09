@@ -65,8 +65,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           ),
           Center(
             child: SizedBox(
-              height: 510,
-              width: 400,
+              height: 410,
+              width: 350,
               child: Card(
                 shadowColor: const Color(0xffB7B7B7),
                 elevation: 30,
@@ -137,7 +137,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                           },
                           child: Image.asset(
                             "assets/images/resend code button.png",
-                            height: 60,
+                            height: 50,
                           )),
                       const SizedBox(
                         height: 20,

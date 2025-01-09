@@ -93,14 +93,23 @@ class _KycCompletePageState extends State<KycCompletePage> {
                   const SizedBox(
                     height: 65,
                   ),
-                  Image.asset("assets/images/kyc/complete kyc.png"),
-                  Image.asset("assets/images/kyc/proof of identity.png"),
-                  const SizedBox(
-                    height: 25,
+                  Image.asset(
+                    "assets/images/kyc/complete kyc.png",
+                    height: 30,
                   ),
-                  Image.asset("assets/images/kyc/step1.png"),
+                  Image.asset(
+                    "assets/images/kyc/proof of identity.png",
+                    height: 350,
+                  ),
                   const SizedBox(
-                    height: 35,
+                    height: 65,
+                  ),
+                  Image.asset(
+                    "assets/images/kyc/step1.png",
+                    height: 40,
+                  ),
+                  const SizedBox(
+                    height: 65,
                   ),
                   GestureDetector(
                       onTap: () {
@@ -110,13 +119,18 @@ class _KycCompletePageState extends State<KycCompletePage> {
                                 child: const KycIdentityCameraPage(),
                                 type: PageTransitionType.rightToLeftWithFade));
                       },
-                      child:
-                          Image.asset("assets/images/kyc/Artboard 40 (1).png")),
+                      child: Image.asset(
+                        "assets/images/kyc/Artboard 40 (1).png",
+                        height: 57,
+                      )),
                   GestureDetector(
                     onTap: () {
                       showAlertDialogSkip(context);
                     },
-                    child: Image.asset("assets/images/kyc/skip button 2.png"),
+                    child: Image.asset(
+                      "assets/images/kyc/skip button 2.png",
+                      height: 57,
+                    ),
                   ),
                 ],
               ),

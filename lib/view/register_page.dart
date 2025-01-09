@@ -210,7 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Column(
                           children: [
                             BuildTextFieldWidget(
-                              hintText: "email",
+                              hintText: "email                 ",
                               keyboardType: TextInputType.emailAddress,
                               controller: emailController,
                               labelText: 'email',
@@ -218,7 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             const SizedBox(height: 5),
                             BuildTextFieldWidget(
-                              hintText: "password",
+                              hintText: "       password",
                               labelText: "password",
                               controller: passwordController,
                               obscureText: passwordVisible,
@@ -242,7 +242,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             BuildTextFieldWidget(
                               controller: confirmPasswordController,
                               labelText: "confirm password",
-                              hintText: "confirm password",
+                              hintText: " confirm password",
                               obscureText: true,
                               validator: (value) => validateConfirmPassword(
                                   passwordController.text, value ?? ""),
@@ -257,7 +257,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           text: 'Password must be at least ',
                           style: TextStyle(
                             color: Color(0xFF5F6368),
-                            fontSize: 24,
+                            fontSize: 14,
                           ),
                           children: [
                             TextSpan(
@@ -271,7 +271,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               text: 'and contain ',
                               style: TextStyle(
                                 color: Color(0xFF5F6368),
-                                fontSize: 24,
+                                fontSize: 14,
                               ),
                             ),
                             TextSpan(
@@ -299,7 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               text: ' and ',
                               style: TextStyle(
                                 color: Color(0xFF5F6368),
-                                fontSize: 24,
+                                fontSize: 14,
                               ),
                             ),
                             TextSpan(
@@ -323,7 +323,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 }
                               },
                               child: Image.asset(
-                                  "assets/images/sign up button.png"),
+                                "assets/images/sign up button.png",
+                                height: 59,
+                              ),
                             ),
                       const SizedBox(height: 20),
                       Row(

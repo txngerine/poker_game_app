@@ -113,14 +113,20 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
                                 print(_imagePath);
                               });
                             },
-                            child: Image.asset("assets/images/confirm.png")),
+                            child: Image.asset(
+                              "assets/images/confirm.png",
+                              height: 57,
+                            )),
                         const SizedBox(height: 10),
                         GestureDetector(
                             onTap: () {
                               _cameraController.dispose();
                               initializeCamera();
                             },
-                            child: Image.asset("assets/images/retake.png")),
+                            child: Image.asset(
+                              "assets/images/retake.png",
+                              height: 57,
+                            )),
                         const SizedBox(
                           height: 10,
                         )

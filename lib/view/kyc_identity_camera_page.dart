@@ -92,12 +92,15 @@ class _KycIdentityCameraPageState extends State<KycIdentityCameraPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/kyc/kyc - proof of identity.png"),
+                Image.asset(
+                  "assets/images/kyc/kyc - proof of identity.png",
+                  height: 50,
+                ),
                 const SizedBox(height: 20),
                 const Text(
                   "Confirm enter proof of identity is visible and clear",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 19),
+                  style: TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 20),
                 Container(
@@ -138,6 +141,9 @@ class _KycIdentityCameraPageState extends State<KycIdentityCameraPage> {
                 //   },
                 //   child: Text("data"),
                 // ),
+                SizedBox(
+                  height: 30,
+                ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -148,13 +154,19 @@ class _KycIdentityCameraPageState extends State<KycIdentityCameraPage> {
                             print(_imagePath);
                           });
                         },
-                        child: Image.asset("assets/images/confirm.png")),
+                        child: Image.asset(
+                          "assets/images/confirm.png",
+                          height: 57,
+                        )),
                     GestureDetector(
                         onTap: () {
                           _cameraController.dispose();
                           initializeCamera();
                         },
-                        child: Image.asset("assets/images/retake.png")),
+                        child: Image.asset(
+                          "assets/images/retake.png",
+                          height: 57,
+                        )),
                   ],
                 ),
               ],

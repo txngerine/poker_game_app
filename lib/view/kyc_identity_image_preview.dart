@@ -61,7 +61,13 @@ class _KycIdentityImagePreviewState extends State<KycIdentityImagePreview> {
                                     type: PageTransitionType
                                         .rightToLeftWithFade));
                           },
-                          child: Image.asset("assets/images/confirm.png")),
+                          child: Image.asset(
+                            "assets/images/confirm.png",
+                            height: 55,
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
                       GestureDetector(
                           onTap: () {
                             Navigator.pop(
@@ -70,7 +76,10 @@ class _KycIdentityImagePreviewState extends State<KycIdentityImagePreview> {
                                     builder: (context) =>
                                         const KycIdentityCameraPage()));
                           },
-                          child: Image.asset("assets/images/retake.png")),
+                          child: Image.asset(
+                            "assets/images/retake.png",
+                            height: 55,
+                          )),
                     ],
                   )
                 : const Text("No image captured."),

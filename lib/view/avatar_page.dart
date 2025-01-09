@@ -41,6 +41,9 @@ class _AvatarPageState extends State<AvatarPage> {
                 children: [
                   const BuildHeadingText(text: "Create Your Avatar"),
                   SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
                     height: 590,
                     width: 430,
                     child: Card(
@@ -223,7 +226,11 @@ class _AvatarPageState extends State<AvatarPage> {
                                 child: const ImageScrollPage(),
                                 type: PageTransitionType.rightToLeftWithFade));
                       },
-                      child: Image.asset("assets/images/take a selfie.png")),
+                      child: Image.asset(
+                        "assets/images/take a selfie.png",
+                        width: 570,
+                        height: 60,
+                      )),
                 ],
               ),
             ),

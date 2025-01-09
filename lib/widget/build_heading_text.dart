@@ -11,7 +11,7 @@ class BuildHeadingText extends StatelessWidget {
       style: const TextStyle(
         fontWeight: FontWeight.w900,
         fontFamily: "CustomFont",
-        fontSize: 40,
+        fontSize: 30,
         shadows: [
           Shadow(
             color: Colors.black38,

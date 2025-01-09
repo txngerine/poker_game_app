@@ -90,7 +90,13 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                                   type:
                                       PageTransitionType.rightToLeftWithFade));
                         },
-                        child: Image.asset("assets/images/confirm.png")),
+                        child: Image.asset(
+                          "assets/images/confirm.png",
+                          height: 57,
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
                     GestureDetector(
                         onTap: () {
                           Navigator.pop(
@@ -99,7 +105,10 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                                 builder: (context) => const FrontCameraPage(),
                               ));
                         },
-                        child: Image.asset("assets/images/retake.png")),
+                        child: Image.asset(
+                          "assets/images/retake.png",
+                          height: 57,
+                        )),
                   ],
                 )
               : const Text("No image captured."),

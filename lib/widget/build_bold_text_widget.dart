@@ -15,10 +15,10 @@ class _BuildBoldTextWidgetState extends State<BuildBoldTextWidget> {
     return Text(
       widget.text,
       style: const TextStyle(
-          fontSize: 18,
+          fontSize: 15,
           fontFamily: AutofillHints.birthday,
           color: Colors.black87,
-          fontWeight: FontWeight.w900),
+          fontWeight: FontWeight.w600),
     );
   }
 }

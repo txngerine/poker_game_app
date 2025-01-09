@@ -97,12 +97,15 @@ class _KycVerifyCameraPageState extends State<KycVerifyCameraPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/kyc/proof of rewsidence.png"),
+                Image.asset(
+                  "assets/images/kyc/proof of rewsidence.png",
+                  height: 55,
+                ),
                 const SizedBox(height: 5),
                 const Text(
                   "Make sure that everything is clearly readable in this photo.\nMake sure all four corners of the document are visible.",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 19),
+                  style: TextStyle(fontSize: 13),
                 ),
                 const SizedBox(height: 20),
                 Container(
@@ -163,13 +166,19 @@ class _KycVerifyCameraPageState extends State<KycVerifyCameraPage> {
                             print(_imagePath);
                           });
                         },
-                        child: Image.asset("assets/images/confirm.png")),
+                        child: Image.asset(
+                          "assets/images/confirm.png",
+                          height: 57,
+                        )),
                     GestureDetector(
                         onTap: () {
                           _cameraController.dispose();
                           initializeCamera();
                         },
-                        child: Image.asset("assets/images/retake.png")),
+                        child: Image.asset(
+                          "assets/images/retake.png",
+                          height: 57,
+                        )),
                   ],
                 ),
               ],

@@ -38,7 +38,7 @@ class _NamePageState extends State<NamePage> {
                 borderRadius: BorderRadius.circular(50),
                 color: const Color(0xffB7B7B7),
               ),
-              height: 400,
+              height: 330,
               width: 420,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),

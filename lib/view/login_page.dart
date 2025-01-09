@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/constants/screen_size.dart';
+import 'package:pokerpad/controller/login_controller.dart';
+import 'package:pokerpad/model/login_request_model.dart';
 import 'package:pokerpad/view/lobby_page.dart';
 import 'package:pokerpad/view/register_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
@@ -18,9 +21,63 @@ class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = true;
   TextEditingController emailController =
-      TextEditingController(text: "user@gmail.com");
+      TextEditingController(text: "playesew0r1@gmai1l1.com");
   TextEditingController passwordController =
-      TextEditingController(text: "User@123");
+      TextEditingController(text: "12!@qwQ342W1");
+  final LoginController _loginController = LoginController();
+  bool isLoading = false;
+
+  Future<void> login() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      isLoading = true;
+    });
+    final requestModel = LoginRequestModel(
+        email: emailController.text,
+        password: passwordController.text,
+        deviceId: 1,
+        accountNo: "A020241027101417");
+    try {
+      final response = await _loginController.login(requestModel);
+      setState(() {
+        isLoading = false;
+      });
+      if (response?.status == "OK") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.activeGreen,
+            content: const Text(
+              "Login Scuessfull",
+              style: TextStyle(color: Colors.white),
+            )));
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: const LobbyPage(),
+                type: PageTransitionType.rightToLeftWithFade));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: const Text("Login failed, Invalid email or password!")));
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error:$e")));
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -66,6 +123,16 @@ class _LoginPageState extends State<LoginPage> {
                             hintText: "Email",
                             labelText: 'email',
                             keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your email";
+                              } else if (!RegExp(
+                                      r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value)) {
+                                return "Please enter a valid email";
+                              }
+                              return null;
+                            },
                           ),
                           const SizedBox(
                             height: 8,
@@ -75,6 +142,12 @@ class _LoginPageState extends State<LoginPage> {
                             hintText: "password",
                             controller: passwordController,
                             obscureText: passwordVisible,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your password";
+                              }
+                              return null;
+                            },
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -95,54 +168,56 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  rememberButton = !rememberButton;
-                                });
-                              },
-                              child: rememberButton
-                                  ? Image.asset(
-                                      "assets/images/empty checkmark.png",
-                                      width: 30,
-                                    )
-                                  : Image.asset(
-                                      "assets/images/Artboard 41.png",
-                                      width: 30,
-                                    ),
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const BuildTextWidget(
-                              text: "Remember me",
-                            )
-                          ],
-                        ),
-                        const BuildBoldTextWidget(text: "Forgot password")
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    rememberButton = !rememberButton;
+                                  });
+                                },
+                                child: rememberButton
+                                    ? Image.asset(
+                                        "assets/images/empty checkmark.png",
+                                        width: 30,
+                                      )
+                                    : Image.asset(
+                                        "assets/images/Artboard 41.png",
+                                        width: 30,
+                                      ),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              const BuildTextWidget(
+                                text: "Remember me",
+                              )
+                            ],
+                          ),
+                          const BuildBoldTextWidget(text: "Forgot password")
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 54),
-                    GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            print("Login button tapped");
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const LobbyPage(),
-                                    type: PageTransitionType
-                                        .rightToLeftWithFade));
-                          } else {
-                            print("Form is not valid");
-                          }
-                        },
-                        child: Image.asset("assets/images/login button.png")),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : GestureDetector(
+                            onTap: () {
+                              if (_formKey.currentState?.validate() ?? false) {
+                                login();
+                              } else {
+                                print("Form is not valid");
+                              }
+                            },
+                            child: Image.asset(
+                              "assets/images/login button.png",
+                              height: 59,
+                            )),
                     const SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
