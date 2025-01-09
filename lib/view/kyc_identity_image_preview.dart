@@ -57,7 +57,7 @@ class _KycIdentityImagePreviewState extends State<KycIdentityImagePreview> {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: KycPage(),
+                                    child: const KycPage(),
                                     type: PageTransitionType
                                         .rightToLeftWithFade));
                           },
@@ -68,7 +68,7 @@ class _KycIdentityImagePreviewState extends State<KycIdentityImagePreview> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        KycIdentityCameraPage()));
+                                        const KycIdentityCameraPage()));
                           },
                           child: Image.asset("assets/images/retake.png")),
                     ],

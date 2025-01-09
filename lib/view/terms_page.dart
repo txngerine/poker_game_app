@@ -110,7 +110,7 @@ class _TermsPageState extends State<TermsPage> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(

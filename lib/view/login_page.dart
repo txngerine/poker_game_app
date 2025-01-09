@@ -84,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                               child: passwordVisible
                                   ? Image.asset(
                                       "assets/images/Artboard 28.png",
-                                      width: 57,
+                                      width: 47,
                                     )
                                   : Image.asset(
                                       "assets/images/Artboard 29.png",
-                                      width: 57,
+                                      width: 47,
                                     ),
                             ),
                           ),

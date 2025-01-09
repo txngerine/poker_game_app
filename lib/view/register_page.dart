@@ -1,8 +1,9 @@
 import 'dart:core';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/signup_controller.dart';
+import 'package:pokerpad/model/signup_request_model.dart';
 import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/view/verify_email_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
@@ -21,12 +22,22 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
   TextEditingController confirmPasswordController = TextEditingController();
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
-
+  final SignupController _signupController = SignupController();
   final _formKey = GlobalKey<FormState>();
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email cannot be empty';
+    }
+    const emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+    final regex = RegExp(emailPattern);
+    if (!regex.hasMatch(value)) {
+      return 'Enter a valid email address';
+    }
+    return null;
+  }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
@@ -54,74 +65,112 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> signup() async {
     if (!_formKey.currentState!.validate()) return;
-
     setState(() {
       isLoading = true;
     });
-
+    final requestModel = SignupRequestModel(
+        email: emailController.text,
+        password: passwordController.text,
+        deviceId: 1,
+        accountNo: "A020241027101417");
     try {
-      final response = await Dio().post(
-        'http://3.6.170.253:1080/server.php/api/v1/player/signup',
-        data: {
-          "email": emailController.text,
-          "password": passwordController.text,
-          "deviceId": 1,
-          "account_no": "A020241027101417",
-        },
-      );
-
+      final response = await _signupController.signup(requestModel);
       setState(() {
         isLoading = false;
       });
-
-      if (response.data != null && response.data['status'] == "OK") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Signup successful!")),
-        );
-
-        if (response.data['data']['step'] == 1) {
-          Navigator.push(
+      if (response.status == "OK") {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Signup Sucessfull..!")));
+        Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const VerifyEmailPage()),
-          );
-        }
-      } else if (response.data != null && response.data['status'] == "FAIL") {
-        // Handle failure response
-        String errorMessage =
-            response.data['messages']['common'] ?? 'Signup failed';
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage)),
-        );
+            MaterialPageRoute(
+              builder: (context) => VerifyEmailPage(),
+            ));
       } else {
-        throw Exception('Unexpected response from the server');
+        if (response.status == "FAIL") {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(response.commonMessage ?? "Signup Failed")));
+        }
       }
     } catch (e) {
       setState(() {
         isLoading = false;
       });
-
-      if (e is DioException) {
-        if (e.response != null) {
-          print('API Response: ${e.response?.data}');
-          String errorMessage =
-              e.response?.data['messages']?['common'] ?? 'Signup failed';
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(errorMessage)),
-          );
-        } else {
-          print('API Error: ${e.message}');
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Signup failed: ${e.message}")),
-          );
-        }
-      } else {
-        print('Unexpected error: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Signup failed: Unexpected error")),
-        );
-      }
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error Signup failed..")));
     }
   }
+
+  // Future<void> signup() async {
+  //   if (!_formKey.currentState!.validate()) return;
+  //
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   try {
+  //     final response = await Dio().post(
+  //       'http://3.6.170.253:1080/server.php/api/v1/player/signup',
+  //       data: {
+  //         "email": emailController.text,
+  //         "password": passwordController.text,
+  //         "deviceId": 1,
+  //         "account_no": "A020241027101417",
+  //       },
+  //     );
+  //
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //
+  //     if (response.data != null && response.data['status'] == "OK") {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text("Signup successful!")),
+  //       );
+  //
+  //       if (response.data['data']['step'] == 1) {
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => const VerifyEmailPage()),
+  //         );
+  //       }
+  //     } else if (response.data != null && response.data['status'] == "FAIL") {
+  //       // Handle failure response
+  //       String errorMessage =
+  //           response.data['messages']['common'] ?? 'Signup failed';
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text(errorMessage)),
+  //       );
+  //     } else {
+  //       throw Exception('Unexpected response from the server');
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //
+  //     if (e is DioException) {
+  //       if (e.response != null) {
+  //         print('API Response: ${e.response?.data}');
+  //         String errorMessage =
+  //             e.response?.data['messages']?['common'] ?? 'Signup failed';
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text(errorMessage)),
+  //         );
+  //       } else {
+  //         print('API Error: ${e.message}');
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text("Signup failed: ${e.message}")),
+  //         );
+  //       }
+  //     } else {
+  //       print('Unexpected error: $e');
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text("Signup failed: Unexpected error")),
+  //       );
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               keyboardType: TextInputType.emailAddress,
                               controller: emailController,
                               labelText: 'email',
+                              validator: validateEmail,
                             ),
                             const SizedBox(height: 5),
                             BuildTextFieldWidget(
@@ -181,10 +231,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 child: passwordVisible
                                     ? Image.asset(
                                         "assets/images/Artboard 28.png",
-                                        width: 57)
+                                        width: 47)
                                     : Image.asset(
                                         "assets/images/Artboard 29.png",
-                                        width: 57),
+                                        width: 47),
                               ),
                               validator: validatePassword,
                             ),

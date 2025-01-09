@@ -51,7 +51,7 @@ class _KycPageState extends State<KycPage> {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: DobPage(),
+                                    child: const DobPage(),
                                     type: PageTransitionType
                                         .rightToLeftWithFade));
                           },

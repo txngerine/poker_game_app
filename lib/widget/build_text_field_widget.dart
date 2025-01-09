@@ -36,6 +36,7 @@ class BuildTextFieldWidget extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(
+                fontSize: 19,
                 color: Color(0xFF5F6368),
               ),
               focusedBorder: OutlineInputBorder(
@@ -43,10 +44,7 @@ class BuildTextFieldWidget extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.black),
               ),
               suffixIcon: suffixIcon,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 60,
-              ),
+              contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
                 borderSide: const BorderSide(color: Colors.black26, width: 2),

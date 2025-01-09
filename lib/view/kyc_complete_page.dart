@@ -47,7 +47,7 @@ class _KycCompletePageState extends State<KycCompletePage> {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: KycPage(),
+                                    child: const KycPage(),
                                     type: PageTransitionType
                                         .rightToLeftWithFade));
                           },

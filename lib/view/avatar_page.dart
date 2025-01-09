@@ -162,7 +162,7 @@ class _AvatarPageState extends State<AvatarPage> {
                                     ),
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(

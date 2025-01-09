@@ -86,7 +86,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: KycCompletePage(),
+                                  child: const KycCompletePage(),
                                   type:
                                       PageTransitionType.rightToLeftWithFade));
                         },
