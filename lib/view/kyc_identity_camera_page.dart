@@ -141,7 +141,7 @@ class _KycIdentityCameraPageState extends State<KycIdentityCameraPage> {
                 //   },
                 //   child: Text("data"),
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Column(

@@ -20,10 +20,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = true;
-  TextEditingController emailController =
-      TextEditingController(text: "playesew0r1@gmai1l1.com");
-  TextEditingController passwordController =
-      TextEditingController(text: "12!@qwQ342W1");
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   final LoginController _loginController = LoginController();
   bool isLoading = false;
 
@@ -205,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 54),
                     isLoading
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : GestureDetector(
                             onTap: () {
                               if (_formKey.currentState?.validate() ?? false) {

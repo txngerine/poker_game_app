@@ -40,7 +40,7 @@ class _AvatarPageState extends State<AvatarPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const BuildHeadingText(text: "Create Your Avatar"),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   SizedBox(

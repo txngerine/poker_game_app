@@ -64,7 +64,7 @@ class _KycImagePreviewPageState extends State<KycImagePreviewPage> {
                             "assets/images/confirm.png",
                             height: 57,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       GestureDetector(

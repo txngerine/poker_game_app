@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
@@ -79,25 +80,62 @@ class _RegisterPageState extends State<RegisterPage> {
         isLoading = false;
       });
       if (response.status == "OK") {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Signup Sucessfull..!")));
-        Navigator.push(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.activeGreen,
+            content: const Text(
+              "Signup Successfully",
+              style: TextStyle(color: Colors.white),
+            )));
+        Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (context) => VerifyEmailPage(),
-            ));
+            PageTransition(
+                child: VerifyEmailPage(
+                  email: requestModel.email,
+                  deviceId: requestModel.deviceId,
+                  id: response.id!.toInt(),
+                ),
+                type: PageTransitionType.rightToLeftWithFade));
+        // ScaffoldMessenger.of(context)
+        //     .showSnackBar(SnackBar(content: Text("Signup Sucessfull..!")));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => VerifyEmailPage(
+        //         email: requestModel.email,
+        //         deviceId: requestModel.deviceId,
+        //         id: response.id!.toInt(),
+        //       ),
+        //     ));
       } else {
         if (response.status == "FAIL") {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              behavior: SnackBarBehavior.floating,
               content: Text(response.commonMessage ?? "Signup Failed")));
+
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //     content: Text(response.commonMessage ?? "Signup Failed")));
         }
       }
     } catch (e) {
       setState(() {
         isLoading = false;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error Signup failed..")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: const Text("Error Signup failed..")));
     }
   }
 

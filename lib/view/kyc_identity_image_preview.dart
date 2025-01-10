@@ -65,7 +65,7 @@ class _KycIdentityImagePreviewState extends State<KycIdentityImagePreview> {
                             "assets/images/confirm.png",
                             height: 55,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       GestureDetector(

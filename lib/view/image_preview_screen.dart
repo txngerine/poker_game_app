@@ -94,7 +94,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                           "assets/images/confirm.png",
                           height: 57,
                         )),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     GestureDetector(
