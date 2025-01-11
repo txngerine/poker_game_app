@@ -245,6 +245,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                               },
                               child: Image.asset(
                                   "assets/images/verify button.png")),
+                      //nooo
                     ],
                   ),
                 ),
