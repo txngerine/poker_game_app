@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:path_provider/path_provider.dart'; // Import path_provider
 
 import 'image_preview_screen.dart';
 
@@ -31,7 +34,7 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
       );
       _cameraController = CameraController(
         frontCamera,
-        ResolutionPreset.high,
+        ResolutionPreset.low,
         enableAudio: false,
         imageFormatGroup: ImageFormatGroup.jpeg,
       );
@@ -56,15 +59,38 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
       final XFile file = await _cameraController.takePicture();
 
       if (file.path.isNotEmpty) {
+        // Get the app's documents directory
+        final Directory appDocDir = await getApplicationDocumentsDirectory();
+        final String imagesDirPath = '${appDocDir.path}/images';
+
+        // Create the directory if it doesn't exist
+        final Directory imagesDir = Directory(imagesDirPath);
+        if (!await imagesDir.exists()) {
+          await imagesDir.create(recursive: true);
+        }
+
+        // Define the new image path
+        final String newImagePath =
+            '$imagesDirPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+        // Copy the captured image to the new directory
+        final File newImageFile = File(newImagePath);
+        await newImageFile.writeAsBytes(await file.readAsBytes());
+
         setState(() {
-          _imagePath = file.path;
+          _imagePath = newImagePath;
         });
-        debugPrint("Image captured at path: ${file.path}");
+
+        debugPrint("Image captured at path: $newImagePath");
+
+        // Navigate to ImagePreviewScreen with the new image path
         Navigator.push(
-            context,
-            PageTransition(
-                child: ImagePreviewScreen(imagePath: file.path),
-                type: PageTransitionType.rightToLeftWithFade));
+          context,
+          PageTransition(
+            child: ImagePreviewScreen(imagePath: newImagePath),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+        );
       }
     } catch (e) {
       debugPrint("Error capturing image: $e");

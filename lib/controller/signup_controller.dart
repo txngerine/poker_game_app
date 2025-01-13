@@ -5,6 +5,7 @@ import '../model/signup_request_model.dart';
 import '../model/signup_response_model.dart';
 
 class SignupController {
+  static int? userId;
   Future<SignupResponseModel> signup(SignupRequestModel requestModel) async {
     try {
       final response = await Dio().post(
@@ -12,6 +13,10 @@ class SignupController {
         data: requestModel.toJson(),
       );
 
+      // Store the userId statically after a successful signup
+      if (response.data != null && response.data['status'] == "OK") {
+        userId = response.data['data']['id']; // Set the ID
+      }
       return SignupResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       if (e.response != null) {
