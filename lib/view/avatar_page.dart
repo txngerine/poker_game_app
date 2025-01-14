@@ -1,5 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/gender_controller.dart';
+import 'package:pokerpad/controller/signup_controller.dart';
+import 'package:pokerpad/model/players_gender_request_model.dart';
+import 'package:pokerpad/model/players_gender_response_model.dart';
 import 'package:pokerpad/view/image_scroll_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_heading_text.dart';
@@ -14,6 +19,58 @@ class AvatarPage extends StatefulWidget {
 
 class _AvatarPageState extends State<AvatarPage> {
   String? selectGender;
+  bool isLoading = false;
+  final GenderController _genderController = GenderController();
+
+  void genderSelect(String gender) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Create request model
+    PlayersGenderRequestModel request = PlayersGenderRequestModel(
+      gender: gender,
+      deviceId: 1,
+      id: SignupController.userId!.toInt(),
+    );
+
+    // Fetch response
+    PlayersGenderResponseModel? response =
+        await _genderController.gender(request);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response != null && response.status == "OK") {
+      print(response.status);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: CupertinoColors.activeGreen,
+          content: Text(
+              "Success! Step: ${response.data!.step}, ID: ${response.data!.id}"),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: CupertinoColors.destructiveRed,
+          content: Text("Error: ${response?.message ?? 'Unknown error'}"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +82,7 @@ class _AvatarPageState extends State<AvatarPage> {
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                // opacity: 0.14,
-                image: AssetImage(
-                  "assets/images/background.jpg",
-                ),
+                image: AssetImage("assets/images/background.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,9 +94,7 @@ class _AvatarPageState extends State<AvatarPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const BuildHeadingText(text: "Create Your Avatar"),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   SizedBox(
                     height: 590,
                     width: 430,
@@ -51,12 +103,8 @@ class _AvatarPageState extends State<AvatarPage> {
                       elevation: 30,
                       color: const Color(0xffE4E0E1),
                       shape: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xffB7B7B7),
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          50,
-                        ),
+                        borderSide: const BorderSide(color: Color(0xffB7B7B7)),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(28.0),
@@ -73,37 +121,29 @@ class _AvatarPageState extends State<AvatarPage> {
                                       onTap: () {
                                         setState(() {
                                           selectGender = "male";
-                                          print("male select");
                                         });
+                                        genderSelect("M");
                                       },
                                       child: selectGender == "male"
                                           ? Image.asset(
                                               "assets/images/Artboard 41.png",
-                                              width: 30,
-                                            )
+                                              width: 30)
                                           : Image.asset(
                                               "assets/images/empty checkmark.png",
-                                              width: 30,
-                                            ),
+                                              width: 30),
                                     ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
+                                    const SizedBox(width: 20),
                                     const BuildTextWidget(text: "Male    ")
                                   ],
-                                )
+                                ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset(
-                                  "assets/images/gender.png",
-                                  height: 50,
-                                ),
+                                Image.asset("assets/images/gender.png",
+                                    height: 50),
                                 const Spacer(),
                                 Row(
                                   children: [
@@ -111,22 +151,18 @@ class _AvatarPageState extends State<AvatarPage> {
                                       onTap: () {
                                         setState(() {
                                           selectGender = "female";
-                                          print("female select");
                                         });
+                                        genderSelect("F");
                                       },
                                       child: selectGender == "female"
                                           ? Image.asset(
                                               "assets/images/Artboard 41.png",
-                                              width: 30,
-                                            )
+                                              width: 30)
                                           : Image.asset(
                                               "assets/images/empty checkmark.png",
-                                              width: 30,
-                                            ),
+                                              width: 30),
                                     ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
+                                    const SizedBox(width: 20),
                                     const BuildTextWidget(text: "Female")
                                   ],
                                 ),
@@ -138,9 +174,7 @@ class _AvatarPageState extends State<AvatarPage> {
                               children: [
                                 BuildBoldTextWidget(
                                     text: "Step 2 : Take a Selfie"),
-                                BuildTextWidget(
-                                  text: "Receive your Avatar",
-                                )
+                                BuildTextWidget(text: "Receive your Avatar")
                               ],
                             ),
                             const Spacer(),
@@ -148,12 +182,9 @@ class _AvatarPageState extends State<AvatarPage> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        50), // Rounded corners
+                                    borderRadius: BorderRadius.circular(50),
                                     border: Border.all(
-                                      color: Colors.grey, // Border color
-                                      width: 3.0, // Border width
-                                    ),
+                                        color: Colors.grey, width: 3.0),
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(30),
@@ -168,12 +199,9 @@ class _AvatarPageState extends State<AvatarPage> {
                                 const Spacer(),
                                 Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        40), // Rounded corners
+                                    borderRadius: BorderRadius.circular(40),
                                     border: Border.all(
-                                      color: Colors.grey, // Border color
-                                      width: 3.0, // Border width
-                                    ),
+                                        color: Colors.grey, width: 3.0),
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(30),
@@ -190,8 +218,9 @@ class _AvatarPageState extends State<AvatarPage> {
                             const Spacer(),
                             Container(
                               decoration: BoxDecoration(
-                                  color: const Color(0xffFFC94A),
-                                  borderRadius: BorderRadius.circular(30)),
+                                color: const Color(0xffFFC94A),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                               height: 150,
                               width: 580,
                               child: const Padding(
@@ -215,22 +244,39 @@ class _AvatarPageState extends State<AvatarPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: const ImageScrollPage(),
-                                type: PageTransitionType.rightToLeftWithFade));
-                      },
-                      child: Image.asset(
-                        "assets/images/take a selfie.png",
-                        width: 570,
-                        height: 60,
-                      )),
+                  const SizedBox(height: 20),
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : GestureDetector(
+                          onTap: () {
+                            if (selectGender != null) {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  child: const ImageScrollPage(),
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: Duration(seconds: 1),
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor:
+                                      CupertinoColors.destructiveRed,
+                                  content: const Text(
+                                      "Please select a gender first."),
+                                ),
+                              );
+                            }
+                          },
+                          child: Image.asset("assets/images/take a selfie.png",
+                              width: 570, height: 60),
+                        ),
                 ],
               ),
             ),

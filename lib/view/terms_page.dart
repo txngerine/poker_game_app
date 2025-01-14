@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/signup_controller.dart';
+import 'package:pokerpad/controller/terms_controller.dart';
+import 'package:pokerpad/model/terms_request_model.dart';
+import 'package:pokerpad/model/terms_response_model.dart';
 import 'package:pokerpad/view/name_page.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
@@ -14,10 +18,70 @@ class TermsPage extends StatefulWidget {
 }
 
 class _TermsPageState extends State<TermsPage> {
-  bool checker = true;
+  bool checker = false;
+  bool isLoading = false;
+  final TermsController _termsController = TermsController();
+
+  Future<void> acceptTerms() async {
+    if (!checker) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content:
+              Text('Please confirm that you have read the Terms of Service'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      TermsRequestModel request = TermsRequestModel(
+        tos: "true",
+        deviceId: 1,
+        id: SignupController.userId!.toInt(),
+      );
+
+      TermsResponseModel? response = await _termsController.terms(request);
+
+      if (response != null && response.status == "OK") {
+        Navigator.push(
+          context,
+          PageTransition(
+            child: const NamePage(),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text('Failed to accept the terms. Please try again later.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -47,118 +111,99 @@ class _TermsPageState extends State<TermsPage> {
               ),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   const BuildSubHeadingText(text: "TERMS OF SERVICE"),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   const BuildTextWidget(
-                      text: "Read to the end to confirm the Terms of Service"),
+                    text: "Read to the end to confirm the Terms of Service",
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.white70),
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white70,
+                      ),
                       width: 400,
                       height: 300,
                       child: const SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(18.0),
-                              child: BuildTextWidget(
-                                  fontSize: 15,
-                                  text:
-                                      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, , comes from a line in section 1.10.32."),
-                            )
-                          ],
+                        child: Padding(
+                          padding: EdgeInsets.all(18.0),
+                          child: BuildTextWidget(
+                            fontSize: 15,
+                            text: "Contrary to popular belief, Lorem Ipsum...",
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              checker = !checker;
-                            });
-                          },
-                          child: checker
-                              ? Image.asset(
-                                  "assets/images/empty checkmark.png",
-                                  width: 30,
-                                )
-                              : Image.asset(
-                                  "assets/images/Artboard 41.png",
-                                  width: 30,
-                                )),
-                      const SizedBox(
-                        width: 19,
+                        onTap: () {
+                          setState(() {
+                            checker = !checker;
+                          });
+                        },
+                        child: Image.asset(
+                          checker
+                              ? "assets/images/Artboard 41.png"
+                              : "assets/images/empty checkmark.png",
+                          width: 30,
+                        ),
                       ),
+                      const SizedBox(width: 19),
                       const BuildTextWidget(
-                        text: "I confirm that i fully read the TOS Agreement",
+                        text: "I confirm that I fully read the TOS Agreement",
                         fontSize: 14,
-                      )
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 170,
                         height: 40,
                         child: ElevatedButton(
-                            onPressed: () {},
-                            style: const ButtonStyle(
-                                backgroundColor:
-                                    WidgetStatePropertyAll(Colors.black)),
-                            child: const Text(
-                              "  Decline  ",
-                              style: TextStyle(color: Colors.white),
-                            )),
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.black),
+                          ),
+                          child: const Text(
+                            "Decline",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      const SizedBox(width: 20),
                       SizedBox(
                         width: 170,
                         height: 40,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: const NamePage(),
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade));
-                            },
-                            style: const ButtonStyle(
-                                backgroundColor:
-                                    WidgetStatePropertyAll(Colors.white)),
-                            child: const Text(
-                              "  Accept  ",
-                              style: TextStyle(color: Colors.black),
-                            )),
+                        child: isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : ElevatedButton(
+                                onPressed: acceptTerms,
+                                style: const ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll(Colors.white),
+                                ),
+                                child: const Text(
+                                  "Accept",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

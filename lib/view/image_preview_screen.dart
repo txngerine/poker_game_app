@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
@@ -40,17 +41,21 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
       String base64String = base64Encode(_imageFile.readAsBytesSync());
       _base64String = base64String;
       log("Base64 String: $_base64String");
+      // Get the userId from SignupController
+      String userId = SignupController.userId.toString();
 
       // API URL
-      const String apiUrl =
-          "http://3.6.170.253:1080/server.php/api/v1/players/1?XDEBUG_SESSION_START=netbeans-xdebug";
+      String apiUrl =
+          "http://3.6.170.253:1080/server.php/api/v1/players/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
 
       Map<String, dynamic> requestBody = {
         "photo": base64String,
-        "id": SignupController.userId,
+        "id": userId,
         "deviceId": 1
       };
       print("00000");
+      print(apiUrl);
+      print(userId);
       print(requestBody["id"]);
       final response = await http.put(
         Uri.parse(apiUrl),
@@ -58,7 +63,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
         body: jsonEncode(requestBody),
       );
 
-      log("Response: ${response.body}");
+      // log("Response: ${response.body}");
 
       // Check response
       if (response.statusCode == 200) {
@@ -68,16 +73,30 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
             PageTransition(
                 child: const KycCompletePage(),
                 type: PageTransitionType.rightToLeftWithFade));
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Image uploaded successfully!")),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.activeGreen,
+            content: const Text(
+              "Image uploaded successfully!",
+              style: TextStyle(color: Colors.white),
+            )));
       } else {
         log("Failed to upload image: ${response.statusCode}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text(
-                  "Face not detected. Please ensure your face is clearly visible, well-lit, and positioned directly in front of the camera.")),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.destructiveRed,
+            content: const Text(
+              "Face not detected. Please ensure your face is clearly visible, well-lit, and positioned directly in front of the camera.",
+              style: TextStyle(color: Colors.white),
+            )));
       }
     } catch (e) {
       log("Error uploading image: $e");

@@ -22,9 +22,11 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
-  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController =
+      TextEditingController(text: "Vava@1100");
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordController =
+      TextEditingController(text: "Vava@1100");
   bool isLoading = false;
   final SignupController _signupController = SignupController();
   final _formKey = GlobalKey<FormState>();
