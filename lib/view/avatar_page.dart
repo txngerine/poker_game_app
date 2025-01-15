@@ -46,6 +46,7 @@ class _AvatarPageState extends State<AvatarPage> {
       print(response.status);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          duration: const Duration(milliseconds: 350),
           elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
@@ -260,7 +261,7 @@ class _AvatarPageState extends State<AvatarPage> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  duration: Duration(seconds: 1),
+                                  duration: const Duration(milliseconds: 200),
                                   elevation: 10,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),

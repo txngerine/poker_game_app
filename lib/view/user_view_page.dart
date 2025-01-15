@@ -5,6 +5,7 @@ import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
 import '../constants/screen_size.dart';
+import '../controller/player_name_controller.dart';
 
 class UserViewPage extends StatefulWidget {
   const UserViewPage({super.key});
@@ -14,6 +15,39 @@ class UserViewPage extends StatefulWidget {
 }
 
 class _UserViewPageState extends State<UserViewPage> {
+  String playerName = "Loading...";
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPlayerName();
+  }
+
+  void fetchPlayerName() async {
+    PlayerNameController playerNameController = PlayerNameController();
+    try {
+      final response = await playerNameController.fetchPlayerDetails();
+      if (response != null) {
+        setState(() {
+          playerName = response.data?.nickname ?? "No name available";
+        });
+      } else {
+        setState(() {
+          playerName = "Error loading name";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        playerName = "Failed to fetch name";
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,19 +67,18 @@ class _UserViewPageState extends State<UserViewPage> {
           Center(
             child: Column(
               children: [
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 const BuildHeadingText(text: "CONGRATULATIONS"),
-                const BuildHeadingText(text: "Charlie"),
-                const BuildTextWidget(text: "Your are now ready to play"),
-                const SizedBox(
-                  height: 10,
-                ),
+                isLoading
+                    ? const CircularProgressIndicator()
+                    : BuildHeadingText(text: playerName),
+                const BuildTextWidget(text: "You are now ready to play"),
+                const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey),
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.grey,
+                  ),
                   height: 450,
                   width: 390,
                   child: Padding(
@@ -59,29 +92,30 @@ class _UserViewPageState extends State<UserViewPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                const SizedBox(height: 10),
+                const BuildTextWidget(
+                  text: "The above picture is just a temporary Avatar.",
                 ),
                 const BuildTextWidget(
-                    text: "The above picture is just a temporary Avatar."),
-                const BuildTextWidget(
-                    text:
-                        "A premium Avatar will be created for you within 24 hours"),
-                const SizedBox(
-                  height: 10,
+                  text:
+                      "A premium Avatar will be created for you within 24 hours",
                 ),
+                const SizedBox(height: 10),
                 GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const LobbyPage(),
-                              type: PageTransitionType.rightToLeftWithFade));
-                    },
-                    child: Image.asset("assets/images/pokerpad_nt_button.png")),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: const LobbyPage(),
+                        type: PageTransitionType.rightToLeftWithFade,
+                      ),
+                    );
+                  },
+                  child: Image.asset("assets/images/pokerpad_nt_button.png"),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

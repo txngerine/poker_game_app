@@ -8,6 +8,7 @@ class TermsController {
   Future<TermsResponseModel?> terms(TermsRequestModel requestModel) async {
     String url =
         "$baseUrl${requestModel.id}?XDEBUG_SESSION_START=netbeans-xdebug";
+    print(url);
 
     try {
       final response = await Dio().put(url,

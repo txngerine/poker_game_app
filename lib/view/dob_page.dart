@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/dob_controller.dart';
+import 'package:pokerpad/model/dob_request_model.dart';
+import 'package:pokerpad/model/dob_response_model.dart';
 import 'package:pokerpad/view/terms_page.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
@@ -15,9 +18,71 @@ class DobPage extends StatefulWidget {
 }
 
 class _DobPageState extends State<DobPage> {
-  bool rememberButton = true;
+  bool rememberButton = false;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController dobController = TextEditingController(text: "");
+  TextEditingController dobController = TextEditingController();
+  bool isLoading = false;
+  final DobController _dobController = DobController();
+  Future<void> getDob() async {
+    if (!rememberButton) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please confirm that your real date of birth'),
+          duration: Duration(milliseconds: 900),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      DobRequestModel request = DobRequestModel(
+        dob: dobController.text,
+        deviceId: 1, // Assuming deviceId is static for now
+      );
+
+      DobResponseModel? response = await _dobController.getDob(request);
+
+      // Debug print response status
+      print("Response Status: ${response?.status}");
+      print("Response Data: ${response?.data}");
+
+      if (response?.status == "OK") {
+        // Navigation if the response is "OK"
+        Navigator.push(
+          context,
+          PageTransition(
+            child: const TermsPage(),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+        );
+      } else {
+        print("Failed response: ${response?.status}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed! Please try again later.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print("Error occurred: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +144,11 @@ class _DobPageState extends State<DobPage> {
                           },
                           child: rememberButton
                               ? Image.asset(
-                                  "assets/images/empty checkmark.png",
+                                  "assets/images/Artboard 41.png",
                                   width: 30,
                                 )
                               : Image.asset(
-                                  "assets/images/Artboard 41.png",
+                                  "assets/images/empty checkmark.png",
                                   width: 30,
                                 ),
                         ),
@@ -100,20 +165,13 @@ class _DobPageState extends State<DobPage> {
                     const SizedBox(
                       height: 50,
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState?.validate() == true) {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const TermsPage(),
-                                    type: PageTransitionType
-                                        .rightToLeftWithFade));
-                          } else {
-                            print("Form not valid");
-                          }
-                        },
-                        child: Image.asset("assets/images/confirm.png"))
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : GestureDetector(
+                            onTap: () {
+                              getDob();
+                            },
+                            child: Image.asset("assets/images/confirm.png"))
                   ],
                 ),
               ),

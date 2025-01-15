@@ -170,9 +170,9 @@ class _TermsPageState extends State<TermsPage> {
                         height: 40,
                         child: ElevatedButton(
                           onPressed: () {},
-                          style: ButtonStyle(
+                          style: const ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Colors.black),
+                                WidgetStatePropertyAll(Colors.black),
                           ),
                           child: const Text(
                             "Decline",
@@ -190,7 +190,7 @@ class _TermsPageState extends State<TermsPage> {
                                 onPressed: acceptTerms,
                                 style: const ButtonStyle(
                                   backgroundColor:
-                                      MaterialStatePropertyAll(Colors.white),
+                                      WidgetStatePropertyAll(Colors.white),
                                 ),
                                 child: const Text(
                                   "Accept",
