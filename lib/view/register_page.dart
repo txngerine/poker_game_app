@@ -22,11 +22,9 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
-  TextEditingController confirmPasswordController =
-      TextEditingController(text: "Vava@1100");
+  TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController =
-      TextEditingController(text: "Vava@1100");
+  final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
   final SignupController _signupController = SignupController();
   final _formKey = GlobalKey<FormState>();
@@ -141,77 +139,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // Future<void> signup() async {
-  //   if (!_formKey.currentState!.validate()) return;
-  //
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //
-  //   try {
-  //     final response = await Dio().post(
-  //       'http://3.6.170.253:1080/server.php/api/v1/player/signup',
-  //       data: {
-  //         "email": emailController.text,
-  //         "password": passwordController.text,
-  //         "deviceId": 1,
-  //         "account_no": "A020241027101417",
-  //       },
-  //     );
-  //
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //
-  //     if (response.data != null && response.data['status'] == "OK") {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text("Signup successful!")),
-  //       );
-  //
-  //       if (response.data['data']['step'] == 1) {
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const VerifyEmailPage()),
-  //         );
-  //       }
-  //     } else if (response.data != null && response.data['status'] == "FAIL") {
-  //       // Handle failure response
-  //       String errorMessage =
-  //           response.data['messages']['common'] ?? 'Signup failed';
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text(errorMessage)),
-  //       );
-  //     } else {
-  //       throw Exception('Unexpected response from the server');
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //
-  //     if (e is DioException) {
-  //       if (e.response != null) {
-  //         print('API Response: ${e.response?.data}');
-  //         String errorMessage =
-  //             e.response?.data['messages']?['common'] ?? 'Signup failed';
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(content: Text(errorMessage)),
-  //         );
-  //       } else {
-  //         print('API Error: ${e.message}');
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(content: Text("Signup failed: ${e.message}")),
-  //         );
-  //       }
-  //     } else {
-  //       print('Unexpected error: $e');
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text("Signup failed: Unexpected error")),
-  //       );
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Column(
                           children: [
                             BuildTextFieldWidget(
-                              hintText: "email                 ",
+                              hintText: "Email                 ",
                               keyboardType: TextInputType.emailAddress,
                               controller: emailController,
                               labelText: 'email',
@@ -258,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             const SizedBox(height: 5),
                             BuildTextFieldWidget(
-                              hintText: "       password",
+                              hintText: "       Password",
                               labelText: "password",
                               controller: passwordController,
                               obscureText: passwordVisible,
@@ -282,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             BuildTextFieldWidget(
                               controller: confirmPasswordController,
                               labelText: "confirm password",
-                              hintText: " confirm password",
+                              hintText: " Confirm password",
                               obscureText: true,
                               validator: (value) => validateConfirmPassword(
                                   passwordController.text, value ?? ""),

@@ -28,6 +28,7 @@ class _SplashPageState extends State<SplashPage> {
       children: [
         SizedBox(
           width: ScreenSize.screenWidth,
+          height: ScreenSize.screenHeight,
           child: Image.asset(
             "assets/images/background.jpg",
             fit: BoxFit.cover,

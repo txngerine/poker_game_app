@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           BuildTextFieldWidget(
                             labelText: "password",
-                            hintText: "password",
+                            hintText: "        Password",
                             controller: passwordController,
                             obscureText: passwordVisible,
                             validator: (value) {

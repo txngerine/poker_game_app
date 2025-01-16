@@ -247,7 +247,11 @@ class _AvatarPageState extends State<AvatarPage> {
                   ),
                   const SizedBox(height: 20),
                   isLoading
-                      ? const CircularProgressIndicator()
+                      ? const SizedBox(
+                          height: 60,
+                          child: CircularProgressIndicator(
+                            color: Colors.transparent,
+                          ))
                       : GestureDetector(
                           onTap: () {
                             if (selectGender != null) {

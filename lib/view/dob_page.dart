@@ -63,7 +63,7 @@ class _DobPageState extends State<DobPage> {
         print("Failed response: ${response?.status}");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Failed! Please try again later.'),
+            content: Text('Failed! Please enter Eg 07/09/2000.'),
             duration: Duration(seconds: 2),
           ),
         );
