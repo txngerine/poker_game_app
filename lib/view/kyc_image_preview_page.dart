@@ -77,7 +77,7 @@ class _KycImagePreviewPageState extends State<KycImagePreviewPage> {
             ),
             behavior: SnackBarBehavior.floating,
             backgroundColor: CupertinoColors.activeGreen,
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             content: const Text(
               "Image uploaded successfully!",
               style: TextStyle(color: Colors.white),
@@ -135,7 +135,7 @@ class _KycImagePreviewPageState extends State<KycImagePreviewPage> {
                       ),
                       const SizedBox(height: 20),
                       isUploading
-                          ? CircularProgressIndicator()
+                          ? const CircularProgressIndicator()
                           : GestureDetector(
                               onTap: () {
                                 uploadImage();

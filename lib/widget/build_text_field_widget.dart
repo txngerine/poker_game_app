@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BuildTextFieldWidget extends StatelessWidget {
   final bool obscureText;
@@ -8,6 +9,7 @@ class BuildTextFieldWidget extends StatelessWidget {
   final String labelText;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   const BuildTextFieldWidget({
     super.key,
@@ -18,6 +20,7 @@ class BuildTextFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.hintText,
     this.validator,
+    this.inputFormatters,
   });
 
   @override
@@ -59,30 +62,12 @@ class BuildTextFieldWidget extends StatelessWidget {
                 fillColor: Colors.white70,
               ),
               validator: validator,
+              inputFormatters: inputFormatters,
             ),
           ),
         ),
         const SizedBox(
             height: 2), // Spacing between TextFormField and error text
-        // SizedBox(
-        //   height: 20, // Reserve space for the error message
-        //   child: Builder(
-        //     builder: (context) {
-        //       final errorText = Form.of(context)
-        //               ?.getFieldError(controller.text.trim())
-        //               ?.call(controller.text) ??
-        //           null;
-        //       return Text(
-        //         errorText ?? '',
-        //         style: const TextStyle(
-        //           fontSize: 14,
-        //           color: Colors.red,
-        //           height: 1,
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
       ],
     );
   }

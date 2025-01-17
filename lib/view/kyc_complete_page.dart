@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/signup_controller.dart';
+import 'package:pokerpad/controller/skip_id_controller.dart';
+import 'package:pokerpad/model/skip_id_request_model.dart';
+import 'package:pokerpad/model/skip_id_response_model.dart';
 import 'package:pokerpad/view/kyc_identity_camera_page.dart';
 import 'package:pokerpad/view/kyc_page.dart';
 
@@ -13,6 +17,8 @@ class KycCompletePage extends StatefulWidget {
 }
 
 class _KycCompletePageState extends State<KycCompletePage> {
+  bool isLoading = false;
+  final SkipIdController _skipIdController = SkipIdController();
   showAlertDialogSkip(BuildContext context) {
     AlertDialog alert = AlertDialog(
       backgroundColor: Colors.transparent,
@@ -42,17 +48,20 @@ class _KycCompletePageState extends State<KycCompletePage> {
                           ))),
                   SizedBox(
                       width: 140,
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const KycPage(),
-                                    type: PageTransitionType
-                                        .rightToLeftWithFade));
-                          },
-                          child:
-                              Image.asset("assets/images/kyc/yes button.png")))
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : GestureDetector(
+                              onTap: () {
+                                skipButton();
+                                // Navigator.push(
+                                //     context,
+                                //     PageTransition(
+                                //         child: const KycPage(),
+                                //         type: PageTransitionType
+                                //             .rightToLeftWithFade));
+                              },
+                              child: Image.asset(
+                                  "assets/images/kyc/yes button.png")))
                 ],
               ))
         ],
@@ -67,6 +76,46 @@ class _KycCompletePageState extends State<KycCompletePage> {
         return alert;
       },
     );
+  }
+
+  Future<void> skipButton() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      SkipIdRequestModel request = SkipIdRequestModel(
+          skip: 1, deviceId: 1, id: SignupController.userId!.toInt());
+      SkipIdResponseModel? response =
+          await _skipIdController.skipButton(request);
+      if (response != null && response.status == "OK") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(milliseconds: 350),
+            content: Text(response.data?.message ?? "Skipped successfully!")));
+        Navigator.push(
+            context,
+            PageTransition(
+                child: const KycPage(),
+                type: PageTransitionType.rightToLeftWithFade));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to skip ID'),
+            duration: Duration(milliseconds: 400),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          duration: const Duration(milliseconds: 400),
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override

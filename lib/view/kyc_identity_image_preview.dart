@@ -135,7 +135,7 @@ class _KycIdentityImagePreviewState extends State<KycIdentityImagePreview> {
                       ),
                       const SizedBox(height: 20),
                       isUploading
-                          ? CircularProgressIndicator()
+                          ? const CircularProgressIndicator()
                           : GestureDetector(
                               onTap: () {
                                 uploadImage();

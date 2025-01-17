@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/signup_controller.dart';
+import 'package:pokerpad/controller/skip_address_controller.dart';
+import 'package:pokerpad/model/skip_address_request_model.dart';
+import 'package:pokerpad/model/skip_address_response_model.dart';
 import 'package:pokerpad/view/dob_page.dart';
 import 'package:pokerpad/view/kyc_verify_camera_page.dart';
 
@@ -13,6 +17,8 @@ class KycPage extends StatefulWidget {
 }
 
 class _KycPageState extends State<KycPage> {
+  bool isLoading = false;
+  final SkipAddressController _skipAddressController = SkipAddressController();
   @override
   void initState() {
     super.initState();
@@ -46,17 +52,14 @@ class _KycPageState extends State<KycPage> {
                               Image.asset("assets/images/kyc/no button.png"))),
                   SizedBox(
                       width: 140,
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const DobPage(),
-                                    type: PageTransitionType
-                                        .rightToLeftWithFade));
-                          },
-                          child:
-                              Image.asset("assets/images/kyc/yes button.png")))
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : GestureDetector(
+                              onTap: () {
+                                skipButton();
+                              },
+                              child: Image.asset(
+                                  "assets/images/kyc/yes button.png")))
                 ],
               ))
         ],
@@ -71,6 +74,32 @@ class _KycPageState extends State<KycPage> {
         return alert;
       },
     );
+  }
+
+  Future<void> skipButton() async {
+    setState(() {
+      isLoading = true;
+    });
+    SkipAddressRequestModel request = SkipAddressRequestModel(
+        skip: 1, deviceId: 1, id: SignupController.userId!.toInt());
+    SkipAddressResponseModel? response =
+        await _skipAddressController.skipButton(request);
+    if (response != null && response.status == "OK") {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: const Duration(milliseconds: 350),
+          content: Text(response.data.message ?? "Skipped successfully!")));
+      Navigator.push(
+          context,
+          PageTransition(
+              child: const DobPage(), type: PageTransitionType.rightToLeftWithFade));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to skip ID'),
+          duration: Duration(milliseconds: 400),
+        ),
+      );
+    }
   }
 
   @override
