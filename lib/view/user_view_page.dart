@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/model/player_name_response_model.dart';
 import 'package:pokerpad/view/lobby_page.dart';
 import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
@@ -17,6 +18,7 @@ class UserViewPage extends StatefulWidget {
 class _UserViewPageState extends State<UserViewPage> {
   String playerName = "Loading...";
   bool isLoading = true;
+  PlayerNameResponseModel? playerDetails;
 
   @override
   void initState() {
@@ -28,8 +30,10 @@ class _UserViewPageState extends State<UserViewPage> {
     PlayerNameController playerNameController = PlayerNameController();
     try {
       final response = await playerNameController.fetchPlayerDetails();
+
       if (response != null) {
         setState(() {
+          playerDetails = response;
           playerName = response.data?.nickname ?? "No name available";
         });
       } else {
@@ -106,7 +110,9 @@ class _UserViewPageState extends State<UserViewPage> {
                     Navigator.push(
                       context,
                       PageTransition(
-                        child: const LobbyPage(),
+                        child: LobbyPage(
+                          playerBalance: playerDetails?.data?.balance,
+                        ),
                         type: PageTransitionType.rightToLeftWithFade,
                       ),
                     );

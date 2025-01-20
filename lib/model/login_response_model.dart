@@ -23,8 +23,8 @@ class Data {
   final int id;
   final String? nickname;
   final String email;
-  final bool? isActive;
-  final bool? isVerified;
+  final int? isActive;
+  final int? isVerified;
   final String balance;
   final int step;
   final int clubId;

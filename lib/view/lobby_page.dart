@@ -8,7 +8,9 @@ import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import '../constants/screen_size.dart';
 
 class LobbyPage extends StatefulWidget {
-  const LobbyPage({super.key});
+  final String? playerBalance;
+  final String? avatar;
+  const LobbyPage({super.key, this.playerBalance, this.avatar});
 
   @override
   State<LobbyPage> createState() => _LobbyPageState();
@@ -49,8 +51,9 @@ class _LobbyPageState extends State<LobbyPage> {
                           "assets/images/lobby/balance holder.png",
                           width: 300,
                         ),
-                        const Center(
-                            child: BuildSubHeadingText(text: "\$13,678.00"))
+                        Center(
+                            child: BuildSubHeadingText(
+                                text: "\$${widget.playerBalance}"))
                       ],
                     ),
                     const BuildIconImageWidget(
@@ -83,16 +86,25 @@ class _LobbyPageState extends State<LobbyPage> {
                         width: 250,
                         height: 290,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xff3C3D37), width: 6),
-                            borderRadius: BorderRadius.circular(40),
-                            color: Colors.grey),
+                          border: Border.all(
+                            color: const Color(0xff3C3D37),
+                            width: 6,
+                          ),
+                          borderRadius: BorderRadius.circular(40),
+                          color: Colors.grey,
+                        ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(40),
-                          child: Image.asset(
-                            "assets/images/user_img.png",
-                            fit: BoxFit.cover,
-                          ),
+                          child:
+                              widget.avatar != null && widget.avatar!.isNotEmpty
+                                  ? Image.network(
+                                      widget.avatar!,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/user_img.png", // Fallback image
+                                      fit: BoxFit.cover,
+                                    ),
                         ),
                       ),
                     ),

@@ -45,12 +45,13 @@ class _RegisterPageState extends State<RegisterPage> {
     if (value == null || value.isEmpty) {
       return 'Password cannot be empty';
     }
+    // Updated regex pattern to include all special characters
     const pattern =
-        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$';
+        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$';
     final regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
-      return 'Password must be at least 8 characters long and include\n'
-          '1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol.';
+      return 'Password must be at least 8 characters long and include '
+          '1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (@,  !, %, *, ?, &, #).';
     }
     return null;
   }
@@ -186,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             const SizedBox(height: 5),
                             BuildTextFieldWidget(
-                              hintText: "       Password",
+                              hintText: "Password",
                               labelText: "password",
                               controller: passwordController,
                               obscureText: passwordVisible,
@@ -213,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             BuildTextFieldWidget(
                               controller: confirmPasswordController,
                               labelText: "confirm password",
-                              hintText: " Confirm password",
+                              hintText: "Confirm password",
                               obscureText: true,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(8)

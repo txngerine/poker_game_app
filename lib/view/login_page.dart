@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/constants/screen_size.dart';
 import 'package:pokerpad/controller/login_controller.dart';
 import 'package:pokerpad/model/login_request_model.dart';
+import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/lobby_page.dart';
 import 'package:pokerpad/view/register_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
@@ -19,10 +20,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
-  bool rememberButton = true;
+  bool rememberButton = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final LoginController _loginController = LoginController();
+  LoginResponseModel? playerDetails;
   bool isLoading = false;
 
   Future<void> login() async {
@@ -39,8 +41,11 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final response = await _loginController.login(requestModel);
       setState(() {
+        playerDetails = response;
         isLoading = false;
       });
+      print(playerDetails);
+      print("response:$response");
       if (response?.status == "OK") {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
@@ -56,7 +61,10 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: const LobbyPage(),
+                child: LobbyPage(
+                  playerBalance: playerDetails?.data?.balance,
+                  avatar: playerDetails?.data?.avatar,
+                ),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -137,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           BuildTextFieldWidget(
                             labelText: "password",
-                            hintText: "        Password",
+                            hintText: "Password",
                             controller: passwordController,
                             obscureText: passwordVisible,
                             validator: (value) {

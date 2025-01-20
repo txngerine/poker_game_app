@@ -7,7 +7,9 @@ class LoginController {
     const String url = "http://3.6.170.253:1080/server.php/api/v1/player/login";
     try {
       final response = await Dio().post(url, data: requestModel.toJson());
+      print(response.data);
       if (response.statusCode == 200) {
+        print("okkkkkk");
         return LoginResponseModel.fromJson(response.data);
       } else {
         print("Error: ${response.statusMessage}");
