@@ -182,64 +182,34 @@ class _AvatarPageState extends State<AvatarPage> {
                             Row(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 3.0),
-                                  ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(30),
-                                    child: Image.network(
-                                      "https://t4.ftcdn.net/jpg/06/11/31/83/360_F_611318347_W9VlSC14WGljlV5K3BP1zEShcr1Dvoq5.jpg",
+                                    child: SizedBox(
                                       width: 170,
-                                      height: 190,
-                                      fit: BoxFit.cover,
+                                      child: Image.asset(
+                                        "assets/images/pokerPadArt/avatar example image1.png",
+                                        width: 170,
+                                        height: 210,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 const Spacer(),
                                 Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 3.0),
-                                  ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(30),
-                                    child: Image.network(
-                                      "https://starryai.com/cdn-cgi/image/format=avif,quality=90/https://cdn.prod.website-files.com/61554cf069663530fc823d21/6369fed004b5b041b7ed686a_download-8-min.png",
+                                    child: Image.asset(
+                                      "assets/images/pokerPadArt/avatar example image2.png",
                                       width: 170,
-                                      height: 190,
-                                      fit: BoxFit.cover,
+                                      height: 210,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                             const Spacer(),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xffFFC94A),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              height: 150,
-                              width: 580,
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    BuildBoldTextWidget(
-                                        text: "Facial Verification"),
-                                    Expanded(
-                                      child: BuildTextWidget(
-                                          align: TextAlign.center,
-                                          text:
-                                              "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum "),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
+                            Image.asset(
+                                "assets/images/pokerPadArt/avatar disclaimer.png")
                           ],
                         ),
                       ),

@@ -192,20 +192,20 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         children: List.generate(
                           4,
                           (index) => SizedBox(
-                            height: 60,
-                            width: 50,
+                            height: 40,
+                            width: 40,
                             child: TextField(
                               controller: _otpControllers[index],
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
-                              style: const TextStyle(fontSize: 24),
+                              style: const TextStyle(fontSize: 15),
                               decoration: InputDecoration(
                                 counterText: "",
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
+                                  borderSide: const BorderSide(
+                                      color: Colors.grey, width: 2),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),

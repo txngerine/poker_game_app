@@ -5,6 +5,7 @@ import 'package:pokerpad/constants/screen_size.dart';
 import 'package:pokerpad/controller/login_controller.dart';
 import 'package:pokerpad/model/login_request_model.dart';
 import 'package:pokerpad/model/login_response_model.dart';
+import 'package:pokerpad/view/forgot_password.dart';
 import 'package:pokerpad/view/lobby_page.dart';
 import 'package:pokerpad/view/register_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
@@ -205,7 +206,17 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             ],
                           ),
-                          const BuildBoldTextWidget(text: "Forgot password")
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        child: const ForgotPassword(),
+                                        type: PageTransitionType
+                                            .rightToLeftWithFade));
+                              },
+                              child: const BuildBoldTextWidget(
+                                  text: "Forgot password"))
                         ],
                       ),
                     ),
