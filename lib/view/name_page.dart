@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/name_controller.dart';
 import 'package:pokerpad/model/name_request_model.dart';
 import 'package:pokerpad/model/name_response_model.dart';
-import 'package:pokerpad/view/user_view_page.dart';
+import 'package:pokerpad/view/loading_avatar_page.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 
@@ -37,7 +37,7 @@ class _NamePageState extends State<NamePage> {
         Navigator.push(
             context,
             PageTransition(
-                child: const UserViewPage(),
+                child: const LoadingAvatarPage(),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
         print(response?.status);

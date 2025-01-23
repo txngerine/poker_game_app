@@ -1,0 +1,108 @@
+import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/view/pick_avatar_page.dart';
+import 'package:pokerpad/view/pick_secondary_avatar.dart';
+
+class ViewPrimaryAvatar extends StatefulWidget {
+  final String selectedImageUrl;
+
+  const ViewPrimaryAvatar({super.key, required this.selectedImageUrl});
+
+  @override
+  State<ViewPrimaryAvatar> createState() => _ViewPrimaryAvatarState();
+}
+
+class _ViewPrimaryAvatarState extends State<ViewPrimaryAvatar> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/background.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(35.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset(
+                      width: 400,
+                      "assets/images/pokerPadArt/pick your primary avatar title.png"),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Frame Image
+                      Image.asset(
+                        "assets/images/pokerPadArt/golden selection frame.png",
+                        height: 470,
+                        // width: 280,
+                      ),
+                      // Avatar Image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            9), // Ensure image fits within the frame's radius
+                        child: Image.network(
+                          widget.selectedImageUrl,
+                          height: 452,
+                          width: 360,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: PickAvatarPage(),
+                              type: PageTransitionType.leftToRightWithFade));
+                    },
+                    child: Image.asset(
+                        "assets/images/pokerPadArt/change avatar button.png"),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: PickSecondaryAvatar(),
+                              type: PageTransitionType.leftToRightWithFade));
+                    },
+                    child: Image.asset(
+                        "assets/images/pokerPadArt/proceed to secondary avatar button.png"),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Image.asset(
+                    "assets/images/pokerPadArt/retake selfie.png",
+                    height: 15,
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

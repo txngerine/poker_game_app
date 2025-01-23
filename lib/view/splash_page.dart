@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pokerpad/constants/screen_size.dart';
-import 'package:pokerpad/view/device_info_page.dart';
-import 'package:pokerpad/widget/build_sub_heading_text.dart';
+
+import 'device_info_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Timer(
-        const Duration(seconds: 3),
+        const Duration(seconds: 10),
         () => Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const DeviceInfoPage())));
   }
@@ -34,12 +34,13 @@ class _SplashPageState extends State<SplashPage> {
             fit: BoxFit.cover,
           ),
         ),
-        const Center(
-          child: Card(
-              color: Colors.transparent,
-              elevation: 19,
-              child: BuildSubHeadingText(text: "Poker Game..")),
-        )
+        Center(
+            child: Image.asset(
+          "assets/images/3d/ezgif.com-gif-maker (1).gif",
+          width: 270,
+          height: 380,
+          fit: BoxFit.fill,
+        ))
       ],
     );
   }
