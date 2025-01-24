@@ -29,7 +29,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(35.0),
+            padding: const EdgeInsets.all(5.0),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -77,6 +77,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                               type: PageTransitionType.leftToRightWithFade));
                     },
                     child: Image.asset(
+                        width: MediaQuery.of(context).size.width / 1.3,
                         "assets/images/pokerPadArt/change avatar button.png"),
                   ),
                   GestureDetector(
@@ -96,11 +97,12 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                                 type: PageTransitionType.leftToRightWithFade));
                       },
                       child: Image.asset(
+                          width: MediaQuery.of(context).size.width / 1.3,
                           "assets/images/pokerPadArt/enter the pokerpad button.png"),
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Image.asset(
                     "assets/images/pokerPadArt/retake selfie.png",

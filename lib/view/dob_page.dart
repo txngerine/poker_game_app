@@ -63,7 +63,7 @@ class _DobPageState extends State<DobPage> {
         print("Failed response: ${response?.status}");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Failed! Please enter Eg 07/09/2000.'),
+            content: Text('Failed! Please enter Eg mm/dd/year.'),
             duration: Duration(seconds: 2),
           ),
         );
@@ -128,8 +128,8 @@ class _DobPageState extends State<DobPage> {
                       key: _formKey,
                       child: BuildTextFieldWidget(
                         controller: dobController,
-                        hintText: "dd/mm/yyyy",
-                        labelText: 'email',
+                        hintText: "mm/dd/yyyy",
+                        labelText: 'mm/dd/yyyy',
                         keyboardType: TextInputType.datetime,
                       ),
                     ),

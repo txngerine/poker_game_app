@@ -34,13 +34,13 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(35.0),
+            padding: const EdgeInsets.all(5.0),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Image.asset(
                       width: 400,
@@ -58,6 +58,8 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                       ),
                       // Carousel Slider
                       SizedBox(
+                        height: 450,
+                        width: 360,
                         child: CarouselSlider(
                           options: CarouselOptions(
                             height: 450, // Adjust height to fit the frame
@@ -142,7 +144,9 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                         width: MediaQuery.of(context).size.width / 1.3,
                         "assets/images/pokerPadArt/pick avatar button.png"),
                   ),
-                  Spacer(),
+                  SizedBox(
+                    height: 50,
+                  ),
                   Image.asset(
                     "assets/images/pokerPadArt/retake selfie.png",
                     height: 15,
