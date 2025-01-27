@@ -39,7 +39,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                   ),
                   Image.asset(
                       width: 400,
-                      "assets/images/pokerPadArt/pick your primary avatar title.png"),
+                      "assets/images/pokerPadArt/pick your secondary avatar title.png"),
                   const SizedBox(
                     height: 50,
                   ),

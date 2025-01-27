@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/get_avatar_controller.dart'; // Ensure you have a controller to fetch the avatar data
 import 'package:pokerpad/view/view_primary_avatar.dart';
 
 class PickAvatarPage extends StatefulWidget {
@@ -11,13 +12,39 @@ class PickAvatarPage extends StatefulWidget {
 }
 
 class _PickAvatarPageState extends State<PickAvatarPage> {
-  final List<String> avatarImageUrls = [
-    "https://img.freepik.com/free-photo/beautiful-young-business-woman-glasses-suit-3d-rendering_1142-51185.jpg",
-    "https://img.freepik.com/free-photo/3d-illustration-young-businessman-with-glasses-mustache-his-head_1142-38718.jpg",
-    "https://img.freepik.com/free-photo/portrait-young-beautiful-business-woman-glasses-3d-rendering_1142-43635.jpg",
-    "https://img.freepik.com/free-photo/portrait-smiling-business-woman-glasses-with-headphones-grey-background_1142-54747.jpg",
-  ];
+  final List<String> avatarImageUrls = [];
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAvatarData();
+  }
+
+  Future<void> _fetchAvatarData() async {
+    try {
+      GetAvatarController getAvatarController = GetAvatarController();
+      final response = await getAvatarController.getAvatar();
+      if (response != null) {
+        final primaryAvatars = response.data.primary;
+
+        setState(() {
+          avatarImageUrls.clear();
+          avatarImageUrls.addAll([
+            primaryAvatars.avatar0,
+            primaryAvatars.avatar1,
+            primaryAvatars.avatar2,
+            primaryAvatars.avatar3,
+            primaryAvatars.avatar4,
+          ]);
+        });
+      }
+    } catch (e) {
+      // Handle error (e.g., display a message to the user)
+      print("Error fetching avatar data: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

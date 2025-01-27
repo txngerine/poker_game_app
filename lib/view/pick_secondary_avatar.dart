@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/view_secondary_avatar.dart';
 
+import '../controller/get_avatar_controller.dart';
+
 class PickSecondaryAvatar extends StatefulWidget {
   const PickSecondaryAvatar({super.key});
 
@@ -11,13 +13,39 @@ class PickSecondaryAvatar extends StatefulWidget {
 }
 
 class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
-  final List<String> avatarImageUrls = [
-    "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1d6554eb-bac4-4f59-a94a-1fc7f52b954b/dgdadq0-d51a8f45-264e-413b-bed0-535dd6599773.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzFkNjU1NGViLWJhYzQtNGY1OS1hOTRhLTFmYzdmNTJiOTU0YlwvZGdkYWRxMC1kNTFhOGY0NS0yNjRlLTQxM2ItYmVkMC01MzVkZDY1OTk3NzMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.UWGcP6YmpMH62a6IrkHuH2h76ko9mA2Fj-uqwe07hMU",
-    "https://files.idyllic.app/files/static/3816357",
-    "https://files.idyllic.app/files/static/3844151?width=640&optimizer=image",
-    "https://files.idyllic.app/files/static/2211330?width=640&optimizer=image",
-  ];
+  final List<String> avatarImageUrls = [];
   int _currentIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchAvatarData();
+  }
+
+  Future<void> _fetchAvatarData() async {
+    try {
+      GetAvatarController getAvatarController = GetAvatarController();
+      final response = await getAvatarController.getAvatar();
+      if (response != null) {
+        final primaryAvatars = response.data.secondary;
+
+        setState(() {
+          avatarImageUrls.clear();
+          avatarImageUrls.addAll([
+            primaryAvatars.avatar5,
+            primaryAvatars.avatar6,
+            primaryAvatars.avatar7,
+            primaryAvatars.avatar8,
+            primaryAvatars.avatar9,
+          ]);
+        });
+      }
+    } catch (e) {
+      // Handle error (e.g., display a message to the user)
+      print("Error fetching avatar data: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -40,7 +40,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
       // Convert the image to Base64
       String base64String = base64Encode(_imageFile.readAsBytesSync());
       _base64String = base64String;
-      log("Base64 String: $_base64String");
+      // log("Base64 String: $_base64String");
       // Get the userId from SignupController
       String userId = SignupController.userId.toString();
 
@@ -53,10 +53,10 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
         "id": userId,
         "deviceId": 1
       };
-      print("00000");
-      print(apiUrl);
-      print(userId);
-      print(requestBody["id"]);
+      // print("00000");
+      // print(apiUrl);
+      // print(userId);
+      // print(requestBody["id"]);
       final response = await http.put(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
@@ -64,10 +64,10 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
       );
 
       // log("Response: ${response.body}");
-
+      // print(response.body);
       // Check response
       if (response.statusCode == 200) {
-        log("Image uploaded successfully: ${response.body}");
+        // log("Image uploaded successfully: ${response.body}");
         Navigator.push(
             context,
             PageTransition(
@@ -85,7 +85,10 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
               style: TextStyle(color: Colors.white),
             )));
       } else {
-        log("Failed to upload image: ${response.statusCode}");
+        print("000000000000000000000");
+        print(response.statusCode);
+        print(response.body);
+        // log("Failed to upload image: ${response.statusCode}");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
             shape: RoundedRectangleBorder(
