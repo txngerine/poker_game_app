@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/widget/build_button_image_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
@@ -84,38 +83,36 @@ class _LobbyPageState extends State<LobbyPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         width: 250,
-                        height: 290,
+                        height: 280,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: const Color(0xff3C3D37),
-                            width: 6,
+                            width: 3,
                           ),
                           borderRadius: BorderRadius.circular(40),
                           color: Colors.grey,
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
-                          child:
-                              widget.avatar != null && widget.avatar!.isNotEmpty
-                                  ? Image.network(
-                                      widget.avatar!,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset(
-                                      "assets/images/user_img.png", // Fallback image
-                                      fit: BoxFit.cover,
-                                    ),
-                        ),
+                            borderRadius: BorderRadius.circular(40),
+                            child: Image.network(
+                              widget.avatar!,
+                              fit: BoxFit.cover,
+                            )
+                            // Image.asset(
+                            //     "assets/images/user_img.png", // Fallback image
+                            //     fit: BoxFit.cover,
+                            //   ),
+                            ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         width: 250,
-                        height: 290,
+                        height: 280,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: const Color(0xff3C3D37), width: 5),
+                                color: const Color(0xff3C3D37), width: 3),
                             borderRadius: BorderRadius.circular(40),
                             color: Colors.grey),
                         child: ClipRRect(
@@ -136,9 +133,9 @@ class _LobbyPageState extends State<LobbyPage> {
                       onTap: () {
                         Navigator.push(
                             context,
-                            PageTransition(
-                                child: const GameView(),
-                                type: PageTransitionType.rightToLeftWithFade));
+                            MaterialPageRoute(
+                              builder: (context) => const GameView(),
+                            ));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -147,13 +144,13 @@ class _LobbyPageState extends State<LobbyPage> {
                             fit: BoxFit.fill,
                             "assets/images/lobby/100 jeton.png",
                             width: 265,
-                            height: 150,
+                            height: 140,
                           ),
                           Image.asset(
                             "assets/images/lobby/200 jeton.png",
                             fit: BoxFit.fill,
                             width: 265,
-                            height: 150,
+                            height: 140,
                           )
                         ],
                       ),
@@ -165,13 +162,13 @@ class _LobbyPageState extends State<LobbyPage> {
                           "assets/images/lobby/500 jeton.png",
                           width: 265,
                           fit: BoxFit.fill,
-                          height: 150,
+                          height: 140,
                         ),
                         Image.asset(
                           "assets/images/lobby/1000 jeton.png",
                           width: 265,
                           fit: BoxFit.fill,
-                          height: 150,
+                          height: 140,
                         )
                       ],
                     ),

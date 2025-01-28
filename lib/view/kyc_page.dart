@@ -91,7 +91,8 @@ class _KycPageState extends State<KycPage> {
       Navigator.push(
           context,
           PageTransition(
-              child: const DobPage(), type: PageTransitionType.rightToLeftWithFade));
+              child: const DobPage(),
+              type: PageTransitionType.rightToLeftWithFade));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

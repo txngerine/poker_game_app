@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/model/player_name_response_model.dart';
 
-class PlayerNameController {
+class PlayerDetailsController {
   final String baseUrl = "http://3.6.170.253:1080/server.php/api/v1/player/";
 
   Future<PlayerNameResponseModel?> fetchPlayerDetails() async {
@@ -20,7 +20,6 @@ class PlayerNameController {
           },
         ),
       );
-
       if (response.statusCode == 200) {
         print("Data fetched successfully");
         return PlayerNameResponseModel.fromJson(response.data);

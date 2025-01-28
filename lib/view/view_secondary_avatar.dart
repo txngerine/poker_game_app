@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/lobby_page.dart';
+import 'package:pokerpad/controller/choose_avatar_controller.dart';
+import 'package:pokerpad/model/choose_avatar_request_model.dart';
+import 'package:pokerpad/model/choose_avatar_response_model.dart';
+import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/view/pick_secondary_avatar.dart';
 
 class ViewSecondaryAvatar extends StatefulWidget {
@@ -13,6 +16,52 @@ class ViewSecondaryAvatar extends StatefulWidget {
 }
 
 class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
+  bool isLoading = false;
+  final ChooseAvatarController _chooseAvatarController =
+      ChooseAvatarController();
+  Future<void> chooseAvatar() async {
+    setState(() {
+      isLoading = true;
+    });
+    ChooseAvatarRequestModel requestModel =
+        ChooseAvatarRequestModel(secondary: widget.selectedImageUrl);
+    ChooseAvatarResponseModel? responseModel =
+        await _chooseAvatarController.chooseAvatar(requestModel);
+    try {
+      if (responseModel != null && responseModel.status == "OK") {
+        print("Avatar upload successfully");
+        print(widget.selectedImageUrl);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(milliseconds: 350),
+            content:
+                Text("Avatar upload successfully ${responseModel.status}")));
+        Navigator.push(
+            context,
+            PageTransition(
+                child: const LoginPage(),
+                type: PageTransitionType.rightToLeftWithFade));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to upload avatar'),
+            duration: Duration(milliseconds: 400),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('An error occurred while uploading avatar'),
+          duration: Duration(milliseconds: 400),
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +83,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Image.asset(
@@ -65,7 +114,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   GestureDetector(
@@ -73,35 +122,31 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                       Navigator.push(
                           context,
                           PageTransition(
-                              child: PickSecondaryAvatar(),
+                              child: const PickSecondaryAvatar(),
                               type: PageTransitionType.leftToRightWithFade));
                     },
                     child: Image.asset(
                         width: MediaQuery.of(context).size.width / 1.3,
                         "assets/images/pokerPadArt/change avatar button.png"),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: PickSecondaryAvatar(),
-                              type: PageTransitionType.leftToRightWithFade));
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: LobbyPage(),
-                                type: PageTransitionType.leftToRightWithFade));
-                      },
-                      child: Image.asset(
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          "assets/images/pokerPadArt/enter the pokerpad button.png"),
-                    ),
-                  ),
-                  SizedBox(
+                  isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            chooseAvatar();
+                            // Navigator.push(
+                            //     context,
+                            //     PageTransition(
+                            //         child: LobbyPage(),
+                            //         type: PageTransitionType.leftToRightWithFade));
+                          },
+                          child: Image.asset(
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              "assets/images/pokerPadArt/enter the pokerpad button.png"),
+                        ),
+                  const SizedBox(
                     height: 20,
                   ),
                   Image.asset(

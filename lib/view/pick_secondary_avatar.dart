@@ -67,7 +67,7 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Image.asset(
@@ -148,14 +148,14 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
                     "Swipe to see your Avatar",
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   GestureDetector(
@@ -172,7 +172,7 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                         width: MediaQuery.of(context).size.width / 1.3,
                         "assets/images/pokerPadArt/pick avatar button.png"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Image.asset(

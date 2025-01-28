@@ -1,10 +1,10 @@
 class ChooseAvatarRequestModel {
-  final String primary;
-  final String secondary;
+  final String? primary;
+  final String? secondary;
 
   ChooseAvatarRequestModel({
-    required this.primary,
-    required this.secondary,
+    this.primary,
+    this.secondary,
   });
 
   // Convert a ChooseAvatarRequestModel into a JSON map.

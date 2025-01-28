@@ -6,9 +6,10 @@ import 'package:pokerpad/model/dob_response_model.dart';
 import 'package:pokerpad/view/terms_page.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import 'package:pokerpad/widget/date_input_formatter.dart';
+import 'package:pokerpad/widget/date_text_form_field.dart';
 
 import '../constants/screen_size.dart';
-import '../widget/build_text_field_widget.dart';
 
 class DobPage extends StatefulWidget {
   const DobPage({super.key});
@@ -125,14 +126,23 @@ class _DobPageState extends State<DobPage> {
                       height: 20,
                     ),
                     Form(
-                      key: _formKey,
-                      child: BuildTextFieldWidget(
-                        controller: dobController,
-                        hintText: "mm/dd/yyyy",
-                        labelText: 'mm/dd/yyyy',
-                        keyboardType: TextInputType.datetime,
-                      ),
-                    ),
+                        key: _formKey,
+                        child: DateTextFormField(
+                          controller: dobController,
+                          hintText: "mm/dd/yyyy",
+                          labelText: 'mm/dd/yyyy',
+                          keyboardType: TextInputType.datetime,
+                          inputFormatters: [DateInputFormatter()],
+                        )
+
+                        // BuildTextFieldWidget(
+                        //   controller: dobController,
+                        //   hintText: "mm/dd/yyyy",
+                        //   labelText: 'mm/dd/yyyy',
+                        //   keyboardType: TextInputType.datetime,
+                        //   inputFormatters: [DateInputFormatter()],
+                        // ),
+                        ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -169,7 +179,10 @@ class _DobPageState extends State<DobPage> {
                         ? const CircularProgressIndicator()
                         : GestureDetector(
                             onTap: () {
-                              getDob();
+                              if (_formKey.currentState?.validate() == true) {
+                                // Perform action if valid
+                                getDob();
+                              }
                             },
                             child: Image.asset("assets/images/confirm.png"))
                   ],

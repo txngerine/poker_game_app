@@ -11,6 +11,7 @@ class GameView extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<GameViewModel>().initialize();
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Consumer<GameViewModel>(
         builder: (context, viewModel, child) {
           if (viewModel.isLoading) {

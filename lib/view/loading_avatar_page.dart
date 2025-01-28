@@ -114,7 +114,7 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
                         fit: BoxFit.fill,
                       ),
 
-                SizedBox(
+                const SizedBox(
                   height: 150,
                 ),
                 Image.asset(
