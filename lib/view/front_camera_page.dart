@@ -71,7 +71,9 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
 
         // Define the new image path
         final String newImagePath =
-            '$imagesDirPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+            '$imagesDirPath/${DateTime.now().millisecondsSinceEpoch}.png';
+        print("00000000000000000");
+        print(newImagePath);
 
         // Copy the captured image to the new directory
         final File newImageFile = File(newImagePath);

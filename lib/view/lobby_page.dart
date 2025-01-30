@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/widget/build_button_image_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
@@ -9,7 +10,9 @@ import '../constants/screen_size.dart';
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
   final String? avatar;
-  const LobbyPage({super.key, this.playerBalance, this.avatar});
+  final LoginResponseModel? playerResponse;
+  const LobbyPage(
+      {super.key, this.playerBalance, this.avatar, this.playerResponse});
 
   @override
   State<LobbyPage> createState() => _LobbyPageState();
@@ -82,28 +85,29 @@ class _LobbyPageState extends State<LobbyPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        width: 250,
-                        height: 280,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color(0xff3C3D37),
-                            width: 3,
+                          width: 250,
+                          height: 280,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xff3C3D37),
+                              width: 3,
+                            ),
+                            borderRadius: BorderRadius.circular(40),
+                            color: Colors.grey,
                           ),
-                          borderRadius: BorderRadius.circular(40),
-                          color: Colors.grey,
-                        ),
-                        child: ClipRRect(
+                          child: ClipRRect(
                             borderRadius: BorderRadius.circular(40),
                             child: Image.network(
-                              widget.avatar!,
+                              widget.avatar ?? "", // Use empty string if null
                               fit: BoxFit.cover,
-                            )
-                            // Image.asset(
-                            //     "assets/images/user_img.png", // Fallback image
-                            //     fit: BoxFit.cover,
-                            //   ),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  "assets/images/user_img.png", // Fallback image
+                                  fit: BoxFit.cover,
+                                );
+                              },
                             ),
-                      ),
+                          )),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -129,31 +133,46 @@ class _LobbyPageState extends State<LobbyPage> {
                 Image.asset("assets/images/lobby/table header.png"),
                 Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const GameView(),
-                            ));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GameView(
+                                    playerResponse: widget.playerResponse,
+                                    buttonId: 100,
+                                  ),
+                                ));
+                          },
+                          child: Image.asset(
                             fit: BoxFit.fill,
                             "assets/images/lobby/100 jeton.png",
                             width: 265,
                             height: 140,
                           ),
-                          Image.asset(
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GameView(
+                                    playerResponse: widget.playerResponse,
+                                    buttonId: 200,
+                                  ),
+                                ));
+                          },
+                          child: Image.asset(
                             "assets/images/lobby/200 jeton.png",
                             fit: BoxFit.fill,
                             width: 265,
                             height: 140,
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

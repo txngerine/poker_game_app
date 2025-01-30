@@ -77,6 +77,7 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(

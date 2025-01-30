@@ -13,7 +13,9 @@ import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({
+    super.key,
+  });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -62,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: LobbyPage(
+                child: LobbyPage(playerResponse: playerDetails,
                   playerBalance: playerDetails?.data?.balance,
                   avatar: playerDetails?.data?.avatar,
                 ),
