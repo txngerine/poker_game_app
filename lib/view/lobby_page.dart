@@ -86,17 +86,17 @@ class _LobbyPageState extends State<LobbyPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                           width: 250,
-                          height: 280,
+                          height: 310,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: const Color(0xff3C3D37),
                               width: 3,
                             ),
-                            borderRadius: BorderRadius.circular(40),
+                            borderRadius: BorderRadius.circular(20),
                             color: Colors.grey,
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
+                            borderRadius: BorderRadius.circular(20),
                             child: Image.network(
                               widget.avatar ?? "", // Use empty string if null
                               fit: BoxFit.cover,
@@ -113,14 +113,14 @@ class _LobbyPageState extends State<LobbyPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         width: 250,
-                        height: 280,
+                        height: 310,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: const Color(0xff3C3D37), width: 3),
-                            borderRadius: BorderRadius.circular(40),
+                            borderRadius: BorderRadius.circular(20),
                             color: Colors.grey),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
+                          borderRadius: BorderRadius.circular(20),
                           child: Image.network(
                             "https://img.freepik.com/premium-vector/playing-cards-dice-casino-logo-vector-illustration_396616-133.jpg",
                             fit: BoxFit.cover,

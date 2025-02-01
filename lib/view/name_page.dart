@@ -105,6 +105,12 @@ class _NamePageState extends State<NamePage> {
                         controller: nameController,
                         hintText: "Enter Name",
                         labelText: '',
+                        validator: (value) {
+                          if (value == null || value.trim().length < 4) {
+                            return "Name must be at least 4 characters long";
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     const SizedBox(

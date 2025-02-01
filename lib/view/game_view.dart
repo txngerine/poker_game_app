@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -31,9 +32,18 @@ class _GameViewState extends State<GameView> {
   @override
   void initState() {
     super.initState();
-    print(widget.playerResponse?.data!.id);
-    print("token${widget.buttonId}");
+
+    // Hide status and navigation bar for a full-screen experience
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     _downloadAndExtractFile();
+  }
+
+  @override
+  void dispose() {
+    // Restore system UI when leaving the screen
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
   }
 
   Future<void> _downloadAndExtractFile() async {
@@ -42,7 +52,6 @@ class _GameViewState extends State<GameView> {
     balance = widget.playerResponse?.data!.balance;
     lobbyAvatar = widget.playerResponse?.data!.lobbyAvatar;
     detailAvatar = widget.playerResponse?.data!.detailAvatar;
-
     id = widget.playerResponse?.data!.id;
 
     try {
@@ -55,9 +64,6 @@ class _GameViewState extends State<GameView> {
         setState(() {
           serverUrl =
               "file://${extractionPath}dist/index.html?buttonId=$buttonId&avatar=$avatar&lobbyAvatar=$lobbyAvatar&detailAvatar=$detailAvatar&balance=$balance&id=$id";
-
-          // print("123${serverUrl}?gameToken${gameToken}&avatar=${avatar}&balance=${balance}");
-          print("123${serverUrl}");
           isLoading = false;
         });
         return;
@@ -83,7 +89,6 @@ class _GameViewState extends State<GameView> {
 
         setState(() {
           serverUrl = "file://${extractionPath}dist/index.html";
-          print("321$serverUrl");
           isLoading = false;
         });
       } else {
@@ -99,24 +104,46 @@ class _GameViewState extends State<GameView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-              color: Colors.white,
-            )) // Show a loader
-          : serverUrl == null
+    return WillPopScope(
+      onWillPop: () async => false, // Prevent back navigation
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: isLoading
               ? const Center(
-                  child: Text("Failed to load content")) // Handle failure case
-              : InAppWebView(
-                  initialUrlRequest: URLRequest(url: WebUri(serverUrl!)),
-                  initialSettings: InAppWebViewSettings(
-                    javaScriptEnabled: true,
-                    allowFileAccessFromFileURLs: true,
-                    allowUniversalAccessFromFileURLs: true,
-                  ),
-                ),
+                  child: CircularProgressIndicator(color: Colors.white),
+                )
+              : serverUrl == null
+                  ? const Center(
+                      child: Text(
+                        "Failed to load content",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  : InAppWebView(
+                      initialUrlRequest: URLRequest(url: WebUri(serverUrl!)),
+                      initialSettings: InAppWebViewSettings(
+                        javaScriptEnabled: true,
+                        allowFileAccessFromFileURLs: true,
+                        allowUniversalAccessFromFileURLs: true,
+                      ),
+                      onWebViewCreated: (controller) {
+                        controller.addJavaScriptHandler(
+                          handlerName: "FlutterChannel",
+                          callback: (args) {
+                            debugPrint("Received from JS: $args");
+                            if (args.isNotEmpty) {
+                              var message = args[0];
+                              if (message["action"] == "exit") {
+                                Navigator.pop(context);
+                              }
+                            }
+                          },
+                        );
+                      },
+                    ),
+        ),
+      ),
     );
   }
 }

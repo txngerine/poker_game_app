@@ -2,7 +2,6 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/model/signup_request_model.dart';
@@ -205,9 +204,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                         "assets/images/Artboard 29.png",
                                         width: 47),
                               ),
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(8)
-                              ],
+                              // inputFormatters: [
+                              //   LengthLimitingTextInputFormatter(8)
+                              // ],
                               validator: validatePassword,
                             ),
                             const SizedBox(height: 5),
@@ -216,9 +215,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "confirm password",
                               hintText: "Confirm password",
                               obscureText: true,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(8)
-                              ],
+                              // inputFormatters: [
+                              //   LengthLimitingTextInputFormatter(8)
+                              // ],
                               validator: (value) => validateConfirmPassword(
                                   passwordController.text, value ?? ""),
                             ),
@@ -314,7 +313,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               Navigator.pushReplacement(
                                 context,
                                 PageTransition(
-                                  child: LoginPage(),
+                                  child: const LoginPage(),
                                   type: PageTransitionType.leftToRightWithFade,
                                 ),
                               );
