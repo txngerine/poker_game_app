@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +118,10 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
                 SizedBox(
                     height: 670,
                     width: 800,
-                    child: CameraPreview(_cameraController)),
+                    child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationY(math.pi),
+                        child: CameraPreview(_cameraController))),
                 Padding(
                   padding: const EdgeInsets.only(top: 83),
                   child: Image.asset(

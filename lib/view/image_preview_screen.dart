@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -133,11 +134,15 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
               child: _imageFile.path.isNotEmpty
                   ? Column(
                       children: [
-                        Image.file(
-                          _imageFile,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height / 1.3,
+                        Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(math.pi),
+                          child: Image.file(
+                            _imageFile,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height / 1.3,
+                          ),
                         ),
                         const SizedBox(height: 20),
                         _isUploading
