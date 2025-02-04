@@ -44,6 +44,7 @@ class _AvatarPageState extends State<AvatarPage> {
 
     if (response != null && response.status == "OK") {
       print(response.status);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(milliseconds: 350),

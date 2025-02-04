@@ -105,7 +105,10 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false, // Prevent back navigation
+      onWillPop: () async {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        return true; // Allow the pop
+      }, // Prevent back navigation
       child: Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(

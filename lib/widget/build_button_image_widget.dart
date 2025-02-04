@@ -11,7 +11,7 @@ class BuildButtonImageWidget extends StatelessWidget {
         onTap: onTap,
         child: Image.asset(
           imgPath,
-          width: 177,
+          width: MediaQuery.of(context).size.width / 3,
         ));
   }
 }

@@ -11,7 +11,7 @@ class BuildIconImageWidget extends StatelessWidget {
       onTap: onTap,
       child: Image.asset(
         imgName,
-        width: 53,
+        width: MediaQuery.of(context).size.width / 9,
       ),
     );
   }
