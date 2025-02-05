@@ -82,6 +82,8 @@ flutter:
      - assets/images/kyc/
      - assets/images/pokerPadArt/
      - assets/images/3d/
+     - assets/images/cashier/
+     - assets/images/cashier/withdraw/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

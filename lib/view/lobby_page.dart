@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/view/text_page.dart';
-import 'package:pokerpad/widget/build_button_image_widget.dart';
+import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
+import 'package:pokerpad/widget/cashier_button_widget.dart';
+import 'package:pokerpad/widget/transfer_button_widget.dart';
 
 import '../constants/screen_size.dart';
 
@@ -40,6 +42,7 @@ class _LobbyPageState extends State<LobbyPage> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -87,18 +90,12 @@ class _LobbyPageState extends State<LobbyPage> {
                       imgName: "assets/images/lobby/Logo active (1).png"),
                 ],
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BuildButtonImageWidget(
-                    imgPath: "assets/images/lobby/affiliate button passive.png",
-                  ),
-                  BuildButtonImageWidget(
-                      imgPath:
-                          "assets/images/lobby/cashier button passive.png"),
-                  BuildButtonImageWidget(
-                      imgPath:
-                          "assets/images/lobby/transfer button passive.png"),
+                  AffiliatedButtonWidget(),
+                  CashierButtonWidget(),
+                  TransferButtonWidget(),
                 ],
               ),
               Row(
@@ -107,7 +104,7 @@ class _LobbyPageState extends State<LobbyPage> {
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 2.1,
-                      height: MediaQuery.of(context).size.height / 2.8,
+                      height: MediaQuery.of(context).size.height / 2.7,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color(0xff3C3D37),
@@ -123,7 +120,7 @@ class _LobbyPageState extends State<LobbyPage> {
                               Image.network(
                                 width: MediaQuery.of(context).size.width / 2.1,
                                 height:
-                                    MediaQuery.of(context).size.height / 2.8,
+                                    MediaQuery.of(context).size.height / 2.7,
 
                                 widget.avatar ?? "", // Use empty string if null
                                 fit: BoxFit.cover,
@@ -163,7 +160,7 @@ class _LobbyPageState extends State<LobbyPage> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width / 2.1,
-                    height: MediaQuery.of(context).size.height / 2.8,
+                    height: MediaQuery.of(context).size.height / 2.7,
                     decoration: BoxDecoration(
                         border: Border.all(
                             color: const Color(0xff3C3D37), width: 3),
@@ -179,8 +176,8 @@ class _LobbyPageState extends State<LobbyPage> {
                   )
                 ],
               ),
-              SizedBox(
-                height: 5,
+              const SizedBox(
+                height: 10,
               ),
               Stack(
                 children: [

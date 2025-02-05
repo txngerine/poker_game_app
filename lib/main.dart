@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/provider/affiliated_button_provider.dart';
+import 'package:pokerpad/provider/cashier_button_provider.dart';
+import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => AffiliatedButtonProvider()),
+    ChangeNotifierProvider(create: (_) => CashierButtonProvider()),
+    ChangeNotifierProvider(create: (_) => TransferButtonProvider()),
+  ], child: const MyApp()));
 
   // runApp(DevicePreview(
   //     enabled: true,
