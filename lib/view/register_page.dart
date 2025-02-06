@@ -101,17 +101,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   id: response.id!.toInt(),
                 ),
                 type: PageTransitionType.rightToLeftWithFade));
-        // ScaffoldMessenger.of(context)
-        //     .showSnackBar(SnackBar(content: Text("Signup Sucessfull..!")));
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => VerifyEmailPage(
-        //         email: requestModel.email,
-        //         deviceId: requestModel.deviceId,
-        //         id: response.id!.toInt(),
-        //       ),
-        //     ));
       } else {
         if (response.status == "FAIL") {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

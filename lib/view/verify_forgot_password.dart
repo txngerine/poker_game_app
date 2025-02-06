@@ -1,15 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/forgot_password.dart';
+import 'package:pokerpad/model/resetpassword_request_model.dart';
 import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 
 import '../constants/screen_size.dart';
+import '../controller/resetpassword_controller.dart';
 import '../widget/build_text_widget.dart';
 
 class VerifyForgotPassword extends StatefulWidget {
-  const VerifyForgotPassword({super.key});
+  final String? email;
+  const VerifyForgotPassword({super.key, this.email});
 
   @override
   State<VerifyForgotPassword> createState() => _VerifyForgotPasswordState();
@@ -18,10 +20,77 @@ class VerifyForgotPassword extends StatefulWidget {
 class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
   bool passwordVisible = true;
   final _formKey = GlobalKey<FormState>();
+  final List<TextEditingController> _otpControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
 
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final ResetPasswordController _resetPasswordController =
+      ResetPasswordController();
+  bool isLoading = false;
+
+  Future<void> resetPassword() async {
+    setState(() {
+      isLoading = true;
+    });
+    String otpCode = _otpControllers.map((c) => c.text).join();
+
+    final requestModel = ResetPasswordRequestModel(
+        email: widget.email ?? "",
+        otp: otpCode,
+        newPassword: newPasswordController.text,
+        confirmPassword: confirmPasswordController.text);
+    try {
+      final response =
+          await _resetPasswordController.resetPassword(requestModel);
+      setState(() {
+        isLoading = false;
+      });
+      if (response?.status == "OK") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.activeGreen,
+            content: const Text(
+              "Reset Password Successfully",
+              style: TextStyle(color: Colors.white),
+            )));
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: const LoginPage(),
+                type: PageTransitionType.rightToLeftWithFade));
+      } else {
+        if (response?.status == "FAIL") {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              behavior: SnackBarBehavior.floating,
+              content: Text(response?.message ?? "Signup Failed")));
+        }
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: const Text("Error Signup failed..")));
+    }
+  }
+
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password cannot be empty';
@@ -106,6 +175,7 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                             height: 50,
                             width: 50,
                             child: TextField(
+                              controller: _otpControllers[index],
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
@@ -169,18 +239,12 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                                       width: 47),
                             ),
                             validator: validatePassword,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(8)
-                            ],
                           ),
                           BuildTextFieldWidget(
                             controller: confirmPasswordController,
                             hintText: "confirm password",
                             labelText: "confirm password",
                             obscureText: true,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(8)
-                            ],
                             validator: (value) => validateConfirmPassword(
                                 newPasswordController.text, value ?? ""),
                             suffixIcon: GestureDetector(
@@ -268,10 +332,10 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 PageTransition(
-                                    child: const ForgotPassword(),
+                                    child: const LoginPage(),
                                     type: PageTransitionType
                                         .leftToRightWithFade));
                           },
@@ -283,18 +347,17 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                         GestureDetector(
                           onTap: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: const LoginPage(),
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade));
+                              resetPassword();
                             }
                           },
-                          child: Image.asset(
-                            "assets/images/pokerPadArt/proceed.png",
-                            width: 180,
-                          ),
+                          child: isLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : Image.asset(
+                                  "assets/images/pokerPadArt/proceed.png",
+                                  width: 180,
+                                ),
                         )
                       ],
                     )

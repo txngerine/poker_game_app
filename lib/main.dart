@@ -17,7 +17,11 @@ void main() {
   // runApp(DevicePreview(
   //     enabled: true,
   //     builder: (context) {
-  //       return const MyApp();
+  //       return MultiProvider(providers: [
+  //         ChangeNotifierProvider(create: (_) => AffiliatedButtonProvider()),
+  //         ChangeNotifierProvider(create: (_) => CashierButtonProvider()),
+  //         ChangeNotifierProvider(create: (_) => TransferButtonProvider()),
+  //       ], child: const MyApp());
   //     }));
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pokerpad/controller/forgot_password_controller.dart';
+import 'package:pokerpad/model/forgot_password_model.dart';
 import 'package:pokerpad/view/verify_forgot_password.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 
@@ -13,7 +15,46 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  bool isLoading = false;
   final TextEditingController emailController = TextEditingController();
+  final ForgotPasswordController forgotPasswordController =
+      ForgotPasswordController();
+  Future<void> forgotPassword() async {
+    setState(() {
+      isLoading = true;
+    });
+    final request = ForgotPasswordRequestModel(email: emailController.text);
+    try {
+      final response = await forgotPasswordController.forgotPassword(request);
+      setState(() {
+        isLoading = false;
+      });
+      print(response);
+      if (response != null) {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: VerifyForgotPassword(
+                  email: emailController.text,
+                ),
+                type: PageTransitionType.rightToLeftWithFade));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to send reset email')),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      // Handle any errors
+      print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred, please try again')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,16 +98,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       child: SizedBox(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const VerifyForgotPassword(),
-                                    type: PageTransitionType
-                                        .rightToLeftWithFade));
+                            forgotPassword();
                           },
-                          child: Image.asset(
-                              width: MediaQuery.of(context).size.width / 1.5,
-                              "assets/images/pokerPadArt/confirm button.png"),
+                          child: isLoading
+                              ? CircularProgressIndicator()
+                              : Image.asset(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.5,
+                                  "assets/images/pokerPadArt/confirm button.png"),
                         ),
                       ))
                 ],
