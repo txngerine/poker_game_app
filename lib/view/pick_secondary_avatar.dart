@@ -15,6 +15,7 @@ class PickSecondaryAvatar extends StatefulWidget {
 class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
   final List<String> avatarImageUrls = [];
   int _currentIndex = 0;
+  bool isLoading = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -27,22 +28,30 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
       GetAvatarController getAvatarController = GetAvatarController();
       final response = await getAvatarController.getAvatar();
       if (response != null) {
-        final primaryAvatars = response.data.secondary;
+        final secondaryAvatars = response.data.secondary;
+        List<String> tempAvatars = [
+          secondaryAvatars.avatar5,
+          secondaryAvatars.avatar6,
+          secondaryAvatars.avatar7,
+          secondaryAvatars.avatar8,
+          secondaryAvatars.avatar9,
+        ];
+
+        await Future.wait(tempAvatars.map((imageUrl) {
+          final ImageProvider imageProvider = NetworkImage(imageUrl);
+          return precacheImage(imageProvider, context);
+        }));
 
         setState(() {
-          avatarImageUrls.clear();
-          avatarImageUrls.addAll([
-            primaryAvatars.avatar5,
-            primaryAvatars.avatar6,
-            primaryAvatars.avatar7,
-            primaryAvatars.avatar8,
-            primaryAvatars.avatar9,
-          ]);
+          avatarImageUrls.addAll(tempAvatars);
+          isLoading = false;
         });
       }
     } catch (e) {
-      // Handle error (e.g., display a message to the user)
       print("Error fetching avatar data: $e");
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -88,35 +97,39 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                       SizedBox(
                         height: 450,
                         width: 360,
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 450, // Adjust height to fit the frame
-                            enlargeCenterPage: true,
-                            autoPlay: false,
-                            viewportFraction: 1.5, // Show one image at a time
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _currentIndex = index;
-                              });
-                            },
-                          ),
-                          items: avatarImageUrls.map((imageUrl) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-                                  width: 360,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(9),
-                                    image: DecorationImage(
-                                      image: NetworkImage(imageUrl),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
+                        child: isLoading
+                            ? Center(child: CircularProgressIndicator())
+                            : CarouselSlider(
+                                options: CarouselOptions(
+                                  height: 450, // Adjust height to fit the frame
+                                  enlargeCenterPage: true,
+                                  autoPlay: false,
+                                  viewportFraction:
+                                      1.5, // Show one image at a time
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _currentIndex = index;
+                                    });
+                                  },
+                                ),
+                                items: avatarImageUrls.map((imageUrl) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width: 360,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(9),
+                                          image: DecorationImage(
+                                            image: NetworkImage(imageUrl),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
                       ),
                       // Stacked Dot Indicators
                       Positioned(

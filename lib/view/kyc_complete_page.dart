@@ -34,7 +34,7 @@ class _KycCompletePageState extends State<KycCompletePage> {
           ),
           Positioned(
               bottom: 67,
-              left: 60,
+              left: MediaQuery.sizeOf(context).width / 6.2,
               child: Row(
                 children: [
                   SizedBox(

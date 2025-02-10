@@ -39,7 +39,7 @@ class _KycPageState extends State<KycPage> {
           ),
           Positioned(
               bottom: 66,
-              left: 60,
+              left: MediaQuery.sizeOf(context).width / 6.2,
               child: Row(
                 children: [
                   SizedBox(

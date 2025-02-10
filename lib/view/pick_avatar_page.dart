@@ -1,11 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/controller/get_avatar_controller.dart'; // Ensure you have a controller to fetch the avatar data
+import 'package:pokerpad/controller/get_avatar_controller.dart';
 import 'package:pokerpad/view/view_primary_avatar.dart';
 
 class PickAvatarPage extends StatefulWidget {
-  const PickAvatarPage({super.key});
+  const PickAvatarPage({
+    super.key,
+  });
 
   @override
   State<PickAvatarPage> createState() => _PickAvatarPageState();
@@ -14,6 +16,7 @@ class PickAvatarPage extends StatefulWidget {
 class _PickAvatarPageState extends State<PickAvatarPage> {
   final List<String> avatarImageUrls = [];
   int _currentIndex = 0;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -27,21 +30,29 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
       final response = await getAvatarController.getAvatar();
       if (response != null) {
         final primaryAvatars = response.data.primary;
+        List<String> tempAvatars = [
+          primaryAvatars.avatar0,
+          primaryAvatars.avatar1,
+          primaryAvatars.avatar2,
+          primaryAvatars.avatar3,
+          primaryAvatars.avatar4,
+        ];
+
+        await Future.wait(tempAvatars.map((imageUrl) {
+          final ImageProvider imageProvider = NetworkImage(imageUrl);
+          return precacheImage(imageProvider, context);
+        }));
 
         setState(() {
-          avatarImageUrls.clear();
-          avatarImageUrls.addAll([
-            primaryAvatars.avatar0,
-            primaryAvatars.avatar1,
-            primaryAvatars.avatar2,
-            primaryAvatars.avatar3,
-            primaryAvatars.avatar4,
-          ]);
+          avatarImageUrls.addAll(tempAvatars);
+          isLoading = false;
         });
       }
     } catch (e) {
-      // Handle error (e.g., display a message to the user)
       print("Error fetching avatar data: $e");
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -87,40 +98,45 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
                       SizedBox(
                         height: 450,
                         width: 360,
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 450, // Adjust height to fit the frame
-                            enlargeCenterPage: true,
-                            autoPlay: false,
-                            viewportFraction: 1.5, // Show one image at a time
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _currentIndex = index;
-                              });
-                            },
-                          ),
-                          items: avatarImageUrls.map((imageUrl) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-                                  width: 360,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(9),
-                                    image: DecorationImage(
-                                      image: NetworkImage(imageUrl),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
+                        child: isLoading
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : CarouselSlider(
+                                options: CarouselOptions(
+                                  height: 450, // Adjust height to fit the frame
+                                  enlargeCenterPage: true,
+                                  autoPlay: false,
+                                  viewportFraction:
+                                      1.5, // Show one image at a time
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _currentIndex = index;
+                                    });
+                                  },
+                                ),
+                                items: avatarImageUrls.map((imageUrl) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width: 360,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(9),
+                                          image: DecorationImage(
+                                            image: NetworkImage(imageUrl),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
                       ),
                       // Stacked Dot Indicators
                       Positioned(
-                        bottom:
-                            10, // Adjust as needed to position below the carousel
+                        bottom: 10,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children:
@@ -136,8 +152,7 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
                                     : Colors.grey,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Colors
-                                      .white, // Outline for active/inactive dots
+                                  color: Colors.white,
                                   width: 1.0,
                                 ),
                               ),

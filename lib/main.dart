@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
-import 'package:pokerpad/view/splash_page.dart';
+import 'package:pokerpad/widget/affiliate_button_view_widget.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const SplashPage(),
+      home: const AffiliateButtonViewWidget(),
     );
   }
 }

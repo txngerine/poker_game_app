@@ -139,7 +139,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                           transform: Matrix4.rotationY(math.pi),
                           child: Image.file(
                             _imageFile,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height / 1.3,
                           ),

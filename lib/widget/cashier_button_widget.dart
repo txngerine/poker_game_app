@@ -38,8 +38,8 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
                     alignment: Alignment.center,
                     children: [
                       Image.asset(
-                        width: MediaQuery.sizeOf(context).width / 1,
-                        height: MediaQuery.sizeOf(context).height / 3,
+                        width: MediaQuery.sizeOf(context).width,
+                        height: MediaQuery.sizeOf(context).height,
                         'assets/images/cashier/cashier frame.png',
                         fit: BoxFit.cover,
                       ),
