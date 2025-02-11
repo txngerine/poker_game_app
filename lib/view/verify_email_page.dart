@@ -111,7 +111,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             "Verification Successfully",
             style: TextStyle(color: Colors.white),
           )));
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           PageTransition(
               child: const AvatarPage(),

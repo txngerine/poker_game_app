@@ -20,6 +20,7 @@ class AvatarPage extends StatefulWidget {
 class _AvatarPageState extends State<AvatarPage> {
   String? selectGender;
   bool isLoading = false;
+  bool genderImage = false;
   final GenderController _genderController = GenderController();
 
   void genderSelect(String gender) async {
@@ -123,6 +124,7 @@ class _AvatarPageState extends State<AvatarPage> {
                                       onTap: () {
                                         setState(() {
                                           selectGender = "male";
+                                          genderImage = false;
                                         });
                                         genderSelect("M");
                                       },
@@ -144,8 +146,9 @@ class _AvatarPageState extends State<AvatarPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset("assets/images/gender.png",
-                                    height: 50),
+                                if (genderImage)
+                                  Image.asset("assets/images/gender.png",
+                                      height: 50),
                                 const Spacer(),
                                 Row(
                                   children: [
@@ -153,6 +156,7 @@ class _AvatarPageState extends State<AvatarPage> {
                                       onTap: () {
                                         setState(() {
                                           selectGender = "female";
+                                          genderImage = false;
                                         });
                                         genderSelect("F");
                                       },
@@ -165,7 +169,9 @@ class _AvatarPageState extends State<AvatarPage> {
                                               width: 30),
                                     ),
                                     const SizedBox(width: 20),
-                                    const BuildTextWidget(text: "Female")
+                                    const BuildTextWidget(
+                                      text: "Female",
+                                    )
                                   ],
                                 ),
                               ],
@@ -234,6 +240,9 @@ class _AvatarPageState extends State<AvatarPage> {
                                 ),
                               );
                             } else {
+                              setState(() {
+                                genderImage = true;
+                              });
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: const Duration(milliseconds: 200),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
+import 'package:pokerpad/widget/affiliate_button_view_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'build_button_image_widget.dart';
@@ -16,7 +17,8 @@ class AffiliatedButtonWidget extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialog(
+            return AffiliateButtonViewWidget();
+            AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               title: const Text("Affiliate Info",
@@ -37,9 +39,7 @@ class AffiliatedButtonWidget extends StatelessWidget {
         );
       },
       child: BuildButtonImageWidget(
-        imgPath: provider.isClicked
-            ? "assets/images/lobby/Affiliate button active.png"
-            : "assets/images/lobby/affiliate button passive.png",
+        imgPath: "assets/images/lobby/affiliate button passive.png",
       ),
     );
   }
