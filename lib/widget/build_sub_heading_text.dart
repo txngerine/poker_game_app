@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class BuildSubHeadingText extends StatefulWidget {
   final String text;
-  const BuildSubHeadingText({super.key, required this.text});
+  final Color? color;
+  const BuildSubHeadingText({super.key, required this.text, this.color});
 
   @override
   State<BuildSubHeadingText> createState() => _BuildSubHeadingTextState();
@@ -13,7 +14,8 @@ class _BuildSubHeadingTextState extends State<BuildSubHeadingText> {
   Widget build(BuildContext context) {
     return Text(
       widget.text,
-      style: const TextStyle(
+      style: TextStyle(
+        color: widget.color,
         fontFamily: "CustomFont",
         fontSize: 20,
         shadows: [
