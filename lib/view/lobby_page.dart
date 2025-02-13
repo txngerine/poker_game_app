@@ -168,9 +168,37 @@ class _LobbyPageState extends State<LobbyPage> {
                         color: Colors.grey),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        "https://img.freepik.com/premium-vector/playing-cards-dice-casino-logo-vector-illustration_396616-133.jpg",
-                        fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.sizeOf(context).height / 16,
+                                ),
+                                child: Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  insetPadding: EdgeInsets.zero,
+                                  child: Container(
+                                    width: MediaQuery.sizeOf(context).width,
+                                    height: MediaQuery.sizeOf(context).height,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(
+                                          30,
+                                        )),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Image.network(
+                          "https://img.freepik.com/premium-vector/playing-cards-dice-casino-logo-vector-illustration_396616-133.jpg",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   )
