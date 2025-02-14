@@ -7,6 +7,7 @@ import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
+import 'package:pokerpad/widget/top_monthly_winners.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
 
 import '../constants/screen_size.dart';
@@ -40,6 +41,8 @@ class _LobbyPageState extends State<LobbyPage> {
   Widget build(BuildContext context) {
     print(widget.playerResponse!.data?.nickname);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -173,22 +176,52 @@ class _LobbyPageState extends State<LobbyPage> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  top: MediaQuery.sizeOf(context).height / 16,
-                                ),
-                                child: Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  insetPadding: EdgeInsets.zero,
-                                  child: Container(
-                                    width: MediaQuery.sizeOf(context).width,
-                                    height: MediaQuery.sizeOf(context).height,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(
-                                          30,
-                                        )),
+                              return Dialog(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.white),
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(
+                                        20,
+                                      )),
+                                  height: height / 5,
+                                  width: width / 1.3,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      const BuildSubHeadingText(
+                                          text: "Top winners",
+                                          color: Colors.white),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return TopMonthlyWinners();
+                                                },
+                                              );
+                                            },
+                                            child: Image.asset(
+                                              width: width,
+                                              "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {},
+                                            child: Image.asset(
+                                              width: width,
+                                              "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );
