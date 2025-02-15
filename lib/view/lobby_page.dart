@@ -8,6 +8,7 @@ import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
 import 'package:pokerpad/widget/top_monthly_winners.dart';
+import 'package:pokerpad/widget/top_yearly_winners.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
 
 import '../constants/screen_size.dart';
@@ -213,7 +214,14 @@ class _LobbyPageState extends State<LobbyPage> {
                                             ),
                                           ),
                                           GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return TopYearlyWinners();
+                                                },
+                                              );
+                                            },
                                             child: Image.asset(
                                               width: width,
                                               "assets/images/lobby/top winners/Yearly Winners Button Passive.png",

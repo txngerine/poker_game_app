@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'build_sub_heading_text.dart';
 
-class TopMonthlyWinners extends StatefulWidget {
-  const TopMonthlyWinners({super.key});
+class TopYearlyWinners extends StatefulWidget {
+  const TopYearlyWinners({super.key});
+
   @override
-  State<TopMonthlyWinners> createState() => _TopMonthlyWinnersState();
+  State<TopYearlyWinners> createState() => _TopYearlyWinnersState();
 }
 
-class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
+class _TopYearlyWinnersState extends State<TopYearlyWinners> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -31,7 +32,7 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
             children: [
               const SizedBox(height: 10),
               const BuildSubHeadingText(
-                  text: "Top monthly winners", color: Colors.white),
+                  text: "Top yearly winners of 2025", color: Colors.white),
               const SizedBox(height: 20),
               Stack(
                 children: [
@@ -136,6 +137,5 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
         ),
       ),
     );
-    ;
   }
 }

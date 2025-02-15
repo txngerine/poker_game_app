@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,8 +11,13 @@ class WithdrawButtonWidget extends StatefulWidget {
 }
 
 class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
+  String scannedCode = ""; // Store scanned QR code
+  final MobileScannerController controller = MobileScannerController();
+
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<CashierButtonProvider>(context);
     return GestureDetector(
       onTap: () {
@@ -69,10 +75,40 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     )
                                   ],
                                 ),
-                                Image.asset(
-                                    width:
-                                        MediaQuery.sizeOf(context).width / 2.5,
-                                    "assets/images/cashier/withdraw/scan qr code.png")
+                                GestureDetector(
+                                  onTap: () {
+                                    print("clicked");
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: SizedBox(
+                                            height: height / 2,
+                                            width: width,
+                                            child: MobileScanner(
+                                              controller: controller,
+                                              onDetect: (capture) {
+                                                final barcode =
+                                                    capture.barcodes.first;
+                                                controller.dispose();
+                                                Navigator.pop(
+                                                    context, barcode.rawValue);
+                                                print(
+                                                    "00000000000000000000000000000000000000000000000000000000000000000");
+                                                print(
+                                                    "barcode values${barcode.rawValue}");
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Image.asset(
+                                      width: MediaQuery.sizeOf(context).width /
+                                          2.5,
+                                      "assets/images/cashier/withdraw/scan qr code.png"),
+                                )
                               ],
                             ),
                             Row(
@@ -117,7 +153,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                       width:
                                           MediaQuery.sizeOf(context).width / 3,
                                       child: Text(
-                                        "Fds133kjdf3kkdf389fjsdflkASDF fdkljkj345",
+                                        "",
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Colors.white,
