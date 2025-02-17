@@ -116,7 +116,7 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
             padding: const EdgeInsets.only(top: 5),
             child: BuildSubHeadingText(
               text: "${index + 1}.",
-              fontWeight: 13,
+              fontSize: 13,
               color: Colors.white,
             ),
           ),
@@ -137,13 +137,13 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
                         BuildSubHeadingText(
                           text: "charlie${index + 1}",
                           color: Colors.white,
-                          fontWeight: 10,
+                          fontSize: 10,
                         ),
                         const SizedBox(width: 5),
                         BuildSubHeadingText(
                           text: "\$${(index + 1) * 10000}",
                           color: Colors.white,
-                          fontWeight: 10,
+                          fontSize: 10,
                         ),
                       ],
                     ),
@@ -152,13 +152,13 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
                         BuildSubHeadingText(
                           text: "won/hour",
                           color: Colors.white,
-                          fontWeight: 10,
+                          fontSize: 10,
                         ),
                         const SizedBox(width: 5),
                         BuildSubHeadingText(
                           text: "\$${(index + 1) * 20}",
                           color: Colors.white,
-                          fontWeight: 10,
+                          fontSize: 10,
                         ),
                       ],
                     ),

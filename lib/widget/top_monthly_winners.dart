@@ -47,27 +47,26 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
                         ),
                       ),
                       const BuildSubHeadingText(
-                          text: "charlie007", fontWeight: 10),
+                          text: "charlie007", fontSize: 10),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          BuildSubHeadingText(text: "  Rank", fontWeight: 10),
-                          BuildSubHeadingText(text: "17", fontWeight: 14),
+                          BuildSubHeadingText(text: "  Rank", fontSize: 10),
+                          BuildSubHeadingText(text: "17", fontSize: 14),
                         ],
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          BuildSubHeadingText(text: "won/hour", fontWeight: 10),
-                          BuildSubHeadingText(text: "\$20", fontWeight: 14),
+                          BuildSubHeadingText(text: "won/hour", fontSize: 10),
+                          BuildSubHeadingText(text: "\$20", fontSize: 14),
                         ],
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          BuildSubHeadingText(text: "winnings", fontWeight: 10),
-                          BuildSubHeadingText(
-                              text: "\$100,000", fontWeight: 14),
+                          BuildSubHeadingText(text: "winnings", fontSize: 10),
+                          BuildSubHeadingText(text: "\$100,000", fontSize: 14),
                         ],
                       ),
                       const SizedBox(width: 20),
@@ -106,22 +105,22 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
                                   BuildSubHeadingText(
                                     text: "Charlie007",
                                     color: Colors.white,
-                                    fontWeight: 12,
+                                    fontSize: 12,
                                   ),
                                   BuildSubHeadingText(
                                     text: "\$100,000",
                                     color: Colors.white,
-                                    fontWeight: 12,
+                                    fontSize: 12,
                                   ),
                                   BuildSubHeadingText(
                                     text: "won/hour",
                                     color: Colors.white,
-                                    fontWeight: 12,
+                                    fontSize: 12,
                                   ),
                                   BuildSubHeadingText(
                                     text: "\$20",
                                     color: Colors.white,
-                                    fontWeight: 12,
+                                    fontSize: 12,
                                   ),
                                 ],
                               ),

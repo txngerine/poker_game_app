@@ -6,6 +6,7 @@ class BuildTextWidget extends StatelessWidget {
   final FontWeight? fontWeight;
   final double? fontSize;
   final String text;
+  final Color? color;
 
   const BuildTextWidget({
     super.key,
@@ -13,6 +14,7 @@ class BuildTextWidget extends StatelessWidget {
     this.fontSize,
     this.fontWeight,
     this.align,
+    this.color,
   });
 
   @override
@@ -23,7 +25,7 @@ class BuildTextWidget extends StatelessWidget {
       style: GoogleFonts.roboto(
         fontSize: fontSize ?? 15,
         fontWeight: FontWeight.w400,
-        color: const Color(0xFF5F6368),
+        color: color ?? const Color(0xFF5F6368),
       ),
     );
   }

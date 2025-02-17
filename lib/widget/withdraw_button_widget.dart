@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
+import 'package:pokerpad/view/qr_scan_page.dart';
 import 'package:provider/provider.dart';
 
 class WithdrawButtonWidget extends StatefulWidget {
-  const WithdrawButtonWidget({super.key});
+  const WithdrawButtonWidget({
+    super.key,
+  });
 
   @override
   State<WithdrawButtonWidget> createState() => _WithdrawButtonWidgetState();
@@ -78,31 +81,36 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                 GestureDetector(
                                   onTap: () {
                                     print("clicked");
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          child: SizedBox(
-                                            height: height / 2,
-                                            width: width,
-                                            child: MobileScanner(
-                                              controller: controller,
-                                              onDetect: (capture) {
-                                                final barcode =
-                                                    capture.barcodes.first;
-                                                controller.dispose();
-                                                Navigator.pop(
-                                                    context, barcode.rawValue);
-                                                print(
-                                                    "00000000000000000000000000000000000000000000000000000000000000000");
-                                                print(
-                                                    "barcode values${barcode.rawValue}");
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => QrScanPage(),
+                                        ));
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (context) {
+                                    //     return Dialog(
+                                    //       child: SizedBox(
+                                    //         height: height / 2,
+                                    //         width: width,
+                                    //         child: MobileScanner(
+                                    //           controller: controller,
+                                    //           onDetect: (capture) {
+                                    //             final barcode =
+                                    //                 capture.barcodes.first;
+                                    //             controller.dispose();
+                                    //             Navigator.pop(
+                                    //                 context, barcode.rawValue);
+                                    //             print(
+                                    //                 "00000000000000000000000000000000000000000000000000000000000000000");
+                                    //             print(
+                                    //                 "barcode values${barcode.rawValue}");
+                                    //           },
+                                    //         ),
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    // );
                                   },
                                   child: Image.asset(
                                       width: MediaQuery.sizeOf(context).width /

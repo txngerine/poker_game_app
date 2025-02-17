@@ -124,26 +124,26 @@ class _TopWinnersWidgetState extends State<TopWinnersWidget> {
                 "assets/images/lobby/top winners/Players Avatar BG.png",
               ),
             ),
-            const BuildSubHeadingText(text: "charlie007", fontWeight: 10),
+            const BuildSubHeadingText(text: "charlie007", fontSize: 10),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                BuildSubHeadingText(text: "  Rank", fontWeight: 10),
-                BuildSubHeadingText(text: "17", fontWeight: 14),
+                BuildSubHeadingText(text: "  Rank", fontSize: 10),
+                BuildSubHeadingText(text: "17", fontSize: 14),
               ],
             ),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                BuildSubHeadingText(text: "won/hour", fontWeight: 10),
-                BuildSubHeadingText(text: "\$20", fontWeight: 14),
+                BuildSubHeadingText(text: "won/hour", fontSize: 10),
+                BuildSubHeadingText(text: "\$20", fontSize: 14),
               ],
             ),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                BuildSubHeadingText(text: "winnings", fontWeight: 10),
-                BuildSubHeadingText(text: "\$100,000", fontWeight: 14),
+                BuildSubHeadingText(text: "winnings", fontSize: 10),
+                BuildSubHeadingText(text: "\$100,000", fontSize: 14),
               ],
             ),
             const SizedBox(width: 20),
@@ -225,7 +225,7 @@ class _TopWinnersWidgetState extends State<TopWinnersWidget> {
             padding: const EdgeInsets.only(top: 5),
             child: BuildSubHeadingText(
               text: "${index + 1}.",
-              fontWeight: 13,
+              fontSize: 13,
               color: Colors.white,
             ),
           ),
@@ -246,13 +246,13 @@ class _TopWinnersWidgetState extends State<TopWinnersWidget> {
                         BuildSubHeadingText(
                           text: "charlie${index + 1}",
                           color: Colors.white,
-                          fontWeight: 10,
+                          fontSize: 10,
                         ),
                         const SizedBox(width: 5),
                         BuildSubHeadingText(
                           text: "\$${(index + 1) * 10000}",
                           color: Colors.white,
-                          fontWeight: 10,
+                          fontSize: 10,
                         ),
                       ],
                     ),
@@ -261,12 +261,12 @@ class _TopWinnersWidgetState extends State<TopWinnersWidget> {
                         BuildSubHeadingText(
                             text: "won/hour",
                             color: Colors.white,
-                            fontWeight: 10),
+                            fontSize: 10),
                         const SizedBox(width: 5),
                         BuildSubHeadingText(
                             text: "\$${(index + 1) * 20}",
                             color: Colors.white,
-                            fontWeight: 10),
+                            fontSize: 10),
                       ],
                     ),
                   ],

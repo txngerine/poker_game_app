@@ -6,7 +6,9 @@ import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
+import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
+import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/top_monthly_winners.dart';
 import 'package:pokerpad/widget/top_yearly_winners.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
@@ -67,9 +69,214 @@ class _LobbyPageState extends State<LobbyPage> {
                 children: [
                   const BuildIconImageWidget(
                       imgName: "assets/images/lobby/Self Exclusion Button.png"),
-                  const BuildIconImageWidget(
-                      imgName:
-                          "assets/images/lobby/profile button passive.png"),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            child: Container(
+                              height: height / 2.3,
+                              width: width,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.white),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        BuildSubHeadingText(
+                                          text: "WhatEverMan",
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        ),
+                                        Spacer(),
+                                        BuildSubHeadingText(
+                                          text: "ID:",
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.mail,
+                                          color: Colors.white,
+                                          size: 12,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        BuildTextWidget(
+                                          text: "whateverman@gmail.com",
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.phone,
+                                          color: Colors.white,
+                                          size: 12,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        BuildTextWidget(
+                                          text: "Enter your mobile number",
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                        Spacer(),
+                                        SizedBox(
+                                          width: width / 3,
+                                          child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      WidgetStatePropertyAll(
+                                                          Colors.white)),
+                                              onPressed: () {},
+                                              child: BuildSubHeadingText(
+                                                text: "change avatar",
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            BuildSubHeadingText(
+                                              fontSize: 15,
+                                              text: "FACIAL VERIFICATION",
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: width / 3,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          WidgetStatePropertyAll(
+                                                              Color(
+                                                                  0xff3C3D37))),
+                                                  onPressed: () {},
+                                                  child: BuildSubHeadingText(
+                                                    text: "pending",
+                                                    fontSize: 12,
+                                                    color: Colors.white70,
+                                                  )),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            BuildSubHeadingText(
+                                              fontSize: 15,
+                                              text: "PROOF OF IDENTITY",
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: width / 3,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          WidgetStatePropertyAll(
+                                                              Color(
+                                                                  0xff79D7BE))),
+                                                  onPressed: () {},
+                                                  child: BuildSubHeadingText(
+                                                    text: "verified",
+                                                    fontSize: 12,
+                                                    color: Colors.white70,
+                                                  )),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            BuildSubHeadingText(
+                                              fontSize: 15,
+                                              text: "PROOF OF ADDRESS",
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: width / 3,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          WidgetStatePropertyAll(
+                                                              Color(
+                                                                  0xffB43F3F))),
+                                                  onPressed: () {},
+                                                  child: BuildSubHeadingText(
+                                                    text: "rejected",
+                                                    fontSize: 12,
+                                                    color: Colors.white70,
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 200,
+                                              color: Color(0xff424242),
+                                              width: width / 3,
+                                            ),
+                                            SizedBox(
+                                              width: width / 3,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          WidgetStatePropertyAll(
+                                                              Colors.white)),
+                                                  onPressed: () {},
+                                                  child: BuildSubHeadingText(
+                                                    text: "try again",
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                  )),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const BuildIconImageWidget(
+                        imgName:
+                            "assets/images/lobby/profile button passive.png"),
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
@@ -88,8 +295,19 @@ class _LobbyPageState extends State<LobbyPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const BuildIconImageWidget(
-                      imgName: "assets/images/lobby/info button active.png"),
+                  GestureDetector(
+                    onTap: () {
+                      print("clicked");
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return InfoButtonWidget();
+                        },
+                      );
+                    },
+                    child: const BuildIconImageWidget(
+                        imgName: "assets/images/lobby/info button active.png"),
+                  ),
                   const BuildIconImageWidget(
                       imgName: "assets/images/lobby/Logo active (1).png"),
                 ],
