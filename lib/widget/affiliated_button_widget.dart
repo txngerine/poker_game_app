@@ -17,7 +17,7 @@ class AffiliatedButtonWidget extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AffiliateButtonViewWidget();
+            return const AffiliateButtonViewWidget();
             AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
