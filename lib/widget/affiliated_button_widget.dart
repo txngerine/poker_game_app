@@ -38,7 +38,7 @@ class AffiliatedButtonWidget extends StatelessWidget {
           },
         );
       },
-      child: BuildButtonImageWidget(
+      child: const BuildButtonImageWidget(
         imgPath: "assets/images/lobby/affiliate button passive.png",
       ),
     );

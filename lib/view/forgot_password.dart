@@ -101,7 +101,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             forgotPassword();
                           },
                           child: isLoading
-                              ? CircularProgressIndicator()
+                              ? const CircularProgressIndicator()
                               : Image.asset(
                                   width:
                                       MediaQuery.of(context).size.width / 1.5,

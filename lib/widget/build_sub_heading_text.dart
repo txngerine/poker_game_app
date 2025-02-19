@@ -26,7 +26,7 @@ class _BuildSubHeadingTextState extends State<BuildSubHeadingText> {
         fontFamily: "CustomFont",
         fontSize: widget.fontSize ?? 20,
         fontWeight: widget.fontWeight,
-        shadows: [
+        shadows: const [
           Shadow(
             color: Colors.black38,
             blurRadius: 4,

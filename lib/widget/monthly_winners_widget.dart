@@ -10,7 +10,7 @@ class MonthlyWinnersWidget extends StatefulWidget {
 }
 
 class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
-  final int totalItems = 73;
+  final int totalItems = 100;
   final int itemsPerPage = 20;
   int currentPage = 0;
 
@@ -25,14 +25,16 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
 
     final leftItems = _generateItems(0);
     final rightItems = _generateItems(10);
 
     return Container(
-      height: 200,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+      ),
       width: width,
-      color: Colors.red,
       child: Column(
         children: [
           _buildWinnersList(width, leftItems, rightItems),
@@ -85,7 +87,7 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
             }
           },
           child: Image.asset(
-            width: width / 10,
+            width: width / 10.9,
             "assets/images/lobby/top winners/previous page (1).png",
           ),
         ),
@@ -100,7 +102,7 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
             }
           },
           child: Image.asset(
-            width: width / 10,
+            width: width / 10.9,
             "assets/images/lobby/top winners/next page (1).png",
           ),
         ),
@@ -149,7 +151,7 @@ class _MonthlyWinnersWidgetState extends State<MonthlyWinnersWidget> {
                     ),
                     Row(
                       children: [
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "won/hour",
                           color: Colors.white,
                           fontSize: 10,

@@ -24,8 +24,8 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
             )),
         height: height / 2,
         width: width,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
+        child: const Padding(
+          padding: EdgeInsets.all(4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

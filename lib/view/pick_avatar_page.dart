@@ -99,7 +99,7 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
                         height: 450,
                         width: 360,
                         child: isLoading
-                            ? Center(
+                            ? const Center(
                                 child: CircularProgressIndicator(),
                               )
                             : CarouselSlider(

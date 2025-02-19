@@ -28,12 +28,12 @@ class _AffiliateTextFieldWidgetState extends State<AffiliateTextFieldWidget> {
             color: Colors.transparent,
             child: TextField(
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white70,
               ),
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: Colors.white70,
                 ),
                 border: OutlineInputBorder(

@@ -79,7 +79,7 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
                   left: 10,
                   right: 10,
                 ),
-                child: Container(
+                child: SizedBox(
                     height: height / 1.28,
                     width: width / 1.2,
                     child: ListView.builder(
@@ -102,22 +102,22 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
                                       width: width / 12,
                                     ),
                                   ),
-                                  BuildSubHeadingText(
+                                  const BuildSubHeadingText(
                                     text: "Charlie007",
                                     color: Colors.white,
                                     fontSize: 12,
                                   ),
-                                  BuildSubHeadingText(
+                                  const BuildSubHeadingText(
                                     text: "\$100,000",
                                     color: Colors.white,
                                     fontSize: 12,
                                   ),
-                                  BuildSubHeadingText(
+                                  const BuildSubHeadingText(
                                     text: "won/hour",
                                     color: Colors.white,
                                     fontSize: 12,
                                   ),
-                                  BuildSubHeadingText(
+                                  const BuildSubHeadingText(
                                     text: "\$20",
                                     color: Colors.white,
                                     fontSize: 12,
@@ -135,6 +135,5 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
         ),
       ),
     );
-    ;
   }
 }

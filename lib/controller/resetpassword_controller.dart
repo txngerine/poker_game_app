@@ -18,7 +18,7 @@ class ResetPasswordController {
         data: requestModel.toJson(),
         options: Options(headers: {"Content-Type": "application/json"}),
       );
-      print("url${url}");
+      print("url$url");
       if (response.statusCode == 200) {
         print(response);
         print("00000000000000000000123");

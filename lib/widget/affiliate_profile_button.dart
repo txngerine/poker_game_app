@@ -53,7 +53,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
+                              const Row(
                                 children: [
                                   SizedBox(
                                     width: 7,
@@ -68,7 +68,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
+                              const Row(
                                 children: [
                                   AffiliatePhoneVerificationWidget(),
                                   SizedBox(
@@ -86,7 +86,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
+                              const Row(
                                 children: [
                                   AffiliateLocationWidget(),
                                   SizedBox(
@@ -116,7 +116,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                                     child: Material(
                                       color: Colors.transparent,
                                       child: TextField(
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             color: Colors.white70),
                                         decoration: InputDecoration(
@@ -124,7 +124,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                                           hintText:
                                               "Introduce yourself.Which local casinos do you frequent and which games do you usually play? invite your players to reach out to you in case they need any type of assistance!",
                                           hintStyle:
-                                              TextStyle(color: Colors.white70),
+                                              const TextStyle(color: Colors.white70),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20),
@@ -155,11 +155,11 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                           child: Material(
                             color: Colors.transparent,
                             child: TextField(
-                              style: TextStyle(color: Colors.white70),
+                              style: const TextStyle(color: Colors.white70),
                               decoration: InputDecoration(
                                 hintText:
                                     "What is the best way to contact you? Do you have whatsapp",
-                                hintStyle: TextStyle(color: Colors.white70),
+                                hintStyle: const TextStyle(color: Colors.white70),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide.none,
@@ -184,6 +184,5 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
         width: width / 10,
       ),
     );
-    ;
   }
 }

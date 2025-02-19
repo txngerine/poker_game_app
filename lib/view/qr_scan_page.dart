@@ -65,7 +65,7 @@ class _QrScanPageState extends State<QrScanPage> {
               right: 50,
               child: ElevatedButton(
                   onPressed: onContinue,
-                  child: BuildSubHeadingText(
+                  child: const BuildSubHeadingText(
                     text: "continue",
                     color: Colors.black,
                   )),
@@ -76,7 +76,7 @@ class _QrScanPageState extends State<QrScanPage> {
               left: 20,
               right: 20,
               child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   color: Colors.white.withOpacity(0.7),
                   child: BuildSubHeadingText(
                     text: "Scanned QR Code:$scannedRawValue",

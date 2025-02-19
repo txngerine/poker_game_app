@@ -58,15 +58,16 @@ class _LoginPageState extends State<LoginPage> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: CupertinoColors.activeGreen,
             content: const Text(
-              "Login Scuessfull",
+              "Login Successfully",
               style: TextStyle(color: Colors.white),
             )));
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: LobbyPage(playerResponse: playerDetails,
+                child: LobbyPage(
+                  playerResponse: playerDetails,
                   playerBalance: playerDetails?.data?.balance,
-                  avatar: playerDetails?.data?.avatar,
+                  avatar: playerDetails?.data?.lobbyAvatar,
                 ),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {

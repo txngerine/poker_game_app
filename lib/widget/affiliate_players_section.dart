@@ -24,7 +24,7 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
         Positioned(
           left: width / 2.5,
           bottom: height / 14,
-          child: Text(
+          child: const Text(
             "394",
             style: TextStyle(color: Colors.white),
           ),
@@ -52,7 +52,7 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                         child: Dialog(
                           alignment: Alignment.topCenter,
                           backgroundColor: Colors.transparent,
-                          child: Container(
+                          child: SizedBox(
                             height: MediaQuery.sizeOf(context).height / 2,
                             width: MediaQuery.sizeOf(context).width,
                             child: Stack(
@@ -68,9 +68,9 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Row(
+                                      const Row(
                                         children: [
-                                          const Column(
+                                          Column(
                                             children: [
                                               CustomTextFieldWidget(
                                                   hintText:
@@ -93,7 +93,7 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                                               "assets/images/cashier/withdraw/forgot password.png"),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Row(
@@ -109,7 +109,7 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                                                         2.7,
                                                 "assets/images/cashier/withdraw/cancel button.png"),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           Image.asset(

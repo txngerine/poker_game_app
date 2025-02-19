@@ -35,7 +35,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
               child: Dialog(
                 alignment: Alignment.topCenter,
                 backgroundColor: Colors.transparent,
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.sizeOf(context).height / 2,
                   width: MediaQuery.sizeOf(context).width,
                   child: Stack(
@@ -84,7 +84,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => QrScanPage(),
+                                          builder: (context) => const QrScanPage(),
                                         ));
                                     // showDialog(
                                     //   context: context,
@@ -157,10 +157,10 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                         "assets/images/cashier/withdraw/Revceival code.png"),
                                     Container(
                                       padding:
-                                          EdgeInsets.only(left: 20, top: 35),
+                                          const EdgeInsets.only(left: 20, top: 35),
                                       width:
                                           MediaQuery.sizeOf(context).width / 3,
-                                      child: Text(
+                                      child: const Text(
                                         "",
                                         style: TextStyle(
                                           fontSize: 12,
@@ -260,7 +260,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     "assets/images/cashier/withdraw/forgot password.png"),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Row(
@@ -274,7 +274,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                           2.7,
                                       "assets/images/cashier/withdraw/cancel button.png"),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Image.asset(

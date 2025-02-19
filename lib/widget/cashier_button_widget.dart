@@ -53,17 +53,17 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
                             Image.asset(
                                 width: MediaQuery.sizeOf(context).width / 1.4,
                                 "assets/images/cashier/contact affiliate button.png"),
-                            SizedBox(
+                            const SizedBox(
                               height: 40,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 WithdrawButtonWidget(),
                                 DepositButtonWidget()
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             )
                           ],

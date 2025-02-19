@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/widget/bonuses_2k_button_widget.dart';
 
 import 'affiliate_balance_section.dart';
 import 'build_text_widget.dart';
@@ -22,7 +23,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
       children: [
         Row(
           children: [
-            AffiliateBalanceSection(),
+            const AffiliateBalanceSection(),
             Image.asset(
                 width: width / 2,
                 "assets/images/Affiliate/bonus/refer a friend.png")
@@ -39,7 +40,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                 Positioned(
                   top: 12,
                   left: width / 2.7,
-                  child: Text(
+                  child: const Text(
                     "\$34,000",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -55,7 +56,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                 Positioned(
                   top: 12,
                   left: width / 2.7,
-                  child: Text(
+                  child: const Text(
                     "\$16,000",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -88,22 +89,28 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            SizedBox(
+                              width: 1,
+                            ),
                             const BuildTextWidget(
                               text: "SEARCH",
                               fontSize: 10,
+                              fontWeight: FontWeight.w900,
                             ),
                             const BuildTextWidget(
                               text: "REFERRALS",
                               fontSize: 10,
+                              fontWeight: FontWeight.w900,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             const BuildTextWidget(
                               text: "ROAD TO \$ 10,000",
                               fontSize: 10,
+                              fontWeight: FontWeight.w900,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
@@ -111,6 +118,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                                 const BuildTextWidget(
                                   text: "BONUSES CLAIMED",
                                   fontSize: 10,
+                                  fontWeight: FontWeight.w900,
                                 ),
                                 Image.asset(
                                     height: height / 49,
@@ -129,7 +137,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                       itemBuilder: (context, index) {
                         int actualIndex =
                             (currentPage - 1) * itemsPerPage + index;
-                        if (actualIndex >= totalItems) return SizedBox();
+                        if (actualIndex >= totalItems) return const SizedBox();
                         return Column(
                           children: [
                             Stack(
@@ -155,27 +163,27 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                                       ),
                                       Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           Text(
                                             "ID:#${actualIndex + 1}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          Text(
+                                          const Text(
                                             "CHARLIE007",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 30,
                                           ),
-                                          Text(
+                                          const Text(
                                             "Rake:\$37k/\$100k",
                                             style: TextStyle(
                                                 fontSize: 12,
@@ -185,199 +193,89 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                                         ],
                                       ),
                                       Expanded(
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 40,
-                                                      height: 25,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          color: Colors.black),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "\$2k",
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 5,
-                                                      width: 1,
-                                                      color: Colors.white,
-                                                    )
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 40,
-                                                      height: 25,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          color: Colors.black),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "\$2k",
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 5,
-                                                      width: 1,
-                                                      color: Colors.white,
-                                                    )
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 40,
-                                                      height: 25,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          color: Colors.black),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "\$2k",
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 5,
-                                                      width: 1,
-                                                      color: Colors.white,
-                                                    )
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Container(
-                                                  width: 40,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      color: Colors.black),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "\$2k",
-                                                      style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors.white),
-                                                    ),
+                                        child: Container(
+                                          width: width / 2,
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              const Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Bonuses2kButtonWidget(),
+                                                  SizedBox(
+                                                    width: 8,
                                                   ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Column(
+                                                  Bonuses2kButtonWidget(),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Bonuses2kButtonWidget(),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Bonuses2kButtonWidget(),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Bonuses2kButtonWidget(),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 12),
+                                                child: Stack(
                                                   children: [
                                                     Container(
-                                                      width: 40,
-                                                      height: 25,
+                                                      height: 8,
                                                       decoration: BoxDecoration(
+                                                        color: Colors.grey[600],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(4),
+                                                      ),
+                                                    ),
+                                                    FractionallySizedBox(
+                                                      widthFactor: 0.5,
+                                                      child: Container(
+                                                        height: 8,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color(
+                                                              0xffFFC94A),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(20),
-                                                          color: Colors.black),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "\$2k",
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              color:
-                                                                  Colors.white),
+                                                                  .circular(4),
                                                         ),
                                                       ),
                                                     ),
-                                                    Container(
-                                                      height: 5,
-                                                      width: 1,
-                                                      color: Colors.white,
-                                                    )
                                                   ],
                                                 ),
-                                              ],
-                                            ),
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  height: 8,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey[600],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                  ),
-                                                ),
-                                                FractionallySizedBox(
-                                                  widthFactor: 0.58,
-                                                  child: Container(
-                                                    height: 8,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xffFFC94A),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                    '${(0.58 * 100).toStringAsFixed(0)}%',
-                                                    style: TextStyle(
-                                                        color: Colors.white70)),
-                                              ],
-                                            ),
-                                          ],
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                      '${(0.5 * 100).toStringAsFixed(0)}%',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              Colors.white70)),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         "\$5,000",
                                         style: TextStyle(
                                             color: Colors.white,
@@ -394,7 +292,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Row(

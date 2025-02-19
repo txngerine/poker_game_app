@@ -38,7 +38,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
         Navigator.push(
             context,
             PageTransition(
-                child: LoginPage(),
+                child: const LoginPage(),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

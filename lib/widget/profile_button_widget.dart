@@ -29,10 +29,10 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   BuildSubHeadingText(
@@ -51,7 +51,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                   )
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(
@@ -72,28 +72,28 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.phone,
                     color: Colors.white,
                     size: 12,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                     text: "Enter your mobile number",
                     color: Colors.white,
                     fontSize: 12,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   SizedBox(
                     width: width / 3,
                     child: ElevatedButton(
-                        style: ButtonStyle(
+                        style: const ButtonStyle(
                             backgroundColor:
                                 WidgetStatePropertyAll(Colors.white)),
                         onPressed: () {},
-                        child: BuildSubHeadingText(
+                        child: const BuildSubHeadingText(
                           text: "change avatar",
                           fontSize: 12,
                           color: Colors.black,
@@ -101,14 +101,14 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 children: [
                   Column(
                     children: [
-                      BuildSubHeadingText(
+                      const BuildSubHeadingText(
                         fontSize: 15,
                         text: "FACIAL VERIFICATION",
                         color: Colors.white,
@@ -116,20 +116,20 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                       SizedBox(
                         width: width / 3,
                         child: ElevatedButton(
-                            style: ButtonStyle(
+                            style: const ButtonStyle(
                                 backgroundColor:
                                     WidgetStatePropertyAll(Color(0xff3C3D37))),
                             onPressed: () {},
-                            child: BuildSubHeadingText(
+                            child: const BuildSubHeadingText(
                               text: "pending",
                               fontSize: 12,
                               color: Colors.white70,
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      BuildSubHeadingText(
+                      const BuildSubHeadingText(
                         fontSize: 15,
                         text: "PROOF OF IDENTITY",
                         color: Colors.white,
@@ -137,20 +137,20 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                       SizedBox(
                         width: width / 3,
                         child: ElevatedButton(
-                            style: ButtonStyle(
+                            style: const ButtonStyle(
                                 backgroundColor:
                                     WidgetStatePropertyAll(Color(0xff79D7BE))),
                             onPressed: () {},
-                            child: BuildSubHeadingText(
+                            child: const BuildSubHeadingText(
                               text: "verified",
                               fontSize: 12,
                               color: Colors.white70,
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      BuildSubHeadingText(
+                      const BuildSubHeadingText(
                         fontSize: 15,
                         text: "PROOF OF ADDRESS",
                         color: Colors.white,
@@ -158,11 +158,11 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                       SizedBox(
                         width: width / 3,
                         child: ElevatedButton(
-                            style: ButtonStyle(
+                            style: const ButtonStyle(
                                 backgroundColor:
                                     WidgetStatePropertyAll(Color(0xffB43F3F))),
                             onPressed: () {},
-                            child: BuildSubHeadingText(
+                            child: const BuildSubHeadingText(
                               text: "rejected",
                               fontSize: 12,
                               color: Colors.white70,
@@ -170,22 +170,22 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Column(
                     children: [
                       Container(
                         height: 200,
-                        color: Color(0xff424242),
+                        color: const Color(0xff424242),
                         width: width / 3,
                       ),
                       SizedBox(
                         width: width / 3,
                         child: ElevatedButton(
-                            style: ButtonStyle(
+                            style: const ButtonStyle(
                                 backgroundColor:
                                     WidgetStatePropertyAll(Colors.white)),
                             onPressed: () {},
-                            child: BuildSubHeadingText(
+                            child: const BuildSubHeadingText(
                               text: "try again",
                               fontSize: 12,
                               color: Colors.black,

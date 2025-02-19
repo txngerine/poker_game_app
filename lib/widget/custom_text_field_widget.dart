@@ -29,14 +29,14 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             width: MediaQuery.sizeOf(context).width /
                 3.5, // To fit inside the image
             child: TextField(
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 color: Colors.white,
               ),
               textAlign: TextAlign.center,
               decoration: InputDecoration.collapsed(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
               ),
               keyboardType: TextInputType.number,
             ),

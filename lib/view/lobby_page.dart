@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
-import 'package:pokerpad/view/text_page.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
+import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
+import 'package:pokerpad/widget/elevated_button_custom.dart';
 import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/profile_button_widget.dart';
 import 'package:pokerpad/widget/top_monthly_winners.dart';
 import 'package:pokerpad/widget/top_yearly_winners.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
+import 'package:pokerpad/widget/winners_widget.dart';
 
 import '../constants/screen_size.dart';
 
@@ -67,14 +69,84 @@ class _LobbyPageState extends State<LobbyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const BuildIconImageWidget(
-                      imgName: "assets/images/lobby/Self Exclusion Button.png"),
+                  GestureDetector(
+                    onTap: () {
+                      print("clicked");
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: Colors.white54, width: 2),
+                                  color: Colors.black),
+                              width: width / 2,
+                              height: height / 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  BuildSubHeadingText(
+                                    text: "self exclusion",
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  BuildTextWidget(
+                                    align: TextAlign.center,
+                                    text:
+                                        "Do you wish to exclude yourself for the \n"
+                                        "next 24 hours from all game?",
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ElevatedButtonCustom(
+                                        onPress: () {},
+                                        textColor: Colors.white54,
+                                        text: "No",
+                                        color: Color(0xff45474B),
+                                      ),
+                                      ElevatedButtonCustom(
+                                        onPress: () {
+                                          Navigator.pop(context);
+                                        },
+                                        textColor: Colors.black,
+                                        text: "Yes",
+                                        color: Color(0xffEEEEEE),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const BuildIconImageWidget(
+                        imgName:
+                            "assets/images/lobby/Self Exclusion Button.png"),
+                  ),
                   GestureDetector(
                     onTap: () {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return ProfileButtonWidget();
+                          return const ProfileButtonWidget();
                         },
                       );
                     },
@@ -106,7 +178,7 @@ class _LobbyPageState extends State<LobbyPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return InfoButtonWidget();
+                          return const InfoButtonWidget();
                         },
                       );
                     },
@@ -117,7 +189,7 @@ class _LobbyPageState extends State<LobbyPage> {
                       imgName: "assets/images/lobby/Logo active (1).png"),
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AffiliatedButtonWidget(),
@@ -182,89 +254,101 @@ class _LobbyPageState extends State<LobbyPage> {
                               )
                             ],
                           ))),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2.1,
-                    height: MediaQuery.of(context).size.height / 2.7,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color(0xff3C3D37), width: 3),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.grey),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.white),
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(
-                                        20,
-                                      )),
-                                  height: height / 5,
-                                  width: width / 1.3,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      const BuildSubHeadingText(
-                                          text: "Top winners",
-                                          color: Colors.white),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                  Stack(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.1,
+                        height: MediaQuery.of(context).size.height / 2.7,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: const Color(0xff3C3D37), width: 3),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.grey),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          color: Colors.black,
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          )),
+                                      height: height / 5,
+                                      width: width / 1.3,
+                                      child: Column(
                                         children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return TopMonthlyWinners();
-                                                },
-                                              );
-                                            },
-                                            child: Image.asset(
-                                              width: width,
-                                              "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
-                                            ),
+                                          const SizedBox(
+                                            height: 10,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return TopYearlyWinners();
+                                          const BuildSubHeadingText(
+                                              text: "Top winners",
+                                              color: Colors.white),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return const TopMonthlyWinners();
+                                                    },
+                                                  );
                                                 },
-                                              );
-                                            },
-                                            child: Image.asset(
-                                              width: width,
-                                              "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
-                                            ),
+                                                child: Image.asset(
+                                                  width: width,
+                                                  "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return const TopYearlyWinners();
+                                                    },
+                                                  );
+                                                },
+                                                child: Image.asset(
+                                                  width: width,
+                                                  "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    ),
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                        child: Image.network(
-                          "https://img.freepik.com/premium-vector/playing-cards-dice-casino-logo-vector-illustration_396616-133.jpg",
-                          fit: BoxFit.cover,
+                            child: Image.asset(
+                              "assets/images/lobby/Poker card.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 74, top: 5),
+                        child: BuildSubHeadingText(
+                          text: "Top winners",
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -285,7 +369,7 @@ class _LobbyPageState extends State<LobbyPage> {
                       Image.asset(
                           width: MediaQuery.of(context).size.width / 5,
                           "assets/images/lobby/omaha butoon passive.png"),
-                      Spacer(),
+                      const Spacer(),
                       Image.asset(
                           width: MediaQuery.of(context).size.width / 2.3,
                           "assets/images/lobby/auto top up button  active.png"),
@@ -350,11 +434,12 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TextPage(),
-                              ));
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return WinnersWidget();
+                            },
+                          );
                         },
                         child: Image.asset(
                           "assets/images/lobby/1000 jeton.png",

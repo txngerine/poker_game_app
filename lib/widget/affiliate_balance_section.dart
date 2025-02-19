@@ -22,7 +22,7 @@ class _AffiliateBalanceSectionState extends State<AffiliateBalanceSection> {
         Positioned(
           left: width / 3,
           bottom: height / 14,
-          child: Text(
+          child: const Text(
             "\$36,2948",
             style: TextStyle(color: Colors.white),
           ),
@@ -47,7 +47,7 @@ class _AffiliateBalanceSectionState extends State<AffiliateBalanceSection> {
                         child: Dialog(
                           alignment: Alignment.topCenter,
                           backgroundColor: Colors.transparent,
-                          child: Container(
+                          child: SizedBox(
                             height: MediaQuery.sizeOf(context).height / 2,
                             width: MediaQuery.sizeOf(context).width,
                             child: Stack(
@@ -147,13 +147,13 @@ class _AffiliateBalanceSectionState extends State<AffiliateBalanceSection> {
                                                           2.5,
                                                   "assets/images/cashier/withdraw/Revceival code.png"),
                                               Container(
-                                                padding: EdgeInsets.only(
+                                                padding: const EdgeInsets.only(
                                                     left: 20, top: 35),
                                                 width:
                                                     MediaQuery.sizeOf(context)
                                                             .width /
                                                         3,
-                                                child: Text(
+                                                child: const Text(
                                                   "Fds133kjdf3kkdf389fjsdflkASDF fdkljkj345",
                                                   style: TextStyle(
                                                     fontSize: 12,
@@ -192,7 +192,7 @@ class _AffiliateBalanceSectionState extends State<AffiliateBalanceSection> {
                                               "assets/images/cashier/withdraw/forgot password.png"),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Row(
@@ -208,7 +208,7 @@ class _AffiliateBalanceSectionState extends State<AffiliateBalanceSection> {
                                                         2.7,
                                                 "assets/images/cashier/withdraw/cancel button.png"),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           Image.asset(

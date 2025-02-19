@@ -37,7 +37,7 @@ class _AffiliatePhoneVerificationWidgetState
                       padding: EdgeInsets.only(top: height / 7),
                       child: Column(
                         children: [
-                          AffiliateTextFieldWidget(
+                          const AffiliateTextFieldWidget(
                             hintText: "your phone number",
                           ),
                           Image.asset(
@@ -58,7 +58,7 @@ class _AffiliatePhoneVerificationWidgetState
                                   textAlign: TextAlign.center,
                                   keyboardType: TextInputType.number,
                                   maxLength: 1,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20, color: Colors.white),
                                   decoration: InputDecoration(
                                     counterText:
@@ -66,12 +66,12 @@ class _AffiliatePhoneVerificationWidgetState
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide:
-                                          BorderSide(color: Colors.white70),
+                                          const BorderSide(color: Colors.white70),
                                     ),
                                   ),
                                   onChanged: (value) {
@@ -84,10 +84,10 @@ class _AffiliatePhoneVerificationWidgetState
                               ),
                             )
                                 .expand(
-                                    (widget) => [widget, SizedBox(width: 10)])
+                                    (widget) => [widget, const SizedBox(width: 10)])
                                 .toList(),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 19,
                           ),
                           Image.asset(

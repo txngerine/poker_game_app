@@ -98,7 +98,7 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                         height: 450,
                         width: 360,
                         child: isLoading
-                            ? Center(child: CircularProgressIndicator())
+                            ? const Center(child: CircularProgressIndicator())
                             : CarouselSlider(
                                 options: CarouselOptions(
                                   height: 450, // Adjust height to fit the frame

@@ -46,25 +46,35 @@ class _AffiliateButtonViewWidgetState extends State<AffiliateButtonViewWidget> {
                     "assets/images/Affiliate/Refresh Button.png",
                     width: width / 10,
                   ),
-                  AffiliateProfileButton(),
+                  const AffiliateProfileButton(),
                   GestureDetector(
                     onTap: () {
                       updateContent(2);
                       print('clicked bonuses button');
                     },
-                    child: Image.asset(
-                      "assets/images/Affiliate/bonuses button passive.png",
-                      width: width / 3.4,
-                    ),
+                    child: selectedButton == 2
+                        ? Image.asset(
+                            "assets/images/Affiliate/bonuses button active.png",
+                            width: width / 3.4,
+                          )
+                        : Image.asset(
+                            "assets/images/Affiliate/bonuses button passive.png",
+                            width: width / 3.4,
+                          ),
                   ),
                   GestureDetector(
                     onTap: () {
                       updateContent(1);
                     },
-                    child: Image.asset(
-                      "assets/images/Affiliate/affiliate button active (2).png",
-                      width: width / 3.4,
-                    ),
+                    child: selectedButton == 1
+                        ? Image.asset(
+                            "assets/images/Affiliate/affiliate button active (2).png",
+                            width: width / 3.4,
+                          )
+                        : Image.asset(
+                            "assets/images/Affiliate/affiliate button passive (2).png",
+                            width: width / 3.4,
+                          ),
                   ),
                   Image.asset(
                     "assets/images/Affiliate/info button active (2).png",
@@ -81,12 +91,12 @@ class _AffiliateButtonViewWidgetState extends State<AffiliateButtonViewWidget> {
                   )
                 ],
               ),
-              Container(
+              SizedBox(
                 height: height / 1.08,
                 width: width,
                 child: selectedButton == 1
-                    ? AffiliateViewWidget()
-                    : BonusesViewWidget(),
+                    ? const AffiliateViewWidget()
+                    : const BonusesViewWidget(),
               ),
             ],
           )

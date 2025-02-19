@@ -26,7 +26,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
               child: Dialog(
                 alignment: Alignment.topCenter,
                 backgroundColor: Colors.transparent,
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.sizeOf(context).height / 2,
                   width: MediaQuery.sizeOf(context).width,
                   child: Stack(
@@ -73,7 +73,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                         )
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 8,
                                     ),
                                     Stack(
@@ -105,7 +105,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                         )
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 8,
                                     ),
                                     Stack(
@@ -137,7 +137,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                         )
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 8,
                                     ),
                                     Image.asset(
@@ -145,7 +145,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                             MediaQuery.sizeOf(context).width /
                                                 2.7,
                                         "assets/images/cashier/deposit/Alert placeholder.png"),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     GestureDetector(
@@ -167,7 +167,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                             MediaQuery.sizeOf(context).width /
                                                 2.7,
                                         "assets/images/cashier/deposit/qr code frame.png"),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Stack(
@@ -178,12 +178,12 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                                 2.5,
                                             "assets/images/cashier/withdraw/Revceival code.png"),
                                         Container(
-                                          padding: EdgeInsets.only(
+                                          padding: const EdgeInsets.only(
                                               left: 20, top: 35),
                                           width:
                                               MediaQuery.sizeOf(context).width /
                                                   3,
-                                          child: Text(
+                                          child: const Text(
                                             "Fds133kjdf3kkdf389fjsdflkASDF fdkljkj345",
                                             style: TextStyle(
                                               fontSize: 12,
@@ -194,7 +194,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                         )
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Image.asset(

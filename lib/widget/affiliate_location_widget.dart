@@ -38,7 +38,7 @@ class _AffiliateLocationWidgetState extends State<AffiliateLocationWidget> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              AffiliateTextFieldWidget(
+                              const AffiliateTextFieldWidget(
                                 hintText: "Your new location",
                               ),
                               GestureDetector(

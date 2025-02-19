@@ -258,7 +258,7 @@ class _TopWinnersWidgetState extends State<TopWinnersWidget> {
                     ),
                     Row(
                       children: [
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                             text: "won/hour",
                             color: Colors.white,
                             fontSize: 10),

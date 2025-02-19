@@ -21,7 +21,7 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
     final height = MediaQuery.sizeOf(context).height;
     return Column(
       children: [
-        Row(
+        const Row(
           children: [AffiliateBalanceSection(), AffiliatePlayersSection()],
         ),
         Row(
@@ -35,7 +35,7 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                 Positioned(
                   top: 12,
                   left: width / 2.7,
-                  child: Text(
+                  child: const Text(
                     "\$50,000",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -51,7 +51,7 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                 Positioned(
                   top: 12,
                   left: width / 2.7,
-                  child: Text(
+                  child: const Text(
                     "\$36,214",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -133,7 +133,7 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                       itemBuilder: (context, index) {
                         int actualIndex =
                             (currentPage - 1) * itemsPerPage + index;
-                        if (actualIndex >= totalItems) return SizedBox();
+                        if (actualIndex >= totalItems) return const SizedBox();
                         return Column(
                           children: [
                             Stack(
@@ -157,12 +157,12 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                                         children: [
                                           Text(
                                             "ID:#${actualIndex + 1}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          Text(
+                                          const Text(
                                             "CHARLIE007",
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -175,28 +175,28 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                                         "assets/images/Affiliate/SEND BUTTON ALERT.png",
                                         width: width / 8,
                                       ),
-                                      Text(
+                                      const Text(
                                         "\$432,678",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
                                       ),
-                                      Text(
+                                      const Text(
                                         "\$43,632",
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
                                       ),
-                                      Text(
+                                      const Text(
                                         "\$50,000",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
                                       ),
-                                      Text(
+                                      const Text(
                                         "\$500",
                                         style: TextStyle(
                                             color: Colors.white,
@@ -213,7 +213,7 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Row(
