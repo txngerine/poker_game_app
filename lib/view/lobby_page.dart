@@ -10,8 +10,6 @@ import 'package:pokerpad/widget/cashier_button_widget.dart';
 import 'package:pokerpad/widget/elevated_button_custom.dart';
 import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/profile_button_widget.dart';
-import 'package:pokerpad/widget/top_monthly_winners.dart';
-import 'package:pokerpad/widget/top_yearly_winners.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
 import 'package:pokerpad/widget/winners_widget.dart';
 
@@ -274,65 +272,71 @@ class _LobbyPageState extends State<LobbyPage> {
                               showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return Dialog(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          )),
-                                      height: height / 5,
-                                      width: width / 1.3,
-                                      child: Column(
-                                        children: [
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          const BuildSubHeadingText(
-                                              text: "Top winners",
-                                              color: Colors.white),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return const TopMonthlyWinners();
-                                                    },
-                                                  );
-                                                },
-                                                child: Image.asset(
-                                                  width: width,
-                                                  "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return const TopYearlyWinners();
-                                                    },
-                                                  );
-                                                },
-                                                child: Image.asset(
-                                                  width: width,
-                                                  "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                  return WinnersWidget();
                                 },
                               );
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (context) {
+                              //     return Dialog(
+                              //       child: Container(
+                              //         decoration: BoxDecoration(
+                              //             border:
+                              //                 Border.all(color: Colors.white),
+                              //             color: Colors.black,
+                              //             borderRadius: BorderRadius.circular(
+                              //               20,
+                              //             )),
+                              //         height: height / 5,
+                              //         width: width / 1.3,
+                              //         child: Column(
+                              //           children: [
+                              //             const SizedBox(
+                              //               height: 10,
+                              //             ),
+                              //             const BuildSubHeadingText(
+                              //                 text: "Top winners",
+                              //                 color: Colors.white),
+                              //             Column(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment.center,
+                              //               children: [
+                              //                 GestureDetector(
+                              //                   onTap: () {
+                              //                     showDialog(
+                              //                       context: context,
+                              //                       builder: (context) {
+                              //                         return const TopMonthlyWinners();
+                              //                       },
+                              //                     );
+                              //                   },
+                              //                   child: Image.asset(
+                              //                     width: width,
+                              //                     "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
+                              //                   ),
+                              //                 ),
+                              //                 GestureDetector(
+                              //                   onTap: () {
+                              //                     showDialog(
+                              //                       context: context,
+                              //                       builder: (context) {
+                              //                         return const TopYearlyWinners();
+                              //                       },
+                              //                     );
+                              //                   },
+                              //                   child: Image.asset(
+                              //                     width: width,
+                              //                     "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
+                              //                   ),
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     );
+                              //   },
+                              // );
                             },
                             child: Image.asset(
                               "assets/images/lobby/Poker card.jpg",
