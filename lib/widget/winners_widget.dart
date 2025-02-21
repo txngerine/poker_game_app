@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/monthly_winners_view_widget.dart';
-import 'package:pokerpad/widget/monthly_winners_widget.dart';
+import 'package:pokerpad/widget/yearly_winners_view.dart';
 
 import 'build_sub_heading_text.dart';
 
@@ -37,111 +37,154 @@ class _WinnersWidgetState extends State<WinnersWidget> {
             color: Colors.black,
             borderRadius: BorderRadius.circular(30),
           ),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              selectButton == 1
-                  ? BuildSubHeadingText(
-                      text: "Top February winners", color: Colors.white)
-                  : BuildSubHeadingText(
-                      text: "Top winners of 2025", color: Colors.white),
-              const SizedBox(height: 20),
-              Stack(
-                children: [
-                  Image.asset(
-                      "assets/images/lobby/top winners/Top Winners Header Button BG.png"),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                selectButton == 1
+                    ? BuildSubHeadingText(
+                        text: "Top February winners", color: Colors.white)
+                    : BuildSubHeadingText(
+                        text: "Top winners of 2025", color: Colors.white),
+                const SizedBox(height: 20),
+                Stack(
+                  children: [
+                    Image.asset(
+                        "assets/images/lobby/top winners/Top Winners Header Button BG.png"),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              updateContent(1);
+                            },
+                            child: selectButton == 1
+                                ? Image.asset(
+                                    width: width / 2.2,
+                                    "assets/images/lobby/top winners/Monthly Winners Button Active.png",
+                                  )
+                                : Image.asset(
+                                    width: width / 2.2,
+                                    "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
+                                  ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              updateContent(2);
+                            },
+                            child: selectButton == 2
+                                ? Image.asset(
+                                    width: width / 2.2,
+                                    "assets/images/lobby/top winners/Yearly Winners Button Active.png",
+                                  )
+                                : Image.asset(
+                                    width: width / 2.2,
+                                    "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    BuildSubHeadingText(
+                      text: "  Players",
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                    BuildSubHeadingText(
+                      text: "  Rank",
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                    BuildSubHeadingText(
+                      text: "  Won/Hour",
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                    BuildSubHeadingText(
+                      text: "  Winnings",
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Image.asset(
+                        "assets/images/lobby/top winners/hero rank holder.png"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            updateContent(1);
-                          },
-                          child: selectButton == 1
-                              ? Image.asset(
-                                  width: width / 2.2,
-                                  "assets/images/lobby/top winners/Monthly Winners Button Active.png",
-                                )
-                              : Image.asset(
-                                  width: width / 2.2,
-                                  "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
-                                ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Image.asset(
+                                width: width / 9,
+                                "assets/images/lobby/top winners/hero avatar holder.png",
+                              ),
+                            ),
+                            BuildSubHeadingText(
+                              text: "charlie007",
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            updateContent(2);
-                          },
-                          child: selectButton == 2
-                              ? Image.asset(
-                                  width: width / 2.2,
-                                  "assets/images/lobby/top winners/Yearly Winners Button Active.png",
-                                )
-                              : Image.asset(
-                                  width: width / 2.2,
-                                  "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
-                                ),
+                        BuildSubHeadingText(
+                          text: "17",
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        BuildSubHeadingText(
+                          text: "\$20",
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        BuildSubHeadingText(
+                          text: "\$100,000",
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              Stack(
-                children: [
-                  Image.asset("assets/images/lobby/top winners/Hero Frame.png"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Image.asset(
-                          width: width / 9,
-                          "assets/images/lobby/top winners/Players Avatar BG.png",
-                        ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Container(
+                      width: width,
+                      height: height / 1.424,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      const BuildSubHeadingText(
-                          text: "charlie007", fontSize: 10),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          BuildSubHeadingText(text: "  Rank", fontSize: 10),
-                          BuildSubHeadingText(text: "17", fontSize: 14),
-                        ],
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          BuildSubHeadingText(text: "won/hour", fontSize: 10),
-                          BuildSubHeadingText(text: "\$20", fontSize: 14),
-                        ],
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          BuildSubHeadingText(text: "winnings", fontSize: 10),
-                          BuildSubHeadingText(text: "\$100,000", fontSize: 14),
-                        ],
-                      ),
-                      const SizedBox(width: 20),
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Container(
-                    width: width,
-                    height: height / 1.4,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: selectButton == 1
-                        ? MonthlyWinnersViewWidget()
-                        : MonthlyWinnersWidget()),
-              )
-            ],
+                      child: selectButton == 1
+                          ? MonthlyWinnersViewWidget()
+                          : YearlyWinnersView()),
+                )
+              ],
+            ),
           ),
         ),
       ),

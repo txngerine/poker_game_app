@@ -4,15 +4,25 @@ import 'build_sub_heading_text.dart';
 
 class TopMonthlyWinners extends StatefulWidget {
   const TopMonthlyWinners({super.key});
+
   @override
   State<TopMonthlyWinners> createState() => _TopMonthlyWinnersState();
 }
 
 class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+
     return Padding(
       padding:
           EdgeInsets.only(left: 20, right: 20, bottom: 10, top: height / 15),
@@ -75,60 +85,80 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: SizedBox(
-                    height: height / 1.28,
-                    width: width / 1.2,
-                    child: ListView.builder(
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return Stack(
-                          children: [
-                            Image.asset(
-                                "assets/images/Affiliate/2nd layer box.png"),
-                            Padding(
-                              padding: EdgeInsets.only(right: width / 12),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Image.asset(
-                                      "assets/images/lobby/top winners/Players Avatar BG.png",
-                                      width: width / 12,
-                                    ),
+                  height: height / 1.28,
+                  width: width / 1.2,
+                  child: ScrollbarTheme(
+                    data: ScrollbarThemeData(
+                      thumbColor: MaterialStateProperty.all(
+                          Colors.white), // White scrollbar
+                      // trackColor: MaterialStateProperty.all(
+                      //     Colors.grey[800]), // Dark track
+                      radius: const Radius.circular(10),
+                      thickness: MaterialStateProperty.all(
+                          18), // Thickness of scrollbar
+                    ),
+                    child: Scrollbar(
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      trackVisibility: true,
+                      interactive: true, // Enables scrollbar dragging
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: 200,
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              children: [
+                                Image.asset(
+                                    "assets/images/Affiliate/2nd layer box.png"),
+                                Padding(
+                                  padding: EdgeInsets.only(right: width / 12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Image.asset(
+                                          "assets/images/lobby/top winners/Players Avatar BG.png",
+                                          width: width / 12,
+                                        ),
+                                      ),
+                                      const BuildSubHeadingText(
+                                        text: "Charlie007",
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                      const BuildSubHeadingText(
+                                        text: "\$100,000",
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                      const BuildSubHeadingText(
+                                        text: "won/hour",
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                      const BuildSubHeadingText(
+                                        text: "\$20",
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ],
                                   ),
-                                  const BuildSubHeadingText(
-                                    text: "Charlie007",
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                  const BuildSubHeadingText(
-                                    text: "\$100,000",
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                  const BuildSubHeadingText(
-                                    text: "won/hour",
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                  const BuildSubHeadingText(
-                                    text: "\$20",
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    )),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               )
             ],
           ),

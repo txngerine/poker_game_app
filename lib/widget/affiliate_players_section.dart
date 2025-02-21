@@ -66,35 +66,70 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                                       const EdgeInsets.only(left: 30, top: 30),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      const Row(
+                                      Row(
                                         children: [
                                           Column(
                                             children: [
-                                              CustomTextFieldWidget(
+                                              const CustomTextFieldWidget(
                                                   hintText:
                                                       "Transfer to player ID:"),
-                                              CustomTextFieldWidget(
+                                              const CustomTextFieldWidget(
                                                   hintText:
                                                       "Transfer Amount\$:"),
-                                              CustomTextFieldWidget(
+                                              const CustomTextFieldWidget(
                                                   hintText: "Password"),
+                                              Image.asset(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width /
+                                                          3,
+                                                  "assets/images/cashier/withdraw/forgot password.png"),
+                                              SizedBox(
+                                                height: height / 14,
+                                              ),
+                                              Image.asset(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width /
+                                                          2.7,
+                                                  "assets/images/cashier/deposit/Alert placeholder.png"),
                                             ],
                                           ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.black,
+                                            ),
+                                            width: width / 3,
+                                            height: height / 3.3,
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: height / 14,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 2, right: 2),
+                                                  child: Image.asset(
+                                                      width: width / 3,
+                                                      // height: height / 3.3,
+                                                      fit: BoxFit.contain,
+                                                      "assets/images/person outline.png"),
+                                                ),
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
                                       Row(
-                                        children: [
-                                          Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  3,
-                                              "assets/images/cashier/withdraw/forgot password.png"),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
+                                        children: [],
                                       ),
                                       Row(
                                         children: [
