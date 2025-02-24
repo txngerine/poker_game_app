@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
+import 'package:pokerpad/view/lobby_avatar_view.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
@@ -214,22 +215,34 @@ class _LobbyPageState extends State<LobbyPage> {
                           borderRadius: BorderRadius.circular(20),
                           child: Stack(
                             children: [
-                              Image.network(
-                                width: MediaQuery.of(context).size.width / 2.1,
-                                height:
-                                    MediaQuery.of(context).size.height / 2.7,
-
-                                widget.avatar ?? "", // Use empty string if null
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    "assets/images/user_img.png", // Fallback image
-                                    fit: BoxFit.cover,
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return LobbyAvatarView();
+                                    },
                                   );
                                 },
+                                child: Image.network(
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 2.7,
+
+                                  widget.avatar ??
+                                      "", // Use empty string if null
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      "assets/images/user_img.png", // Fallback image
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(18.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -346,7 +359,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 74, top: 5),
+                        padding: const EdgeInsets.only(left: 74, top: 8),
                         child: BuildSubHeadingText(
                           text: "Top winners",
                           color: Colors.white,

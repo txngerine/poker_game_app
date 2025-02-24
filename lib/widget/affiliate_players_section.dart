@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/view/history_button_view.dart';
 
 import 'custom_text_field_widget.dart';
 
@@ -35,7 +36,14 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  print("history button clicked");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HistoryButtonView(),
+                      ));
+                },
                 child: Image.asset(
                   "assets/images/Affiliate/Aff History Button .png",
                   width: width / 5,
@@ -128,9 +136,9 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                                           )
                                         ],
                                       ),
-                                      Row(
-                                        children: [],
-                                      ),
+                                      // Row(
+                                      //   children: [],
+                                      // ),
                                       Row(
                                         children: [
                                           GestureDetector(

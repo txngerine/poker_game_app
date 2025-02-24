@@ -12,9 +12,6 @@ class BonusesViewWidget extends StatefulWidget {
 }
 
 class _BonusesViewWidgetState extends State<BonusesViewWidget> {
-  int currentPage = 1;
-  final int itemsPerPage = 4;
-  final int totalItems = 47;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -130,14 +127,15 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: height / 1.76,
+                  Container(
+                    height: height / 1.495,
                     child: ListView.builder(
-                      itemCount: itemsPerPage,
+                      padding: EdgeInsets.zero,
+                      itemCount: 10,
                       itemBuilder: (context, index) {
-                        int actualIndex =
-                            (currentPage - 1) * itemsPerPage + index;
-                        if (actualIndex >= totalItems) return const SizedBox();
+                        // int actualIndex =
+                        //     (currentPage - 1) * itemsPerPage + index;
+                        // if (actualIndex >= totalItems) return const SizedBox();
                         return Column(
                           children: [
                             Stack(
@@ -167,7 +165,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                                             height: 10,
                                           ),
                                           Text(
-                                            "ID:#${actualIndex + 1}",
+                                            "ID:#${index + 1}",
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.white,
@@ -292,41 +290,41 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          if (currentPage > 1) {
-                            setState(() {
-                              currentPage--;
-                            });
-                          }
-                        },
-                        child: Image.asset(
-                            "assets/images/Affiliate/previous page.png",
-                            width: width / 10),
-                      ),
-                      Text("$currentPage/${(totalItems / itemsPerPage).ceil()}",
-                          style: const TextStyle(color: Colors.white)),
-                      GestureDetector(
-                        onTap: () {
-                          if (currentPage <
-                              (totalItems / itemsPerPage).ceil()) {
-                            setState(() {
-                              currentPage++;
-                            });
-                          }
-                        },
-                        child: Image.asset(
-                            "assets/images/Affiliate/next page.png",
-                            width: width / 10),
-                      ),
-                    ],
-                  )
+                  // const SizedBox(
+                  //   height: 25,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         if (currentPage > 1) {
+                  //           setState(() {
+                  //             currentPage--;
+                  //           });
+                  //         }
+                  //       },
+                  //       child: Image.asset(
+                  //           "assets/images/Affiliate/previous page.png",
+                  //           width: width / 10),
+                  //     ),
+                  //     Text("$currentPage/${(totalItems / itemsPerPage).ceil()}",
+                  //         style: const TextStyle(color: Colors.white)),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         if (currentPage <
+                  //             (totalItems / itemsPerPage).ceil()) {
+                  //           setState(() {
+                  //             currentPage++;
+                  //           });
+                  //         }
+                  //       },
+                  //       child: Image.asset(
+                  //           "assets/images/Affiliate/next page.png",
+                  //           width: width / 10),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

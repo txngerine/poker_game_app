@@ -29,7 +29,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                 height: MediaQuery.sizeOf(context).height / 1.1,
                 width: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xff272829),
                     borderRadius: BorderRadius.circular(
                       35,
                     )),
@@ -49,7 +49,10 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              const BuildSubHeadingText(text: "whateverman"),
+                              const BuildSubHeadingText(
+                                text: "whateverman",
+                                color: Colors.white,
+                              ),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -62,7 +65,10 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  BuildTextWidget(text: "whateverman@gmail.com")
+                                  BuildTextWidget(
+                                    text: "whateverman@gmail.com",
+                                    color: Colors.white70,
+                                  )
                                 ],
                               ),
                               const SizedBox(
@@ -80,6 +86,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                                   ),
                                   BuildTextWidget(
                                     text: "8086433988",
+                                    color: Colors.white70,
                                   )
                                 ],
                               ),
@@ -98,6 +105,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                                   ),
                                   BuildTextWidget(
                                     text: "Ernakulam",
+                                    color: Colors.white70,
                                   )
                                 ],
                               ),
@@ -123,8 +131,8 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                                           hintMaxLines: 6,
                                           hintText:
                                               "Introduce yourself.Which local casinos do you frequent and which games do you usually play? invite your players to reach out to you in case they need any type of assistance!",
-                                          hintStyle:
-                                              const TextStyle(color: Colors.white70),
+                                          hintStyle: const TextStyle(
+                                              color: Colors.white70),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20),
@@ -159,7 +167,8 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                               decoration: InputDecoration(
                                 hintText:
                                     "What is the best way to contact you? Do you have whatsapp",
-                                hintStyle: const TextStyle(color: Colors.white70),
+                                hintStyle:
+                                    const TextStyle(color: Colors.white70),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide.none,

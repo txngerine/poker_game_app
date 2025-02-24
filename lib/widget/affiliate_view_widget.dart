@@ -12,9 +12,9 @@ class AffiliateViewWidget extends StatefulWidget {
 }
 
 class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
-  int currentPage = 1;
-  final int itemsPerPage = 8;
-  final int totalItems = 47;
+  // int currentPage = 1;
+  // final int itemsPerPage = 8;
+  // final int totalItems = 47;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -126,14 +126,17 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: height / 1.76,
+                  Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    // color: Colors.red,
+                    height: height / 1.515,
                     child: ListView.builder(
-                      itemCount: itemsPerPage,
+                      itemCount: 20,
                       itemBuilder: (context, index) {
-                        int actualIndex =
-                            (currentPage - 1) * itemsPerPage + index;
-                        if (actualIndex >= totalItems) return const SizedBox();
+                        // int actualIndex =
+                        //     (currentPage - 1) * itemsPerPage + index;
+                        // if (actualIndex >= totalItems) return const SizedBox();
                         return Column(
                           children: [
                             Stack(
@@ -156,7 +159,7 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                                       Column(
                                         children: [
                                           Text(
-                                            "ID:#${actualIndex + 1}",
+                                            "ID:#${index + 1}",
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.white,
@@ -216,38 +219,38 @@ class _AffiliateViewWidgetState extends State<AffiliateViewWidget> {
                   const SizedBox(
                     height: 25,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          if (currentPage > 1) {
-                            setState(() {
-                              currentPage--;
-                            });
-                          }
-                        },
-                        child: Image.asset(
-                            "assets/images/Affiliate/previous page.png",
-                            width: width / 10),
-                      ),
-                      Text("$currentPage/${(totalItems / itemsPerPage).ceil()}",
-                          style: const TextStyle(color: Colors.white)),
-                      GestureDetector(
-                        onTap: () {
-                          if (currentPage <
-                              (totalItems / itemsPerPage).ceil()) {
-                            setState(() {
-                              currentPage++;
-                            });
-                          }
-                        },
-                        child: Image.asset(
-                            "assets/images/Affiliate/next page.png",
-                            width: width / 10),
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         if (currentPage > 1) {
+                  //           setState(() {
+                  //             currentPage--;
+                  //           });
+                  //         }
+                  //       },
+                  //       child: Image.asset(
+                  //           "assets/images/Affiliate/previous page.png",
+                  //           width: width / 10),
+                  //     ),
+                  //     Text("$currentPage/${(totalItems / itemsPerPage).ceil()}",
+                  //         style: const TextStyle(color: Colors.white)),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         if (currentPage <
+                  //             (totalItems / itemsPerPage).ceil()) {
+                  //           setState(() {
+                  //             currentPage++;
+                  //           });
+                  //         }
+                  //       },
+                  //       child: Image.asset(
+                  //           "assets/images/Affiliate/next page.png",
+                  //           width: width / 10),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

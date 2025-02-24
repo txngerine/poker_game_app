@@ -22,6 +22,7 @@ class _BuildSubHeadingTextState extends State<BuildSubHeadingText> {
     return Text(
       widget.text,
       style: TextStyle(
+        decoration: TextDecoration.none,
         color: widget.color,
         fontFamily: "CustomFont",
         fontSize: widget.fontSize ?? 20,
