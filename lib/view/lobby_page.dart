@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/view/lobby_avatar_view.dart';
@@ -402,17 +403,26 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => GameView(
-                                playerResponse: widget.playerResponse,
-                                buttonId: 100,
-                              ),
-                            ),
-                          ).then((_) {
+                                  context,
+                                  PageTransition(
+                                      child: GameView(),
+                                      type: PageTransitionType.fade))
+                              .then((_) {
                             SystemChrome.setEnabledSystemUIMode(
                                 SystemUiMode.immersiveSticky);
                           });
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => GameView(
+                          //       playerResponse: widget.playerResponse,
+                          //       buttonId: 100,
+                          //     ),
+                          //   ),
+                          // ).then((_) {
+                          //   SystemChrome.setEnabledSystemUIMode(
+                          //       SystemUiMode.immersiveSticky);
+                          // });
                         },
                         child: Image.asset(
                           fit: BoxFit.fill,
