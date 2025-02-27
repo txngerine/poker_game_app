@@ -41,11 +41,11 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                   child: Stack(
                     children: [
                       Image.asset(
-                        'assets/images/cashier/withdraw/deposit frame.png',
+                        'assets/images/CASHIER Button/WITHDRAWAL/bank  frame.png',
                         fit: BoxFit.cover,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 30, top: 30),
+                        padding: const EdgeInsets.only(left: 50, top: 50),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -56,67 +56,69 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     Image.asset(
                                         width:
                                             MediaQuery.sizeOf(context).width /
-                                                2.7,
-                                        "assets/images/cashier/withdraw/select currcnecy.png"),
+                                                2.9,
+                                        "assets/images/CASHIER Button/WITHDRAWAL/currency holder.png"),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 10, top: 40),
+                                          left: 5, top: 30),
                                       child: Row(
                                         children: [
                                           Image.asset(
                                               width: MediaQuery.sizeOf(context)
                                                       .width /
-                                                  6,
-                                              "assets/images/cashier/withdraw/usdc button.png"),
+                                                  6.1,
+                                              "assets/images/CASHIER Button/WITHDRAWAL/usdc button.png"),
                                           Image.asset(
                                               width: MediaQuery.sizeOf(context)
                                                       .width /
-                                                  6,
-                                              "assets/images/cashier/withdraw/usdt button.png")
+                                                  6.1,
+                                              "assets/images/CASHIER Button/WITHDRAWAL/usdt button.png")
                                         ],
                                       ),
                                     )
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    print("clicked");
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const QrScanPage(),
-                                        ));
-                                    // showDialog(
-                                    //   context: context,
-                                    //   builder: (context) {
-                                    //     return Dialog(
-                                    //       child: SizedBox(
-                                    //         height: height / 2,
-                                    //         width: width,
-                                    //         child: MobileScanner(
-                                    //           controller: controller,
-                                    //           onDetect: (capture) {
-                                    //             final barcode =
-                                    //                 capture.barcodes.first;
-                                    //             controller.dispose();
-                                    //             Navigator.pop(
-                                    //                 context, barcode.rawValue);
-                                    //             print(
-                                    //                 "00000000000000000000000000000000000000000000000000000000000000000");
-                                    //             print(
-                                    //                 "barcode values${barcode.rawValue}");
-                                    //           },
-                                    //         ),
-                                    //       ),
-                                    //     );
-                                    //   },
-                                    // );
-                                  },
-                                  child: Image.asset(
-                                      width: MediaQuery.sizeOf(context).width /
-                                          2.5,
-                                      "assets/images/cashier/withdraw/scan qr code.png"),
-                                )
+                                Stack(
+                                  children: [
+                                    Image.asset(
+                                        width: width / 2.9,
+                                        "assets/images/CASHIER Button/WITHDRAWAL/receival address holder.png"),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 23, left: 16),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    QrScanPage(),
+                                              ));
+                                        },
+                                        child: Image.asset(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width /
+                                                3.5,
+                                            "assets/images/cashier/withdraw/scan qr code.png"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     print("clicked");
+                                //     Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //           builder: (context) =>
+                                //               const QrScanPage(),
+                                //         ));
+                                //   },
+                                //   child: Image.asset(
+                                //       width: MediaQuery.sizeOf(context).width /
+                                //           2.5,
+                                //       "assets/images/cashier/withdraw/scan qr code.png"),
+                                // )
                               ],
                             ),
                             Row(
@@ -126,25 +128,16 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     Image.asset(
                                         width:
                                             MediaQuery.sizeOf(context).width /
-                                                2.7,
-                                        "assets/images/cashier/withdraw/select network.png"),
+                                                2.9,
+                                        "assets/images/CASHIER Button/WITHDRAWAL/network holder.png"),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 10, top: 40),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  6,
-                                              "assets/images/cashier/withdraw/erc20 button.png"),
-                                          Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  6,
-                                              "assets/images/cashier/withdraw/trc20 button.png")
-                                        ],
-                                      ),
+                                          left: 10, top: 30),
+                                      child: Image.asset(
+                                          width:
+                                              MediaQuery.sizeOf(context).width /
+                                                  3.3,
+                                          "assets/images/CASHIER Button/WITHDRAWAL/erc20 button.png"),
                                     )
                                   ],
                                 ),
@@ -153,11 +146,11 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     Image.asset(
                                         width:
                                             MediaQuery.sizeOf(context).width /
-                                                2.5,
-                                        "assets/images/cashier/withdraw/Revceival code.png"),
+                                                2.9,
+                                        "assets/images/CASHIER Button/WITHDRAWAL/receival address holder.png"),
                                     Container(
-                                      padding:
-                                          const EdgeInsets.only(left: 20, top: 35),
+                                      padding: const EdgeInsets.only(
+                                          left: 20, top: 35),
                                       width:
                                           MediaQuery.sizeOf(context).width / 3,
                                       child: const Text(
@@ -178,14 +171,13 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                 Column(
                                   children: [
                                     Stack(
-                                      alignment: Alignment.center,
                                       children: [
                                         // Background Image
                                         Image.asset(
                                           "assets/images/cashier/withdraw/withdraw amount-password.png",
                                           width:
                                               MediaQuery.sizeOf(context).width /
-                                                  2.7,
+                                                  2.9,
                                           fit: BoxFit.cover,
                                         ),
 
@@ -206,7 +198,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                               textAlign: TextAlign.center,
                                               decoration:
                                                   InputDecoration.collapsed(
-                                                hintText: "Withdraw Amount",
+                                                hintText: "Deposit Amount\$",
                                                 hintStyle: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -218,50 +210,49 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                       ],
                                     ),
                                     Stack(
-                                      alignment: Alignment.center,
                                       children: [
+                                        // Background Image
                                         Image.asset(
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width /
-                                                2.7,
-                                            "assets/images/cashier/withdraw/withdraw amount-password.png"),
-                                        SizedBox(
+                                          "assets/images/cashier/withdraw/withdraw amount-password.png",
                                           width:
                                               MediaQuery.sizeOf(context).width /
-                                                  3.5,
-                                          child: const TextField(
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                            decoration:
-                                                InputDecoration.collapsed(
-                                              hintText: "Password",
-                                              hintStyle: TextStyle(
-                                                  color: Colors.white),
+                                                  2.9,
+                                          fit: BoxFit.cover,
+                                        ),
+
+                                        // TextField without border
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 15), // Adjust as needed
+                                          child: SizedBox(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width /
+                                                3.5, // To fit inside the image
+                                            child: const TextField(
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              decoration:
+                                                  InputDecoration.collapsed(
+                                                hintText: "Password",
+                                                hintStyle: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              keyboardType: TextInputType.text,
                                             ),
                                           ),
-                                        )
+                                        ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                                 Image.asset(
-                                    width:
-                                        MediaQuery.sizeOf(context).width / 2.5,
-                                    "assets/images/cashier/withdraw/alert placeholder.png")
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
                                     width: MediaQuery.sizeOf(context).width / 3,
-                                    "assets/images/cashier/withdraw/forgot password.png"),
+                                    "assets/images/CASHIER Button/WITHDRAWAL/withdraw alert holder.png")
                               ],
-                            ),
-                            const SizedBox(
-                              height: 5,
                             ),
                             Row(
                               children: [
@@ -271,18 +262,21 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                   },
                                   child: Image.asset(
                                       width: MediaQuery.sizeOf(context).width /
-                                          2.7,
-                                      "assets/images/cashier/withdraw/cancel button.png"),
+                                          2.9,
+                                      "assets/images/CASHIER Button/WITHDRAWAL/deposit button black.png"),
                                 ),
                                 const SizedBox(
                                   width: 5,
                                 ),
                                 Image.asset(
                                     width:
-                                        MediaQuery.sizeOf(context).width / 2.7,
+                                        MediaQuery.sizeOf(context).width / 2.9,
                                     "assets/images/cashier/withdraw/withdraw button.png")
                               ],
-                            )
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                           ],
                         ),
                       )

@@ -91,6 +91,9 @@ flutter:
      - assets/images/lobby/top winners/
      - assets/images/Affiliate/bonus/
      - assets/images/Affiliate/history/
+     - assets/images/CASHIER Button/DEPOSIT/
+     - assets/images/CASHIER Button/WITHDRAWAL/
+     - assets/images/CASHIER Button/TRANSFER/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

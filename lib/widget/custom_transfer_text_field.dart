@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFieldWidget extends StatefulWidget {
+class CustomTransferTextField extends StatelessWidget {
   final String hintText;
-  final double? width;
   final TextInputType? keyboardType;
-  const CustomTextFieldWidget(
-      {super.key, required this.hintText, this.keyboardType, this.width});
+  const CustomTransferTextField(
+      {super.key, required this.hintText, this.keyboardType});
 
-  @override
-  State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
-}
-
-class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     return Stack(
       alignment: Alignment.center,
       children: [
         // Background Image
         Image.asset(
           "assets/images/cashier/withdraw/withdraw amount-password.png",
-          width: MediaQuery.sizeOf(context).width / 2.7,
+          width: MediaQuery.sizeOf(context).width / 2.9,
           fit: BoxFit.cover,
         ),
 
@@ -38,14 +34,15 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
               ),
               textAlign: TextAlign.center,
               decoration: InputDecoration.collapsed(
-                hintText: widget.hintText,
+                hintText: hintText,
                 hintStyle: const TextStyle(color: Colors.white),
               ),
-              keyboardType: widget.keyboardType ?? TextInputType.number,
+              keyboardType: keyboardType ?? TextInputType.number,
             ),
           ),
         ),
       ],
     );
+    ;
   }
 }
