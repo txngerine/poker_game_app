@@ -107,7 +107,7 @@ class _HistoryButtonViewState extends State<HistoryButtonView> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w100,
                                                 ),
-                                                BuildSubHeadingText(
+                                                const BuildSubHeadingText(
                                                   text: "CHARLIE007",
                                                   color: Colors.white70,
                                                   fontSize: 10,
@@ -119,22 +119,22 @@ class _HistoryButtonViewState extends State<HistoryButtonView> {
                                         ),
                                         Row(
                                           children: [
-                                            BuildSubHeadingText(
+                                            const BuildSubHeadingText(
                                               text: "15:38UTC",
                                               color: Colors.white70,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w100,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 20,
                                             ),
-                                            BuildSubHeadingText(
+                                            const BuildSubHeadingText(
                                               text: "02/13/2025",
                                               color: Colors.white70,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w100,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 20,
                                             ),
                                             BuildSubHeadingText(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
+import 'package:pokerpad/provider/currency_button_provider.dart';
+import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/view/qr_scan_page.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +18,14 @@ class WithdrawButtonWidget extends StatefulWidget {
 class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
   String scannedCode = ""; // Store scanned QR code
   final MobileScannerController controller = MobileScannerController();
+  int selectedButton = 1;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<CashierButtonProvider>(context);
+    final qrProvider = Provider.of<QrProvider>(context);
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
@@ -63,16 +67,73 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                           left: 5, top: 30),
                                       child: Row(
                                         children: [
-                                          Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  6.1,
-                                              "assets/images/CASHIER Button/WITHDRAWAL/usdc button.png"),
-                                          Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  6.1,
-                                              "assets/images/CASHIER Button/WITHDRAWAL/usdt button.png")
+                                          GestureDetector(
+                                            onTap: () {
+                                              context
+                                                  .read<
+                                                      CurrencyButtonProvider>()
+                                                  .selectButton(1);
+                                            },
+                                            child: Consumer<
+                                                CurrencyButtonProvider>(
+                                              builder:
+                                                  (context, provider, child) {
+                                                return provider
+                                                            .selectedButton ==
+                                                        1
+                                                    ? Image.asset(
+                                                        "assets/images/CASHIER Button/WITHDRAWAL/selected_usdc.png",
+                                                        width:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width /
+                                                                6.1,
+                                                      )
+                                                    : Image.asset(
+                                                        "assets/images/CASHIER Button/WITHDRAWAL/usdc button.png",
+                                                        width:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width /
+                                                                6.1,
+                                                      );
+                                              },
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              context
+                                                  .read<
+                                                      CurrencyButtonProvider>()
+                                                  .selectButton(
+                                                      2); // Update the selected button using the provider
+                                            },
+                                            child: Consumer<
+                                                CurrencyButtonProvider>(
+                                              builder:
+                                                  (context, provider, child) {
+                                                return provider
+                                                            .selectedButton ==
+                                                        2
+                                                    ? Image.asset(
+                                                        "assets/images/CASHIER Button/WITHDRAWAL/selected_usdt.png",
+                                                        width:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width /
+                                                                6.1,
+                                                      )
+                                                    : Image.asset(
+                                                        "assets/images/CASHIER Button/WITHDRAWAL/usdt button.png",
+                                                        width:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width /
+                                                                6.1,
+                                                      );
+                                              },
+                                            ),
+                                          )
                                         ],
                                       ),
                                     )
@@ -87,19 +148,29 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                       padding: const EdgeInsets.only(
                                           top: 23, left: 16),
                                       child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    QrScanPage(),
-                                              ));
+                                        onTap: () async {
+                                          final scannedValue =
+                                              await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const QrScanPage(),
+                                            ),
+                                          );
+
+                                          if (scannedValue != null) {
+                                            setState(() {
+                                              scannedCode =
+                                                  scannedValue; // Update state with scanned value
+                                            });
+                                          }
                                         },
                                         child: Image.asset(
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width /
-                                                3.5,
-                                            "assets/images/cashier/withdraw/scan qr code.png"),
+                                          width:
+                                              MediaQuery.sizeOf(context).width /
+                                                  3.5,
+                                          "assets/images/cashier/withdraw/scan qr code.png",
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -149,19 +220,24 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                                 2.9,
                                         "assets/images/CASHIER Button/WITHDRAWAL/receival address holder.png"),
                                     Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, top: 35),
-                                      width:
-                                          MediaQuery.sizeOf(context).width / 3,
-                                      child: const Text(
-                                        "",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.white,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ),
-                                    )
+                                        padding: const EdgeInsets.only(
+                                            left: 20, top: 35),
+                                        width:
+                                            MediaQuery.sizeOf(context).width /
+                                                3,
+                                        child: Consumer<QrProvider>(
+                                          builder:
+                                              (context, qrProvider, child) {
+                                            return Text(
+                                              qrProvider.scannedCode,
+                                              style: const TextStyle(
+                                                fontSize: 8,
+                                                color: Colors.white,
+                                                overflow: TextOverflow.clip,
+                                              ),
+                                            );
+                                          },
+                                        ))
                                   ],
                                 )
                               ],
@@ -274,7 +350,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     "assets/images/cashier/withdraw/withdraw button.png")
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                           ],

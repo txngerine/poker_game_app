@@ -14,7 +14,8 @@ import '../constants/screen_size.dart';
 import '../widget/build_text_field_widget.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final String? deviceId;
+  const RegisterPage({super.key, this.deviceId});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -73,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final requestModel = SignupRequestModel(
         email: emailController.text,
         password: passwordController.text,
-        deviceId: 1,
+        deviceId: widget.deviceId.toString(),
         accountNo: "A020241027101417");
     try {
       final response = await _signupController.signup(requestModel);
@@ -127,6 +128,13 @@ class _RegisterPageState extends State<RegisterPage> {
           behavior: SnackBarBehavior.floating,
           content: const Text("Error Signup failed..")));
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("register page:${widget.deviceId}");
   }
 
   @override

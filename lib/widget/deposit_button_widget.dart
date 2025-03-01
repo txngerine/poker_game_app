@@ -51,7 +51,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                       children: [
                                         Column(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Stack(

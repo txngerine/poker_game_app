@@ -26,7 +26,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
       height: height / 1.28,
       width: width / 1.2,
       child: ScrollbarTheme(
-        data: ScrollbarThemeData(
+        data: const ScrollbarThemeData(
           thumbColor: WidgetStatePropertyAll(Colors.grey),
           radius: Radius.circular(10),
           thickness: WidgetStatePropertyAll(17),
@@ -71,7 +71,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                           color: Colors.black,
                           fontSize: 12,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         const BuildSubHeadingText(
@@ -79,7 +79,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                           color: Colors.black,
                           fontSize: 12,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         BuildSubHeadingText(
@@ -87,7 +87,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                           color: Colors.black,
                           fontSize: 12,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                       ],

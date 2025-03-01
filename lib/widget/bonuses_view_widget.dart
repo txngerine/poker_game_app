@@ -86,7 +86,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 1,
                             ),
                             const BuildTextWidget(
@@ -127,7 +127,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                       )
                     ],
                   ),
-                  Container(
+                  SizedBox(
                     height: height / 1.495,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -191,7 +191,7 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                                         ],
                                       ),
                                       Expanded(
-                                        child: Container(
+                                        child: SizedBox(
                                           width: width / 2,
                                           child: Column(
                                             children: [

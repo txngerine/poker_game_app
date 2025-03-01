@@ -22,8 +22,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
   final TextEditingController passwordController = TextEditingController();
   String _deviceDetails = "Device information";
   String _deviceId = "";
-  bool isLoading =
-      true; // Set loading to true initially to show loading indicator
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
 
   Future<void> _checkStoredDevice() async {
     // Adding delay to simulate the check process
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? storedDeviceId = pref.getString("device_id");
@@ -50,7 +49,10 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
       Future.delayed(Duration.zero, () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(
+              builder: (context) => LoginPage(
+                    deviceId: storedDeviceId,
+                  )),
         );
       });
     } else {
@@ -60,6 +62,11 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
   }
 
   Future<void> _registerDevice() async {
+    if (passwordController.text.isEmpty) {
+      _showErrorDialog("Password cannot be empty.");
+      return;
+    }
+
     if (_deviceId.isEmpty) {
       debugPrint("Device ID is empty, fetching device info again.");
       await _getDeviceInfo();
@@ -69,30 +76,38 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
       isLoading = true;
     });
 
-    final String url =
+    const String url =
         "http://3.6.170.253:1080/server.php/api/v1/device-register";
+
     try {
-      final response = await http.post(Uri.parse(url),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "deviceId": _deviceId,
-            "password": passwordController.text,
-          }));
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "deviceId": _deviceId,
+          "password": passwordController.text,
+        }),
+      );
 
       debugPrint("API Response: ${response.body}");
 
       if (response.statusCode == 200) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        await pref.setString("device_id", _deviceId);
+        final responseData = jsonDecode(response.body);
 
-        String? savedDeviceId = pref.getString("device_id");
-        debugPrint("Saved Device ID: $savedDeviceId");
+        if (responseData["status"] == "OK") {
+          // Store device ID only on successful registration
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          await pref.setString("device_id", _deviceId);
+          debugPrint("Saved Device ID: $_deviceId");
 
-        // After storing device ID, navigate to login page
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
+          // Navigate to login page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        } else {
+          _showErrorDialog("Incorrect Password! Try again.");
+        }
       } else {
         _showErrorDialog("Registration Failed! Try again.");
       }
@@ -127,29 +142,32 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
     setState(() {
       _deviceId = deviceID;
       _deviceDetails = deviceDetails;
-      isLoading = false; // Set loading to false after fetching device info
+      isLoading = false;
     });
 
     debugPrint("Retrieved Device ID: $_deviceId");
-
-    if (_deviceId.isNotEmpty) {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      await pref.setString("device_id", _deviceId);
-      debugPrint("Device ID stored: $_deviceId");
-    }
   }
 
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Error"),
+        elevation: 10,
+        title: const BuildSubHeadingText(
+          text: "Error Message",
+          color: Colors.black,
+        ),
         content: Text(message),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("OK"),
-          )
+              style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Color(0xff3D3D3D))),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const BuildSubHeadingText(
+                text: "OK",
+                fontSize: 12,
+                color: Colors.white,
+              ))
         ],
       ),
     );
@@ -169,31 +187,37 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
           ),
           Center(
             child: isLoading // Only show the body when loading is false
-                ? CircularProgressIndicator()
-                : Container(
+                ? const CircularProgressIndicator(
+                    color: Color(0xff3D3D3D),
+                  )
+                : SizedBox(
                     width: ScreenSize.screenWidth / 2,
                     height: ScreenSize.screenHeight / 3.5,
                     child: Card(
                       elevation: 10,
-                      color: Color(0xffF5F5F5),
+                      color: const Color(0xffF5F5F5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 10),
-                          BuildSubHeadingText(
+                          const SizedBox(height: 10),
+                          const BuildSubHeadingText(
                             text: "Register Device",
                             fontSize: 25,
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           BuildSubHeadingText(
-                            text: "$_deviceDetails",
+                            text: _deviceDetails,
                             fontSize: 14,
                           ),
                           Padding(
                               padding: const EdgeInsets.all(28.0),
                               child: TextField(
+                                  textAlign: TextAlign.center,
                                   controller: passwordController,
                                   decoration: InputDecoration(
+                                      hintStyle:
+                                          const TextStyle(color: Colors.grey),
+                                      hintText: "Enter Password",
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(12)),
@@ -201,16 +225,15 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(12))))),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           SizedBox(
                             width: ScreenSize.screenWidth / 5,
                             child: ElevatedButtonCustom(
-                              color: Color(0xff3D3D3D),
+                              color: const Color(0xff3D3D3D),
                               text: "submit",
                               textColor: Colors.white,
                               onPress: () async {
-                                await _getDeviceInfo();
-                                _registerDevice();
+                                await _registerDevice();
                               },
                             ),
                           )

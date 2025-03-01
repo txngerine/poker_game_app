@@ -42,9 +42,9 @@ class _WinnersWidgetState extends State<WinnersWidget> {
               children: [
                 const SizedBox(height: 10),
                 selectButton == 1
-                    ? BuildSubHeadingText(
+                    ? const BuildSubHeadingText(
                         text: "Top February winners", color: Colors.white)
-                    : BuildSubHeadingText(
+                    : const BuildSubHeadingText(
                         text: "Top winners of 2025", color: Colors.white),
                 const SizedBox(height: 20),
                 Stack(
@@ -136,35 +136,35 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                                 "assets/images/lobby/top winners/hero avatar holder.png",
                               ),
                             ),
-                            BuildSubHeadingText(
+                            const BuildSubHeadingText(
                               text: "charlie007",
                               fontSize: 14,
                               color: Colors.white,
                             ),
                           ],
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "17",
                           fontSize: 14,
                           color: Colors.white,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "\$20",
                           fontSize: 14,
                           color: Colors.white,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "\$100,000",
                           fontSize: 14,
                           color: Colors.white,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                       ],
@@ -180,8 +180,8 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: selectButton == 1
-                          ? MonthlyWinnersViewWidget()
-                          : YearlyWinnersView()),
+                          ? const MonthlyWinnersViewWidget()
+                          : const YearlyWinnersView()),
                 )
               ],
             ),

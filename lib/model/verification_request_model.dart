@@ -1,7 +1,7 @@
 class VerificationRequestModel {
   final String email;
   final String otp;
-  final int deviceId;
+  final String deviceId;
   final int id;
 
   VerificationRequestModel({

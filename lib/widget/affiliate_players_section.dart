@@ -41,7 +41,7 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HistoryButtonView(),
+                        builder: (context) => const HistoryButtonView(),
                       ));
                 },
                 child: Image.asset(
@@ -105,7 +105,7 @@ class _AffiliatePlayersSectionState extends State<AffiliatePlayersSection> {
                                                   "assets/images/cashier/deposit/Alert placeholder.png"),
                                             ],
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 15,
                                           ),
                                           Container(

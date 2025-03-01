@@ -43,6 +43,5 @@ class CustomTransferTextField extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }

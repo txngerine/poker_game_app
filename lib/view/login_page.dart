@@ -13,8 +13,10 @@ import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
 class LoginPage extends StatefulWidget {
+  final String? deviceId;
   const LoginPage({
     super.key,
+    this.deviceId,
   });
 
   @override
@@ -29,6 +31,12 @@ class _LoginPageState extends State<LoginPage> {
   final LoginController _loginController = LoginController();
   LoginResponseModel? playerDetails;
   bool isLoading = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("Login deviceId:${widget.deviceId}");
+  }
 
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
@@ -39,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
     final requestModel = LoginRequestModel(
         email: emailController.text,
         password: passwordController.text,
-        deviceId: 1,
+        deviceId: widget.deviceId.toString(),
         accountNo: "A020241027101417");
     try {
       final response = await _loginController.login(requestModel);
@@ -250,7 +258,9 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushReplacement(
                                   context,
                                   PageTransition(
-                                      child: const RegisterPage(),
+                                      child: RegisterPage(
+                                        deviceId: widget.deviceId,
+                                      ),
                                       type: PageTransitionType
                                           .rightToLeftWithFade));
                             },

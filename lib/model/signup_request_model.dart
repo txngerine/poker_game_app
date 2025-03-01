@@ -2,7 +2,7 @@
 class SignupRequestModel {
   final String email;
   final String password;
-  final int deviceId;
+  final String deviceId;
   final String accountNo;
 
   SignupRequestModel({

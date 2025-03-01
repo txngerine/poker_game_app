@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/view/lobby_avatar_view.dart';
@@ -87,17 +86,17 @@ class _LobbyPageState extends State<LobbyPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
-                                  BuildSubHeadingText(
+                                  const BuildSubHeadingText(
                                     text: "self exclusion",
                                     color: Colors.white,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
-                                  BuildTextWidget(
+                                  const BuildTextWidget(
                                     align: TextAlign.center,
                                     text:
                                         "Do you wish to exclude yourself for the \n"
@@ -105,7 +104,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                     color: Colors.white,
                                     fontSize: 12,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   Row(
@@ -118,7 +117,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                         onPress: () {},
                                         textColor: Colors.white54,
                                         text: "No",
-                                        color: Color(0xff45474B),
+                                        color: const Color(0xff45474B),
                                       ),
                                       ElevatedButtonCustom(
                                         onPress: () {
@@ -126,7 +125,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                         },
                                         textColor: Colors.black,
                                         text: "Yes",
-                                        color: Color(0xffEEEEEE),
+                                        color: const Color(0xffEEEEEE),
                                       ),
                                     ],
                                   )
@@ -221,7 +220,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return LobbyAvatarView();
+                                      return const LobbyAvatarView();
                                     },
                                   );
                                 },
@@ -286,7 +285,7 @@ class _LobbyPageState extends State<LobbyPage> {
                               showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return WinnersWidget();
+                                  return const WinnersWidget();
                                 },
                               );
                               // showDialog(
@@ -359,8 +358,8 @@ class _LobbyPageState extends State<LobbyPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 74, top: 8),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 74, top: 8),
                         child: BuildSubHeadingText(
                           text: "Top winners",
                           color: Colors.white,
@@ -402,27 +401,28 @@ class _LobbyPageState extends State<LobbyPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: GameView(),
-                                      type: PageTransitionType.fade))
-                              .then((_) {
-                            SystemChrome.setEnabledSystemUIMode(
-                                SystemUiMode.immersiveSticky);
-                          });
                           // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => GameView(
-                          //       playerResponse: widget.playerResponse,
-                          //       buttonId: 100,
-                          //     ),
-                          //   ),
-                          // ).then((_) {
+                          //         context,
+                          //         PageTransition(
+                          //             child: const GameView(),
+                          //             type: PageTransitionType
+                          //                 .leftToRightWithFade))
+                          //     .then((_) {
                           //   SystemChrome.setEnabledSystemUIMode(
                           //       SystemUiMode.immersiveSticky);
                           // });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GameView(
+                                playerResponse: widget.playerResponse,
+                                buttonId: 100,
+                              ),
+                            ),
+                          ).then((_) {
+                            SystemChrome.setEnabledSystemUIMode(
+                                SystemUiMode.immersiveSticky);
+                          });
                         },
                         child: Image.asset(
                           fit: BoxFit.fill,
@@ -460,14 +460,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         fit: BoxFit.fill,
                       ),
                       GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return WinnersWidget();
-                            },
-                          );
-                        },
+                        onTap: () {},
                         child: Image.asset(
                           "assets/images/lobby/1000 jeton.png",
                           width: MediaQuery.sizeOf(context).width / 2,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
+import 'package:pokerpad/provider/currency_button_provider.dart';
+import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => AffiliatedButtonProvider()),
     ChangeNotifierProvider(create: (_) => CashierButtonProvider()),
     ChangeNotifierProvider(create: (_) => TransferButtonProvider()),
+    ChangeNotifierProvider(create: (_) => QrProvider()),
+    ChangeNotifierProvider(create: (_) => CurrencyButtonProvider()),
   ], child: const MyApp()));
 
   // runApp(DevicePreview(

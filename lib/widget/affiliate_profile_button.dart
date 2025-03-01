@@ -29,7 +29,7 @@ class _AffiliateProfileButtonState extends State<AffiliateProfileButton> {
                 height: MediaQuery.sizeOf(context).height / 1.1,
                 width: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(
-                    color: Color(0xff272829),
+                    color: const Color(0xff272829),
                     borderRadius: BorderRadius.circular(
                       35,
                     )),

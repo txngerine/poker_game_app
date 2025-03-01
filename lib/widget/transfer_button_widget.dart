@@ -70,7 +70,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                           hintText: "Password",
                                           keyboardType: TextInputType.text,
                                         ),
-                                        BuildTextWidget(
+                                        const BuildTextWidget(
                                           text: "Forgot Password",
                                           color: Colors.white,
                                           fontSize: 10,
@@ -93,7 +93,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                     : "assets/images/CASHIER Button/TRANSFER/black check emty.png",
                                               ),
                                             ),
-                                            BuildTextWidget(
+                                            const BuildTextWidget(
                                               text: "Remember Password",
                                               color: Colors.white,
                                               fontSize: 10,

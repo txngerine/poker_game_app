@@ -11,7 +11,7 @@ import '../constants/screen_size.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   final String email;
-  final int deviceId;
+  final String deviceId;
   final int id;
   const VerifyEmailPage(
       {super.key,
@@ -24,6 +24,13 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("verify email:${widget.deviceId}");
+  }
+
   bool isLoading = false;
   final VerificationController _verificationController =
       VerificationController();

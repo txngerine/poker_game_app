@@ -24,7 +24,7 @@ class _Bonuses2kButtonWidgetState extends State<Bonuses2kButtonWidget> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 1,
         ),
         Container(

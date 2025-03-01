@@ -91,12 +91,12 @@ class _TopMonthlyWinnersState extends State<TopMonthlyWinners> {
                   width: width / 1.2,
                   child: ScrollbarTheme(
                     data: ScrollbarThemeData(
-                      thumbColor: MaterialStateProperty.all(
+                      thumbColor: WidgetStateProperty.all(
                           Colors.white), // White scrollbar
                       // trackColor: MaterialStateProperty.all(
                       //     Colors.grey[800]), // Dark track
                       radius: const Radius.circular(10),
-                      thickness: MaterialStateProperty.all(
+                      thickness: WidgetStateProperty.all(
                           18), // Thickness of scrollbar
                     ),
                     child: Scrollbar(
