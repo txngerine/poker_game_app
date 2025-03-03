@@ -3,8 +3,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/choose_avatar_controller.dart';
 import 'package:pokerpad/model/choose_avatar_request_model.dart';
 import 'package:pokerpad/model/choose_avatar_response_model.dart';
+import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/view/pick_secondary_avatar.dart';
-import 'package:pokerpad/view/splash_page.dart';
 
 class ViewSecondaryAvatar extends StatefulWidget {
   final String selectedImageUrl;
@@ -38,7 +38,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
         Navigator.push(
             context,
             PageTransition(
-                child: const SplashPage(),
+                child: const LoginPage(),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

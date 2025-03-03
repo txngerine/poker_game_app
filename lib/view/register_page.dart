@@ -9,13 +9,15 @@ import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/view/verify_email_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/screen_size.dart';
 import '../widget/build_text_field_widget.dart';
 
 class RegisterPage extends StatefulWidget {
-  final String? deviceId;
-  const RegisterPage({super.key, this.deviceId});
+  const RegisterPage({
+    super.key,
+  });
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -74,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final requestModel = SignupRequestModel(
         email: emailController.text,
         password: passwordController.text,
-        deviceId: widget.deviceId.toString(),
+        deviceId: _deviceId,
         accountNo: "A020241027101417");
     try {
       final response = await _signupController.signup(requestModel);
@@ -130,11 +132,26 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  String _deviceId = "Fetching...";
+
+  Future<void> _getStoredDeviceId() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? storedDeviceId = pref.getString("device_id");
+
+    setState(() {
+      _deviceId = storedDeviceId ?? "No Device ID Found";
+    });
+    print("Updated Device ID: $_deviceId");
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print("register page:${widget.deviceId}");
+    _getStoredDeviceId();
+
+    Future.delayed(Duration(seconds: 1), () {
+      print("register page device id: $_deviceId");
+    });
   }
 
   @override

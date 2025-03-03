@@ -44,6 +44,7 @@ class _LobbyPageState extends State<LobbyPage> {
   @override
   Widget build(BuildContext context) {
     print(widget.playerResponse!.data?.nickname);
+    print(widget.playerResponse);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;

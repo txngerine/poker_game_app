@@ -27,6 +27,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
   @override
   void initState() {
     super.initState();
+
     _checkStoredDevice();
   }
 
@@ -49,10 +50,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
       Future.delayed(Duration.zero, () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => LoginPage(
-                    deviceId: storedDeviceId,
-                  )),
+          MaterialPageRoute(builder: (context) => LoginPage()),
         );
       });
     } else {
@@ -103,7 +101,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
           // Navigate to login page
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage()),
           );
         } else {
           _showErrorDialog("Incorrect Password! Try again.");

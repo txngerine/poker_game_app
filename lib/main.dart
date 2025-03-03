@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/currency_button_provider.dart';
@@ -7,9 +8,9 @@ import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  // await requestPermissions();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AffiliatedButtonProvider()),
     ChangeNotifierProvider(create: (_) => CashierButtonProvider()),
@@ -27,6 +28,21 @@ void main() {
   //         ChangeNotifierProvider(create: (_) => TransferButtonProvider()),
   //       ], child: const MyApp());
   //     }));
+}
+
+Future<void> requestPermissions() async {
+  Map<Permission, PermissionStatus> statuses = await [
+    Permission.camera,
+    Permission.storage, // For Android 12 and below
+    Permission.photos, // For iOS
+    Permission.requestInstallPackages,
+  ].request();
+
+  if (statuses[Permission.camera]!.isDenied ||
+      statuses[Permission.storage]!.isDenied ||
+      statuses[Permission.requestInstallPackages]!.isDenied) {
+    openAppSettings(); // Open settings if permission is permanently denied
+  }
 }
 
 class MyApp extends StatelessWidget {
