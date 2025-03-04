@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class DeviceInfoPage extends StatefulWidget {
 class _DeviceInfoPageState extends State<DeviceInfoPage> {
   final TextEditingController passwordController = TextEditingController();
   String _deviceDetails = "Device information";
+  //PP1PPS4FMS68
   String _deviceId = "";
   bool isLoading = true;
 
@@ -136,9 +138,17 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
     } else {
       deviceDetails = "Unsupported Platform";
     }
+    // Generate custom ID
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    int randomNumber = Random().nextInt(1000); // Random number between 0-999
+    int numericId = int.parse("$timestamp$randomNumber");
+
+    // Convert to base 36
+    String base36Id = numericId.toRadixString(36).toUpperCase();
+    String customDeviceId = base36Id;
 
     setState(() {
-      _deviceId = deviceID;
+      _deviceId = customDeviceId;
       _deviceDetails = deviceDetails;
       isLoading = false;
     });
@@ -204,7 +214,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
                           ),
                           const SizedBox(height: 20),
                           BuildSubHeadingText(
-                            text: _deviceDetails,
+                            text: "Device id : ${_deviceId}",
                             fontSize: 14,
                           ),
                           Padding(
