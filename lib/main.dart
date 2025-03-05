@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await requestPermissions();
+  await requestPermissions();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AffiliatedButtonProvider()),
     ChangeNotifierProvider(create: (_) => CashierButtonProvider()),

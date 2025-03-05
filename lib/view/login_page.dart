@@ -80,11 +80,11 @@ class _LoginPageState extends State<LoginPage> {
       print(playerDetails);
       print("response:$response");
       if (response?.status == "OK") {
-        final appVersion = int.tryParse(response?.data?.appVersion ?? "0") ?? 1;
+        final appVersion = int.tryParse(response?.data?.appVersion ?? "0") ?? 2;
         print("app version:$appVersion");
         final appUrl = response?.data?.appUrl;
 
-        if (appVersion > 1 && appUrl != null && appUrl.isNotEmpty) {
+        if (appVersion > 2 && appUrl != null && appUrl.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
             shape:
@@ -415,7 +415,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Spacer(),
                     BuildSubHeadingText(
-                      text: "Version:1.0.0",
+                      text: "Version:2.0.0",
                       fontSize: 10,
                       color: Colors.black26,
                     )
