@@ -7,4 +7,9 @@ class AffiliatedButtonProvider extends ChangeNotifier {
     _isClicked = value;
     notifyListeners();
   }
+
+  // void setAffiliateStatus(bool value) {
+  //   _isAffiliate = value;
+  //   notifyListeners();
+  // }
 }

@@ -71,8 +71,8 @@ class _HistoryButtonViewState extends State<HistoryButtonView> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
+                        // color: Colors.red,
                       ),
-                      // color: Colors.red,
                       height: height / 1.201,
                       child: ListView.builder(
                         itemCount: 20,
