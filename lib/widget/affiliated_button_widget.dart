@@ -23,6 +23,7 @@ class AffiliatedButtonWidget extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) {
+            // affiliate player view function
             return const AffiliatePlayerViewWidget();
           },
         );
