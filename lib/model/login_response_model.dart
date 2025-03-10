@@ -46,11 +46,12 @@ class Data {
   final String? lobbyAvatar;
   final String? detailAvatar;
   final DateTime? lastLogin;
-  final double? rakePendingRate; // Changed from int? to double?
+  final int? rakePendingRate;
   final String? appVersion;
   final String? appUrl;
   final String? holemGameVersion;
   final String? holdemGameUrl;
+  final int? selfAffiliateId;
   final String? message;
   final String? type;
   final String? title;
@@ -75,6 +76,7 @@ class Data {
     this.appUrl,
     this.holemGameVersion,
     this.holdemGameUrl,
+    this.selfAffiliateId,
     this.message,
     this.type,
     this.title,
@@ -97,12 +99,12 @@ class Data {
         lastLogin: json["last_login"] == null
             ? null
             : DateTime.parse(json["last_login"]),
-        rakePendingRate: (json["rake_pending_rate"] as num?)
-            ?.toDouble(), // Convert to double safely
+        rakePendingRate: json["rake_pending_rate"],
         appVersion: json["app_version"],
         appUrl: json["app_url"],
         holemGameVersion: json["holem_game_version"],
         holdemGameUrl: json["holdem_game_url"],
+        selfAffiliateId: json["self_affiliate_id"],
         message: json["message"],
         type: json["type"],
         title: json["title"],
@@ -128,6 +130,7 @@ class Data {
         "app_url": appUrl,
         "holem_game_version": holemGameVersion,
         "holdem_game_url": holdemGameUrl,
+        "self_affiliate_id": selfAffiliateId,
         "message": message,
         "type": type,
         "title": title,

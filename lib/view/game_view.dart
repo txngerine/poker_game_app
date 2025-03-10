@@ -32,6 +32,8 @@ class _GameViewState extends State<GameView> {
   @override
   void initState() {
     super.initState();
+    print("game url:");
+    print(widget.playerResponse?.data?.holdemGameUrl.toString());
 
     // Hide status and navigation bar for a full-screen experience
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -53,7 +55,14 @@ class _GameViewState extends State<GameView> {
     lobbyAvatar = widget.playerResponse?.data!.lobbyAvatar;
     detailAvatar = widget.playerResponse?.data!.detailAvatar;
     id = widget.playerResponse?.data!.id;
-
+    final url = widget.playerResponse?.data!.holdemGameUrl;
+    if (url == null || url.isEmpty) {
+      debugPrint('Game URL is null or empty.');
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
     try {
       final tempDir = await getTemporaryDirectory();
       final extractionPath = '${tempDir.path}/dist/';
@@ -70,7 +79,7 @@ class _GameViewState extends State<GameView> {
       }
 
       debugPrint('Downloading and extracting ZIP file...');
-      const url = 'https://api-poker.indrean.com/data/poker2.zip';
+      // final url = widget.playerResponse?.data?.holdemGameUrl;
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {

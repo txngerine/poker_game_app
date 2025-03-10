@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
-import 'package:pokerpad/view/lobby_avatar_view.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
+import 'package:pokerpad/widget/avatar_image_view_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
-import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
-import 'package:pokerpad/widget/elevated_button_custom.dart';
 import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/profile_button_widget.dart';
+import 'package:pokerpad/widget/self_exclusion_widget.dart';
+import 'package:pokerpad/widget/top_winners_view_widget.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
-import 'package:pokerpad/widget/winners_widget.dart';
 
 import '../constants/screen_size.dart';
 
@@ -69,78 +68,7 @@ class _LobbyPageState extends State<LobbyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      print("clicked");
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                      color: Colors.white54, width: 2),
-                                  color: Colors.black),
-                              width: width / 2,
-                              height: height / 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const BuildSubHeadingText(
-                                    text: "self exclusion",
-                                    color: Colors.white,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const BuildTextWidget(
-                                    align: TextAlign.center,
-                                    text:
-                                        "Do you wish to exclude yourself for the \n"
-                                        "next 24 hours from all game?",
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ElevatedButtonCustom(
-                                        onPress: () {},
-                                        textColor: Colors.white54,
-                                        text: "No",
-                                        color: const Color(0xff45474B),
-                                      ),
-                                      ElevatedButtonCustom(
-                                        onPress: () {
-                                          Navigator.pop(context);
-                                        },
-                                        textColor: Colors.black,
-                                        text: "Yes",
-                                        color: const Color(0xffEEEEEE),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: const BuildIconImageWidget(
-                        imgName:
-                            "assets/images/lobby/Self Exclusion Button.png"),
-                  ),
+                  const SelfExclusionWidget(),
                   GestureDetector(
                     onTap: () {
                       showDialog(
@@ -189,10 +117,12 @@ class _LobbyPageState extends State<LobbyPage> {
                       imgName: "assets/images/lobby/Logo active (1).png"),
                 ],
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AffiliatedButtonWidget(),
+                  AffiliatedButtonWidget(
+                    playerResponse: widget.playerResponse,
+                  ),
                   CashierButtonWidget(),
                   TransferButtonWidget(),
                 ],
@@ -201,173 +131,14 @@ class _LobbyPageState extends State<LobbyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                      width: MediaQuery.of(context).size.width / 2.1,
-                      height: MediaQuery.of(context).size.height / 2.7,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xff3C3D37),
-                          width: 3,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.grey,
-                      ),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Stack(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const LobbyAvatarView();
-                                    },
-                                  );
-                                },
-                                child: Image.network(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.1,
-                                  height:
-                                      MediaQuery.of(context).size.height / 2.7,
-
-                                  widget.avatar ??
-                                      "", // Use empty string if null
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      "assets/images/user_img.png", // Fallback image
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      widget.playerResponse?.data?.nickname ??
-                                          "no name",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text(
-                                      "ID ${widget.playerResponse?.data?.id ?? "no id"}",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ))),
+                  AvatarImageViewWidget(
+                    playerResponse: widget.playerResponse,
+                    avatar: widget.avatar,
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Stack(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2.1,
-                        height: MediaQuery.of(context).size.height / 2.7,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xff3C3D37), width: 3),
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.grey),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return const WinnersWidget();
-                                },
-                              );
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (context) {
-                              //     return Dialog(
-                              //       child: Container(
-                              //         decoration: BoxDecoration(
-                              //             border:
-                              //                 Border.all(color: Colors.white),
-                              //             color: Colors.black,
-                              //             borderRadius: BorderRadius.circular(
-                              //               20,
-                              //             )),
-                              //         height: height / 5,
-                              //         width: width / 1.3,
-                              //         child: Column(
-                              //           children: [
-                              //             const SizedBox(
-                              //               height: 10,
-                              //             ),
-                              //             const BuildSubHeadingText(
-                              //                 text: "Top winners",
-                              //                 color: Colors.white),
-                              //             Column(
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.center,
-                              //               children: [
-                              //                 GestureDetector(
-                              //                   onTap: () {
-                              //                     showDialog(
-                              //                       context: context,
-                              //                       builder: (context) {
-                              //                         return const TopMonthlyWinners();
-                              //                       },
-                              //                     );
-                              //                   },
-                              //                   child: Image.asset(
-                              //                     width: width,
-                              //                     "assets/images/lobby/top winners/Monthly Winners Button Passive.png",
-                              //                   ),
-                              //                 ),
-                              //                 GestureDetector(
-                              //                   onTap: () {
-                              //                     showDialog(
-                              //                       context: context,
-                              //                       builder: (context) {
-                              //                         return const TopYearlyWinners();
-                              //                       },
-                              //                     );
-                              //                   },
-                              //                   child: Image.asset(
-                              //                     width: width,
-                              //                     "assets/images/lobby/top winners/Yearly Winners Button Passive.png",
-                              //                   ),
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ),
-                              //     );
-                              //   },
-                              // );
-                            },
-                            child: Image.asset(
-                              "assets/images/lobby/Poker card.jpg",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 74, top: 8),
-                        child: BuildSubHeadingText(
-                          text: "Top winners",
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
+                  TopWinnersViewWidget()
                 ],
               ),
               const SizedBox(
