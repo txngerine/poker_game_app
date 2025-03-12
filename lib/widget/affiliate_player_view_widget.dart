@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/affiliate_player_profile_view.dart';
-import 'package:pokerpad/widget/affiliate_player_request_widget.dart';
-import 'package:pokerpad/widget/affiliate_player_transfer_widget.dart';
+
+import 'affiliate_player_request_widget.dart';
+import 'affiliate_player_transfer_widget.dart';
 
 class AffiliatePlayerViewWidget extends StatefulWidget {
   const AffiliatePlayerViewWidget({super.key});
@@ -22,11 +23,11 @@ class _AffiliatePlayerViewWidgetState extends State<AffiliatePlayerViewWidget> {
   Widget getSelectedContent() {
     switch (selectedButton) {
       case 1:
-        return AffiliatePlayerProfileView();
+        return const AffiliatePlayerProfileView();
       case 2:
-        return AffiliatePlayerTransferWidget();
+        return const AffiliatePlayerTransferWidget();
       case 3:
-        return AffiliatePlayerRequestWidget();
+        return const AffiliatePlayerRequestWidget();
       default:
         return const Center(
           child: Text(

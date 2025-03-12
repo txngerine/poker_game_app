@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
+import 'package:pokerpad/widget/withdraw_button_widget.dart';
 import 'package:provider/provider.dart';
 
 class DepositButtonWidget extends StatefulWidget {
@@ -15,226 +16,198 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<CashierButtonProvider>(context);
-    return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-        provider.setClicked(false);
-        showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 100),
-              child: Dialog(
-                alignment: Alignment.topCenter,
-                backgroundColor: Colors.transparent,
-                child: SizedBox(
-                  // height: MediaQuery.sizeOf(context).height / 2,
-                  width: MediaQuery.sizeOf(context).width,
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        width: width,
-                        'assets/images/CASHIER Button/DEPOSIT/bank  frame.png',
-                        fit: BoxFit.cover,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 50, left: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+    return Padding(
+      padding: const EdgeInsets.only(top: 50),
+      child: Dialog(
+        alignment: Alignment.topCenter,
+        backgroundColor: Colors.transparent,
+        child: SizedBox(
+          // height: MediaQuery.sizeOf(context).height / 2,
+          width: MediaQuery.sizeOf(context).width,
+          child: Stack(
+            children: [
+              Image.asset(
+                width: width,
+                height: height / 2,
+                'assets/images/cashier/deposit image/bank  frame (1).png',
+                fit: BoxFit.cover,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  top: 60,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Column(
                           children: [
                             Row(
                               children: [
                                 Column(
                                   children: [
-                                    Row(
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Stack(
                                       children: [
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Stack(
-                                              children: [
-                                                Image.asset(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width /
-                                                        2.3,
-                                                    "assets/images/CASHIER Button/DEPOSIT/currency holder long.png"),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15, top: 25),
-                                                  child: Row(
-                                                    children: [
-                                                      Image.asset(
-                                                          width:
-                                                              MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width /
-                                                                  5,
-                                                          "assets/images/CASHIER Button/DEPOSIT/usdc long.png"),
-                                                      Image.asset(
-                                                          width:
-                                                              MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width /
-                                                                  5,
-                                                          "assets/images/CASHIER Button/DEPOSIT/usdt long.png")
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            Stack(
-                                              children: [
-                                                Image.asset(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width /
-                                                        2.3,
-                                                    "assets/images/CASHIER Button/DEPOSIT/network holder long.png"),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15, top: 25),
-                                                  child: Row(
-                                                    children: [
-                                                      Image.asset(
-                                                          width:
-                                                              MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width /
-                                                                  2.6,
-                                                          "assets/images/CASHIER Button/DEPOSIT/erc20 long.png"),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                          ],
-                                        ),
                                         Image.asset(
                                             width: MediaQuery.sizeOf(context)
                                                     .width /
-                                                4,
-                                            "assets/images/CASHIER Button/DEPOSIT/qr frame.png"),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 39),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  2.4,
-                                              "assets/images/CASHIER Button/DEPOSIT/instruction frame.png"),
-                                          Stack(
-                                            children: [
-                                              Image.asset(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width /
-                                                          3.7,
-                                                  "assets/images/CASHIER Button/DEPOSIT/deposit holder 84.png"),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20, top: 20),
+                                                2,
+                                            "assets/images/cashier/deposit image/currency-network frame.png"),
+                                        Positioned(
+                                            left: 12,
+                                            top: 29,
+                                            child: Image.asset(
                                                 width:
                                                     MediaQuery.sizeOf(context)
                                                             .width /
-                                                        3,
-                                                child: const Text(
-                                                  "Fds133kjdf3kkdf389fjsdflkASDF ",
-                                                  style: TextStyle(
-                                                    fontSize: 8,
-                                                    color: Colors.white,
-                                                    overflow: TextOverflow.clip,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                                        2.2,
+                                                "assets/images/cashier/deposit image/usdc.png")),
+                                        Positioned(
+                                            left: 12,
+                                            top: height / 11,
+                                            child: Image.asset(
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width /
+                                                        2.2,
+                                                "assets/images/cashier/deposit image/solana.png")),
+                                      ],
                                     ),
-                                    Row(
+                                    // const SizedBox(
+                                    //   height: 8,
+                                    // ),
+                                    Stack(
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Image.asset(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width /
-                                                  2.8,
-                                              "assets/images/CASHIER Button/DEPOSIT/withdraw black button.png"),
-                                        ),
                                         Image.asset(
                                             width: MediaQuery.sizeOf(context)
                                                     .width /
-                                                3.2,
-                                            "assets/images/cashier/deposit/Deposit button.png")
+                                                2,
+                                            "assets/images/cashier/deposit image/info frame.png"),
+                                        Positioned(
+                                          left: 20,
+                                          top: 20,
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width /
+                                                        2.1,
+                                                child: Text(
+                                                  "Step 1: Obtain the receival address by scanning the QR code with your phone.",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              SizedBox(
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width /
+                                                        2.1,
+                                                child: Text(
+                                                  "Step 2: Send USDC SPL tokens,the designated USDC tokens on Solana.",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
-                                    ),
-                                    // Stack(
-                                    //   alignment: Alignment.center,
-                                    //   children: [
-                                    //     Image.asset(
-                                    //         width: MediaQuery.sizeOf(context)
-                                    //                 .width /
-                                    //             2.7,
-                                    //         "assets/images/cashier/withdraw/withdraw amount-password.png"),
-                                    //     SizedBox(
-                                    //       width:
-                                    //           MediaQuery.sizeOf(context).width /
-                                    //               3.5,
-                                    //       child: const TextField(
-                                    //         keyboardType: TextInputType.number,
-                                    //         style: TextStyle(
-                                    //           fontSize: 12,
-                                    //           color: Colors.white,
-                                    //         ),
-                                    //         textAlign: TextAlign.center,
-                                    //         decoration:
-                                    //             InputDecoration.collapsed(
-                                    //           hintText: "Deposit Amount:",
-                                    //           hintStyle: TextStyle(
-                                    //               color: Colors.white),
-                                    //         ),
-                                    //       ),
-                                    //     )
-                                    //   ],
-                                    // ),
+                                    )
                                     // const SizedBox(
                                     //   height: 8,
                                     // ),
                                   ],
                                 ),
+                                Column(
+                                  children: [
+                                    Image.asset(
+                                        width:
+                                            MediaQuery.sizeOf(context).width /
+                                                3,
+                                        "assets/images/cashier/deposit image/qr frame.png"),
+                                    Stack(
+                                      children: [
+                                        Image.asset(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width /
+                                                3,
+                                            "assets/images/CASHIER Button/DEPOSIT/deposit holder 84.png"),
+                                        Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 15, top: 20),
+                                          width:
+                                              MediaQuery.sizeOf(context).width /
+                                                  3.3,
+                                          child: const Text(
+                                            "Fds133kjdf3kkdf389fjsdflkASDFFds133kjdf3kkdf389fjsdflkASDF ",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.white,
+                                              overflow: TextOverflow.clip,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                //navigate to withdraw page
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return WithdrawButtonWidget();
+                                      },
+                                    );
+                                  },
+                                  child: Image.asset(
+                                      width: MediaQuery.sizeOf(context).width /
+                                          2.4,
+                                      "assets/images/CASHIER Button/DEPOSIT/withdraw black button.png"),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    provider.setClicked(false);
+                                  },
+                                  child: Image.asset(
+                                      width: MediaQuery.sizeOf(context).width /
+                                          2.6,
+                                      "assets/images/cashier/deposit/Deposit button.png"),
+                                )
                               ],
                             ),
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            );
-          },
-        );
-      },
-      child: Image.asset(
-          width: MediaQuery.sizeOf(context).width / 2.7,
-          "assets/images/CASHIER Button/WITHDRAWAL/deposit button black.png"),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

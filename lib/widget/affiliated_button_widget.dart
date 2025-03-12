@@ -31,8 +31,8 @@ class AffiliatedButtonWidget extends StatelessWidget {
           builder: (BuildContext context) {
             // affiliate player view function
             return isAffiliate
-                ? AffiliatePlayerViewWidget()
-                : AffiliateButtonViewWidget();
+                ? AffiliateButtonViewWidget()
+                : AffiliatePlayerViewWidget();
           },
         );
       },

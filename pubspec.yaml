@@ -98,6 +98,8 @@ flutter:
      - assets/images/CASHIER Button/WITHDRAWAL/
      - assets/images/CASHIER Button/TRANSFER/
      - assets/images/Affiliate/player-view/
+     - assets/images/cashier/deposit image/
+     - assets/images/cashier/withdraw images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

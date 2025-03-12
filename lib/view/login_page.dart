@@ -18,6 +18,8 @@ import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widget/downloading_progress_widget.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({
     super.key,
@@ -359,26 +361,8 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               SizedBox(height: 20),
                               downloadProgress > 0
-                                  ? Column(
-                                      children: [
-                                        LinearProgressIndicator(
-                                          value:
-                                              downloadProgress, // Show the download progress
-                                          backgroundColor: Colors.grey[300],
-                                          color: Colors
-                                              .blue, // You can change this to your desired color
-                                        ),
-                                        SizedBox(height: 10),
-                                        Text(
-                                          '${(downloadProgress * 100).toStringAsFixed(0)}%', // Display the percentage
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : const CircularProgressIndicator(), // Show circular indicator if no download progress
+                                  ? DownloadingProgressWidget()
+                                  : const CircularProgressIndicator(),
                             ],
                           )
                         : GestureDetector(
@@ -414,8 +398,8 @@ class _LoginPageState extends State<LoginPage> {
                             child: const BuildBoldTextWidget(text: " Sign up")),
                       ],
                     ),
-                    Spacer(),
-                    BuildSubHeadingText(
+                    const Spacer(),
+                    const BuildSubHeadingText(
                       text: "Version:2.0.0",
                       fontSize: 10,
                       color: Colors.black26,
