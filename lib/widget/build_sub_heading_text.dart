@@ -5,12 +5,14 @@ class BuildSubHeadingText extends StatefulWidget {
   final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final String? hintText;
   const BuildSubHeadingText(
       {super.key,
       required this.text,
       this.color,
       this.fontSize,
-      this.fontWeight});
+      this.fontWeight,
+      this.hintText});
 
   @override
   State<BuildSubHeadingText> createState() => _BuildSubHeadingTextState();
@@ -20,7 +22,7 @@ class _BuildSubHeadingTextState extends State<BuildSubHeadingText> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      widget.text,
+      widget.hintText ?? widget.text,
       style: TextStyle(
         decoration: TextDecoration.none,
         color: widget.color,

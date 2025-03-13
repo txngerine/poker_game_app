@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
-import 'package:pokerpad/widget/affiliate_button_view_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../model/login_response_model.dart';
-import 'affiliate_player_view_widget.dart';
+import 'affiliate_players_button_widget.dart';
 import 'build_button_image_widget.dart';
 
 class AffiliatedButtonWidget extends StatelessWidget {
@@ -19,25 +18,28 @@ class AffiliatedButtonWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // provider.setClicked(true);
+        provider.setClicked(true);
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return AffiliatePlayersButtonWidget();
+          },
+        );
         // showDialog(
         //   context: context,
         //   builder: (BuildContext context) {
-        //     return const AffiliateButtonViewWidget();
+        //     // affiliate player view function
+        //     return isAffiliate
+        //         ? AffiliateButtonViewWidget()
+        //         : AffiliatePlayerViewWidget();
         //   },
         // );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            // affiliate player view function
-            return isAffiliate
-                ? AffiliateButtonViewWidget()
-                : AffiliatePlayerViewWidget();
-          },
-        );
       },
-      child: const BuildButtonImageWidget(
-        imgPath: "assets/images/lobby/affiliate button passive.png",
+      child: BuildButtonImageWidget(
+        imgPath: provider.isClicked
+            ? "assets/images/lobby/Affiliate button active.png"
+            : "assets/images/lobby/affiliate button passive.png",
       ),
     );
   }

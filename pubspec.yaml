@@ -54,6 +54,7 @@ dependencies:
   shared_preferences: ^2.5.2
   open_filex: ^4.6.0
   permission_handler: ^11.4.0
+  chart_sparkline: ^1.1.1
 
 
 dev_dependencies:
@@ -100,6 +101,7 @@ flutter:
      - assets/images/Affiliate/player-view/
      - assets/images/cashier/deposit image/
      - assets/images/cashier/withdraw images/
+     - assets/images/affiliate screen/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
