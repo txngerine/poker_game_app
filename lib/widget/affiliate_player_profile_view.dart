@@ -17,7 +17,7 @@ class _AffiliatePlayerProfileViewState
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: Padding(
@@ -38,26 +38,26 @@ class _AffiliatePlayerProfileViewState
                   Image.asset(
                       width: width / 2,
                       "assets/images/Affiliate/verify phone alert/affiliate player view - image.png"),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 22),
+                    padding: const EdgeInsets.only(top: 22),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "whateverman",
                           color: Colors.white,
                           fontSize: 29,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             SizedBox(
                               width: 10,
@@ -75,10 +75,10 @@ class _AffiliatePlayerProfileViewState
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             SizedBox(
                               width: 10,
@@ -96,10 +96,10 @@ class _AffiliatePlayerProfileViewState
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             SizedBox(
                               width: 10,
@@ -117,11 +117,11 @@ class _AffiliatePlayerProfileViewState
                             )
                           ],
                         ),
-                        Container(
+                        SizedBox(
                           height: height / 5,
                           width: width / 2.3,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(15.0),
                             child: Text(
                                 textAlign: TextAlign.start,
                                 style: TextStyle(color: Colors.white70),
@@ -133,11 +133,11 @@ class _AffiliatePlayerProfileViewState
                   )
                 ],
               ),
-              Container(
+              SizedBox(
                 height: height / 12,
                 width: width,
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(18.0),
                   child: Text(
                       style: TextStyle(color: Colors.white70),
                       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),

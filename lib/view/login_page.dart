@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     super.initState();
     _getStoredDeviceId();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       print("login page device id: $_deviceId");
     });
   }
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
         playerDetails = response;
         isLoading = false;
       });
-      print("device id login api:${_deviceId}");
+      print("device id login api:$_deviceId");
       print(playerDetails);
       print("response:$response");
       if (response?.status == "OK") {
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Image.asset(
                       "assets/images/welcome_to_pokerpad.png",
                     ),
@@ -359,9 +359,9 @@ class _LoginPageState extends State<LoginPage> {
                     isLoading
                         ? Column(
                             children: [
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               downloadProgress > 0
-                                  ? DownloadingProgressWidget()
+                                  ? const DownloadingProgressWidget()
                                   : const CircularProgressIndicator(),
                             ],
                           )
@@ -391,7 +391,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushReplacement(
                                   context,
                                   PageTransition(
-                                      child: RegisterPage(),
+                                      child: const RegisterPage(),
                                       type: PageTransitionType
                                           .rightToLeftWithFade));
                             },

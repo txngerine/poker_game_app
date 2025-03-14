@@ -98,13 +98,13 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                                     MediaQuery.sizeOf(context)
                                                             .width /
                                                         2.1,
-                                                child: Text(
+                                                child: const Text(
                                                   "Step 1: Obtain the receival address by scanning the QR code with your phone.",
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               SizedBox(
@@ -112,7 +112,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                                     MediaQuery.sizeOf(context)
                                                             .width /
                                                         2.1,
-                                                child: Text(
+                                                child: const Text(
                                                   "Step 2: Send USDC SPL tokens,the designated USDC tokens on Solana.",
                                                   style: TextStyle(
                                                       color: Colors.white),
@@ -173,7 +173,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                       barrierDismissible: false,
                                       context: context,
                                       builder: (context) {
-                                        return WithdrawButtonWidget();
+                                        return const WithdrawButtonWidget();
                                       },
                                     );
                                   },
@@ -182,7 +182,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                           2.4,
                                       "assets/images/CASHIER Button/DEPOSIT/withdraw black button.png"),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 GestureDetector(

@@ -2,7 +2,8 @@ import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:flutter/material.dart';
 
 class ChartLineWidget extends StatefulWidget {
-  const ChartLineWidget({super.key});
+  final String? avatar;
+  const ChartLineWidget({super.key, this.avatar});
 
   @override
   State<ChartLineWidget> createState() => _ChartLineWidgetState();
@@ -106,8 +107,7 @@ class _ChartLineWidgetState extends State<ChartLineWidget> {
                 height: height / 3.5,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "https://i.etsystatic.com/39063034/r/il/cb88ab/4893801479/il_570xN.4893801479_e4tq.jpg"),
+                      image: NetworkImage(widget.avatar ?? ""),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -118,9 +118,9 @@ class _ChartLineWidgetState extends State<ChartLineWidget> {
                 shadowColor: Colors.black,
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(width: 4, color: Color(0xffFFC94A)),
+                    border: Border.all(width: 4, color: const Color(0xffFFC94A)),
                     borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffFFA725),
+                    color: const Color(0xffFFA725),
                   ),
                   width: width / 2,
                   height: height / 5,

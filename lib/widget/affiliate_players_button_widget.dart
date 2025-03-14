@@ -27,7 +27,7 @@ class _AffiliatePlayersButtonWidgetState
       child: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/affiliate screen/aff_bg.png"),
                 fit: BoxFit.cover)),
@@ -49,7 +49,7 @@ class _AffiliatePlayersButtonWidgetState
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BuildSubHeadingText(
@@ -76,7 +76,7 @@ class _AffiliatePlayersButtonWidgetState
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BuildSubHeadingText(
@@ -115,7 +115,7 @@ class _AffiliatePlayersButtonWidgetState
                         barrierDismissible: false,
                         context: context,
                         builder: (context) {
-                          return AffiliateBonusButtonWidget();
+                          return const AffiliateBonusButtonWidget();
                         },
                       );
                     },
@@ -134,7 +134,7 @@ class _AffiliatePlayersButtonWidgetState
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BuildSubHeadingText(
@@ -218,7 +218,7 @@ class _AffiliatePlayersButtonWidgetState
                   ),
                 ),
               ),
-              AffiliatePlayersListview()
+              const AffiliatePlayersListview()
             ],
           ),
         ),

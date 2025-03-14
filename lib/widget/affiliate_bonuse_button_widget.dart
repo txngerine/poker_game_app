@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/widget/affiliate_bonuses_listview.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/affiliated_button_provider.dart';
-import 'affiliate_players_listview.dart';
 import 'build_sub_heading_text.dart';
 
 class AffiliateBonusButtonWidget extends StatefulWidget {
@@ -47,11 +47,11 @@ class _AffiliateBonusButtonWidgetState
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BuildSubHeadingText(
-                              text: "NO.OF PLAYERS",
+                              text: "NO.OF REFRRALS",
                               color: Colors.white,
                               fontSize: 10,
                             ),
@@ -74,16 +74,16 @@ class _AffiliateBonusButtonWidgetState
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BuildSubHeadingText(
-                              text: "TOTAL RAKE",
+                              text: "PENDING BONUSES",
                               color: Colors.white,
                               fontSize: 10,
                             ),
                             BuildSubHeadingText(
-                              text: "\$50,214",
+                              text: "\$34,000",
                               color: Colors.white,
                               fontSize: 13,
                             ),
@@ -137,16 +137,16 @@ class _AffiliateBonusButtonWidgetState
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BuildSubHeadingText(
-                              text: "YOUR COMMISSION",
+                              text: "BONUSES CLAIMED",
                               color: Colors.white,
                               fontSize: 10,
                             ),
                             BuildSubHeadingText(
-                              text: "\$36,214",
+                              text: "\$16,000",
                               color: Colors.white,
                               fontSize: 13,
                             ),
@@ -154,6 +154,30 @@ class _AffiliateBonusButtonWidgetState
                         )),
                   ),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: ClipRRect(
+                  child: Container(
+                    width: width,
+                    height: height / 16,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                "assets/images/bonuses/referral_text field.png"))),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        BuildSubHeadingText(
+                          text:
+                              "REFER A FRIEND AND RECEIVE  A BONUS UP TO \$10,000",
+                          color: Colors.black87,
+                          fontSize: 15,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(3.0),
@@ -168,9 +192,6 @@ class _AffiliateBonusButtonWidgetState
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SizedBox(
-                          width: 3,
-                        ),
                         SizedBox(
                           width: 80,
                           height: 50,
@@ -188,40 +209,36 @@ class _AffiliateBonusButtonWidgetState
                             ),
                           ),
                         ),
+                        BuildSubHeadingText(
+                          text: "REFERRALS",
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
                         SizedBox(
-                          width: 20,
+                          width: 40,
                         ),
                         BuildSubHeadingText(
-                          text: "TRANSFER",
+                          text: "ROAD TO \$10,000",
                           color: Colors.white,
                           fontSize: 10,
                         ),
+                        SizedBox(
+                          width: 30,
+                        ),
                         BuildSubHeadingText(
-                          text: "BALANCE",
+                          text: "BONUSES",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        BuildSubHeadingText(
-                          text: "WINNINGS",
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                        BuildSubHeadingText(
-                          text: "RAKE",
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                        BuildSubHeadingText(
-                          text: "COMMISSION",
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
+                        SizedBox(
+                          width: 10,
+                        )
                       ],
                     ),
                   ),
                 ),
               ),
-              const AffiliatePlayersListview()
+              const AffiliateBonusesListview()
             ],
           ),
         ),

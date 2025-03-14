@@ -116,10 +116,10 @@ class _AffiliatePlayerViewWidgetState extends State<AffiliatePlayerViewWidget> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Container(
+              SizedBox(
                 width: width,
                 height: height / 1.1,
                 child: getSelectedContent(),

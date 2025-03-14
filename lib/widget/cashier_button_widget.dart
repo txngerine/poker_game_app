@@ -24,9 +24,9 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
         provider.setClicked(true);
         showDialog(
           context: context,
-          barrierDismissible: false, // Dismiss by tapping outside
+          barrierDismissible: false,
           builder: (BuildContext context) {
-            return DepositButtonWidget();
+            return const DepositButtonWidget();
           },
         );
       },

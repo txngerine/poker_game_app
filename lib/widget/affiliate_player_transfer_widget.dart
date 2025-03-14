@@ -26,17 +26,17 @@ class _AffiliatePlayerTransferWidgetState
             padding: const EdgeInsets.only(left: 40, top: 40),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: height / 2.8,
                   width: width / 1.15,
                   child: Row(
                     children: [
                       Image.asset(
                           "assets/images/Affiliate/player-view/avatar plavceholder.png"),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -69,7 +69,7 @@ class _AffiliatePlayerTransferWidgetState
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: width / 1.15,
                   height: height / 15,
                   child: Row(
@@ -84,7 +84,7 @@ class _AffiliatePlayerTransferWidgetState
                       SizedBox(
                         width: width / 9,
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -103,10 +103,10 @@ class _AffiliatePlayerTransferWidgetState
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
+                SizedBox(
                   width: width / 1.15,
                   height: height / 15,
                   child: Row(

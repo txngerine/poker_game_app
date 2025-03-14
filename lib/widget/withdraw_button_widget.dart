@@ -143,7 +143,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                 ),
                               ],
                             ),
-                            Text(
+                            const Text(
                               "Forgot Password?",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12),
@@ -193,7 +193,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Stack(
@@ -220,13 +220,13 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     ))
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Image.asset(
                                 width: MediaQuery.sizeOf(context).width / 2.6,
                                 "assets/images/cashier/withdraw images/withdraw alert holder.png"),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             GestureDetector(
@@ -242,9 +242,9 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                         )
                       ],
                     ),
-                    Row(
+                    const Row(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: 5,
                         ),
                       ],

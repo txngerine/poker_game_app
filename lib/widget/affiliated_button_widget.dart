@@ -23,7 +23,7 @@ class AffiliatedButtonWidget extends StatelessWidget {
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            return AffiliatePlayersButtonWidget();
+            return const AffiliatePlayersButtonWidget();
           },
         );
         // showDialog(

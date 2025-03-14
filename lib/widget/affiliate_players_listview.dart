@@ -66,7 +66,7 @@ class _AffiliatePlayersListviewState extends State<AffiliatePlayersListview> {
                                         color: Colors.white,
                                         fontSize: 10,
                                       ),
-                                      BuildSubHeadingText(
+                                      const BuildSubHeadingText(
                                         text: "CHARLIE007",
                                         color: Colors.white,
                                         fontSize: 12,
@@ -78,27 +78,27 @@ class _AffiliatePlayersListviewState extends State<AffiliatePlayersListview> {
                             ),
                             Image.asset(
                                 "assets/images/affiliate screen/aff_transfer button.png"),
-                            BuildSubHeadingText(
+                            const BuildSubHeadingText(
                               text: "\$432,732",
                               color: Colors.white70,
                               fontSize: 9,
                             ),
-                            BuildSubHeadingText(
+                            const BuildSubHeadingText(
                               text: "\$612,432",
                               color: Colors.green,
                               fontSize: 9,
                             ),
-                            BuildSubHeadingText(
+                            const BuildSubHeadingText(
                               text: "\$50,000",
                               color: Colors.white70,
                               fontSize: 9,
                             ),
-                            BuildSubHeadingText(
+                            const BuildSubHeadingText(
                               text: "\$500",
                               color: Colors.white70,
                               fontSize: 9,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                           ],

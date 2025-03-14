@@ -103,7 +103,7 @@ class _LobbyPageState extends State<LobbyPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print("clicked");
+                      print("clicked info button");
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -124,8 +124,8 @@ class _LobbyPageState extends State<LobbyPage> {
                   AffiliatedButtonWidget(
                     playerResponse: widget.playerResponse,
                   ),
-                  CashierButtonWidget(),
-                  TransferButtonWidget(),
+                  const CashierButtonWidget(),
+                  const TransferButtonWidget(),
                 ],
               ),
               Row(
@@ -139,7 +139,7 @@ class _LobbyPageState extends State<LobbyPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  TopWinnersViewWidget()
+                  const TopWinnersViewWidget()
                 ],
               ),
               const SizedBox(
@@ -238,7 +238,10 @@ class _LobbyPageState extends State<LobbyPage> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return ChartLineWidget();
+                              return ChartLineWidget(
+                                avatar: widget.playerResponse?.data?.lobbyAvatar
+                                    .toString(),
+                              );
                             },
                           );
                         },

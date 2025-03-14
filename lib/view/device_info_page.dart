@@ -52,7 +52,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
       Future.delayed(Duration.zero, () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       });
     } else {
@@ -103,7 +103,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
           // Navigate to login page
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
           _showErrorDialog("Incorrect Password! Try again.");
@@ -214,7 +214,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
                           ),
                           const SizedBox(height: 20),
                           BuildSubHeadingText(
-                            text: "Device id : ${_deviceId}",
+                            text: "Device id : $_deviceId",
                             fontSize: 14,
                           ),
                           Padding(
