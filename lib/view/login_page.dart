@@ -1,24 +1,15 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:open_filex/open_filex.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pokerpad/constants/screen_size.dart';
-import 'package:pokerpad/controller/login_controller.dart';
-import 'package:pokerpad/model/login_request_model.dart';
-import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/forgot_password.dart';
-import 'package:pokerpad/view/lobby_page.dart';
 import 'package:pokerpad/view/register_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-import '../widget/downloading_progress_widget.dart';
+import '../provider/login_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -32,180 +23,232 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = false;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  final LoginController _loginController = LoginController();
-  LoginResponseModel? playerDetails;
-  bool isLoading = false;
-
-// device id get function
-  String _deviceId = "Fetching...";
-
-  Future<void> _getStoredDeviceId() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? storedDeviceId = pref.getString("device_id");
-
-    setState(() {
-      _deviceId = storedDeviceId ?? "No Device ID Found";
-    });
-    print("Updated Device ID: $_deviceId");
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getStoredDeviceId();
-    Future.delayed(const Duration(seconds: 1), () {
-      print("login page device id: $_deviceId");
-    });
-  }
-
-  Future<void> login() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() {
-      isLoading = true;
-    });
-    final requestModel = LoginRequestModel(
-        email: emailController.text,
-        password: passwordController.text,
-        deviceId: _deviceId,
-        // deviceId: "1",
-        accountNo: "A020241027101417");
-    try {
-      final response = await _loginController.login(requestModel);
-      setState(() {
-        playerDetails = response;
-        isLoading = false;
-      });
-      print("device id login api:$_deviceId");
-      print(playerDetails);
-      print("response:$response");
-      if (response?.status == "OK") {
-        final appVersion = int.tryParse(response?.data?.appVersion ?? "0") ?? 2;
-        print("app version:$appVersion");
-        final appUrl = response?.data?.appUrl;
-
-        if (appVersion > 2 && appUrl != null && appUrl.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.orange,
-            content:
-                const Text("A new update is available. Please update the app."),
-          ));
-          await downloadAndInstallApk(appUrl);
-          return;
-        }
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.activeGreen,
-            content: const Text(
-              "Login Successfully",
-              style: TextStyle(color: Colors.white),
-            )));
-        Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: LobbyPage(
-                  playerResponse: playerDetails,
-                  playerBalance: playerDetails?.data?.balance,
-                  avatar: playerDetails?.data?.lobbyAvatar,
-                ),
-                type: PageTransitionType.rightToLeftWithFade));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            content: const Text("Login failed, Invalid email or password!")));
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error:$e")));
-    }
-  }
-
-  double downloadProgress = 0.0; // Track progress
-
-  Future<void> downloadAndInstallApk(String appUrl) async {
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      // Check and request permissions
-      if (await Permission.storage.request().isDenied ||
-          await Permission.manageExternalStorage.request().isDenied ||
-          await Permission.requestInstallPackages.request().isDenied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content:
-                  Text("Storage permission is required to update the app")),
-        );
-        setState(() {
-          isLoading = false;
-        });
-        return;
-      }
-
-      // Save in app directory instead of external storage (avoids permission issues)
-      final dir = await getApplicationDocumentsDirectory(); // Internal storage
-      final apkPath = '${dir.path}/app-release.apk';
-      final dio = Dio();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("App Updating, please wait...")),
-      );
-
-      await dio.download(
-        appUrl,
-        apkPath,
-        onReceiveProgress: (received, total) {
-          if (total != -1) {
-            double progress = received / total;
-            setState(() {
-              downloadProgress = progress;
-            });
-            print("Progress: ${(progress * 100).toStringAsFixed(0)}%");
-          }
-        },
-      );
-
-      // Install APK
-      await OpenFilex.open(apkPath);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("App update complete!")),
-      );
-    } catch (e) {
-      print("Error Downloading or Installing APK: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to update the app")),
-      );
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+  // TextEditingController emailController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
+  // LoginResponseModel? playerDetails;
+  // bool isLoading = false;
+  // late WebSocketChannel? _channel;
+  // String _deviceId = "Fetching...";
+  //
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   // _getStoredDeviceId();
+  //   Future.delayed(const Duration(seconds: 1), () {});
+  // }
+  //
+  // Future<void> _getStoredDeviceId() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String? storedDeviceId = pref.getString("device_id");
+  //
+  //   setState(() {
+  //     _deviceId = storedDeviceId ?? "No Device ID Found";
+  //   });
+  //   print("Updated Device ID: $_deviceId");
+  // }
+  //
+  // Future<void> login() async {
+  //   if (!_formKey.currentState!.validate()) return;
+  //
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   _channel = WebSocketChannel.connect(
+  //       Uri.parse("ws://3.6.170.253:48001/game?playerId=1"));
+  //   print("WebSocket connected...");
+  //
+  //   _channel?.sink.add(jsonEncode({
+  //     "code": "LOGIN_REQUEST",
+  //     "data": {
+  //       "username": emailController.text,
+  //       "password": passwordController.text,
+  //       "deviceId": _deviceId
+  //     }
+  //   }));
+  //
+  //   _channel?.stream.listen(
+  //     (message) async {
+  //       print("Message received: $message");
+  //       final response = jsonDecode(message);
+  //
+  //       switch (response["code"]) {
+  //         case "LOGIN_REQUEST":
+  //           switch (response["data"]["status"]) {
+  //             case "OK":
+  //               setState(() {
+  //                 playerDetails = LoginResponseModel.fromJson(response["data"]);
+  //                 isLoading = false;
+  //               });
+  //
+  //               final appVersionStr = playerDetails?.data?.appVersion ?? "0";
+  //               final appVersion = int.tryParse(appVersionStr) ?? 0;
+  //               final appUrl = playerDetails?.data?.appUrl ?? "";
+  //
+  //               print("App Version: $appVersion");
+  //               print("App URL: $appUrl");
+  //
+  //               if (appVersion > 2 && appUrl.isNotEmpty) {
+  //                 print("A new update is available. Please update the app.");
+  //                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //                   elevation: 10,
+  //                   shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(24)),
+  //                   behavior: SnackBarBehavior.floating,
+  //                   backgroundColor: Colors.orange,
+  //                   content: const Text(
+  //                       "A new update is available. Please update the app."),
+  //                 ));
+  //
+  //                 await downloadAndInstallApk(appUrl);
+  //                 return;
+  //               }
+  //
+  //               if (playerDetails != null && playerDetails!.data != null) {
+  //                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //                   elevation: 10,
+  //                   shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(24)),
+  //                   behavior: SnackBarBehavior.floating,
+  //                   backgroundColor: CupertinoColors.activeGreen,
+  //                   content: const Text("Login Successful",
+  //                       style: TextStyle(color: Colors.white)),
+  //                 ));
+  //                 Navigator.pushReplacement(
+  //                   context,
+  //                   PageTransition(
+  //                     child: LobbyPage(
+  //                       playerResponse: playerDetails,
+  //                       playerBalance: playerDetails!.data!.balance ?? "",
+  //                       avatar: playerDetails!.data!.lobbyAvatar ?? "",
+  //                     ),
+  //                     type: PageTransitionType.rightToLeftWithFade,
+  //                   ),
+  //                 );
+  //               }
+  //               break;
+  //
+  //             case "FAIL":
+  //               setState(() {
+  //                 isLoading = false;
+  //               });
+  //
+  //               String errorMessage =
+  //                   response["data"]["message"] ?? "Login failed,";
+  //               print("Error Message: $errorMessage");
+  //
+  //               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //                 backgroundColor: Colors.red,
+  //                 elevation: 10,
+  //                 shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(24)),
+  //                 behavior: SnackBarBehavior.floating,
+  //                 content: Text(errorMessage),
+  //               ));
+  //
+  //               if (_channel != null) {
+  //                 print("web socket close");
+  //                 _channel!.sink.close();
+  //               }
+  //               break;
+  //           }
+  //           break;
+  //
+  //         default:
+  //           break;
+  //       }
+  //     },
+  //     onError: (error) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //
+  //       ScaffoldMessenger.of(context)
+  //           .showSnackBar(SnackBar(content: Text("Error: $error")));
+  //       print(error);
+  //     },
+  //     onDone: () {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //
+  //       print("WebSocket connection closed.");
+  //     },
+  //   );
+  // }
+  //
+  // double downloadProgress = 0.0; // Track progress
+  //
+  // Future<void> downloadAndInstallApk(String appUrl) async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   try {
+  //     // Check and request permissions
+  //     if (await Permission.storage.request().isDenied ||
+  //         await Permission.manageExternalStorage.request().isDenied ||
+  //         await Permission.requestInstallPackages.request().isDenied) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //             content:
+  //                 Text("Storage permission is required to update the app")),
+  //       );
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       return;
+  //     }
+  //
+  //     // Save in app directory instead of external storage (avoids permission issues)
+  //     final dir = await getApplicationDocumentsDirectory(); // Internal storage
+  //     final apkPath = '${dir.path}/app-release.apk';
+  //     final dio = Dio();
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("App Updating, please wait...")),
+  //     );
+  //
+  //     await dio.download(
+  //       appUrl,
+  //       apkPath,
+  //       onReceiveProgress: (received, total) {
+  //         if (total != -1) {
+  //           double progress = received / total;
+  //           setState(() {
+  //             downloadProgress = progress;
+  //           });
+  //           print("Progress: ${(progress * 100).toStringAsFixed(0)}%");
+  //         }
+  //       },
+  //     );
+  //
+  //     // Install APK
+  //     await OpenFilex.open(apkPath);
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("App update complete!")),
+  //     );
+  //   } catch (e) {
+  //     print("Error Downloading or Installing APK: $e");
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("Failed to update the app")),
+  //     );
+  //   } finally {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
+    print("Device id login:${loginProvider.deviceId}");
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -245,7 +288,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           BuildTextFieldWidget(
-                            controller: emailController,
+                            controller: loginProvider.emailController,
                             hintText: "Email",
                             labelText: 'email',
                             keyboardType: TextInputType.emailAddress,
@@ -266,7 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                           BuildTextFieldWidget(
                             labelText: "password",
                             hintText: "Password",
-                            controller: passwordController,
+                            controller: loginProvider.passwordController,
                             obscureText: passwordVisible,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -356,19 +399,37 @@ class _LoginPageState extends State<LoginPage> {
                     //         ),
                     //       ),
 
-                    isLoading
+                    loginProvider.isLoading
                         ? Column(
                             children: [
                               const SizedBox(height: 20),
-                              downloadProgress > 0
-                                  ? const DownloadingProgressWidget()
+                              loginProvider.downloadProgress > 0
+                                  ? Column(
+                                      children: [
+                                        LinearProgressIndicator(
+                                          value: loginProvider.downloadProgress,
+                                          backgroundColor: Colors.grey[300],
+                                          color: Colors.blue,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          '${(loginProvider.downloadProgress * 100).toStringAsFixed(0)}%',
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   : const CircularProgressIndicator(),
                             ],
                           )
                         : GestureDetector(
                             onTap: () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                login(); // Call the login function
+                                loginProvider
+                                    .login(context); // Call the login function
+                                // _connectWebSocket();
                               } else {
                                 print("Form is not valid");
                               }

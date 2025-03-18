@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/currency_button_provider.dart';
+import 'package:pokerpad/provider/login_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
@@ -17,6 +18,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => TransferButtonProvider()),
     ChangeNotifierProvider(create: (_) => QrProvider()),
     ChangeNotifierProvider(create: (_) => CurrencyButtonProvider()),
+    ChangeNotifierProvider(create: (_) => LoginProvider()),
   ], child: const MyApp()));
 
   // runApp(DevicePreview(

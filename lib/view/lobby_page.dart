@@ -13,8 +13,10 @@ import 'package:pokerpad/widget/profile_button_widget.dart';
 import 'package:pokerpad/widget/self_exclusion_widget.dart';
 import 'package:pokerpad/widget/top_winners_view_widget.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
+import '../provider/login_provider.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
@@ -28,6 +30,7 @@ class LobbyPage extends StatefulWidget {
 }
 
 class _LobbyPageState extends State<LobbyPage> {
+  // String balance = "0.00";
   @override
   void initState() {
     // TODO: implement initState
@@ -44,10 +47,10 @@ class _LobbyPageState extends State<LobbyPage> {
   @override
   Widget build(BuildContext context) {
     print(widget.playerResponse!.data?.nickname);
+    print(widget.playerResponse!.data?.balance);
     print(widget.playerResponse);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    final width = MediaQuery.sizeOf(context).width;
-    final height = MediaQuery.sizeOf(context).height;
+    final loginProvider = Provider.of<LoginProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -95,7 +98,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                       Center(
                           child: BuildSubHeadingText(
-                              text: "\$${widget.playerBalance}"))
+                              text:
+                                  "\$${loginProvider.playerBalance ?? widget.playerBalance}"))
                     ],
                   ),
                   const SizedBox(
