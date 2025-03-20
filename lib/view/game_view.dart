@@ -79,7 +79,6 @@ class _GameViewState extends State<GameView> {
       }
 
       debugPrint('Downloading and extracting ZIP file...');
-      // final url = widget.playerResponse?.data?.holdemGameUrl;
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -98,6 +97,7 @@ class _GameViewState extends State<GameView> {
 
         setState(() {
           serverUrl = "file://${extractionPath}dist/index.html";
+          print("serverUrl$serverUrl");
           isLoading = false;
         });
       } else {

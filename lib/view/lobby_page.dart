@@ -46,11 +46,12 @@ class _LobbyPageState extends State<LobbyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
+
     print(widget.playerResponse!.data?.nickname);
     print(widget.playerResponse!.data?.balance);
     print(widget.playerResponse);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    final loginProvider = Provider.of<LoginProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

@@ -138,7 +138,7 @@ class LoginProvider extends ChangeNotifier {
         PageTransition(
           child: LobbyPage(
             playerResponse: playerDetails,
-            playerBalance: playerBalance.toString(),
+            playerBalance: playerDetails?.data?.balance.toString(),
             avatar: playerDetails!.data!.lobbyAvatar ?? "",
           ),
           type: PageTransitionType.rightToLeftWithFade,

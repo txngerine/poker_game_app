@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/model/signup_request_model.dart';
+import 'package:pokerpad/provider/register_provider.dart';
 import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/view/verify_email_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/screen_size.dart';
@@ -25,6 +27,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool passwordVisible = true;
+  bool confirmPasswordVisible = true;
   TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -156,6 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final registerProvider = Provider.of<RegisterProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -188,29 +192,30 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 40),
                       // Login Fields
                       Form(
-                        key: _formKey,
+                        key: registerProvider.formKey,
                         child: Column(
                           children: [
                             BuildTextFieldWidget(
                               hintText: "Email                 ",
                               keyboardType: TextInputType.emailAddress,
-                              controller: emailController,
+                              controller: registerProvider.emailController,
                               labelText: 'email',
-                              validator: validateEmail,
+                              validator: registerProvider.validateEmail,
                             ),
                             const SizedBox(height: 5),
                             BuildTextFieldWidget(
                               hintText: "Password",
                               labelText: "password",
-                              controller: passwordController,
-                              obscureText: passwordVisible,
+                              controller: registerProvider.passwordController,
+                              obscureText: !registerProvider.isPasswordVisible,
                               suffixIcon: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    passwordVisible = !passwordVisible;
-                                  });
+                                  registerProvider.togglePasswordVisibility();
+                                  // setState(() {
+                                  //   passwordVisible = !passwordVisible;
+                                  // });
                                 },
-                                child: passwordVisible
+                                child: registerProvider.isPasswordVisible
                                     ? Image.asset(
                                         "assets/images/Artboard 28.png",
                                         width: 47)
@@ -221,20 +226,40 @@ class _RegisterPageState extends State<RegisterPage> {
                               // inputFormatters: [
                               //   LengthLimitingTextInputFormatter(8)
                               // ],
-                              validator: validatePassword,
+                              validator: registerProvider.validatePassword,
                             ),
                             const SizedBox(height: 5),
                             BuildTextFieldWidget(
-                              controller: confirmPasswordController,
-                              labelText: "confirm password",
-                              hintText: "Confirm password",
-                              obscureText: true,
-                              // inputFormatters: [
-                              //   LengthLimitingTextInputFormatter(8)
-                              // ],
-                              validator: (value) => validateConfirmPassword(
-                                  passwordController.text, value ?? ""),
-                            ),
+                                controller:
+                                    registerProvider.confirmPasswordController,
+                                labelText: "confirm password",
+                                hintText: "Confirm password",
+                                obscureText:
+                                    !registerProvider.isPasswordVisible,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    // setState(() {
+                                    //   confirmPasswordVisible =
+                                    //       !confirmPasswordVisible;
+                                    // });
+                                  },
+                                  child: registerProvider.isPasswordMatch
+                                      ? Image.asset(
+                                          "assets/images/register/Artboard 31 (2).png",
+                                          width: 47)
+                                      : Image.asset(
+                                          "assets/images/register/Artboard 30 (2).png",
+                                          width: 47),
+                                ),
+
+                                // inputFormatters: [
+                                //   LengthLimitingTextInputFormatter(8)
+                                // ],
+                                validator:
+                                    registerProvider.validateConfirmPassword
+                                // (value) => validateConfirmPassword(
+                                // passwordController.text, value ?? ""),
+                                ),
                             const SizedBox(height: 5),
                           ],
                         ),
@@ -301,14 +326,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       const SizedBox(height: 70),
-                      isLoading
+                      registerProvider.isLoading
                           ? const CircularProgressIndicator()
                           : GestureDetector(
                               onTap: () {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  signup();
-                                }
+                                registerProvider.signup(context);
+
+                                // if (_formKey.currentState?.validate() ??
+                                //     false) {
+                                //   // signup();
+                                // }
                               },
                               child: Image.asset(
                                 "assets/images/sign up button.png",
