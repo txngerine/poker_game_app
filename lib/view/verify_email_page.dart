@@ -82,7 +82,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       Navigator.push(
           context,
           PageTransition(
-              child: const AvatarPage(),
+              child: AvatarPage(),
               type: PageTransitionType.rightToLeftWithFade));
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
