@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/verification_controller.dart';
 import 'package:pokerpad/model/verification_request_model.dart';
-import 'package:pokerpad/view/avatar_page.dart';
+import 'package:pokerpad/view/phone_number_page.dart';
 import 'package:pokerpad/widget/build_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
@@ -82,7 +82,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       Navigator.push(
           context,
           PageTransition(
-              child: AvatarPage(),
+              child: PhoneNumberPage(),
               type: PageTransitionType.rightToLeftWithFade));
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -102,6 +102,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -116,69 +118,71 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ),
             ),
           ),
-          Center(
-            child: SizedBox(
-              height: 450,
-              width: 350,
-              child: Card(
-                shadowColor: const Color(0xffB7B7B7),
-                elevation: 30,
-                color: const Color(0xffB7B7B7),
-                shape: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Color(0xffB7B7B7),
+          Container(
+            width: width,
+            height: height / 1.4,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image:
+                    AssetImage("assets/images/phone&country/log-reg frame.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  const BuildHeadingText(text: "Verify Email"),
+                  const SizedBox(height: 10),
+                  const Icon(
+                    Icons.mail_outline,
+                    color: Colors.black26,
+                    size: 80,
                   ),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  const SizedBox(height: 20),
+                  const BuildTextWidget(
+                    fontSize: 18,
+                    align: TextAlign.center,
+                    text:
+                        "A 4-digit verification code has been sent to your email.\n Enter the code below.",
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const BuildHeadingText(text: "Verify Email"),
-                      const SizedBox(height: 10),
-                      const Icon(
-                        Icons.mail_outline,
-                        color: Colors.black26,
-                        size: 40,
-                      ),
-                      const SizedBox(height: 20),
-                      const BuildTextWidget(
-                        align: TextAlign.center,
-                        text:
-                            "A 4-digit verification code has been sent to your email. Enter the code below.",
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          4,
-                          (index) => SizedBox(
-                            height: 40,
-                            width: 40,
+                    children: List.generate(
+                      4,
+                      (index) => SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/verifyemail/code field.png"),
+                                fit: BoxFit
+                                    .fill, // Ensures the image covers the text field
+                              ),
+                            ),
                             child: TextField(
                               controller: _otpControllers[index],
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               maxLength: 1,
-                              style: const TextStyle(fontSize: 15),
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                               decoration: InputDecoration(
                                 counterText: "",
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 4,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                ),
-                                fillColor: Colors.grey[200],
-                                filled: true,
+                                border:
+                                    InputBorder.none, // Removes default borders
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                contentPadding: const EdgeInsets.all(
+                                    0), // Ensures text stays centered
                               ),
                               onChanged: (value) {
                                 if (value.isNotEmpty && index < 3) {
@@ -189,57 +193,59 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      GestureDetector(
-                        onTap: () {
-                          // Resend OTP logic
-                        },
-                        child: Image.asset(
-                          "assets/images/verifyemail/resend code button (3).png",
-                          height: 50,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  GestureDetector(
+                    onTap: () {
+                      // Resend OTP logic
+                    },
+                    child: Image.asset(
+                      width: width / 1.4,
+                      "assets/images/verifyemail/resend code button (3).png",
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  if (_errorText != null) ...[
+                    Container(
+                      width: width / 1.4,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black54, width: 2),
+                        color: Colors.orange[50], // Light red background
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Center(
+                        child: Text(
+                          _errorText!,
+                          style: const TextStyle(
+                            color: Colors.black, // Text color
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      if (_errorText != null) ...[
-                        Container(
-                          width: 270,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black54, width: 2),
-                            color: Colors.orange[50], // Light red background
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(
-                            child: Text(
-                              _errorText!,
-                              style: const TextStyle(
-                                color: Colors.black, // Text color
+                    ),
+                  ],
+                  const SizedBox(height: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/verifyemail/back button.png",
+                        width: width / 2.8,
+                      ),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : GestureDetector(
+                              onTap: verify,
+                              child: Image.asset(
+                                "assets/images/verifyemail/confirm button (1).png",
+                                width: width / 2.8,
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/images/verifyemail/back button.png",
-                            height: 45,
-                          ),
-                          isLoading
-                              ? const CircularProgressIndicator()
-                              : GestureDetector(
-                                  onTap: verify,
-                                  child: Image.asset(
-                                    "assets/images/verifyemail/confirm button (1).png",
-                                    height: 43,
-                                  ),
-                                ),
-                        ],
-                      )
                     ],
-                  ),
-                ),
+                  )
+                ],
               ),
             ),
           ),

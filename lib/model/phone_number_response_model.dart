@@ -13,7 +13,7 @@ String phoneNumberResponseModelToJson(PhoneNumberResponseModel data) =>
 class PhoneNumberResponseModel {
   final String? phone;
   final String? phCountryCode;
-  final int? deviceId;
+  final String? deviceId;
 
   PhoneNumberResponseModel({
     this.phone,

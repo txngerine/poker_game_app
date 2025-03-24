@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
-import '../model/country_list.dart';
+import '../provider/country_provider.dart';
 import '../widget/build_text_widget.dart';
 
 class PhoneNumberPage extends StatefulWidget {
@@ -12,17 +13,34 @@ class PhoneNumberPage extends StatefulWidget {
 }
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
-  String countryCode = "+1"; // Default country code
-  String countryFlag = "🇺🇸"; // Default flag
-  String phoneNumber = ""; // Store entered phone number
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   _getStoredDeviceId();
+  // }
+  //
+  // String _deviceId = "Fetching...";
+  //
+  // Future<void> _getStoredDeviceId() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String? storedDeviceId = pref.getString("device_id");
+  //
+  //   setState(() {
+  //     _deviceId = storedDeviceId ?? "No Device ID Found";
+  //   });
+  //   print("Updated Device ID: $_deviceId");
+  // }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+    final countryProvider = Provider.of<CountryProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[300], // Soft gray background
+      backgroundColor: Colors.grey[300],
       body: Stack(
         children: [
           Container(
@@ -36,7 +54,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             ),
           ),
           Container(
-            width: width / 1,
+            width: width,
             height: height / 1.4,
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -49,9 +67,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 BuildTextWidget(
                   text: "Phone Number",
                   fontSize: 25,
@@ -61,6 +77,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 const SizedBox(height: 50),
                 Image.asset("assets/images/phone&country/phone icon (1).png"),
                 const SizedBox(height: 100),
+
                 // Country Code Picker + Phone Number Input
                 Container(
                   width: width / 1.5,
@@ -69,7 +86,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                     children: [
                       // Country Code Picker
                       GestureDetector(
-                        onTap: () => _showCountryPicker(context),
+                        onTap: () {
+                          countryProvider.resetFilteredCountries();
+                          _showCountryPicker(context);
+                        },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           height: 55,
@@ -83,28 +103,13 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                           ),
                           child: Row(
                             children: [
-                              Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  // Background Flag Holder Image
-                                  // Image.asset(
-                                  //   "assets/images/phone&country/flag holder.png",
-                                  //   width: 28, // Adjust width as needed
-                                  //   height: 35,
-                                  //   fit: BoxFit.cover,
-                                  // ),
-
-                                  Text(
-                                    countryFlag, // Unicode flag emoji from List<Country>
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ],
+                              Text(
+                                countryProvider.countryFlag,
+                                style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(width: 5),
-
-                              // Country Code
                               Text(
-                                countryCode,
+                                countryProvider.countryCode,
                                 style: const TextStyle(
                                     fontSize: 12, color: Colors.black),
                               ),
@@ -114,7 +119,6 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                       ),
                       const SizedBox(width: 10),
 
-                      // Phone Number Input
                       Expanded(
                         child: SizedBox(
                           height: 50,
@@ -124,29 +128,23 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                               image: DecorationImage(
                                 image: AssetImage(
                                     "assets/images/phone&country/country text field.png"),
-                                fit: BoxFit.fill, // Adjust as needed
+                                fit: BoxFit.fill,
                               ),
-                              borderRadius:
-                                  BorderRadius.circular(30), // Rounded corners
+                              borderRadius: BorderRadius.circular(30),
                             ),
                             child: TextFormField(
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.phone,
                               style: const TextStyle(
-                                  fontSize: 12,
-                                  color:
-                                      Colors.black), // Ensure text is visible
+                                  fontSize: 12, color: Colors.black),
                               decoration: InputDecoration(
                                 hintText: "Phone Number",
                                 hintStyle: const TextStyle(
                                     color: Colors.grey, fontSize: 12),
                                 filled: true,
-                                fillColor: Colors
-                                    .transparent, // Transparent so the image is visible
+                                fillColor: Colors.transparent,
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 15),
-
-                                // Hide default border to keep image look
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
                                   borderSide: BorderSide.none,
@@ -160,11 +158,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
-                              onChanged: (value) {
-                                setState(() {
-                                  phoneNumber = value;
-                                });
-                              },
+                              onChanged: countryProvider.updatePhoneNumber,
                             ),
                           ),
                         ),
@@ -172,12 +166,16 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: height / 6,
-                ),
-                Image.asset(
+                SizedBox(height: height / 8),
+                GestureDetector(
+                  onTap: () {
+                    countryProvider.sentPhoneNumber(context);
+                  },
+                  child: Image.asset(
                     width: width / 1.5,
-                    "assets/images/phone&country/confirm button (1).png")
+                    "assets/images/phone&country/confirm button (1).png",
+                  ),
+                )
               ],
             ),
           ),
@@ -186,86 +184,135 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
     );
   }
 
-  // Custom Country Picker Modal
   void _showCountryPicker(BuildContext context) {
-    showModalBottomSheet(
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final countryProvider =
+        Provider.of<CountryProvider>(context, listen: false);
+
+    showDialog(
       context: context,
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
       builder: (context) {
-        return SizedBox(
-          height: 400,
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              const Text(
-                "Select Country",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+        return Align(
+          alignment: Alignment.topCenter, // Moves the dialog to the top
+          child: Material(
+            // Ensures background transparency works
+            color: Colors.transparent,
+            child: Container(
+              width: width / 1.1,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      "assets/images/phone&country/country code frame.png"),
+                  fit: BoxFit.fill,
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search country",
-                    prefixIcon: const Icon(Icons.search),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  BuildTextWidget(
+                    text: "Country Code",
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54,
+                  ),
+
+                  // Search Field
+                  SizedBox(
+                    width: width / 1.3,
+                    height: 55,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          image: AssetImage(
+                              "assets/images/phone&country/country text field.png"),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: TextFormField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: "Enter country name",
+                            hintStyle: const TextStyle(
+                                color: Colors.grey, fontSize: 15),
+                            filled: true,
+                            fillColor: Colors.transparent,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                          onChanged: countryProvider.searchCountry),
                     ),
                   ),
-                  onChanged: (query) {
-                    setState(() {
-                      countries = countries
-                          .where((country) => country.name
-                              .toLowerCase()
-                              .contains(query.toLowerCase()))
-                          .toList();
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-              // Country List
-              Expanded(
-                child: ListView.builder(
-                  itemCount: countries.length,
-                  itemBuilder: (context, index) {
-                    final country = countries[index];
-                    return ListTile(
-                      leading: Text(
-                        country.flag,
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      title: Text(
-                        country.name,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      trailing: Text(
-                        country.dialCode,
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.black54),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          countryFlag = country.flag;
-                          countryCode = country.dialCode;
-                        });
-                        Navigator.pop(context); // Close modal
+                  // ListView inside a scrollable container
+                  Container(
+                    width: width / 1.3,
+                    height: height / 1.2,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black38, width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    child: Consumer<CountryProvider>(
+                      builder: (context, provider, child) {
+                        return provider.filteredCountries.isEmpty
+                            ? const Center(
+                                child: Text("No Results Found",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.grey)))
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: provider.filteredCountries.length,
+                                  itemBuilder: (context, index) {
+                                    final country =
+                                        provider.filteredCountries[index];
+                                    return ListTile(
+                                      leading: Text(country.flag,
+                                          style: const TextStyle(fontSize: 20)),
+                                      title: Text(
+                                        country.name,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      ),
+                                      trailing: Text(
+                                        country.dialCode,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black54),
+                                      ),
+                                      onTap: () {
+                                        provider.selectCountry(country);
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  },
+                                ),
+                              );
                       },
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         );
       },

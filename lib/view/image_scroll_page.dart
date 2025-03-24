@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/front_camera_page.dart';
-import 'package:pokerpad/widget/build_heading_text.dart';
 
 import '../constants/screen_size.dart';
 
@@ -15,6 +14,61 @@ class ImageScrollPage extends StatefulWidget {
 class _ImageScrollPageState extends State<ImageScrollPage> {
   final PageController _pageController = PageController();
   bool _showButton = false;
+  // String? selectGender;
+  // bool isLoading = false;
+  // bool genderImage = false;
+  // final GenderController _genderController = GenderController();
+  //
+  // void genderSelect(String gender) async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   // Create request model
+  //   PlayersGenderRequestModel request = PlayersGenderRequestModel(
+  //     gender: gender,
+  //     deviceId: 1,
+  //     id: SignupController.userId!.toInt(),
+  //   );
+  //
+  //   // Fetch response
+  //   PlayersGenderResponseModel? response =
+  //       await _genderController.gender(request);
+  //
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  //
+  //   if (response != null && response.status == "OK") {
+  //     print(response.status);
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         duration: const Duration(milliseconds: 350),
+  //         elevation: 10,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(24),
+  //         ),
+  //         behavior: SnackBarBehavior.floating,
+  //         backgroundColor: CupertinoColors.activeGreen,
+  //         content: Text(
+  //             "Success! Step: ${response.data!.step}, ID: ${response.data!.id}"),
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         elevation: 10,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(24),
+  //         ),
+  //         behavior: SnackBarBehavior.floating,
+  //         backgroundColor: CupertinoColors.destructiveRed,
+  //         content: Text("Error: ${response?.message ?? 'Unknown error'}"),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +97,6 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  const BuildHeadingText(text: "Instructions"),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
@@ -53,9 +106,63 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
                         });
                       },
                       children: [
-                        Image.asset(
-                          'assets/images/9. Instruction - light copy.png',
-                          fit: BoxFit.cover,
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/images/9. Instruction - light copy.png',
+                              fit: BoxFit.cover,
+                            ),
+                            // Row(
+                            //   children: [
+                            //     Row(
+                            //       children: [
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               selectGender = "male";
+                            //               genderImage = false;
+                            //             });
+                            //             genderSelect("M");
+                            //           },
+                            //           child: selectGender == "male"
+                            //               ? Image.asset(
+                            //                   "assets/images/Artboard 41.png",
+                            //                   width: 30)
+                            //               : Image.asset(
+                            //                   "assets/images/empty checkmark.png",
+                            //                   width: 30),
+                            //         ),
+                            //         const SizedBox(width: 20),
+                            //         const BuildTextWidget(text: "Male    ")
+                            //       ],
+                            //     ),
+                            //     Row(
+                            //       children: [
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               selectGender = "female";
+                            //               genderImage = false;
+                            //             });
+                            //             genderSelect("F");
+                            //           },
+                            //           child: selectGender == "female"
+                            //               ? Image.asset(
+                            //                   "assets/images/Artboard 41.png",
+                            //                   width: 30)
+                            //               : Image.asset(
+                            //                   "assets/images/empty checkmark.png",
+                            //                   width: 30),
+                            //         ),
+                            //         const SizedBox(width: 20),
+                            //         const BuildTextWidget(
+                            //           text: "Female",
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ],
+                            // ),
+                          ],
                         ),
                         Image.asset(
                           'assets/images/10. instruction - accessories copy.png',

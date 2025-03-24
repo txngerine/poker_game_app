@@ -24,6 +24,7 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
   String _deviceDetails = "Device information";
   //PP1PPS4FMS68
   String _deviceId = "";
+
   bool isLoading = true;
 
   @override
