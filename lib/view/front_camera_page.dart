@@ -4,9 +4,9 @@ import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:path_provider/path_provider.dart'; // Import path_provider
+import 'package:path_provider/path_provider.dart';
 
-import 'image_preview_screen.dart';
+import 'image_preview_screen.dart'; // Import path_provider
 
 class FrontCameraPage extends StatefulWidget {
   const FrontCameraPage({super.key});
