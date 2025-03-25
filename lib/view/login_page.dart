@@ -23,6 +23,225 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = false;
+  // TextEditingController emailController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
+  // LoginResponseModel? playerDetails;
+  // bool isLoading = false;
+  // late WebSocketChannel? _channel;
+  // String _deviceId = "Fetching...";
+  //
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   // _getStoredDeviceId();
+  //   Future.delayed(const Duration(seconds: 1), () {});
+  // }
+  //
+  // Future<void> _getStoredDeviceId() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String? storedDeviceId = pref.getString("device_id");
+  //
+  //   setState(() {
+  //     _deviceId = storedDeviceId ?? "No Device ID Found";
+  //   });
+  //   print("Updated Device ID: $_deviceId");
+  // }
+  //
+  // Future<void> login() async {
+  //   if (!_formKey.currentState!.validate()) return;
+  //
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   _channel = WebSocketChannel.connect(
+  //       Uri.parse("ws://3.6.170.253:48001/game?playerId=1"));
+  //   print("WebSocket connected...");
+  //
+  //   _channel?.sink.add(jsonEncode({
+  //     "code": "LOGIN_REQUEST",
+  //     "data": {
+  //       "username": emailController.text,
+  //       "password": passwordController.text,
+  //       "deviceId": _deviceId
+  //     }
+  //   }));
+  //
+  //   _channel?.stream.listen(
+  //     (message) async {
+  //       print("Message received: $message");
+  //       final response = jsonDecode(message);
+  //
+  //       switch (response["code"]) {
+  //         case "LOGIN_REQUEST":
+  //           switch (response["data"]["status"]) {
+  //             case "OK":
+  //               setState(() {
+  //                 playerDetails = LoginResponseModel.fromJson(response["data"]);
+  //                 isLoading = false;
+  //               });
+  //
+  //               final appVersionStr = playerDetails?.data?.appVersion ?? "0";
+  //               final appVersion = int.tryParse(appVersionStr) ?? 0;
+  //               final appUrl = playerDetails?.data?.appUrl ?? "";
+  //
+  //               print("App Version: $appVersion");
+  //               print("App URL: $appUrl");
+  //
+  //               if (appVersion > 2 && appUrl.isNotEmpty) {
+  //                 print("A new update is available. Please update the app.");
+  //                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //                   elevation: 10,
+  //                   shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(24)),
+  //                   behavior: SnackBarBehavior.floating,
+  //                   backgroundColor: Colors.orange,
+  //                   content: const Text(
+  //                       "A new update is available. Please update the app."),
+  //                 ));
+  //
+  //                 await downloadAndInstallApk(appUrl);
+  //                 return;
+  //               }
+  //
+  //               if (playerDetails != null && playerDetails!.data != null) {
+  //                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //                   elevation: 10,
+  //                   shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(24)),
+  //                   behavior: SnackBarBehavior.floating,
+  //                   backgroundColor: CupertinoColors.activeGreen,
+  //                   content: const Text("Login Successful",
+  //                       style: TextStyle(color: Colors.white)),
+  //                 ));
+  //                 Navigator.pushReplacement(
+  //                   context,
+  //                   PageTransition(
+  //                     child: LobbyPage(
+  //                       playerResponse: playerDetails,
+  //                       playerBalance: playerDetails!.data!.balance ?? "",
+  //                       avatar: playerDetails!.data!.lobbyAvatar ?? "",
+  //                     ),
+  //                     type: PageTransitionType.rightToLeftWithFade,
+  //                   ),
+  //                 );
+  //               }
+  //               break;
+  //
+  //             case "FAIL":
+  //               setState(() {
+  //                 isLoading = false;
+  //               });
+  //
+  //               String errorMessage =
+  //                   response["data"]["message"] ?? "Login failed,";
+  //               print("Error Message: $errorMessage");
+  //
+  //               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //                 backgroundColor: Colors.red,
+  //                 elevation: 10,
+  //                 shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(24)),
+  //                 behavior: SnackBarBehavior.floating,
+  //                 content: Text(errorMessage),
+  //               ));
+  //
+  //               if (_channel != null) {
+  //                 print("web socket close");
+  //                 _channel!.sink.close();
+  //               }
+  //               break;
+  //           }
+  //           break;
+  //
+  //         default:
+  //           break;
+  //       }
+  //     },
+  //     onError: (error) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //
+  //       ScaffoldMessenger.of(context)
+  //           .showSnackBar(SnackBar(content: Text("Error: $error")));
+  //       print(error);
+  //     },
+  //     onDone: () {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //
+  //       print("WebSocket connection closed.");
+  //     },
+  //   );
+  // }
+  //
+  // double downloadProgress = 0.0; // Track progress
+  //
+  // Future<void> downloadAndInstallApk(String appUrl) async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   try {
+  //     // Check and request permissions
+  //     if (await Permission.storage.request().isDenied ||
+  //         await Permission.manageExternalStorage.request().isDenied ||
+  //         await Permission.requestInstallPackages.request().isDenied) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //             content:
+  //                 Text("Storage permission is required to update the app")),
+  //       );
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       return;
+  //     }
+  //
+  //     // Save in app directory instead of external storage (avoids permission issues)
+  //     final dir = await getApplicationDocumentsDirectory(); // Internal storage
+  //     final apkPath = '${dir.path}/app-release.apk';
+  //     final dio = Dio();
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("App Updating, please wait...")),
+  //     );
+  //
+  //     await dio.download(
+  //       appUrl,
+  //       apkPath,
+  //       onReceiveProgress: (received, total) {
+  //         if (total != -1) {
+  //           double progress = received / total;
+  //           setState(() {
+  //             downloadProgress = progress;
+  //           });
+  //           print("Progress: ${(progress * 100).toStringAsFixed(0)}%");
+  //         }
+  //       },
+  //     );
+  //
+  //     // Install APK
+  //     await OpenFilex.open(apkPath);
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("App update complete!")),
+  //     );
+  //   } catch (e) {
+  //     print("Error Downloading or Installing APK: $e");
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("Failed to update the app")),
+  //     );
+  //   } finally {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+
   final _formKey = GlobalKey<FormState>();
 
   @override
