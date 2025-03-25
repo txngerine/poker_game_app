@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/chart_line_widget.dart';
 
@@ -37,7 +39,6 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
                       context: context,
                       builder: (context) {
                         return ChartLineWidget(
-
                         );
                       },
                     );
