@@ -70,8 +70,8 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 const SizedBox(height: 30),
                 BuildTextWidget(
                   text: "Phone Number",
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w900,
                   color: Colors.black54,
                 ),
                 const SizedBox(height: 50),
@@ -212,10 +212,16 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                   const SizedBox(height: 10),
                   BuildTextWidget(
                     text: "Country Code",
-                    fontSize: 25,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
                     color: Colors.black54,
                   ),
+                  // BuildTextWidget(
+                  //   text: "Country Code",
+                  //   fontSize: 25,
+                  //   fontWeight: FontWeight.w700,
+                  //   color: Colors.black54,
+                  // ),
 
                   // Search Field
                   SizedBox(
@@ -241,8 +247,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                 color: Colors.grey, fontSize: 15),
                             filled: true,
                             fillColor: Colors.transparent,
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 15),
+                            contentPadding: const EdgeInsets.all(14),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide.none,

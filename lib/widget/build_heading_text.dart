@@ -9,16 +9,18 @@ class BuildHeadingText extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(
-        fontWeight: FontWeight.w900,
-        fontFamily: "CustomFont",
+        fontWeight: FontWeight.w800,
+        // fontFamily: "CustomFont",
         fontSize: 30,
-        shadows: [
-          Shadow(
-            color: Colors.black38,
-            blurRadius: 4,
-            offset: Offset(1, 2),
-          ),
-        ],
+        color: Color(0xff454545),
+
+        // shadows: [
+        //   Shadow(
+        //     color: Color(0xff454545),
+        //     // blurRadius: 4,
+        //     // offset: Offset(1, 2),
+        //   ),
+        // ],
       ),
     );
   }
