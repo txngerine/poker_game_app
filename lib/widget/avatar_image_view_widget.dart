@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/widget/chart_line_widget.dart';
 
 import '../model/login_response_model.dart';
 import '../view/lobby_avatar_view.dart';
@@ -35,7 +36,9 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return const LobbyAvatarView();
+                        return ChartLineWidget(
+
+                        );
                       },
                     );
                   },
