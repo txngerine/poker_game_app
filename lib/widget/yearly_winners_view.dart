@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'build_sub_heading_text.dart';
+import 'chart_line_widget.dart';
 
 class YearlyWinnersView extends StatefulWidget {
   const YearlyWinnersView({super.key});
@@ -54,9 +55,19 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(1.0),
-                              child: Image.asset(
-                                "assets/images/lobby/top winners/villain avatar holder.png",
-                                width: width / 9,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const ChartLineWidget();
+                                    },
+                                  );
+                                },
+                                child: Image.asset(
+                                  "assets/images/lobby/top winners/villain avatar holder.png",
+                                  width: width / 9,
+                                ),
                               ),
                             ),
                             const BuildSubHeadingText(

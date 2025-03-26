@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokerpad/view/lobby_avatar_view.dart';
+import 'package:pokerpad/widget/chart_line_widget.dart';
 
 import 'build_sub_heading_text.dart';
 
@@ -61,7 +61,7 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return const LobbyAvatarView();
+                                      return const ChartLineWidget();
                                     },
                                   );
                                 },
