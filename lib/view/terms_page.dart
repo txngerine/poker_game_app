@@ -107,9 +107,8 @@ class _TermsPageState extends State<TermsPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 15),
                 BuildHeadingWidget(text: "Terms and Conditions"),
-                const SizedBox(height: 5),
+                const SizedBox(height: 45),
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(

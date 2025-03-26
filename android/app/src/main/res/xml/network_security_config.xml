@@ -22,8 +22,5 @@
             <certificates src="user" />
         </trust-anchors>
     </base-config>
-<<<<<<< HEAD
-</network-security-config>
-=======
-</network-security-config>
->>>>>>> d77b8b2a437bd63604d38f0658dcefdb831e2c6d
+
+    </network-security-config>

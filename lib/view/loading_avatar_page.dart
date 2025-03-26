@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/get_avatar_controller.dart';
 import 'package:pokerpad/view/pick_avatar_page.dart';
+import 'package:pokerpad/widget/build_heading_widget.dart';
 
 import '../constants/screen_size.dart';
 
@@ -76,6 +77,8 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -90,16 +93,18 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(35.0),
+          Container(
+            width: width,
+            height: height / 1.1,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/images/terms/terms bg.png")),
+            ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image.asset(
-                    "assets/images/pokerPadArt/avtaar generation title.png"),
-                const SizedBox(
-                  height: 100,
-                ),
+                const BuildHeadingWidget(text: "Loading Avatars"),
                 // Show a loading indicator or the avatar data
                 isLoading
                     ? Image.asset(
@@ -114,15 +119,45 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
                         "assets/images/3d/ezgif.com-gif-maker (1).gif",
                         fit: BoxFit.fill,
                       ),
-
                 const SizedBox(
-                  height: 150,
-                ),
-                Image.asset(
-                    "assets/images/pokerPadArt/avatar generation explanation.png"),
+                  height: 50,
+                )
               ],
             ),
-          ),
+          )
+          // Padding(
+          //   padding: const EdgeInsets.all(35.0),
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       Image.asset(
+          //           "assets/images/pokerPadArt/avtaar generation title.png"),
+          //       const SizedBox(
+          //         height: 100,
+          //       ),
+          //       // Show a loading indicator or the avatar data
+          //       isLoading
+          //           ? Image.asset(
+          //               height: 250,
+          //               width: 250,
+          //               "assets/images/3d/ezgif.com-gif-maker (1).gif",
+          //               fit: BoxFit.fill,
+          //             )
+          //           : Image.asset(
+          //               height: 250,
+          //               width: 250,
+          //               "assets/images/3d/ezgif.com-gif-maker (1).gif",
+          //               fit: BoxFit.fill,
+          //             ),
+          //
+          //       const SizedBox(
+          //         height: 150,
+          //       ),
+          //       Image.asset(
+          //           "assets/images/pokerPadArt/avatar generation explanation.png"),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

@@ -135,7 +135,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 children: [
                   const SizedBox(height: 40),
                   // const BuildHeadingText(text: "Verify Email"),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                     text: "Verify Email",
                     fontSize: 28,
                     fontWeight: FontWeight.w900,
@@ -165,7 +165,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                     "assets/images/verifyemail/code field.png"),
@@ -214,10 +214,11 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                     Container(
                       width: width / 1.4,
                       height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black54, width: 2),
-                        color: Colors.orange[50], // Light red background
-                        borderRadius: BorderRadius.circular(30),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                "assets/images/verifyemail/alert frame.png"),
+                            fit: BoxFit.cover),
                       ),
                       child: Center(
                         child: Text(
@@ -239,7 +240,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         width: width / 2.8,
                       ),
                       isLoading
-                          ? const CircularProgressIndicator()
+                          ? SizedBox(
+                              width: width / 2.8,
+                              child: Center(
+                                  child: const CircularProgressIndicator()))
                           : GestureDetector(
                               onTap: verify,
                               child: Image.asset(
