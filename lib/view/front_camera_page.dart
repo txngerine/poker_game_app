@@ -110,20 +110,22 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       backgroundColor: const Color(0xffE4E0E1),
       body: _isCameraInitialized
           ? Stack(
               children: [
                 SizedBox(
-                    height: 670,
-                    width: 800,
+                    height: height / 1.2,
+                    width: width,
                     child: Transform(
                         alignment: Alignment.center,
                         transform: Matrix4.rotationY(math.pi),
                         child: CameraPreview(_cameraController))),
                 Padding(
-                  padding: const EdgeInsets.only(top: 83),
+                  padding: const EdgeInsets.only(top: 105),
                   child: Image.asset(
                     'assets/images/person outline.png',
                     fit: BoxFit.cover,
@@ -146,19 +148,19 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
                               });
                             },
                             child: Image.asset(
-                              "assets/images/confirm.png",
-                              height: 57,
+                              "assets/images/shutter_button_white.png",
+                              height: height / 9,
                             )),
-                        const SizedBox(height: 10),
-                        GestureDetector(
-                            onTap: () {
-                              _cameraController.dispose();
-                              initializeCamera();
-                            },
-                            child: Image.asset(
-                              "assets/images/retake.png",
-                              height: 57,
-                            )),
+                        // const SizedBox(height: 10),
+                        // GestureDetector(
+                        //     onTap: () {
+                        //       _cameraController.dispose();
+                        //       initializeCamera();
+                        //     },
+                        //     child: Image.asset(
+                        //       "assets/images/retake.png",
+                        //       height: 57,
+                        //     )),
                         const SizedBox(
                           height: 10,
                         )

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
@@ -19,16 +20,39 @@ class TermsPage extends StatefulWidget {
 
 class _TermsPageState extends State<TermsPage> {
   bool checker = false;
+  bool checker2 = false;
   bool isLoading = false;
   final TermsController _termsController = TermsController();
 
   Future<void> acceptTerms() async {
     if (!checker) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: CupertinoColors.destructiveRed,
+          content: const Text(
+            "Please confirm that you have read the Terms of Service",
+            style: TextStyle(color: Colors.white),
+          )));
+
+      return;
+    }
+    if (!checker2) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content:
-              Text('Please confirm that you have read the Terms of Service'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: CupertinoColors.destructiveRed,
+          content: const Text(
+            "Please confirm that you have read the Terms of Service",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       );
       return;
@@ -167,7 +191,7 @@ class _TermsPageState extends State<TermsPage> {
                     ),
                     const SizedBox(width: 19),
                     const BuildTextWidget(
-                      text: "I confirm that I fully read the TOS Agreement",
+                      text: "I agree with the Terms and Conditions.",
                       fontSize: 14,
                     ),
                   ],
@@ -179,11 +203,11 @@ class _TermsPageState extends State<TermsPage> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          checker = !checker;
+                          checker2 = !checker2;
                         });
                       },
                       child: Image.asset(
-                        checker
+                        checker2
                             ? "assets/images/Artboard 41.png"
                             : "assets/images/empty checkmark.png",
                         width: 30,
@@ -191,7 +215,7 @@ class _TermsPageState extends State<TermsPage> {
                     ),
                     const SizedBox(width: 19),
                     const BuildTextWidget(
-                      text: "I confirm that I fully read the TOS Agreement",
+                      text: "I confirm that i am over 18 years old.   ",
                       fontSize: 14,
                     ),
                   ],
@@ -248,7 +272,10 @@ class _TermsPageState extends State<TermsPage> {
                       child: isLoading
                           ? Center(child: const CircularProgressIndicator())
                           : Image.asset(
-                              "assets/images/terms/proceed button.png")))),
+                              "assets/images/enter_pokerpad_button.png")))),
+          SizedBox(
+            height: 20,
+          )
         ],
       ),
     );

@@ -73,9 +73,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
           Column(
             children: [
-              const SizedBox(
-                height: 100,
-              ),
               Stack(
                 children: [
                   Image.asset(
@@ -101,7 +98,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             forgotPassword();
                           },
                           child: isLoading
-                              ? const CircularProgressIndicator()
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.5,
+                                  child: Center(
+                                      child: const CircularProgressIndicator()))
                               : Image.asset(
                                   width:
                                       MediaQuery.of(context).size.width / 1.5,

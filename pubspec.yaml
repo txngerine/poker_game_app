@@ -108,6 +108,7 @@ flutter:
     - assets/images/nickname/
     - assets/images/terms/
     - assets/images/primaryAvatar/
+    - assets/images/gender&avatar/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

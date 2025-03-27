@@ -10,8 +10,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/view/kyc_complete_page.dart';
 
-import 'front_camera_page.dart';
-
 class ImagePreviewScreen extends StatefulWidget {
   final String imagePath;
 
@@ -116,6 +114,8 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       body: Stack(
         children: [
@@ -130,7 +130,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
             ),
           ),
           SingleChildScrollView(
-            child: Center(
+            child: Container(
               child: _imageFile.path.isNotEmpty
                   ? Column(
                       children: [
@@ -141,36 +141,51 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                             _imageFile,
                             fit: BoxFit.fill,
                             width: double.infinity,
-                            height: MediaQuery.of(context).size.height / 1.3,
+                            height: MediaQuery.of(context).size.height / 1.2,
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        _isUploading
-                            ? const CircularProgressIndicator()
-                            : GestureDetector(
-                                onTap: () {
-                                  uploadImage();
-                                },
-                                child: Image.asset(
-                                  "assets/images/confirm.png",
-                                  height: 57,
-                                ),
-                              ),
-                        const SizedBox(height: 10),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FrontCameraPage(),
-                              ),
-                            );
-                          },
-                          child: Image.asset(
-                            "assets/images/retake.png",
-                            height: 57,
-                          ),
-                        ),
+                        const SizedBox(height: 30),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/retake (6).png",
+                              width: width / 2.3,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                uploadImage();
+                                uploadImage();
+                              },
+                              child: _isUploading
+                                  ? SizedBox(
+                                      width: width / 2.3,
+                                      child: Center(
+                                          child:
+                                              const CircularProgressIndicator()))
+                                  : Image.asset(
+                                      "assets/images/confirm (6).png",
+                                      width: width / 2.3,
+                                    ),
+                            )
+                          ],
+                        )
+
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.pop(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const FrontCameraPage(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: Image.asset(
+                        //     "assets/images/retake.png",
+                        //     height: 57,
+                        //   ),
+                        // ),
                       ],
                     )
                   : const Text("No image captured."),
