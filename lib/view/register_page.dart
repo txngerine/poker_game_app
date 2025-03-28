@@ -12,8 +12,10 @@ import '../constants/screen_size.dart';
 import '../widget/build_text_field_widget.dart';
 
 class RegisterPage extends StatefulWidget {
+  final int? affiliateId;
   const RegisterPage({
     super.key,
+    this.affiliateId,
   });
 
   @override

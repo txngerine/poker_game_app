@@ -144,11 +144,33 @@ class LoginProvider extends ChangeNotifier {
           type: PageTransitionType.rightToLeftWithFade,
         ),
       );
-    } else {
+    }
+    // else if (response["status"] == "FAIL") {
+    //   isLoading = false;
+    //   notifyListeners();
+    //   // Login failed, check if redirect is required
+    //   bool shouldRedirect = response["data"]["redirect"] ?? false;
+    //   int? affiliateId = response["data"]["affiliate_id"];
+    //   String errorMessage = response["messages"]["common"] ?? "Login Failed";
+    //
+    //   print(response["message"]["common"]);
+    //
+    //   if (shouldRedirect && affiliateId != null) {
+    //     print("Redirecting to Register Page...");
+    //
+    //     print("00o0o000");
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text(response["messages"]["common"] ?? "Login Failed"),
+    //         backgroundColor: Colors.yellow,
+    //       ),
+    //     );
+    //   }
+    // }
+    else {
       isLoading = false;
       notifyListeners();
       String errorMessage = response["data"]["message"] ?? "Login failed.";
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
