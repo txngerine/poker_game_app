@@ -64,7 +64,7 @@ class _ChartLineWidgetState extends State<ChartLineWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            width: width * 0.6,
+            width: width * 0.50,
             height: height / 2.9,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12),bottom: Radius.circular(12)),border: Border.all(color: Colors.black, width: 1.5),
