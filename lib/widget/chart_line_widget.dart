@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -93,11 +95,23 @@ class _ChartLineWidgetState extends State<ChartLineWidget> {
           ),
         ),
         Positioned(
-          top: 12,
-          left: 255,
-          child: CircleAvatar(radius: 17,backgroundColor: Colors.white,
-            child: CircleAvatar(radius: 15,
-              child: Image.network(chartController.countryFlag),
+          top: 15,
+          left: 251,
+          child: Container(decoration: BoxDecoration(
+  gradient: const LinearGradient(
+            colors: [
+              Color(0xFF3E3E3E), // Darker shade at top
+              Color(0xFF1C1C1C), // Dark shade at bottom
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+    shape: BoxShape.circle,
+  ),
+            child: CircleAvatar(radius: 18,backgroundColor: Colors.transparent,
+              child: CircleAvatar(radius: 16,
+                child: Image.network(chartController.countryFlag,fit: BoxFit.cover,),
+              ),
             ),
           ),
         ),

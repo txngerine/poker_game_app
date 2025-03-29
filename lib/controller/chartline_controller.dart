@@ -83,6 +83,7 @@ class ChartController with ChangeNotifier {
   bool isLoading = true;
   Player? player;
   String activeSince = "N/A";
+  String totalHandsPlayed = '';
   String totalWinnings = "\$0";
   String wonPerHour = "0";
   String avatar = '';
@@ -175,6 +176,7 @@ class ChartController with ChangeNotifier {
     data = [const FlSpot(0, 0)];
     isLoading = false;
     avatar = '';
+    totalHandsPlayed = '';
     username = "PLAYER";
     activeSince = "N/A";
     totalWinnings = "\$0";
