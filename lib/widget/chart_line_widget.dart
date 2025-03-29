@@ -92,6 +92,15 @@ class _ChartLineWidgetState extends State<ChartLineWidget> {
             ),
           ),
         ),
+        Positioned(
+          top: 12,
+          left: 255,
+          child: CircleAvatar(radius: 17,backgroundColor: Colors.white,
+            child: CircleAvatar(radius: 15,
+              child: Image.network(chartController.countryFlag),
+            ),
+          ),
+        ),
       ],
     );
   }

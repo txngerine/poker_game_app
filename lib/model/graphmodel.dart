@@ -78,6 +78,7 @@ class Player {
     String? photo;
     int? handsPlayed;
     String? winnings;
+    String? countryFlag;
 
     Player({
         this.nickname,
@@ -85,6 +86,7 @@ class Player {
         this.photo,
         this.handsPlayed,
         this.winnings,
+        this.countryFlag,
     });
 
     factory Player.fromJson(Map<String, dynamic> json) => Player(
@@ -93,6 +95,7 @@ class Player {
         photo: json["photo"],
         handsPlayed: json["hands_played"],
         winnings: json["winnings"],
+        countryFlag: json["country_flag"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -101,5 +104,6 @@ class Player {
         "photo": photo,
         "hands_played": handsPlayed,
         "winnings": winnings,
+        "country_flag": countryFlag,
     };
 }
