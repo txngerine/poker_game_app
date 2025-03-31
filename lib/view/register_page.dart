@@ -153,6 +153,18 @@ class _RegisterPageState extends State<RegisterPage> {
   //     print("register page device id: $_deviceId");
   //   });
   // }
+  late RegisterProvider registerProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    registerProvider = Provider.of<RegisterProvider>(context, listen: false);
+    print("affiliate id:${widget.affiliateId}");
+  }
+
+  void signUp() {
+    registerProvider.signup(affiliateId: widget.affiliateId, context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -327,8 +339,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           ? const CircularProgressIndicator()
                           : GestureDetector(
                               onTap: () {
-                                registerProvider.signup(context);
-
+                                // registerProvider.signup(context);
+                                signUp();
                                 // if (_formKey.currentState?.validate() ??
                                 //     false) {
                                 //   // signup();

@@ -6,6 +6,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pokerpad/view/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -144,30 +145,40 @@ class LoginProvider extends ChangeNotifier {
           type: PageTransitionType.rightToLeftWithFade,
         ),
       );
-    }
-    // else if (response["status"] == "FAIL") {
-    //   isLoading = false;
-    //   notifyListeners();
-    //   // Login failed, check if redirect is required
-    //   bool shouldRedirect = response["data"]["redirect"] ?? false;
-    //   int? affiliateId = response["data"]["affiliate_id"];
-    //   String errorMessage = response["messages"]["common"] ?? "Login Failed";
-    //
-    //   print(response["message"]["common"]);
-    //
-    //   if (shouldRedirect && affiliateId != null) {
-    //     print("Redirecting to Register Page...");
-    //
-    //     print("00o0o000");
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text(response["messages"]["common"] ?? "Login Failed"),
-    //         backgroundColor: Colors.yellow,
-    //       ),
-    //     );
-    //   }
-    // }
-    else {
+    } else if (response["data"]["status"] == "FAIL") {
+      // Login failed, check if redirect is required
+      bool shouldRedirect = response["data"]["data"]["redirect"] ?? false;
+      int? affiliateId = response["data"]["data"]["affiliate_id"];
+      String errorMessage = response["data"]["message"] ?? "Login Failed";
+      print(shouldRedirect);
+      print(affiliateId);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.yellow,
+        ),
+      );
+
+      print(errorMessage);
+
+      if (shouldRedirect && affiliateId != null) {
+        print("Redirecting to Register Page...");
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RegisterPage(
+                affiliateId: affiliateId,
+              ),
+            ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Redirecting to signup..."),
+            backgroundColor: Colors.blue,
+          ),
+        );
+      }
+    } else {
       isLoading = false;
       notifyListeners();
       String errorMessage = response["data"]["message"] ?? "Login failed.";

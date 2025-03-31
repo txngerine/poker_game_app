@@ -13,24 +13,6 @@ class PhoneNumberPage extends StatefulWidget {
 }
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   _getStoredDeviceId();
-  // }
-  //
-  // String _deviceId = "Fetching...";
-  //
-  // Future<void> _getStoredDeviceId() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   String? storedDeviceId = pref.getString("device_id");
-  //
-  //   setState(() {
-  //     _deviceId = storedDeviceId ?? "No Device ID Found";
-  //   });
-  //   print("Updated Device ID: $_deviceId");
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +38,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           Container(
             width: width,
             height: height / 1.4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
                     AssetImage("assets/images/phone&country/log-reg frame.png"),
@@ -91,9 +73,9 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                           _showCountryPicker(context);
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           height: 55,
-                          width: 100,
+                          width: 110,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
@@ -102,16 +84,25 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                             ),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              Image.asset(
                                 countryProvider.countryFlag,
-                                style: const TextStyle(fontSize: 16),
+                                width: 33,
+                                height: 33,
                               ),
+                              // Text(
+                              //   countryProvider.countryFlag,
+                              //   style: const TextStyle(fontSize: 16),
+                              // ),
                               const SizedBox(width: 5),
                               Text(
                                 countryProvider.countryCode,
                                 style: const TextStyle(
                                     fontSize: 12, color: Colors.black),
+                              ),
+                              SizedBox(
+                                width: 4,
                               ),
                             ],
                           ),
@@ -199,12 +190,13 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             // Ensures background transparency works
             color: Colors.transparent,
             child: Container(
-              width: width / 1.1,
+              width: width / 1,
+              height: height / 1,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      "assets/images/phone&country/country code frame.png"),
-                  fit: BoxFit.fill,
+                      "assets/images/phone&country/country code bg.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
               child: Column(
@@ -216,6 +208,9 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                     fontWeight: FontWeight.w900,
                     color: Colors.black54,
                   ),
+                  SizedBox(
+                    height: 40,
+                  ),
                   // BuildTextWidget(
                   //   text: "Country Code",
                   //   fontSize: 25,
@@ -225,7 +220,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
 
                   // Search Field
                   SizedBox(
-                    width: width / 1.3,
+                    width: width / 1.4,
                     height: 55,
                     child: Container(
                       decoration: BoxDecoration(
@@ -268,11 +263,16 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
 
                   // ListView inside a scrollable container
                   Container(
-                    width: width / 1.3,
-                    height: height / 1.2,
+                    width: width / 1.4,
+                    height: height / 1.3,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black38, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                      image: DecorationImage(
+                          image: AssetImage(
+                              "assets/images/phone&country/country code frame.png"),
+                          fit: BoxFit.contain),
+                      // border: Border.all(color: Colors.black38, width: 1.4),
+                      // borderRadius: BorderRadius.all(Radius.circular(30))),
+                    ),
                     child: Consumer<CountryProvider>(
                       builder: (context, provider, child) {
                         return provider.filteredCountries.isEmpty
@@ -281,7 +281,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.grey)))
                             : Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(18.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: provider.filteredCountries.length,
@@ -289,8 +289,29 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                     final country =
                                         provider.filteredCountries[index];
                                     return ListTile(
-                                      leading: Text(country.flag,
-                                          style: const TextStyle(fontSize: 20)),
+                                      contentPadding: EdgeInsets.all(5),
+                                      leading: Container(
+                                        width: 68,
+                                        height: 68,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/phone&country/flag holder.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          // Ensures the country flag is centered inside the holder
+                                          child: Image.asset(
+                                            country.flag,
+                                            width: 45, // Adjust width as needed
+                                            height:
+                                                45, // Adjust height as needed
+                                            fit: BoxFit
+                                                .contain, // Ensures the flag is fully visible
+                                          ),
+                                        ),
+                                      ),
                                       title: Text(
                                         country.name,
                                         style: const TextStyle(

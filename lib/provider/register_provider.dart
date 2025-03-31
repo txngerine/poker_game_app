@@ -85,9 +85,7 @@ class RegisterProvider extends ChangeNotifier {
     return null;
   }
 
-  Future<void> signup(
-    BuildContext context,
-  ) async {
+  Future<void> signup(BuildContext context, {int? affiliateId}) async {
     if (!formKey.currentState!.validate()) {
       return; // Stop if form validation fails
     }
@@ -99,6 +97,7 @@ class RegisterProvider extends ChangeNotifier {
       password: passwordController.text,
       deviceId: _deviceId,
       accountNo: "A020241027101417",
+      affiliateId: affiliateId, // ✅ Pass only if available
     );
 
     try {
