@@ -262,8 +262,19 @@ class _AffiliatePlayersButtonWidgetState
     extends State<AffiliatePlayersButtonWidget> {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
-  String sortedColumn = "";
+  String? sortField;
   bool isAscending = true;
+
+  void sortByField(String field) {
+    setState(() {
+      if (sortField == field) {
+        isAscending = !isAscending; // Toggle sort direction
+      } else {
+        sortField = field;
+        isAscending = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -277,9 +288,11 @@ class _AffiliatePlayersButtonWidgetState
         width: width,
         height: height,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/affiliate screen/aff_bg.png"),
-                fit: BoxFit.cover)),
+          image: DecorationImage(
+            image: AssetImage("assets/images/affiliate screen/aff_bg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -287,59 +300,17 @@ class _AffiliatePlayersButtonWidgetState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    child: Container(
-                        width: width / 2.1,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/affiliate screen/aff_textfield1.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            BuildSubHeadingText(
-                              text: "NO.OF PLAYERS",
-                              color: Colors.white,
-                              fontSize: 10,
-                            ),
-                            BuildSubHeadingText(
-                              text: "365",
-                              color: Colors.white,
-                              fontSize: 13,
-                            ),
-                          ],
-                        )),
+                  _buildStatContainer(
+                    width,
+                    "NO.OF PLAYERS",
+                    "365",
+                    "assets/images/affiliate screen/aff_textfield1.png",
                   ),
-                  ClipRRect(
-                    child: Container(
-                        width: width / 2.1,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/affiliate screen/aff_texfield2.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            BuildSubHeadingText(
-                              text: "TOTAL RAKE",
-                              color: Colors.white,
-                              fontSize: 10,
-                            ),
-                            BuildSubHeadingText(
-                              text: "\$50,214",
-                              color: Colors.white,
-                              fontSize: 13,
-                            ),
-                          ],
-                        )),
+                  _buildStatContainer(
+                    width,
+                    "TOTAL RAKE",
+                    "\$50,214",
+                    "assets/images/affiliate screen/aff_texfield2.png",
                   ),
                 ],
               ),
@@ -353,12 +324,12 @@ class _AffiliatePlayersButtonWidgetState
                       provider.toggleBonusClicked(false);
                     },
                     child: Image.asset(
-                        width: width / 4.2,
-                        "assets/images/affiliate screen/players active.png"),
+                      width: width / 4.2,
+                      "assets/images/affiliate screen/players active.png",
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      print("clicked bonus button");
                       provider.toggleBonusClicked(true);
                       showDialog(
                         barrierDismissible: false,
@@ -369,35 +340,15 @@ class _AffiliatePlayersButtonWidgetState
                       );
                     },
                     child: Image.asset(
-                        width: width / 4.2,
-                        "assets/images/affiliate screen/bonuses passive.png"),
+                      width: width / 4.2,
+                      "assets/images/affiliate screen/bonuses passive.png",
+                    ),
                   ),
-                  ClipRRect(
-                    child: Container(
-                        width: width / 2.1,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/affiliate screen/aff_texfield2.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            BuildSubHeadingText(
-                              text: "YOUR COMMISSION",
-                              color: Colors.white,
-                              fontSize: 10,
-                            ),
-                            BuildSubHeadingText(
-                              text: "\$36,214",
-                              color: Colors.white,
-                              fontSize: 13,
-                            ),
-                          ],
-                        )),
+                  _buildStatContainer(
+                    width,
+                    "YOUR COMMISSION",
+                    "\$36,214",
+                    "assets/images/affiliate screen/aff_texfield2.png",
                   ),
                 ],
               ),
@@ -408,15 +359,15 @@ class _AffiliatePlayersButtonWidgetState
                     width: width,
                     height: height / 13,
                     decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/affiliate screen/search frame.png"))),
+                      image: DecorationImage(
+                        image: AssetImage(
+                            "assets/images/affiliate screen/search frame.png"),
+                      ),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const SizedBox(
-                          width: 3,
-                        ),
+                        const SizedBox(width: 3),
                         SizedBox(
                           width: 80,
                           height: 50,
@@ -443,25 +394,21 @@ class _AffiliatePlayersButtonWidgetState
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        _buildSortableColumn("TRANSFER"),
-                        _buildSortableColumn("BALANCE"),
-                        _buildSortableColumn("WINNINGS"),
-                        _buildSortableColumn("RAKE"),
-                        _buildSortableColumn("COMMISSION"),
+                        const SizedBox(width: 20),
+                        _buildSortButton("TRANSFER"),
+                        _buildSortButton("BALANCE"),
+                        _buildSortButton("WINNINGS"),
+                        _buildSortButton("RAKE"),
+                        _buildSortButton("COMMISSION"),
                       ],
                     ),
                   ),
                 ),
               ),
-              Expanded(
-                child: AffiliatePlayersListview(
-                  searchQuery: searchQuery,
-                  sortColumn: sortedColumn,
-                  isAscending: isAscending,
-                ),
+              AffiliatePlayersListview(
+                searchQuery: searchQuery,
+                sortField: sortField,
+                isAscending: isAscending,
               ),
             ],
           ),
@@ -470,32 +417,59 @@ class _AffiliatePlayersButtonWidgetState
     );
   }
 
-  // Build a sortable column header
-  Widget _buildSortableColumn(String columnName) {
+  Widget _buildStatContainer(
+    double width,
+    String title,
+    String value,
+    String assetPath,
+  ) {
+    return ClipRRect(
+      child: Container(
+        width: width / 2.1,
+        height: 50,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(assetPath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            BuildSubHeadingText(
+              text: title,
+              color: Colors.white,
+              fontSize: 10,
+            ),
+            BuildSubHeadingText(
+              text: value,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSortButton(String field) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          if (sortedColumn == columnName) {
-            isAscending = !isAscending;
-          } else {
-            sortedColumn = columnName;
-            isAscending = true;
-          }
-        });
+        sortByField(field);
       },
       child: Row(
         children: [
           BuildSubHeadingText(
-            text: columnName,
+            text: field,
             color: Colors.white,
             fontSize: 10,
           ),
           Icon(
-            sortedColumn == columnName
+            (sortField == field)
                 ? (isAscending ? Icons.arrow_upward : Icons.arrow_downward)
-                : Icons.swap_vert,
-            size: 12,
+                : Icons.sort,
             color: Colors.white,
+            size: 12,
           ),
         ],
       ),
