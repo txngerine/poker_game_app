@@ -16,6 +16,8 @@ class AffiliatePlayersButtonWidget extends StatefulWidget {
 
 class _AffiliatePlayersButtonWidgetState
     extends State<AffiliatePlayersButtonWidget> {
+      final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -162,10 +164,10 @@ class _AffiliatePlayersButtonWidgetState
                         image: DecorationImage(
                             image: AssetImage(
                                 "assets/images/affiliate screen/search frame.png"))),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 3,
                         ),
                         SizedBox(
@@ -174,41 +176,50 @@ class _AffiliatePlayersButtonWidgetState
                           child: Material(
                             color: Colors.transparent,
                             child: TextField(
-                              decoration: InputDecoration(
+                              controller: _searchController,
+                              decoration: const InputDecoration(
                                 hintText: "   SEARCH",
                                 hintStyle: TextStyle(
-                                    color: Colors.white, fontSize: 11),
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 10),
+                                border: InputBorder.none,
                               ),
-                              style: TextStyle(color: Colors.white70),
+                              style: const TextStyle(color: Colors.white70),
+                              onChanged: (value) {
+                                setState(() {
+                                  searchQuery = value;
+                                });
+                              },
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "TRANSFER",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "BALANCE",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "WINNINGS",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "RAKE",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "COMMISSION",
                           color: Colors.white,
                           fontSize: 10,
@@ -218,7 +229,9 @@ class _AffiliatePlayersButtonWidgetState
                   ),
                 ),
               ),
-              const AffiliatePlayersListview()
+               AffiliatePlayersListview(
+                  searchQuery: searchQuery,
+                ),
             ],
           ),
         ),
