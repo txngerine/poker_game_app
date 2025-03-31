@@ -15,6 +15,8 @@ class AffiliateBonusButtonWidget extends StatefulWidget {
 
 class _AffiliateBonusButtonWidgetState
     extends State<AffiliateBonusButtonWidget> {
+      final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -189,7 +191,7 @@ class _AffiliateBonusButtonWidgetState
                         image: DecorationImage(
                             image: AssetImage(
                                 "assets/images/affiliate screen/search frame.png"))),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SizedBox(
@@ -198,39 +200,48 @@ class _AffiliateBonusButtonWidgetState
                           child: Material(
                             color: Colors.transparent,
                             child: TextField(
-                              decoration: InputDecoration(
+                              controller: _searchController,
+                              decoration: const InputDecoration(
                                 hintText: "   SEARCH",
                                 hintStyle: TextStyle(
-                                    color: Colors.white, fontSize: 11),
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 10),
+                                border: InputBorder.none,
                               ),
-                              style: TextStyle(color: Colors.white70),
+                              style: const TextStyle(color: Colors.white70),
+                              onChanged: (value) {
+                                setState(() {
+                                  searchQuery = value;
+                                });
+                              },
                             ),
                           ),
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "REFERRALS",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 40,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "ROAD TO \$10,000",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
-                        BuildSubHeadingText(
+                        const BuildSubHeadingText(
                           text: "BONUSES",
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         )
                       ],
@@ -238,7 +249,7 @@ class _AffiliateBonusButtonWidgetState
                   ),
                 ),
               ),
-              const AffiliateBonusesListview()
+              AffiliateBonusesListview(searchQuery: searchQuery,)
             ],
           ),
         ),
