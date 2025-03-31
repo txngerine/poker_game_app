@@ -2,15 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
-import 'package:pokerpad/view/avatar_page.dart';
+import 'package:pokerpad/view/loading_avatar_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/country_list.dart';
 
 class CountryProvider extends ChangeNotifier {
   String _countryCode = "+1"; // Default country code
-  String _countryFlag = "🇺🇸"; // Default flag
+  String _countryFlag =
+      "assets/images/Country Flags/United_States_of_America_1.png"; // Default flag
   String _phoneNumber = ""; // Store entered phone number
+  String _countryName = "";
   String _deviceId = "Fetching..."; // Default value
   bool _isLoading = false;
   String? _apiResponse;
@@ -19,6 +21,7 @@ class CountryProvider extends ChangeNotifier {
   String get countryCode => _countryCode;
   String get countryFlag => _countryFlag;
   String get phoneNumber => _phoneNumber;
+  String get countryName => _countryName;
   String get deviceId => _deviceId;
   bool get isLoading => _isLoading;
   String? get apiResponse => _apiResponse;
@@ -58,9 +61,11 @@ class CountryProvider extends ChangeNotifier {
   void selectCountry(Country country) {
     _countryFlag = country.flag;
     _countryCode = country.dialCode;
+    _countryName = country.name;
     final id = SignupController.userId;
     print("userId$id");
     print("deviceId:$deviceId");
+    print("countryName:${_countryName}");
     print(_countryCode);
     notifyListeners();
   }
@@ -88,6 +93,7 @@ class CountryProvider extends ChangeNotifier {
           data: {
             "phone": _phoneNumber,
             "ph_country_code": _countryCode,
+            "country": _countryName,
             "deviceId": _deviceId
           },
           options: Options(headers: {
@@ -99,7 +105,7 @@ class CountryProvider extends ChangeNotifier {
         Navigator.pushReplacement(
           context,
           PageTransition(
-            child: const AvatarPage(), // Ensure HomePage is imported
+            child: const LoadingAvatarPage(), // Ensure HomePage is imported
             type: PageTransitionType.rightToLeftWithFade,
           ),
         );

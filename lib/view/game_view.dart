@@ -572,9 +572,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
-import 'package:pokerpad/widget/chart_line_widget.dart';
-import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:shelf_static/shelf_static.dart';
 
 import '../model/login_response_model.dart';
 
@@ -613,44 +610,6 @@ class _GameViewState extends State<GameView> {
     super.dispose();
   }
 
-  /// Deletes old files if needed
-  Future<void> _deleteTempFiles() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final extractionPath = '${dir.path}/dist/';
-    final zipFilePath = '${dir.path}/poker.zip';
-
-    try {
-      final extractionDir = Directory(extractionPath);
-      if (await extractionDir.exists()) {
-        await extractionDir.delete(recursive: true);
-        debugPrint('Extracted files deleted.');
-      }
-
-      final zipFile = File(zipFilePath);
-      if (await zipFile.exists()) {
-        await zipFile.delete();
-        debugPrint('ZIP file deleted.');
-      }
-    } catch (e) {
-      debugPrint('Error deleting temp files: $e');
-    }
-  }
-
-  /// Checks if the extracted files already exist
-  Future<bool> _isAlreadyExtracted() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final extractedFile = File('${dir.path}/dist/index.html');
-    return extractedFile.exists();
-  }
-
-  /// Checks if the ZIP file already exists
-  Future<bool> _isZipFileDownloaded() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final zipFile = File('${dir.path}/poker.zip');
-    return zipFile.exists();
-  }
-
-  /// Downloads and extracts the ZIP file to a permanent directory
   Future<void> _downloadAndExtractFile() async {
     final isExtracted = await _isAlreadyExtracted();
     final isZipDownloaded = await _isZipFileDownloaded();
@@ -679,129 +638,54 @@ class _GameViewState extends State<GameView> {
     }
 
     try {
-      final dir = await getApplicationDocumentsDirectory();
-      final zipFilePath = '${dir.path}/poker.zip';
-      final zipFile = File(zipFilePath);
+      final tempDir = await getTemporaryDirectory();
+      final extractionPath = '${tempDir.path}/dist/';
+      final extractionDir = Directory(extractionPath);
 
-      if (!isZipDownloaded) {
-        final response = await http.get(Uri.parse(url));
-        if (response.statusCode == 200) {
-          await zipFile.writeAsBytes(response.bodyBytes);
-          debugPrint('ZIP file downloaded successfully.');
-        } else {
-          throw Exception('Failed to download ZIP file: ${response.statusCode}');
+      if (await extractionDir.exists()) {
+        debugPrint('Files already extracted. Skipping download.');
+        setState(() {
+          serverUrl =
+              "file://${extractionPath}dist/index.html?buttonId=$buttonId&avatar=$avatar&lobbyAvatar=$lobbyAvatar&detailAvatar=$detailAvatar&balance=$balance&id=$id";
+          isLoading = false;
+        });
+        return;
+      }
+
+      debugPrint('Downloading and extracting ZIP file...');
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final zipFilePath = '${tempDir.path}/poker.zip';
+        final zipFile = File(zipFilePath);
+        await zipFile.writeAsBytes(response.bodyBytes);
+
+        final archive = ZipDecoder().decodeBytes(await zipFile.readAsBytes());
+        for (final file in archive) {
+          final filePath = '$extractionPath${file.name}';
+          if (file.isFile) {
+            final extractedFile = File(filePath)..createSync(recursive: true);
+            await extractedFile.writeAsBytes(file.content as List<int>);
+          }
         }
-      }
 
-      await _extractZip(zipFilePath, '${dir.path}/dist/');
-      await _startServer(await _getExtractionPath());
-    } catch (e) {
-      _showError('Error occurred: $e');
-    }
-  }
-
-  /// Extracts ZIP content
-  Future<void> _extractZip(String zipPath, String extractionPath) async {
-    final bytes = await File(zipPath).readAsBytes();
-    final archive = ZipDecoder().decodeBytes(bytes);
-
-    for (final file in archive) {
-      final filePath = '$extractionPath${file.name}';
-      if (file.isFile) {
-        final extractedFile = File(filePath)..createSync(recursive: true);
-        await extractedFile.writeAsBytes(file.content as List<int>);
+        setState(() {
+          serverUrl = "file://${extractionPath}dist/index.html";
+          print("serverUrl$serverUrl");
+          isLoading = false;
+        });
       } else {
-        Directory(filePath).createSync(recursive: true);
+        throw Exception('Failed to download ZIP file: ${response.statusCode}');
       }
-    }
-    debugPrint('Files extracted to $extractionPath');
-  }
-
-  /// Starts a local server to serve extracted files
-  Future<void> _startServer(String path) async {
-    final handler = createStaticHandler(
-      path,
-      defaultDocument: 'index.html',
-    );
-
-    try {
-      final ipAddress = await _getLocalIpAddress();
-      _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, 4040);
-
-      // Allow WebSocket upgrades and CORS requests
-      _server?.defaultResponseHeaders
-          .add('Access-Control-Allow-Origin', '*');
-      _server?.defaultResponseHeaders
-          .add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      _server?.defaultResponseHeaders
-          .add('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
+    } catch (e) {
+      debugPrint('Error occurred: $e');
       setState(() {
         serverUrl =
             "http://$ipAddress:4040/dist/index.html?buttonId=$buttonId&avatar=$avatar&lobbyAvatar=$lobbyAvatar&detailAvatar=$detailAvatar&balance=$balance&id=$id";
         isLoading = false;
       });
-
-      debugPrint('Server running at $serverUrl');
-    } catch (e) {
-      _showError('Failed to start local server: $e');
     }
   }
-
-  /// Stops the server when the widget is disposed
-  Future<void> _stopServer() async {
-    if (_server != null) {
-      await _server?.close(force: true);
-      debugPrint('Server stopped.');
-    }
-  }
-
-  /// Displays error message and stops loading
-  void _showError(String message) {
-    debugPrint(message);
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  /// Gets the local IP address
-  Future<String> _getLocalIpAddress() async {
-    for (var interface in await NetworkInterface.list()) {
-      for (var addr in interface.addresses) {
-        if (addr.type == InternetAddressType.IPv4 && !addr.isLoopback) {
-          return addr.address;
-        }
-      }
-    }
-    return '127.0.0.1';
-  }
-
-  /// Gets extraction path in permanent directory
-  Future<String> _getExtractionPath() async {
-    final dir = await getApplicationDocumentsDirectory();
-    return '${dir.path}/dist/';
-  }
-
-  /// Shows ChartLineWidget as a modal bottom sheet
-  /// Shows ChartLineWidget as a modal bottom sheet and closes on tap outside
-void _navigateToChartPage(BuildContext context, int? playerId) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (context) => GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => Navigator.of(context).pop(),
-      child: SizedBox(
-        child: GestureDetector(
-          onTap: () {}, // Prevent closing when tapping inside content
-          child: ChartLineWidget(),
-        ),
-      ),
-    ),
-  );
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -840,18 +724,8 @@ void _navigateToChartPage(BuildContext context, int? playerId) {
                           callback: (args) {
                             if (args.isNotEmpty) {
                               var message = args[0];
-                              switch (message["action"]) {
-                                case "exit":
-                                  Navigator.pop(context);
-                                  break;
-                                case "log":
-                                  debugPrint("JS Console: ${message["message"]}");
-                                  break;
-                                case "playerDetails":
-                                  _navigateToChartPage(context, message["data"][1]);
-                                  break;
-                                default:
-                                  debugPrint("Unknown action: ${message["action"]}");
+                              if (message["action"] == "exit") {
+                                Navigator.pop(context);
                               }
                             }
                           },

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/verification_controller.dart';
 import 'package:pokerpad/model/verification_request_model.dart';
-import 'package:pokerpad/view/phone_number_page.dart';
-import 'package:pokerpad/widget/build_heading_text.dart';
+import 'package:pokerpad/view/image_scroll_page.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
 import '../constants/screen_size.dart';
@@ -82,7 +81,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       Navigator.push(
           context,
           PageTransition(
-              child: PhoneNumberPage(),
+              child: ImageScrollPage(),
               type: PageTransitionType.rightToLeftWithFade));
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -134,8 +133,14 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 30),
-                  const BuildHeadingText(text: "Verify Email"),
+                  const SizedBox(height: 40),
+                  // const BuildHeadingText(text: "Verify Email"),
+                  const BuildTextWidget(
+                    text: "Verify Email",
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black54,
+                  ),
                   const SizedBox(height: 10),
                   const Icon(
                     Icons.mail_outline,
@@ -160,7 +165,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                     "assets/images/verifyemail/code field.png"),
@@ -177,12 +182,11 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                                   fontSize: 18, fontWeight: FontWeight.bold),
                               decoration: InputDecoration(
                                 counterText: "",
-                                border:
-                                    InputBorder.none, // Removes default borders
+
                                 enabledBorder: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                                 contentPadding: const EdgeInsets.all(
-                                    0), // Ensures text stays centered
+                                    15), // Ensures text stays centered
                               ),
                               onChanged: (value) {
                                 if (value.isNotEmpty && index < 3) {
@@ -205,27 +209,52 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       "assets/images/verifyemail/resend code button (3).png",
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  if (_errorText != null) ...[
-                    Container(
-                      width: width / 1.4,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black54, width: 2),
-                        color: Colors.orange[50], // Light red background
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Center(
-                        child: Text(
-                          _errorText!,
-                          style: const TextStyle(
-                            color: Colors.black, // Text color
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 20),
+
+                  // if (_errorText != null) ...[
+                  //   Container(
+                  //     width: width / 1.4,
+                  //     height: 50,
+                  //     decoration: const BoxDecoration(
+                  //       image: DecorationImage(
+                  //           image: AssetImage(
+                  //               "assets/images/verifyemail/alert frame.png"),
+                  //           fit: BoxFit.cover),
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         _errorText!,
+                  //         style: const TextStyle(
+                  //           color: Colors.black, // Text color
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: width / 1.4,
+                    height: 50, // Ensuring consistent height
+                    child: _errorText != null
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/verifyemail/alert frame.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                _errorText!,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(), // Empty SizedBox maintains the height
+                  ),
+                  const SizedBox(height: 40),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +264,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         width: width / 2.8,
                       ),
                       isLoading
-                          ? const CircularProgressIndicator()
+                          ? SizedBox(
+                              width: width / 2.8,
+                              child: Center(
+                                  child: const CircularProgressIndicator()))
                           : GestureDetector(
                               onTap: verify,
                               child: Image.asset(

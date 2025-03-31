@@ -1,8 +1,9 @@
 class NameResponseModel {
   final String status;
   final NameResponseData? data;
+  final Map<String, dynamic>? messages; // Added messages field
 
-  NameResponseModel({required this.status, this.data});
+  NameResponseModel({required this.status, this.data, this.messages});
 
   // Factory constructor to create the model from JSON
   factory NameResponseModel.fromJson(Map<String, dynamic> json) {
@@ -10,6 +11,9 @@ class NameResponseModel {
       status: json['status'] as String,
       data:
           json['data'] != null ? NameResponseData.fromJson(json['data']) : null,
+      messages: json['messages'] != null
+          ? json['messages'] as Map<String, dynamic>
+          : null, // Parse messages
     );
   }
 }
