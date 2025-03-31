@@ -10,8 +10,11 @@ import 'package:pokerpad/view/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../controller/forgot_password_controller.dart';
+import '../model/forgot_password_model.dart';
 import '../model/login_response_model.dart';
 import '../view/lobby_page.dart';
+import '../view/verify_forgot_password.dart';
 
 class LoginProvider extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -25,6 +28,7 @@ class LoginProvider extends ChangeNotifier {
   String _deviceId = "Fetching..";
   double downloadProgress = 0.0;
   int? playerBalance;
+  String? errorMessage;
   LoginProvider() {
     _getStoredDeviceId();
   }
@@ -101,6 +105,7 @@ class LoginProvider extends ChangeNotifier {
               0;
 
       isLoading = false;
+      this.errorMessage = null;
       notifyListeners();
 
       final appVersionStr = playerDetails?.data?.appVersion ?? "0";
@@ -146,6 +151,17 @@ class LoginProvider extends ChangeNotifier {
         ),
       );
     } else if (response["data"]["status"] == "FAIL") {
+      // Login failed, update errorMessage
+      this.errorMessage = response["data"]["message"] ?? "Login Failed";
+      isLoading = false;
+      notifyListeners();
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(this.errorMessage!),
+      //     backgroundColor: Colors.red,
+      //   ),
+      // );
       // Login failed, check if redirect is required
       bool shouldRedirect = response["data"]["data"]["redirect"] ?? false;
       int? affiliateId = response["data"]["data"]["affiliate_id"];
@@ -263,6 +279,49 @@ class LoginProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> forgotPassword(BuildContext context) async {
+    if (emailController.text.isEmpty) {
+      errorMessage = "Please enter your email";
+      notifyListeners();
+      return;
+    }
+    errorMessage = null;
+    notifyListeners();
+
+    // Perform forgot password API call or navigation logic here
+
+    isLoading = true;
+    notifyListeners();
+    final request = ForgotPasswordRequestModel(email: emailController.text);
+    try {
+      final response = await ForgotPasswordController().forgotPassword(request);
+      isLoading = false;
+      notifyListeners();
+      print(response);
+      if (response != null) {
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            child: VerifyForgotPassword(email: emailController.text),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+        );
+      } else {
+        errorMessage = "This email is not registered";
+      }
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred, please try again')),
+      );
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Forgot password request sent")),
+    );
   }
 
   void disposeResources() {

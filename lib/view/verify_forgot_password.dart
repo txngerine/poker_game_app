@@ -20,6 +20,7 @@ class VerifyForgotPassword extends StatefulWidget {
 
 class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
   bool passwordVisible = true;
+  String? errorMessage;
   final _formKey = GlobalKey<FormState>();
   final List<TextEditingController> _otpControllers = List.generate(
     6,
@@ -34,61 +35,96 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
   bool isLoading = false;
 
   Future<void> resetPassword() async {
+    if (!_formKey.currentState!.validate()) {
+      return; // Stop execution if validation fails
+    }
+
     setState(() {
       isLoading = true;
+      errorMessage = null; // Reset error message on new request
     });
-    String otpCode = _otpControllers.map((c) => c.text).join();
+
+    String otpCode = _otpControllers.map((c) => c.text.trim()).join();
+
+    if (otpCode.length < 6) {
+      setState(() {
+        isLoading = false;
+        errorMessage = "Please enter the 6-digit OTP code.";
+      });
+      return;
+    }
 
     final requestModel = ResetPasswordRequestModel(
-        email: widget.email ?? "",
-        otp: otpCode,
-        newPassword: newPasswordController.text,
-        confirmPassword: confirmPasswordController.text);
+      email: widget.email ?? "",
+      otp: otpCode,
+      newPassword: newPasswordController.text,
+      confirmPassword: confirmPasswordController.text,
+    );
+
     try {
       final response =
           await _resetPasswordController.resetPassword(requestModel);
+
       setState(() {
         isLoading = false;
       });
-      if (response?.status == "OK") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+      if (response?.status?.trim().toUpperCase() == "OK") {
+        String successMessage =
+            response?.data?['message'] ?? "Password updated successfully";
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             elevation: 10,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),
             behavior: SnackBarBehavior.floating,
             backgroundColor: CupertinoColors.activeGreen,
-            content: const Text(
-              "Reset Password Successfully",
-              style: TextStyle(color: Colors.white),
-            )));
-        Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: const LoginPage(),
-                type: PageTransitionType.rightToLeftWithFade));
+            content: Text(successMessage,
+                style: const TextStyle(color: Colors.white)),
+          ),
+        );
+
+        Navigator.push(
+          context,
+          PageTransition(
+            child: const LoginPage(),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+        );
       } else {
-        if (response?.status == "FAIL") {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              behavior: SnackBarBehavior.floating,
-              content: Text(response?.message ?? "Signup Failed")));
-        }
+        setState(() {
+          errorMessage = response?.message ?? "Invalid verification code";
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text(errorMessage!),
+          ),
+        );
       }
     } catch (e) {
       setState(() {
         isLoading = false;
+        errorMessage = "Error: Reset failed. Please try again.";
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
           elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
           behavior: SnackBarBehavior.floating,
-          content: const Text("Error Signup failed..")));
+          content: const Text("Error: Reset failed. Please try again."),
+        ),
+      );
     }
   }
 
@@ -96,22 +132,21 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
     if (value == null || value.isEmpty) {
       return 'Password cannot be empty';
     }
-    // Updated regex pattern to include all special characters
     const pattern =
-        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$';
+        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?/~`-])[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?/~`-]{8,}$';
     final regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return 'Password must be at least 8 characters long and include '
-          '1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (@,  !, %, *, ?, &, #).';
+          '1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.';
     }
     return null;
   }
 
-  String? validateConfirmPassword(String? confirmPassword, String? password) {
-    if (confirmPassword == null || confirmPassword.isEmpty) {
+  String? validateConfirmPassword(String? value, String? newPassword) {
+    if (value == null || value.isEmpty) {
       return 'Please confirm your password';
     }
-    if (confirmPassword != password) {
+    if (value != newPassword) {
       return 'Passwords do not match';
     }
     return null;
@@ -323,269 +358,56 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                   ),
                 ),
                 SizedBox(
-                  height: 60,
+                  height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      resetPassword();
-                    }
-                  },
-                  child: isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
+                SizedBox(
+                  width: width / 1.4,
+                  height: 50, // Ensuring consistent height
+                  child: errorMessage != null
+                      ? Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/verifyemail/alert frame.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Center(
+                            child: isLoading
+                                ? Center(child: CircularProgressIndicator())
+                                : Text(
+                                    errorMessage!,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                          ),
                         )
-                      : Image.asset(
-                          "assets/images/phone&country/confirm button (1).png",
-                          width: width / 1.4,
-                        ),
+                      : const SizedBox(),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/verifyemail/back button.png",
+                      width: width / 2.8,
+                    ),
+                    isLoading
+                        ? SizedBox(
+                            width: width / 2.8,
+                            child: Center(
+                                child: const CircularProgressIndicator()))
+                        : GestureDetector(
+                            onTap: resetPassword,
+                            child: Image.asset(
+                              "assets/images/verifyemail/confirm button (1).png",
+                              width: width / 2.8,
+                            ),
+                          ),
+                  ],
                 )
               ],
             ),
           )
-          // Align(
-          //   alignment: Alignment.topCenter,
-          //   child: Column(
-          //     children: [
-          //       SizedBox(
-          //         height: 40,
-          //       ),
-          //       SizedBox(
-          //         height: 550,
-          //         width: 400,
-          //         child: Card(
-          //           shadowColor: const Color(0xffB7B7B7),
-          //           elevation: 30,
-          //           color: Colors.grey[200],
-          //           // color: const Color(0xffB7B7B7),
-          //           shape: OutlineInputBorder(
-          //             borderSide: const BorderSide(
-          //               color: Color(0xffB7B7B7),
-          //             ),
-          //             borderRadius: BorderRadius.circular(
-          //               40,
-          //             ),
-          //           ),
-          //           child: Column(
-          //             crossAxisAlignment: CrossAxisAlignment.center,
-          //             children: [
-          //               const SizedBox(
-          //                 height: 20,
-          //               ),
-          //               const BuildTextWidget(
-          //                 fontSize: 12,
-          //                 align: TextAlign.center,
-          //                 text:
-          //                     "A 6-digit verification code has been sent to your email\n Enter the code below",
-          //               ),
-          //               const SizedBox(height: 20),
-          //               Padding(
-          //                 padding: const EdgeInsets.only(left: 40, right: 40),
-          //                 child: Row(
-          //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //                   children: List.generate(
-          //                     6,
-          //                     (index) => SizedBox(
-          //                       height: 50,
-          //                       width: 50,
-          //                       child: TextField(
-          //                         controller: _otpControllers[index],
-          //                         textAlign: TextAlign.center,
-          //                         keyboardType: TextInputType.number,
-          //                         maxLength: 1,
-          //                         style: const TextStyle(fontSize: 15),
-          //                         decoration: InputDecoration(
-          //                           counterText: "",
-          //                           enabledBorder: OutlineInputBorder(
-          //                             borderRadius: BorderRadius.circular(10),
-          //                             borderSide: BorderSide(
-          //                                 color: Colors.grey.shade300,
-          //                                 width: 3),
-          //                           ),
-          //                           focusedBorder: OutlineInputBorder(
-          //                             borderRadius: BorderRadius.circular(10),
-          //                             borderSide:
-          //                                 const BorderSide(color: Colors.blue),
-          //                           ),
-          //                           fillColor: Colors.white,
-          //                           filled: true,
-          //                         ),
-          //                         onChanged: (value) {
-          //                           if (value.isNotEmpty && index < 5) {
-          //                             FocusScope.of(context).nextFocus();
-          //                           }
-          //                         },
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ),
-          //               const SizedBox(height: 20),
-          //               GestureDetector(
-          //                   onTap: () {
-          //                     // resendOtp();
-          //                   },
-          //                   child: Image.asset(
-          //                     "assets/images/resend code button.png",
-          //                     height: 50,
-          //                   )),
-          //               const SizedBox(
-          //                 height: 20,
-          //               ),
-          //               Form(
-          //                 key: _formKey,
-          //                 child: Column(
-          //                   children: [
-          //                     BuildTextFieldWidget(
-          //                       controller: newPasswordController,
-          //                       hintText: "new password",
-          //                       labelText: "new password",
-          //                       obscureText: passwordVisible,
-          //                       suffixIcon: GestureDetector(
-          //                         onTap: () {
-          //                           setState(() {
-          //                             passwordVisible = !passwordVisible;
-          //                           });
-          //                         },
-          //                         child: passwordVisible
-          //                             ? Image.asset(
-          //                                 "assets/images/Artboard 28.png",
-          //                                 width: 47)
-          //                             : Image.asset(
-          //                                 "assets/images/Artboard 29.png",
-          //                                 width: 47),
-          //                       ),
-          //                       validator: validatePassword,
-          //                     ),
-          //                     BuildTextFieldWidget(
-          //                       controller: confirmPasswordController,
-          //                       hintText: "confirm password",
-          //                       labelText: "confirm password",
-          //                       obscureText: true,
-          //                       validator: (value) => validateConfirmPassword(
-          //                           newPasswordController.text, value ?? ""),
-          //                       suffixIcon: GestureDetector(
-          //                         onTap: () {
-          //                           setState(() {
-          //                             confirmPasswordController.clear();
-          //                           });
-          //                         },
-          //                         child: Image.asset(
-          //                             "assets/images/pokerPadArt/Artboard 30 (1).png"),
-          //                       ),
-          //                     ),
-          //                   ],
-          //                 ),
-          //               ),
-          //               Padding(
-          //                 padding: const EdgeInsets.only(left: 30, right: 30),
-          //                 child: RichText(
-          //                   textAlign: TextAlign.center,
-          //                   text: const TextSpan(
-          //                     text: 'Password must be at least ',
-          //                     style: TextStyle(
-          //                       color: Color(0xFF5F6368),
-          //                       fontSize: 13,
-          //                     ),
-          //                     children: [
-          //                       TextSpan(
-          //                         text: '8 characters ',
-          //                         style: TextStyle(
-          //                           fontWeight: FontWeight.bold,
-          //                           color: Colors.black87,
-          //                         ),
-          //                       ),
-          //                       TextSpan(
-          //                         text: 'and contain ',
-          //                         style: TextStyle(
-          //                           color: Color(0xFF5F6368),
-          //                           fontSize: 14,
-          //                         ),
-          //                       ),
-          //                       TextSpan(
-          //                         text: '1 number, ',
-          //                         style: TextStyle(
-          //                           fontWeight: FontWeight.bold,
-          //                           color: Colors.black87,
-          //                         ),
-          //                       ),
-          //                       TextSpan(
-          //                         text: '1 uppercase letter, ',
-          //                         style: TextStyle(
-          //                           fontWeight: FontWeight.bold,
-          //                           color: Colors.black87,
-          //                         ),
-          //                       ),
-          //                       TextSpan(
-          //                         text: '1 lowercase letter ',
-          //                         style: TextStyle(
-          //                           fontWeight: FontWeight.bold,
-          //                           color: Colors.black87,
-          //                         ),
-          //                       ),
-          //                       TextSpan(
-          //                         text: ' and ',
-          //                         style: TextStyle(
-          //                           color: Color(0xFF5F6368),
-          //                           fontSize: 14,
-          //                         ),
-          //                       ),
-          //                       TextSpan(
-          //                         text: '1 symbol.',
-          //                         style: TextStyle(
-          //                           fontWeight: FontWeight.bold,
-          //                           color: Colors.black87,
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //               ),
-          //               const SizedBox(
-          //                 height: 50,
-          //               ),
-          //               Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   GestureDetector(
-          //                     onTap: () {
-          //                       Navigator.pushReplacement(
-          //                           context,
-          //                           PageTransition(
-          //                               child: const LoginPage(),
-          //                               type: PageTransitionType
-          //                                   .leftToRightWithFade));
-          //                     },
-          //                     child: Image.asset(
-          //                       "assets/images/pokerPadArt/cancel.png",
-          //                       width: 180,
-          //                     ),
-          //                   ),
-          //                   GestureDetector(
-          //                     onTap: () {
-          //                       if (_formKey.currentState?.validate() ??
-          //                           false) {
-          //                         resetPassword();
-          //                       }
-          //                     },
-          //                     child: isLoading
-          //                         ? const Center(
-          //                             child: CircularProgressIndicator(),
-          //                           )
-          //                         : Image.asset(
-          //                             "assets/images/pokerPadArt/proceed.png",
-          //                             width: 180,
-          //                           ),
-          //                   )
-          //                 ],
-          //               )
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

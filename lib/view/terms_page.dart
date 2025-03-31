@@ -5,7 +5,7 @@ import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/controller/terms_controller.dart';
 import 'package:pokerpad/model/terms_request_model.dart';
 import 'package:pokerpad/model/terms_response_model.dart';
-import 'package:pokerpad/view/name_page.dart';
+import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/widget/build_heading_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
@@ -75,7 +75,7 @@ class _TermsPageState extends State<TermsPage> {
         Navigator.push(
           context,
           PageTransition(
-            child: const NamePage(),
+            child: const LoginPage(),
             type: PageTransitionType.rightToLeftWithFade,
           ),
         );

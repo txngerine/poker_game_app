@@ -168,6 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
     final registerProvider = Provider.of<RegisterProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -334,7 +335,31 @@ class _RegisterPageState extends State<RegisterPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 70),
+                      const SizedBox(height: 40),
+                      SizedBox(
+                        width: width / 1.4,
+                        height: 50,
+                        child: registerProvider.errorMessage != null
+                            ? Container(
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/verifyemail/alert frame.png"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    registerProvider.errorMessage!,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       registerProvider.isLoading
                           ? const CircularProgressIndicator()
                           : GestureDetector(

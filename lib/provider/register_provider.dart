@@ -16,6 +16,7 @@ class RegisterProvider extends ChangeNotifier {
   bool isPasswordVisible = false;
   bool isPasswordMatch = false; // Default to false
   bool isLoading = false;
+  String? errorMessage;
   String _deviceId = "No Device ID Found";
   final SignupController _signupController = SignupController();
 
@@ -90,6 +91,7 @@ class RegisterProvider extends ChangeNotifier {
       return; // Stop if form validation fails
     }
     isLoading = true;
+    errorMessage = null;
     notifyListeners();
 
     final requestModel = SignupRequestModel(
@@ -129,15 +131,17 @@ class RegisterProvider extends ChangeNotifier {
           ),
         );
       } else if (response.status == "FAIL") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            elevation: 10,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            behavior: SnackBarBehavior.floating,
-            content: Text(response.commonMessage ?? "Signup Failed"),
-          ),
-        );
+        print(response.commonMessage);
+        errorMessage = response.commonMessage;
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     elevation: 10,
+        //     shape:
+        //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        //     behavior: SnackBarBehavior.floating,
+        //     content: Text(response.commonMessage ?? "Signup Failed"),
+        //   ),
+        // );
       }
     } catch (e) {
       isLoading = false;

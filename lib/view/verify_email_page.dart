@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/verification_controller.dart';
 import 'package:pokerpad/model/verification_request_model.dart';
-import 'package:pokerpad/view/phone_number_page.dart';
+import 'package:pokerpad/view/image_scroll_page.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
 import '../constants/screen_size.dart';
@@ -81,7 +81,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       Navigator.push(
           context,
           PageTransition(
-              child: PhoneNumberPage(),
+              child: ImageScrollPage(),
               type: PageTransitionType.rightToLeftWithFade));
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -209,28 +209,52 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       "assets/images/verifyemail/resend code button (3).png",
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  if (_errorText != null) ...[
-                    Container(
-                      width: width / 1.4,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/verifyemail/alert frame.png"),
-                            fit: BoxFit.cover),
-                      ),
-                      child: Center(
-                        child: Text(
-                          _errorText!,
-                          style: const TextStyle(
-                            color: Colors.black, // Text color
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 20),
+
+                  // if (_errorText != null) ...[
+                  //   Container(
+                  //     width: width / 1.4,
+                  //     height: 50,
+                  //     decoration: const BoxDecoration(
+                  //       image: DecorationImage(
+                  //           image: AssetImage(
+                  //               "assets/images/verifyemail/alert frame.png"),
+                  //           fit: BoxFit.cover),
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         _errorText!,
+                  //         style: const TextStyle(
+                  //           color: Colors.black, // Text color
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: width / 1.4,
+                    height: 50, // Ensuring consistent height
+                    child: _errorText != null
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/verifyemail/alert frame.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                _errorText!,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(), // Empty SizedBox maintains the height
+                  ),
+                  const SizedBox(height: 40),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,

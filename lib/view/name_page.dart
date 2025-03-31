@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/name_controller.dart';
 import 'package:pokerpad/model/name_request_model.dart';
 import 'package:pokerpad/model/name_response_model.dart';
-import 'package:pokerpad/view/loading_avatar_page.dart';
+import 'package:pokerpad/view/phone_number_page.dart';
 
 import '../constants/screen_size.dart';
 import '../widget/build_text_widget.dart';
@@ -45,7 +45,7 @@ class _NamePageState extends State<NamePage> {
         Navigator.push(
             context,
             PageTransition(
-                child: const LoadingAvatarPage(),
+                child: const PhoneNumberPage(),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
         setState(() {
@@ -168,28 +168,27 @@ class _NamePageState extends State<NamePage> {
                   SizedBox(
                     height: 40,
                   ),
-                  if (_errorText != null) ...[
-                    Container(
-                      width: width / 1.3,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/nickname/alert frame.png")),
-                        // border: Border.all(color: Colors.black54, width: 2),
-                        // color: Colors.orange[50], // Light red background
-                        // borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Center(
-                        child: Text(
-                          _errorText!,
-                          style: const TextStyle(
-                            color: Colors.black, // Text color
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  SizedBox(
+                    width: width / 1.4,
+                    height: 50, // Ensuring consistent height
+                    child: _errorText != null
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/verifyemail/alert frame.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                _errorText!,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(), // Empty SizedBox maintains the height
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -206,34 +205,6 @@ class _NamePageState extends State<NamePage> {
                                 "assets/images/phone&country/confirm button (1).png"),
                           ),
                         ),
-
-                  // SizedBox(
-                  //         width: 170,
-                  //         height: 40,
-                  //         child: ElevatedButton(
-                  //           onPressed: () {
-                  //             if (_formKey.currentState?.validate() == true) {
-                  //               print("form validated");
-                  //               playerName();
-                  //               // Navigator.push(
-                  //               //     context,
-                  //               //     PageTransition(
-                  //               //         child: const UserViewPage(),
-                  //               //         type: PageTransitionType
-                  //               //             .rightToLeftWithFade));
-                  //             } else {
-                  //               print("error in form state");
-                  //             }
-                  //           },
-                  //           style: const ButtonStyle(
-                  //               backgroundColor:
-                  //                   WidgetStatePropertyAll(Colors.white)),
-                  //           child: const Text(
-                  //             "  Continue  ",
-                  //             style: TextStyle(color: Colors.black),
-                  //           ),
-                  //         ),
-                  //       ),
                   SizedBox(
                     height: 30,
                   ),

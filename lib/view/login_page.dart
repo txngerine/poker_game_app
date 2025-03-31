@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/constants/screen_size.dart';
-import 'package:pokerpad/view/forgot_password.dart';
 import 'package:pokerpad/view/register_page.dart';
 import 'package:pokerpad/widget/build_bold_text_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
@@ -23,6 +22,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   bool rememberButton = false;
+
   // TextEditingController emailController = TextEditingController();
   // TextEditingController passwordController = TextEditingController();
   // LoginResponseModel? playerDetails;
@@ -248,6 +248,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
     print("Device id login:${loginProvider.deviceId}");
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -370,34 +372,40 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        child: const ForgotPassword(),
-                                        type: PageTransitionType
-                                            .rightToLeftWithFade));
+                                loginProvider.forgotPassword(context);
                               },
                               child: const BuildBoldTextWidget(
                                   text: "Forgot password"))
                         ],
                       ),
                     ),
-                    const SizedBox(height: 54),
-                    // isLoading
-                    //     ? CircularProgressIndicator()
-                    //     : GestureDetector(
-                    //         onTap: () {
-                    //           if (_formKey.currentState?.validate() ?? false) {
-                    //             login(); // Call the login function
-                    //           } else {
-                    //             print("Form is not valid");
-                    //           }
-                    //         },
-                    //         child: Image.asset(
-                    //           "assets/images/login button.png",
-                    //           height: 59,
-                    //         ),
-                    //       ),
+
+                    Consumer<LoginProvider>(
+                      builder: (context, loginProvider, child) {
+                        return SizedBox(
+                          width: width / 1.4,
+                          height: 50,
+                          child: loginProvider.errorMessage != null
+                              ? Container(
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/verifyemail/alert frame.png"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      loginProvider.errorMessage!,
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                        );
+                      },
+                    ),
 
                     loginProvider.isLoading
                         ? Column(

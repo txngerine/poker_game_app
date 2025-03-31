@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
-import 'package:pokerpad/view/kyc_complete_page.dart';
+import 'package:pokerpad/view/name_page.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
   final String imagePath;
@@ -70,7 +70,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
         Navigator.push(
             context,
             PageTransition(
-                child: const KycCompletePage(),
+                child: const NamePage(),
                 type: PageTransitionType.rightToLeftWithFade));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
@@ -155,7 +155,6 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                uploadImage();
                                 uploadImage();
                               },
                               child: _isUploading

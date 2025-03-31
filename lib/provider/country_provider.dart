@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
-import 'package:pokerpad/view/avatar_page.dart';
+import 'package:pokerpad/view/loading_avatar_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/country_list.dart';
@@ -105,7 +105,7 @@ class CountryProvider extends ChangeNotifier {
         Navigator.pushReplacement(
           context,
           PageTransition(
-            child: const AvatarPage(), // Ensure HomePage is imported
+            child: const LoadingAvatarPage(), // Ensure HomePage is imported
             type: PageTransitionType.rightToLeftWithFade,
           ),
         );
