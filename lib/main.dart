@@ -11,6 +11,8 @@ import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
 import 'package:provider/provider.dart';
 
+import 'controller/chartline_controller.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await requestPermissions();
@@ -23,6 +25,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => RegisterProvider()),
     ChangeNotifierProvider(create: (_) => CountryProvider()),
+    ChangeNotifierProvider(create: (_) => ChartController()),
   ], child: const MyApp()));
 
   // runApp(DevicePreview(

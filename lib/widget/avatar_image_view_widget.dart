@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/login_response_model.dart';
-import '../view/lobby_avatar_view.dart';
+import 'chart_line_widget.dart';
 
 class AvatarImageViewWidget extends StatefulWidget {
   final String? avatar;
@@ -35,7 +35,8 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return const LobbyAvatarView();
+                       return ChartLineWidget(
+                        );
                       },
                     );
                   },
