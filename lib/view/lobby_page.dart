@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
+import '../widget/chart_line_widget.dart';
 import '../widget/self_exclusion_widget.dart';
 
 class LobbyPage extends StatefulWidget {
@@ -240,13 +241,13 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: () {
                           print("clicked");
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return ChartLineWidget(
-                          //     );
-                          //   },
-                          // );
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ChartLineWidget(
+                              );
+                            },
+                          );
                         },
                         child: Image.asset(
                           "assets/images/lobby/1000 jeton.png",
