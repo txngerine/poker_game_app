@@ -1,10 +1,7 @@
-// ignore_for_file: unused_import, prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:pokerpad/widget/chart_line_widget.dart';
 
 import '../model/login_response_model.dart';
-import '../view/lobby_avatar_view.dart';
+import 'chart_line_widget.dart';
 
 class AvatarImageViewWidget extends StatefulWidget {
   final String? avatar;
@@ -38,7 +35,7 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return ChartLineWidget(
+                       return ChartLineWidget(
                         );
                       },
                     );
