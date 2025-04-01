@@ -295,6 +295,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_static/shelf_static.dart';
 
 import '../model/login_response_model.dart';
+import '../widget/chart_line_widget.dart';
 
 class GameView extends StatefulWidget {
   final LoginResponseModel? playerResponse;
@@ -513,7 +514,7 @@ class _GameViewState extends State<GameView> {
         child: SizedBox(
           child: GestureDetector(
             onTap: () {}, // Prevent closing when tapping inside content
-            // child: ChartLineWidget(),
+            child: ChartLineWidget(),
           ),
         ),
       ),

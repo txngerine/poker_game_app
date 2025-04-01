@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../model/leaderboard_monthly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
+import 'chart_line_widget.dart';
 
 class MonthlyWinnersViewWidget extends StatefulWidget {
   const MonthlyWinnersViewWidget({super.key});
@@ -106,12 +107,12 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            // showDialog(
-                                            //   context: context,
-                                            //   builder: (context) {
-                                            //     return const ChartLineWidget();
-                                            //   },
-                                            // );
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return const ChartLineWidget();
+                                              },
+                                            );
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(1.0),
