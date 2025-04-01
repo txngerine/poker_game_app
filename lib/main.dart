@@ -6,6 +6,7 @@ import 'package:pokerpad/provider/country_provider.dart';
 import 'package:pokerpad/provider/currency_button_provider.dart';
 import 'package:pokerpad/provider/login_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
+import '../controller/chartline_controller.dart';
 import 'package:pokerpad/provider/register_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
