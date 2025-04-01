@@ -111,6 +111,8 @@ flutter:
     - assets/images/primaryAvatar/
     - assets/images/gender&avatar/
     - assets/images/Country Flags/
+    - assets/images/new_lobby/
+    - assets/images/chat/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

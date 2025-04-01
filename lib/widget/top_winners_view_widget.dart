@@ -20,10 +20,9 @@ class _TopWinnersViewWidgetState extends State<TopWinnersViewWidget> {
           height: MediaQuery.of(context).size.height / 2.7,
           decoration: BoxDecoration(
               border: Border.all(color: const Color(0xff3C3D37), width: 3),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(30),
               color: Colors.grey),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
             child: GestureDetector(
               onTap: () {
                 showDialog(
@@ -34,8 +33,10 @@ class _TopWinnersViewWidgetState extends State<TopWinnersViewWidget> {
                 );
               },
               child: Image.asset(
-                "assets/images/lobby/Poker card.jpg",
+                "assets/images/new_lobby/top_winner_image.png",
                 fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width / 2.1,
+                height: MediaQuery.of(context).size.height / 2.7,
               ),
             ),
           ),

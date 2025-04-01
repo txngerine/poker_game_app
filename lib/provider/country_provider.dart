@@ -12,7 +12,7 @@ class CountryProvider extends ChangeNotifier {
   String _countryFlag =
       "assets/images/Country Flags/United_States_of_America_1.png"; // Default flag
   String _phoneNumber = ""; // Store entered phone number
-  String _countryName = "";
+  String _countryName = "United States America";
   String _deviceId = "Fetching..."; // Default value
   bool _isLoading = false;
   String? _apiResponse;

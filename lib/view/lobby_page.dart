@@ -10,13 +10,13 @@ import 'package:pokerpad/widget/cashier_button_widget.dart';
 import 'package:pokerpad/widget/chart_line_widget.dart';
 import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/profile_button_widget.dart';
-import 'package:pokerpad/widget/self_exclusion_widget.dart';
 import 'package:pokerpad/widget/top_winners_view_widget.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
+import '../widget/self_exclusion_widget.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
@@ -94,13 +94,14 @@ class _LobbyPageState extends State<LobbyPage> {
                     alignment: Alignment.center,
                     children: [
                       Image.asset(
-                        "assets/images/lobby/balance holder.png",
+                        "assets/images/new_lobby/Lobby_balance.png",
                         width: MediaQuery.sizeOf(context).width / 2,
                       ),
                       Center(
                           child: BuildSubHeadingText(
+                              color: Colors.white,
                               text:
-                                  "\$${loginProvider.playerBalance ?? widget.playerBalance}"))
+                                  "\$ ${loginProvider.playerBalance ?? widget.playerBalance} USDC"))
                     ],
                   ),
                   const SizedBox(

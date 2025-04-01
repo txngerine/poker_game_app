@@ -82,7 +82,7 @@ class _SelfExclusionWidgetState extends State<SelfExclusionWidget> {
         );
       },
       child: const BuildIconImageWidget(
-          imgName: "assets/images/lobby/Self Exclusion Button.png"),
+          imgName: "assets/images/new_lobby/Chat_support_passive.png"),
     );
   }
 }

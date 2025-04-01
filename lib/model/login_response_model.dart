@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final loginResponseModel = loginResponseModelFromJson(jsonString);
-
 import 'dart:convert';
 
 LoginResponseModel loginResponseModelFromJson(String str) =>
@@ -35,6 +31,7 @@ class Data {
   final int? id;
   final String? nickname;
   final String? email;
+  final String? phone;
   final int? isActive;
   final int? isVerified;
   final String? balance;
@@ -47,6 +44,12 @@ class Data {
   final String? detailAvatar;
   final DateTime? lastLogin;
   final int? rakePendingRate;
+  final String? usertype;
+  final String? addressStatus;
+  final String? idStatus;
+  final String? faceStatus;
+  final String? walletAddress;
+  final int? timeLeft;
   final String? appVersion;
   final String? appUrl;
   final String? holemGameVersion;
@@ -60,6 +63,7 @@ class Data {
     this.id,
     this.nickname,
     this.email,
+    this.phone,
     this.isActive,
     this.isVerified,
     this.balance,
@@ -72,6 +76,12 @@ class Data {
     this.detailAvatar,
     this.lastLogin,
     this.rakePendingRate,
+    this.usertype,
+    this.addressStatus,
+    this.idStatus,
+    this.faceStatus,
+    this.walletAddress,
+    this.timeLeft,
     this.appVersion,
     this.appUrl,
     this.holemGameVersion,
@@ -86,6 +96,7 @@ class Data {
         id: json["id"],
         nickname: json["nickname"],
         email: json["email"],
+        phone: json["phone"],
         isActive: json["is_active"],
         isVerified: json["is_verified"],
         balance: json["balance"],
@@ -100,6 +111,12 @@ class Data {
             ? null
             : DateTime.parse(json["last_login"]),
         rakePendingRate: json["rake_pending_rate"],
+        usertype: json["usertype"],
+        addressStatus: json["address_status"],
+        idStatus: json["id_status"],
+        faceStatus: json["face_status"],
+        walletAddress: json["wallet_address"],
+        timeLeft: json["time_left"],
         appVersion: json["app_version"],
         appUrl: json["app_url"],
         holemGameVersion: json["holem_game_version"],
@@ -114,6 +131,7 @@ class Data {
         "id": id,
         "nickname": nickname,
         "email": email,
+        "phone": phone,
         "is_active": isActive,
         "is_verified": isVerified,
         "balance": balance,
@@ -126,6 +144,12 @@ class Data {
         "detail_avatar": detailAvatar,
         "last_login": lastLogin?.toIso8601String(),
         "rake_pending_rate": rakePendingRate,
+        "usertype": usertype,
+        "address_status": addressStatus,
+        "id_status": idStatus,
+        "face_status": faceStatus,
+        "wallet_address": walletAddress,
+        "time_left": timeLeft,
         "app_version": appVersion,
         "app_url": appUrl,
         "holem_game_version": holemGameVersion,
