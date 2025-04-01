@@ -7,7 +7,6 @@ import 'package:pokerpad/widget/avatar_image_view_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
-import 'package:pokerpad/widget/chart_line_widget.dart';
 import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/profile_button_widget.dart';
 import 'package:pokerpad/widget/top_winners_view_widget.dart';
@@ -241,13 +240,13 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: () {
                           print("clicked");
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return ChartLineWidget(
-                              );
-                            },
-                          );
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return ChartLineWidget(
+                          //     );
+                          //   },
+                          // );
                         },
                         child: Image.asset(
                           "assets/images/lobby/1000 jeton.png",

@@ -6,13 +6,10 @@ import 'package:pokerpad/provider/country_provider.dart';
 import 'package:pokerpad/provider/currency_button_provider.dart';
 import 'package:pokerpad/provider/login_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
-import '../controller/chartline_controller.dart';
 import 'package:pokerpad/provider/register_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
 import 'package:provider/provider.dart';
-
-import 'controller/chartline_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +23,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => RegisterProvider()),
     ChangeNotifierProvider(create: (_) => CountryProvider()),
-    ChangeNotifierProvider(create: (_) => ChartController()),
+    // ChangeNotifierProvider(create: (_) => ChartController()),
   ], child: const MyApp()));
 
   // runApp(DevicePreview(

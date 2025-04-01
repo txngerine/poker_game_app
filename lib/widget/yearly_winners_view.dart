@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../model/leaderboard_yearly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
-import 'chart_line_widget.dart';
 
 class YearlyWinnersView extends StatefulWidget {
   const YearlyWinnersView({super.key});
@@ -105,23 +105,22 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return const ChartLineWidget();
-                                              },
-                                            );
+                                            // showDialog(
+                                            //   context: context,
+                                            //   builder: (context) {
+                                            //     return const ChartLineWidget();
+                                            //   },
+                                            // );
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(1.0),
                                             child: CircleAvatar(
                                               radius: 23.5,
                                               backgroundColor: Colors.grey[300],
-                                              backgroundImage:
-                                                  AssetImage(player.photo ??
-                                                      "assets/images/lobby/top winners/villain avatar holder.png"),
-                                              onBackgroundImageError:
-                                                  (_, __) {
+                                              backgroundImage: AssetImage(player
+                                                      .photo ??
+                                                  "assets/images/lobby/top winners/villain avatar holder.png"),
+                                              onBackgroundImageError: (_, __) {
                                                 // Handle image error if needed
                                               },
                                             ),

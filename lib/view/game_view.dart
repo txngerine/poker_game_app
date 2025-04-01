@@ -284,13 +284,13 @@
 //solved akshai mystery gameview.dart
 
 import 'dart:io';
+
 import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
-import 'package:pokerpad/widget/chart_line_widget.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_static/shelf_static.dart';
 
@@ -407,7 +407,8 @@ class _GameViewState extends State<GameView> {
           await zipFile.writeAsBytes(response.bodyBytes);
           debugPrint('ZIP file downloaded successfully.');
         } else {
-          throw Exception('Failed to download ZIP file: ${response.statusCode}');
+          throw Exception(
+              'Failed to download ZIP file: ${response.statusCode}');
         }
       }
 
@@ -447,12 +448,11 @@ class _GameViewState extends State<GameView> {
       _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, 4040);
 
       // Allow WebSocket upgrades and CORS requests
-      _server?.defaultResponseHeaders
-          .add('Access-Control-Allow-Origin', '*');
+      _server?.defaultResponseHeaders.add('Access-Control-Allow-Origin', '*');
       _server?.defaultResponseHeaders
           .add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      _server?.defaultResponseHeaders
-          .add('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+      _server?.defaultResponseHeaders.add('Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept');
 
       setState(() {
         serverUrl =
@@ -502,24 +502,23 @@ class _GameViewState extends State<GameView> {
 
   /// Shows ChartLineWidget as a modal bottom sheet
   /// Shows ChartLineWidget as a modal bottom sheet and closes on tap outside
-void _navigateToChartPage(BuildContext context, int? playerId) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (context) => GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => Navigator.of(context).pop(),
-      child: SizedBox(
-        child: GestureDetector(
-          onTap: () {}, // Prevent closing when tapping inside content
-          child: ChartLineWidget(),
+  void _navigateToChartPage(BuildContext context, int? playerId) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).pop(),
+        child: SizedBox(
+          child: GestureDetector(
+            onTap: () {}, // Prevent closing when tapping inside content
+            // child: ChartLineWidget(),
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -563,13 +562,16 @@ void _navigateToChartPage(BuildContext context, int? playerId) {
                                   Navigator.pop(context);
                                   break;
                                 case "log":
-                                  debugPrint("JS Console: ${message["message"]}");
+                                  debugPrint(
+                                      "JS Console: ${message["message"]}");
                                   break;
                                 case "playerDetails":
-                                  _navigateToChartPage(context, message["data"][1]);
+                                  _navigateToChartPage(
+                                      context, message["data"][1]);
                                   break;
                                 default:
-                                  debugPrint("Unknown action: ${message["action"]}");
+                                  debugPrint(
+                                      "Unknown action: ${message["action"]}");
                               }
                             }
                           },

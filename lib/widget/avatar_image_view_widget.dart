@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../model/login_response_model.dart';
-import 'chart_line_widget.dart';
 
 class AvatarImageViewWidget extends StatefulWidget {
   final String? avatar;
@@ -32,13 +31,13 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                       return ChartLineWidget(
-                        );
-                      },
-                    );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) {
+                    //    return ChartLineWidget(
+                    //     );
+                    //   },
+                    // );
                   },
                   child: Image.network(
                     width: MediaQuery.of(context).size.width / 2.1,

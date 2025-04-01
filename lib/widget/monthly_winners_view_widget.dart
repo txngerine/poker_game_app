@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokerpad/widget/chart_line_widget.dart';
 
 import '../model/leaderboard_monthly_model.dart';
 import '../services/api_service.dart';
@@ -107,23 +106,22 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return const ChartLineWidget();
-                                              },
-                                            );
+                                            // showDialog(
+                                            //   context: context,
+                                            //   builder: (context) {
+                                            //     return const ChartLineWidget();
+                                            //   },
+                                            // );
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(1.0),
                                             child: CircleAvatar(
                                               radius: 23.5,
                                               backgroundColor: Colors.grey[300],
-                                              backgroundImage:
-                                                  AssetImage(player.photo ??
-                                                      "assets/images/lobby/top winners/villain avatar holder.png"),
-                                              onBackgroundImageError:
-                                                  (_, __) {
+                                              backgroundImage: AssetImage(player
+                                                      .photo ??
+                                                  "assets/images/lobby/top winners/villain avatar holder.png"),
+                                              onBackgroundImageError: (_, __) {
                                                 // Fallback image if error occurs
                                               },
                                             ),
