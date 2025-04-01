@@ -10,6 +10,7 @@ class TextPage extends StatefulWidget {
 class _TextPageState extends State<TextPage> {
   @override
   Widget build(BuildContext context) {
+    // da ith nokk
     return Scaffold(
       body: SizedBox(
           height: double.infinity,
