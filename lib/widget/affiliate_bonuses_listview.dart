@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'bonuses_2k_button_widget.dart';
 
 class AffiliateBonusesListview extends StatefulWidget {
-  const AffiliateBonusesListview({super.key});
+  final String searchQuery;
+
+  const AffiliateBonusesListview({super.key, required this.searchQuery});
 
   @override
   State<AffiliateBonusesListview> createState() =>
@@ -11,33 +12,48 @@ class AffiliateBonusesListview extends StatefulWidget {
 }
 
 class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
+  final List<Map<String, dynamic>> bonuses = List.generate(10, (index) {
+    return {
+      "id": "#${index + 1}",
+      "username": "CHARLIE00${index + 1}",
+      "rake": "\$37k/\$100k",
+      "bonus": "\$5,000",
+      "progress": 0.5, // Sample progress
+    };
+  });
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+
+    // Filter the list based on search query
+    final filteredBonuses = bonuses.where((bonus) {
+      final query = widget.searchQuery.toLowerCase();
+      return bonus["username"].toLowerCase().contains(query) ||
+          bonus["id"].toLowerCase().contains(query);
+    }).toList();
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          // color: Colors.grey,
         ),
         height: height / 1.750,
         width: width,
         child: ListView.builder(
           padding: EdgeInsets.zero,
-          itemCount: 10,
+          itemCount: filteredBonuses.length,
           itemBuilder: (context, index) {
-            // int actualIndex =
-            //     (currentPage - 1) * itemsPerPage + index;
-            // if (actualIndex >= totalItems) return const SizedBox();
+            final bonus = filteredBonuses[index];
             return Column(
               children: [
                 Stack(
                   children: [
                     Image.asset(
                       "assets/images/Affiliate/bonus/bonus bg frame.png",
-                      width: width / 1,
+                      width: width,
                       height: height / 7,
                     ),
                     Padding(
@@ -54,29 +70,25 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                           ),
                           Column(
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               Text(
-                                "ID:#${index + 1}",
+                                "ID:${bonus["id"]}",
                                 style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600),
                               ),
-                              const Text(
-                                "CHARLIE007",
-                                style: TextStyle(
+                              Text(
+                                bonus["username"],
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400),
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              const Text(
-                                "Rake:\$37k/\$100k",
-                                style: TextStyle(
+                              const SizedBox(height: 30),
+                              Text(
+                                bonus["rake"],
+                                style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400),
@@ -88,28 +100,18 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                               width: width / 2,
                               child: Column(
                                 children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
+                                  const SizedBox(height: 20),
                                   const Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Bonuses2kButtonWidget(),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
+                                      SizedBox(width: 8),
                                       Bonuses2kButtonWidget(),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
+                                      SizedBox(width: 8),
                                       Bonuses2kButtonWidget(),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
+                                      SizedBox(width: 8),
                                       Bonuses2kButtonWidget(),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
+                                      SizedBox(width: 8),
                                       Bonuses2kButtonWidget(),
                                     ],
                                   ),
@@ -126,7 +128,7 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                                           ),
                                         ),
                                         FractionallySizedBox(
-                                          widthFactor: 0.5,
+                                          widthFactor: bonus["progress"],
                                           child: Container(
                                             height: 8,
                                             decoration: BoxDecoration(
@@ -139,13 +141,12 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
+                                  const SizedBox(height: 20),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text('${(0.5 * 100).toStringAsFixed(0)}%',
+                                      Text(
+                                          '${(bonus["progress"] * 100).toStringAsFixed(0)}%',
                                           style: const TextStyle(
                                               color: Colors.white70)),
                                     ],
@@ -154,12 +155,10 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            "\$5,000",
-                            style: TextStyle(
+                          const SizedBox(width: 10),
+                          Text(
+                            bonus["bonus"],
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),

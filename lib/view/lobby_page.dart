@@ -245,8 +245,6 @@ class _LobbyPageState extends State<LobbyPage> {
                             context: context,
                             builder: (context) {
                               return ChartLineWidget(
-                                avatar: widget.playerResponse?.data?.lobbyAvatar
-                                    .toString(),
                               );
                             },
                           );
