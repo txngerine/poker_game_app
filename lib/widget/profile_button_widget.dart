@@ -285,13 +285,23 @@ class ProfileButtonWidget extends StatelessWidget {
                       color: Colors.black54,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.phone, color: Colors.white70, size: 18),
-                        SizedBox(width: 10),
-                        Text(
-                          "+38651646587",
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: const [
+                            Icon(Icons.phone, color: Colors.white70, size: 18),
+                            SizedBox(width: 10),
+                            Text(
+                              "+38651646587",
+                              style: TextStyle(color: Colors.white70, fontSize: 12),
+                            ),]
+                        ),CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 15,
+                          child: IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.black, size: 15),
+                            onPressed: () {},
+                          ),
                         ),
                       ],
                     ),
