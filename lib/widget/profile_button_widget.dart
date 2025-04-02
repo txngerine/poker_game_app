@@ -208,173 +208,238 @@
 
 import 'package:flutter/material.dart';
 
-class ProfileButtonWidget extends StatelessWidget {
+class ProfileButtonWidget extends StatefulWidget {
   const ProfileButtonWidget({super.key});
+
+  @override
+  State<ProfileButtonWidget> createState() => _ProfileButtonWidgetState();
+}
+
+class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
+  bool _isEditing = false;
+  String kycStatus = "PENDING"; // Default status
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       backgroundColor: const Color(0xFF3C3D37),
       child: Container(
         padding: const EdgeInsets.all(15),
-        width: width * 0.9,height: height * 0.5,
+        width: width * 0.9,
         decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage("assets/images/profilebutton/bank_frame.png"),
-            fit: BoxFit.none,
-          ),borderRadius: BorderRadius.circular(20)
+          color: const Color(0xFF2F2F2F),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/name_field.png"),fit: BoxFit.fill),borderRadius: BorderRadius.circular(20),),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "  Jasper Den Hollander",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text(
-                      "ID: 113  ",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            _buildNameIDSection(),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Flexible(
-                      child: Row(
-                        children: const [
-                          Icon(Icons.mail, color: Colors.white70, size: 18),
-                          SizedBox(width: 10),
-                          Text(
-                            "jasper.from.holand@gmail.com",
-                            style: TextStyle(color: Colors.white70, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.phone, color: Colors.white70, size: 18),
-                        SizedBox(width: 10),
-                        Text(
-                          "+38651646587",
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildEmailPhoneSection(),
             const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/images/profilebutton/kyc_field.png"),fit: BoxFit.contain),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Center(
-                child: Text(
-                  "KYC Verification",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(height: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/kyc_field.png"),fit: BoxFit.contain),
-                borderRadius: BorderRadius.circular(10),),
-                    child:  Center(
-                      child: Text(
-                        "Face Check",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    child: const Text(
-                      "Verified",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildKYCVerificationTitle(),
             const SizedBox(height: 10),
-            Row(
+            Column(
               children: [
-                Expanded(
-                  child: Container(height: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/kyc_field.png"),fit: BoxFit.contain),
-                borderRadius: BorderRadius.circular(10),),
-                    child: Center(
-                      child: const Text(
-                        "Proof of Identity",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      "Verified",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                ),
+                _buildKYCRow("FACE CHECK"),
+                const SizedBox(height: 10),
+                _buildKYCRow("PROOF OF IDENTITY"),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNameIDSection() {
+    return Container(
+      height: 45,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage("assets/images/profilebutton/name_field.png"),
+          fit: BoxFit.fill,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          Text(
+            "JASPER DEN HOLLANDER",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            "ID:113",
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmailPhoneSection() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 45,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              image: const DecorationImage(
+                image: AssetImage("assets/images/profilebutton/name_field.png"),
+                fit: BoxFit.fill,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Text(
+              "jasper.from.holand@gmail.com",
+              style: TextStyle(color: Colors.white70, fontSize: 12),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            height: 45,
+            decoration: BoxDecoration(
+              image: const DecorationImage(
+                image: AssetImage("assets/images/profilebutton/name_field.png"),
+                fit: BoxFit.fill,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "+38651646587",
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEditing = !_isEditing;
+                    });
+                  },
+                  child: Image.asset(
+                    _isEditing
+                        ? "assets/images/profilebutton/edit_button_active.png"
+                        : "assets/images/profilebutton/edit_button_passive.png",
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildKYCVerificationTitle() {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage("assets/images/profilebutton/name_field.png"),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: const Center(
+        child: Text(
+          "KYC VERIFICATION",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKYCRow(String leftText) {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildKYCButton(leftText),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: _buildStatusButton(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildKYCButton(String text) {
+    return Container(
+      height: 55,
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage("assets/images/profilebutton/kyc_field.png"),
+          fit: BoxFit.fill,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusButton() {
+    String assetPath;
+
+    if (kycStatus == "PENDING") {
+      assetPath = "assets/images/profilebutton/pending_notification.png";
+    } else if (kycStatus == "VERIFIED") {
+      assetPath = "assets/images/profilebutton/verified_button.png";
+    } else {
+      assetPath = "assets/images/profilebutton/try_again_button.png";
+    }
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (kycStatus == "PENDING") {
+            kycStatus = "VERIFIED";
+          } else if (kycStatus == "VERIFIED") {
+            kycStatus = "TRY AGAIN";
+          } else {
+            kycStatus = "PENDING";
+          }
+        });
+      },
+      child: Container(
+        height: 45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Image.asset(
+          assetPath,
+          fit: BoxFit.cover,
         ),
       ),
     );
