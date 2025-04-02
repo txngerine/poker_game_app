@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/choose_avatar_controller.dart';
 import 'package:pokerpad/model/choose_avatar_request_model.dart';
 import 'package:pokerpad/model/choose_avatar_response_model.dart';
+import 'package:pokerpad/view/pick_secondary_avatar.dart';
 import 'package:pokerpad/view/proof_of_identity_screen.dart';
 
 import '../widget/build_heading_widget.dart';
@@ -131,9 +132,18 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                      width: width / 2.5,
-                      "assets/images/primaryAvatar/change avatar button (2).png"),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PickSecondaryAvatar(),
+                          ));
+                    },
+                    child: Image.asset(
+                        width: width / 2.5,
+                        "assets/images/primaryAvatar/change avatar button (2).png"),
+                  ),
                   GestureDetector(
                     onTap: () {
                       chooseAvatar();

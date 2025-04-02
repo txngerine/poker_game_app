@@ -152,7 +152,7 @@ class _LobbyPageState extends State<LobbyPage> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
+              const Row(
                 children: [
                   BuildButtonImageWidget(
                       imgPath: "assets/images/new_lobby/Holdem Active.png"),

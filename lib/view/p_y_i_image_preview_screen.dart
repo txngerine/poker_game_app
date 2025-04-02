@@ -10,6 +10,7 @@ import 'package:pokerpad/view/terms_page.dart';
 
 import '../constants/screen_size.dart';
 import '../controller/signup_controller.dart';
+import 'p_y_i_camera_page.dart';
 
 class PYIImagePreviewScreen extends StatefulWidget {
   final String imagePath;
@@ -137,9 +138,18 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "assets/images/retake (6).png",
-                    width: width / 2.3,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PYICameraPage(),
+                          ));
+                    },
+                    child: Image.asset(
+                      "assets/images/retake (6).png",
+                      width: width / 2.3,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {

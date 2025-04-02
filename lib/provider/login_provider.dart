@@ -24,6 +24,7 @@ class LoginProvider extends ChangeNotifier {
 
   WebSocketChannel? _channel;
   bool isLoading = false;
+  bool isForgotLoading = false;
   LoginResponseModel? playerDetails;
   String _deviceId = "Fetching..";
   double downloadProgress = 0.0;
@@ -292,12 +293,12 @@ class LoginProvider extends ChangeNotifier {
 
     // Perform forgot password API call or navigation logic here
 
-    isLoading = true;
+    isForgotLoading = true;
     notifyListeners();
     final request = ForgotPasswordRequestModel(email: emailController.text);
     try {
       final response = await ForgotPasswordController().forgotPassword(request);
-      isLoading = false;
+      isForgotLoading = false;
       notifyListeners();
       print(response);
       if (response != null) {
@@ -309,10 +310,10 @@ class LoginProvider extends ChangeNotifier {
           ),
         );
       } else {
-        errorMessage = "This email is not registered";
+        errorMessage = "The selected email is invalid";
       }
     } catch (e) {
-      isLoading = false;
+      isForgotLoading = false;
       notifyListeners();
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
