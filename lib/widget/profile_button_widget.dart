@@ -220,7 +220,7 @@ class ProfileButtonWidget extends StatelessWidget {
       backgroundColor: const Color(0xFF3C3D37),
       child: Container(
         padding: const EdgeInsets.all(15),
-        width: width * 0.9,height: height * 0.36,
+        width: width * 0.9,height: height * 0.5,
         decoration: BoxDecoration(
           image: const DecorationImage(
             image: AssetImage("assets/images/profilebutton/bank_frame.png"),
@@ -230,7 +230,7 @@ class ProfileButtonWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/name_field.png"),fit: BoxFit.cover),borderRadius: BorderRadius.circular(20),),
+            Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/name_field.png"),fit: BoxFit.fill),borderRadius: BorderRadius.circular(20),),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,23 +285,13 @@ class ProfileButtonWidget extends StatelessWidget {
                       color: Colors.black54,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: const [
-                            Icon(Icons.phone, color: Colors.white70, size: 18),
-                            SizedBox(width: 10),
-                            Text(
-                              "+38651646587",
-                              style: TextStyle(color: Colors.white70, fontSize: 12),
-                            ),]
-                        ),CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 15,
-                          child: IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.black, size: 15),
-                            onPressed: () {},
-                          ),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.phone, color: Colors.white70, size: 18),
+                        SizedBox(width: 10),
+                        Text(
+                          "+38651646587",
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
                         ),
                       ],
                     ),
@@ -331,30 +321,19 @@ class ProfileButtonWidget extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black54,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  child: Container(height: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/kyc_field.png"),fit: BoxFit.contain),
+                borderRadius: BorderRadius.circular(10),),
+                    child:  Center(
+                      child: Text(
+                        "Face Check",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      "Face Check",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () {},
+                  child: Container(
                     child: const Text(
                       "Verified",
                       style: TextStyle(color: Colors.white, fontSize: 16),
@@ -367,17 +346,13 @@ class ProfileButtonWidget extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black54,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  child: Container(height: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/profilebutton/kyc_field.png"),fit: BoxFit.contain),
+                borderRadius: BorderRadius.circular(10),),
+                    child: Center(
+                      child: const Text(
+                        "Proof of Identity",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      "Proof of Identity",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ),
