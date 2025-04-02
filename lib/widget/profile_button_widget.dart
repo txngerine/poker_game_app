@@ -303,7 +303,7 @@ class ProfileButtonWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.black54,
+                image: DecorationImage(image: AssetImage("assets/images/profilebutton/kyc_field.png"),fit: BoxFit.contain),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Center(
