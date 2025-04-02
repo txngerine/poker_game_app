@@ -3,8 +3,12 @@ import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/widget/withdraw_button_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../model/login_response_model.dart';
+
 class DepositButtonWidget extends StatefulWidget {
-  const DepositButtonWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const DepositButtonWidget({super.key, this.playerResponse});
 
   @override
   State<DepositButtonWidget> createState() => _DepositButtonWidgetState();
@@ -16,6 +20,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<CashierButtonProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Dialog(

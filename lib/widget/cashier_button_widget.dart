@@ -3,10 +3,13 @@ import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/widget/deposit_button_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../model/login_response_model.dart';
 import 'build_button_image_widget.dart';
 
 class CashierButtonWidget extends StatefulWidget {
-  const CashierButtonWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const CashierButtonWidget({super.key, this.playerResponse});
 
   @override
   State<CashierButtonWidget> createState() => _CashierButtonWidgetState();
@@ -26,7 +29,9 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) {
-            return const DepositButtonWidget();
+            return DepositButtonWidget(
+              playerResponse: widget.playerResponse,
+            );
           },
         );
       },

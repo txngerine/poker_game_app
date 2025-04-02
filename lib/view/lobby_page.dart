@@ -131,7 +131,9 @@ class _LobbyPageState extends State<LobbyPage> {
                   AffiliatedButtonWidget(
                     playerResponse: widget.playerResponse,
                   ),
-                  const CashierButtonWidget(),
+                  CashierButtonWidget(
+                    playerResponse: widget.playerResponse,
+                  ),
                   const TransferButtonWidget(),
                 ],
               ),
