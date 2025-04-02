@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/widget/withdraw_button_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../model/login_response_model.dart';
 
@@ -135,11 +136,44 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                 ),
                                 Column(
                                   children: [
-                                    Image.asset(
-                                        width:
-                                            MediaQuery.sizeOf(context).width /
+                                    Stack(
+                                      children: [
+                                        Image.asset(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width /
                                                 3,
-                                        "assets/images/cashier/deposit image/qr frame.png"),
+                                            "assets/images/cashier/deposit image/qr frame.png"),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 13, top: 12),
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              width: width / 3.4,
+                                              height: height / 5.5,
+                                              child: QrImageView(
+                                                data: widget.playerResponse
+                                                        ?.data?.walletAddress ??
+                                                    "No address available",
+                                                version: QrVersions.auto,
+                                                eyeStyle: const QrEyeStyle(
+                                                  eyeShape: QrEyeShape.square,
+                                                  color: Colors
+                                                      .white, // Change the eye color
+                                                ),
+                                                dataModuleStyle:
+                                                    const QrDataModuleStyle(
+                                                  dataModuleShape:
+                                                      QrDataModuleShape.square,
+                                                  color: Colors
+                                                      .white, // Change the QR color
+                                                ),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                     Stack(
                                       children: [
                                         Image.asset(
@@ -153,8 +187,10 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                           width:
                                               MediaQuery.sizeOf(context).width /
                                                   3.3,
-                                          child: const Text(
-                                            "Fds133kjdf3kkdf389fjsdflkASDFFds133kjdf3kkdf389fjsdflkASDF ",
+                                          child: Text(
+                                            widget.playerResponse?.data
+                                                    ?.walletAddress ??
+                                                "No address available",
                                             style: TextStyle(
                                               fontSize: 10,
                                               color: Colors.white,
