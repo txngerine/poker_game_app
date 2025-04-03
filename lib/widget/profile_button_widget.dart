@@ -348,28 +348,76 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
     );
   }
 
-  Widget _buildKYCVerificationTitle() {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: AssetImage("assets/images/profilebutton/name_field.png"),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: const Center(
-        child: Text(
-          "KYC VERIFICATION",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
+  // Widget _buildKYCVerificationTitle() {
+  //   String assetPath = kycStatus == "VERIFIED"
+  //       ? "assets/images/profilebutton/name_field.png"
+  //       : "assets/images/profilebutton/profile_alerts.png";
+
+  //   return Container(
+  //     padding: const EdgeInsets.all(14),
+  //     decoration: BoxDecoration(
+  //       image: DecorationImage(
+  //         image: AssetImage(assetPath),
+  //         fit: BoxFit.cover,
+  //       ),
+  //       borderRadius: BorderRadius.circular(20),
+  //     ),
+  //     child: const Center(
+  //       child: Text(
+  //         "KYC VERIFICATION",
+  //         style: TextStyle(
+  //           color: Colors.white,
+  //           fontSize: 18,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+   Widget _buildKYCVerificationTitle() {
+  String assetPath = kycStatus == "VERIFIED"
+      ? "assets/images/profilebutton/name_field.png"
+      : "assets/images/profilebutton/profile_alerts.png";
+
+  String titleText = "KYC VERIFICATION";
+  Color textColor = Colors.white;
+
+  if (kycStatus == "PENDING") {
+    titleText = "Thank you for your submission! Your KYC verification is currently in progress."
+        "Please be patient as our team reviews your documents. If you have any questions,"
+        "feel free to reach out to our support team.";
+        textColor = Colors.black;
+  } else if (kycStatus == "TRY AGAIN") {
+    titleText =
+        "We're sorry, but your KYC verification has not been successful. "
+        "Please review the requirements and try again. If you need assistance, "
+        "feel free to contact our support team for guidance.";
+    textColor = Colors.black;
   }
+
+  return Container(
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(assetPath),
+        fit: BoxFit.cover,
+      ),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Center(
+      child: Text(
+        titleText,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  );
+}
+
 
   Widget _buildKYCRow(String leftText) {
     return Row(
