@@ -1,13 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:pokerpad/controller/cashier_controller.dart';
+import 'package:pokerpad/model/withdraw_request_model.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/view/qr_scan_page.dart';
+import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../model/login_response_model.dart';
+
 class WithdrawButtonWidget extends StatefulWidget {
+  final LoginResponseModel? playerResponse;
+
   const WithdrawButtonWidget({
     super.key,
+    this.playerResponse,
   });
 
   @override
@@ -18,6 +27,97 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
   String scannedCode = ""; // Store scanned QR code
   final MobileScannerController controller = MobileScannerController();
   int selectedButton = 1;
+  bool isLoading = false;
+  TextEditingController withdrawAmountController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final CashierController cashierController = CashierController();
+  String? errorMessage;
+
+  Future<void> withDrawAmount() async {
+    print("id:${widget.playerResponse?.data!.id}");
+
+    if (!mounted) return; // Prevents setState after widget is disposed
+
+    setState(() {
+      isLoading = true;
+    });
+
+    final request = WithdrawRequestModel(
+      playerId: widget.playerResponse?.data!.id.toString(),
+      currency: "usdc",
+      network: "solana",
+      password: passwordController.text,
+      chips: int.tryParse(withdrawAmountController.text) ?? 0,
+    );
+
+    try {
+      final response = await cashierController.postWithdraw(request);
+
+      if (!mounted) return; // Prevents further execution if widget is disposed
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response.status == "OK") {
+        Navigator.pop(context);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 350),
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.activeGreen,
+            content: Text(
+              "Success!: ${response.status}, ID: ${response.data?.id ?? "N/A"}",
+            ),
+          ),
+        );
+      } else {
+        setState(() {
+          errorMessage = " Unable to initiate redeem, Verification failed";
+        });
+        print("API Failure: ${response.status}, Message: ${response.messages}");
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 350),
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.systemRed,
+            content: Text("Fail!: ${response.messages ?? "Unknown error"}"),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(milliseconds: 350),
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: CupertinoColors.systemRed,
+          content: Text("API Error: $e"),
+        ),
+      );
+
+      print("API Error: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +192,8 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                   child: SizedBox(
                                     width: MediaQuery.sizeOf(context).width /
                                         3.5, // To fit inside the image
-                                    child: const TextField(
+                                    child: TextField(
+                                      controller: withdrawAmountController,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.white,
@@ -126,7 +227,8 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                   child: SizedBox(
                                     width: MediaQuery.sizeOf(context).width /
                                         3.5, // To fit inside the image
-                                    child: const TextField(
+                                    child: TextField(
+                                      controller: passwordController,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.white,
@@ -149,7 +251,9 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
                               child: Image.asset(
                                   width: MediaQuery.sizeOf(context).width / 2.3,
                                   "assets/images/cashier/withdraw images/deposit button black.png"),
@@ -223,20 +327,50 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Image.asset(
-                                width: MediaQuery.sizeOf(context).width / 2.6,
-                                "assets/images/cashier/withdraw images/withdraw alert holder.png"),
+                            Container(
+                              width: MediaQuery.sizeOf(context).width / 2.6,
+                              height: height / 10,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/cashier/withdraw images/withdraw alert holder.png"),
+                                ),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: BuildTextWidget(
+                                    text: errorMessage ?? "",
+                                    align: TextAlign.center,
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Image.asset(
+                            //     width: MediaQuery.sizeOf(context).width / 2.6,
+                            //     "assets/images/cashier/withdraw images/withdraw alert holder.png"),
                             const SizedBox(
                               height: 15,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                                provider.setClicked(false);
-                              },
-                              child: Image.asset(
-                                  width: MediaQuery.sizeOf(context).width / 2.6,
-                                  "assets/images/cashier/withdraw images/withdraw button white.png"),
+                            SizedBox(
+                              height: 60,
+                              width: MediaQuery.sizeOf(context).width / 2.6,
+                              child: isLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator())
+                                  : GestureDetector(
+                                      onTap: () {
+                                        provider.setClicked(false);
+                                        withDrawAmount();
+                                      },
+                                      child: Image.asset(
+                                          width:
+                                              MediaQuery.sizeOf(context).width /
+                                                  2.6,
+                                          "assets/images/cashier/withdraw images/withdraw button white.png"),
+                                    ),
                             )
                           ],
                         )

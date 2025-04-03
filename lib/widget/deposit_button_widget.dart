@@ -214,7 +214,9 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                       barrierDismissible: false,
                                       context: context,
                                       builder: (context) {
-                                        return const WithdrawButtonWidget();
+                                        return WithdrawButtonWidget(
+                                          playerResponse: widget.playerResponse,
+                                        );
                                       },
                                     );
                                   },

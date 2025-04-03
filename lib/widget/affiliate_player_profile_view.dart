@@ -82,7 +82,7 @@ class _AffiliatePlayerProfileViewState
                 padding: const EdgeInsets.all(4.0),
                 child: Column(
                   children: [
-                    BuildTextWidget(
+                    const BuildTextWidget(
                       text:
                           "Affiliate partners are independent entities and do not act as employees or representatives of PokerPad Ltd."
                           "Consequently, PokerPad Ltd. disclaims any liability for outcomers resulting from user interactions with affiliate partners,encompassing any ransactions and agreements.",
