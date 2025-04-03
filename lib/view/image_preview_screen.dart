@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
+import 'package:pokerpad/view/front_camera_page.dart';
 import 'package:pokerpad/view/name_page.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
@@ -149,9 +150,19 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/retake (6).png",
-                              width: width / 2.3,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FrontCameraPage(),
+                                    ));
+                              },
+                              child: Image.asset(
+                                "assets/images/retake (6).png",
+                                width: width / 2.3,
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {

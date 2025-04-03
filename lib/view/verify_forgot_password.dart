@@ -374,7 +374,8 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                           ),
                           child: Center(
                             child: isLoading
-                                ? Center(child: CircularProgressIndicator())
+                                ? const Center(
+                                    child: CircularProgressIndicator())
                                 : Text(
                                     errorMessage!,
                                     style: const TextStyle(color: Colors.black),
@@ -387,15 +388,26 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/images/verifyemail/back button.png",
-                      width: width / 2.8,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            child: const LoginPage(),
+                            type: PageTransitionType.leftToRightWithFade,
+                          ),
+                        );
+                      },
+                      child: Image.asset(
+                        "assets/images/verifyemail/back button.png",
+                        width: width / 2.8,
+                      ),
                     ),
                     isLoading
                         ? SizedBox(
                             width: width / 2.8,
-                            child: Center(
-                                child: const CircularProgressIndicator()))
+                            child: const Center(
+                                child: CircularProgressIndicator()))
                         : GestureDetector(
                             onTap: resetPassword,
                             child: Image.asset(
