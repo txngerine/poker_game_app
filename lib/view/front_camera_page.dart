@@ -85,7 +85,6 @@ class _FrontCameraPageState extends State<FrontCameraPage> {
         });
 
         debugPrint("Image captured at path: $newImagePath");
-
         // Navigate to ImagePreviewScreen with the new image path
         Navigator.push(
           context,

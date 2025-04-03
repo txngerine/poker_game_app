@@ -4,6 +4,7 @@ import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
+import 'package:pokerpad/widget/build_button_image_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
@@ -16,7 +17,7 @@ import 'package:provider/provider.dart';
 import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
 import '../widget/chart_line_widget.dart';
-import '../widget/self_exclusion_widget.dart';
+import '../widget/chat_support_widget.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
@@ -73,7 +74,7 @@ class _LobbyPageState extends State<LobbyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SelfExclusionWidget(),
+                  const ChatSupportWidget(),
                   GestureDetector(
                     onTap: () {
                       showDialog(
@@ -130,7 +131,9 @@ class _LobbyPageState extends State<LobbyPage> {
                   AffiliatedButtonWidget(
                     playerResponse: widget.playerResponse,
                   ),
-                  const CashierButtonWidget(),
+                  CashierButtonWidget(
+                    playerResponse: widget.playerResponse,
+                  ),
                   const TransferButtonWidget(),
                 ],
               ),
@@ -151,28 +154,38 @@ class _LobbyPageState extends State<LobbyPage> {
               const SizedBox(
                 height: 10,
               ),
-              Stack(
+              const Row(
                 children: [
-                  Image.asset("assets/images/lobby/Table Header (1).png"),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                          alignment: Alignment.center,
-                          // height: MediaQuery.sizeOf(context).height / 15,
-                          width: MediaQuery.of(context).size.width / 4,
-                          "assets/images/lobby/holdem button active.png"),
-                      Image.asset(
-                          width: MediaQuery.of(context).size.width / 5,
-                          "assets/images/lobby/omaha butoon passive.png"),
-                      const Spacer(),
-                      Image.asset(
-                          width: MediaQuery.of(context).size.width / 2.3,
-                          "assets/images/lobby/auto top up button  active.png"),
-                    ],
-                  )
+                  BuildButtonImageWidget(
+                      imgPath: "assets/images/new_lobby/Holdem Active.png"),
+                  BuildButtonImageWidget(
+                      imgPath: "assets/images/new_lobby/Omaha Passive.png"),
+                  BuildButtonImageWidget(
+                      imgPath: "assets/images/new_lobby/Privte Passive.png"),
                 ],
               ),
+              // Stack(
+              //   children: [
+              //     Image.asset("assets/images/lobby/Table Header (1).png"),
+              //     Row(
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Image.asset(
+              //             alignment: Alignment.center,
+              //             // height: MediaQuery.sizeOf(context).height / 15,
+              //             width: MediaQuery.of(context).size.width / 4,
+              //             "assets/images/lobby/holdem button active.png"),
+              //         Image.asset(
+              //             width: MediaQuery.of(context).size.width / 5,
+              //             "assets/images/lobby/omaha butoon passive.png"),
+              //         const Spacer(),
+              //         Image.asset(
+              //             width: MediaQuery.of(context).size.width / 2.3,
+              //             "assets/images/lobby/auto top up button  active.png"),
+              //       ],
+              //     )
+              //   ],
+              // ),
               Column(
                 children: [
                   Row(
@@ -244,8 +257,7 @@ class _LobbyPageState extends State<LobbyPage> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return ChartLineWidget(
-                              );
+                              return ChartLineWidget();
                             },
                           );
                         },

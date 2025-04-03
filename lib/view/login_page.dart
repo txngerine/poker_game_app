@@ -370,12 +370,23 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             ],
                           ),
-                          GestureDetector(
-                              onTap: () {
-                                loginProvider.forgotPassword(context);
-                              },
-                              child: const BuildBoldTextWidget(
-                                  text: "Forgot password"))
+                          loginProvider.isForgotLoading
+                              ? const Padding(
+                                  padding: EdgeInsets.only(right: 50),
+                                  child: SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    loginProvider.forgotPassword(context);
+                                  },
+                                  child: const BuildBoldTextWidget(
+                                      text: "Forgot password"))
                         ],
                       ),
                     ),
