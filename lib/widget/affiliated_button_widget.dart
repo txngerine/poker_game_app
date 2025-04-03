@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
-import 'package:pokerpad/widget/affiliate_player_view_widget.dart';
+import 'package:pokerpad/widget/affiliate_player_profile_view.dart';
 import 'package:pokerpad/widget/affiliate_players_button_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -32,9 +32,13 @@ class AffiliatedButtonWidget extends StatelessWidget {
             // affiliate player view function
             return userType == "AFFILIATE"
                 ? AffiliatePlayersButtonWidget()
-                : AffiliatePlayerViewWidget();
+                : AffiliatePlayerProfileView(
+                    playerResponse: playerResponse,
+                  );
           },
-        );
+        ).then((_) {
+          provider.setClicked(false);
+        });
       },
       child: BuildButtonImageWidget(
         imgPath: provider.isClicked

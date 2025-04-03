@@ -117,6 +117,7 @@ flutter:
     - assets/images/new_lobby/
     - assets/images/chat/
     - assets/images/profilebutton/
+    - assets/images/playerAffiliate/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
