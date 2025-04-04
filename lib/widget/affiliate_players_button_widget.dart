@@ -451,28 +451,46 @@ class _AffiliatePlayersButtonWidgetState
       ),
     );
   }
-
-  Widget _buildSortButton(String field) {
-    return GestureDetector(
-      onTap: () {
-        sortByField(field);
-      },
-      child: Row(
-        children: [
-          BuildSubHeadingText(
-            text: field,
-            color: Colors.white,
-            fontSize: 10,
-          ),
-          Icon(
-            (sortField == field)
-                ? (isAscending ? Icons.arrow_upward : Icons.arrow_downward)
-                : Icons.sort,
-            color: Colors.white,
-            size: 12,
-          ),
-        ],
-      ),
+Widget _buildSortButton(String field) {
+  if (field == "TRANSFER") {
+    return BuildSubHeadingText(
+      text: field,
+      color: Colors.white,
+      fontSize: 10,
     );
   }
+
+  return GestureDetector(
+    onTap: () {
+      sortByField(field);
+    },
+    child: Row(
+      children: [
+        Container(
+          height: 40,
+          width: 80,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BuildSubHeadingText(
+                text: field,
+                color: Colors.white,
+                fontSize: 10,
+              ),
+              if (sortField == field) ...[ // Show image only when active
+                const SizedBox(height: 4),
+                Image.asset(
+                  "assets/images/selection_triangle.png",
+                  height: 10,
+                  width: 10,
+                  fit: BoxFit.fill,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
+    }
