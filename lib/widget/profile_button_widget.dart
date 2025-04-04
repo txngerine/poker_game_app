@@ -207,6 +207,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:pokerpad/widget/build_sub_heading_text.dart';
 
 class ProfileButtonWidget extends StatefulWidget {
   const ProfileButtonWidget({super.key});
@@ -258,7 +259,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
 
   Widget _buildNameIDSection() {
     return Container(
-      height: 45,
+      height: 50,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         image: const DecorationImage(
@@ -271,7 +272,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           Text(
-            "JASPER DEN HOLLANDER",
+            "  JASPER DEN HOLLANDER",
             style: TextStyle(
               color: Colors.white,
               fontSize: 15,
@@ -279,7 +280,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
             ),
           ),
           Text(
-            "ID:113",
+            "ID:113  ",
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ],
@@ -287,66 +288,81 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
     );
   }
 
-  Widget _buildEmailPhoneSection() {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: 45,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage("assets/images/profilebutton/name_field.png"),
-                fit: BoxFit.fill,
+ Widget _buildEmailSection() {
+  return Expanded(
+    child: Container(
+      height: 50,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage("assets/images/profilebutton/mail_phone_field.png"),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(
+        child: const Text(
+          "jasper.from.holand@gmail.com",
+          style: TextStyle(color: Colors.white70, fontSize: 12),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildPhoneSection() {
+  return Expanded(
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: 50,
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage("assets/images/profilebutton/mail_phone_field.png"),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "+38651646587",
+            style: TextStyle(color: Colors.white70, fontSize: 12),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _isEditing = !_isEditing;
+              });
+            },
+            child: CircleAvatar(
+              radius: 23, // Adjust size
+              backgroundColor: Colors.transparent, // Transparent background
+              child: Image.asset(
+                _isEditing
+                    ? "assets/images/profilebutton/edit_button_active.png"
+                    : "assets/images/profilebutton/edit_button_passive.png",
+                width: 50, // Adjust icon size
+                height: 50,
               ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Text(
-              "jasper.from.holand@gmail.com",
-              style: TextStyle(color: Colors.white70, fontSize: 12),
             ),
           ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: 45,
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage("assets/images/profilebutton/name_field.png"),
-                fit: BoxFit.fill,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "+38651646587",
-                  style: TextStyle(color: Colors.white70, fontSize: 12),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isEditing = !_isEditing;
-                    });
-                  },
-                  child: Image.asset(
-                    _isEditing
-                        ? "assets/images/profilebutton/edit_button_active.png"
-                        : "assets/images/profilebutton/edit_button_passive.png",
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildEmailPhoneSection() {
+  return Row(
+    children: [
+      _buildEmailSection(),
+      const SizedBox(width: 10),
+      _buildPhoneSection(),
+    ],
+  );
+}
+
+
 
   // Widget _buildKYCVerificationTitle() {
   //   String assetPath = kycStatus == "VERIFIED"
@@ -396,12 +412,12 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
     textColor = Colors.black;
   }
 
-  return Container(
+  return Container(height: 80,
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
       image: DecorationImage(
         image: AssetImage(assetPath),
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ),
       borderRadius: BorderRadius.circular(20),
     ),
@@ -445,14 +461,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        child: BuildSubHeadingText(text: text, color: Colors.white, fontSize: 15),
       ),
     );
   }
