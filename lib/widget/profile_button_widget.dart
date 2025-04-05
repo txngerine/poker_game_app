@@ -1,209 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// import 'build_sub_heading_text.dart';
-// import 'build_text_widget.dart';
-
-// class ProfileButtonWidget extends StatefulWidget {
-//   const ProfileButtonWidget({super.key});
-
-//   @override
-//   State<ProfileButtonWidget> createState() => _ProfileButtonWidgetState();
-// }
-
-// class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final width = MediaQuery.sizeOf(context).width;
-//     final height = MediaQuery.sizeOf(context).height;
-//     return Dialog(
-//       child: Container(
-//         height: height / 2.3,
-//         width: width,
-//         decoration: BoxDecoration(
-//           color: Colors.black,
-//           borderRadius: BorderRadius.circular(20),
-//           border: Border.all(color: Colors.white),
-//         ),
-//         child: Padding(
-//           padding: const EdgeInsets.all(10.0),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               const SizedBox(
-//                 height: 10,
-//               ),
-//               const Row(
-//                 mainAxisAlignment: MainAxisAlignment.start,
-//                 children: [
-//                   BuildSubHeadingText(
-//                     text: "WhatEverMan",
-//                     color: Colors.white,
-//                     fontSize: 20,
-//                   ),
-//                   Spacer(),
-//                   BuildSubHeadingText(
-//                     text: "ID:",
-//                     color: Colors.white,
-//                     fontSize: 20,
-//                   ),
-//                   SizedBox(
-//                     width: 20,
-//                   )
-//                 ],
-//               ),
-//               const Row(
-//                 mainAxisAlignment: MainAxisAlignment.start,
-//                 children: [
-//                   Icon(
-//                     Icons.mail,
-//                     color: Colors.white,
-//                     size: 12,
-//                   ),
-//                   SizedBox(
-//                     width: 10,
-//                   ),
-//                   BuildTextWidget(
-//                     text: "whateverman@gmail.com",
-//                     color: Colors.white,
-//                     fontSize: 12,
-//                   )
-//                 ],
-//               ),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.start,
-//                 children: [
-//                   const Icon(
-//                     Icons.phone,
-//                     color: Colors.white,
-//                     size: 12,
-//                   ),
-//                   const SizedBox(
-//                     width: 10,
-//                   ),
-//                   const BuildTextWidget(
-//                     text: "Enter your mobile number",
-//                     color: Colors.white,
-//                     fontSize: 12,
-//                   ),
-//                   const Spacer(),
-//                   SizedBox(
-//                     width: width / 3,
-//                     child: ElevatedButton(
-//                         style: const ButtonStyle(
-//                             backgroundColor:
-//                                 WidgetStatePropertyAll(Colors.white)),
-//                         onPressed: () {},
-//                         child: const BuildSubHeadingText(
-//                           text: "change avatar",
-//                           fontSize: 12,
-//                           color: Colors.black,
-//                         )),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(
-//                 height: 30,
-//               ),
-//               Row(
-//                 children: [
-//                   Column(
-//                     children: [
-//                       const BuildSubHeadingText(
-//                         fontSize: 15,
-//                         text: "FACIAL VERIFICATION",
-//                         color: Colors.white,
-//                       ),
-//                       SizedBox(
-//                         width: width / 3,
-//                         child: ElevatedButton(
-//                             style: const ButtonStyle(
-//                                 backgroundColor:
-//                                     WidgetStatePropertyAll(Color(0xff3C3D37))),
-//                             onPressed: () {},
-//                             child: const BuildSubHeadingText(
-//                               text: "pending",
-//                               fontSize: 12,
-//                               color: Colors.white70,
-//                             )),
-//                       ),
-//                       const SizedBox(
-//                         height: 20,
-//                       ),
-//                       const BuildSubHeadingText(
-//                         fontSize: 15,
-//                         text: "PROOF OF IDENTITY",
-//                         color: Colors.white,
-//                       ),
-//                       SizedBox(
-//                         width: width / 3,
-//                         child: ElevatedButton(
-//                             style: const ButtonStyle(
-//                                 backgroundColor:
-//                                     WidgetStatePropertyAll(Color(0xff79D7BE))),
-//                             onPressed: () {},
-//                             child: const BuildSubHeadingText(
-//                               text: "verified",
-//                               fontSize: 12,
-//                               color: Colors.white70,
-//                             )),
-//                       ),
-//                       const SizedBox(
-//                         height: 20,
-//                       ),
-//                       const BuildSubHeadingText(
-//                         fontSize: 15,
-//                         text: "PROOF OF ADDRESS",
-//                         color: Colors.white,
-//                       ),
-//                       SizedBox(
-//                         width: width / 3,
-//                         child: ElevatedButton(
-//                             style: const ButtonStyle(
-//                                 backgroundColor:
-//                                     WidgetStatePropertyAll(Color(0xffB43F3F))),
-//                             onPressed: () {},
-//                             child: const BuildSubHeadingText(
-//                               text: "rejected",
-//                               fontSize: 12,
-//                               color: Colors.white70,
-//                             )),
-//                       ),
-//                     ],
-//                   ),
-//                   const Spacer(),
-//                   Column(
-//                     children: [
-//                       Container(
-//                         height: 200,
-//                         color: const Color(0xff424242),
-//                         width: width / 3,
-//                       ),
-//                       SizedBox(
-//                         width: width / 3,
-//                         child: ElevatedButton(
-//                             style: const ButtonStyle(
-//                                 backgroundColor:
-//                                     WidgetStatePropertyAll(Colors.white)),
-//                             onPressed: () {},
-//                             child: const BuildSubHeadingText(
-//                               text: "try again",
-//                               fontSize: 12,
-//                               color: Colors.black,
-//                             )),
-//                       ),
-//                     ],
-//                   )
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
@@ -391,28 +185,37 @@ Widget _buildEmailPhoneSection() {
   //   );
   // }
 
-   Widget _buildKYCVerificationTitle() {
+  Widget _buildKYCVerificationTitle() {
   String assetPath = kycStatus == "VERIFIED"
       ? "assets/images/profilebutton/name_field.png"
       : "assets/images/profilebutton/profile_alerts.png";
 
   String titleText = "KYC VERIFICATION";
   Color textColor = Colors.white;
+  double fontSize = 15;
 
   if (kycStatus == "PENDING") {
-    titleText = "Thank you for your submission! Your KYC verification is currently in progress."
-        "Please be patient as our team reviews your documents. If you have any questions,"
+    titleText = "Thank you for your submission! Your KYC verification is currently in progress. "
+        "Please be patient as our team reviews your documents. If you have any questions, "
         "feel free to reach out to our support team.";
-        textColor = Colors.black;
+    textColor = Colors.black;
+    fontSize = 10;
   } else if (kycStatus == "TRY AGAIN") {
-    titleText =
-        "We're sorry, but your KYC verification has not been successful. "
+    titleText = "We're sorry, but your KYC verification has not been successful. "
         "Please review the requirements and try again. If you need assistance, "
         "feel free to contact our support team for guidance.";
     textColor = Colors.black;
+    fontSize = 10;
   }
 
-  return Container(height: 80,
+  // Override text color and font size if profile alert asset is used
+  if (assetPath == "assets/images/profilebutton/profile_alerts.png") {
+    textColor = Colors.black;
+    fontSize = 10;
+  }
+
+  return Container(
+    height: 80,
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
       image: DecorationImage(
@@ -422,17 +225,15 @@ Widget _buildEmailPhoneSection() {
       borderRadius: BorderRadius.circular(20),
     ),
     child: Center(
-      child: Text(
-        titleText,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-        ),
+      child: BuildSubHeadingText(
+        text: titleText,
+        color: textColor,
+        fontSize: fontSize,
       ),
     ),
   );
 }
+
 
 
   Widget _buildKYCRow(String leftText) {
@@ -461,7 +262,7 @@ Widget _buildEmailPhoneSection() {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Center(
-        child: BuildSubHeadingText(text: text, color: Colors.white, fontSize: 15),
+        child: BuildSubHeadingText(text: text, color: Colors.white, fontSize: 15,textAlign: TextAlign.start,),
       ),
     );
   }
