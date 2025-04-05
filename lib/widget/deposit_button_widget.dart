@@ -21,6 +21,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<CashierButtonProvider>(context);
+    print("address:${widget.playerResponse?.data?.walletAddress}");
 
     return Padding(
       padding: const EdgeInsets.only(top: 50),

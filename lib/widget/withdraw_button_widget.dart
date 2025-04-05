@@ -194,12 +194,13 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                         3.5, // To fit inside the image
                                     child: TextField(
                                       controller: withdrawAmountController,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Colors.white,
                                       ),
                                       textAlign: TextAlign.center,
-                                      decoration: InputDecoration.collapsed(
+                                      decoration:
+                                          const InputDecoration.collapsed(
                                         hintText: "Withdraw Amount: \$",
                                         hintStyle:
                                             TextStyle(color: Colors.white),
@@ -229,12 +230,13 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                         3.5, // To fit inside the image
                                     child: TextField(
                                       controller: passwordController,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Colors.white,
                                       ),
                                       textAlign: TextAlign.center,
-                                      decoration: InputDecoration.collapsed(
+                                      decoration:
+                                          const InputDecoration.collapsed(
                                         hintText: "Password",
                                         hintStyle:
                                             TextStyle(color: Colors.white),

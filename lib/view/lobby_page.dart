@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
-import '../widget/chart_line_widget.dart';
 import '../widget/chat_support_widget.dart';
 
 class LobbyPage extends StatefulWidget {
@@ -48,10 +47,10 @@ class _LobbyPageState extends State<LobbyPage> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
-
+    final balance = loginProvider.playerBalance;
     print(widget.playerResponse!.data?.nickname);
-    print(widget.playerResponse!.data?.balance);
-    print(widget.playerResponse);
+    print("playerBalance:${widget.playerResponse!.data?.balance}");
+    print("walletAddress:${widget.playerResponse!.data?.walletAddress}");
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(
@@ -188,86 +187,188 @@ class _LobbyPageState extends State<LobbyPage> {
               // ),
               Column(
                 children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: (context) => GameView(
+                  //               playerResponse: widget.playerResponse,
+                  //               buttonId: 100,
+                  //             ),
+                  //           ),
+                  //         ).then((_) {
+                  //           SystemChrome.setEnabledSystemUIMode(
+                  //               SystemUiMode.immersiveSticky);
+                  //         });
+                  //       },
+                  //       child: Image.asset(
+                  //         fit: BoxFit.fill,
+                  //         "assets/images/lobby/100 jeton.png",
+                  //         width: MediaQuery.sizeOf(context).width / 2,
+                  //         height: MediaQuery.sizeOf(context).height / 5,
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //               builder: (context) => GameView(
+                  //                 playerResponse: widget.playerResponse,
+                  //                 buttonId: 200,
+                  //               ),
+                  //             ));
+                  //       },
+                  //       child: Image.asset(
+                  //         "assets/images/lobby/200 jeton.png",
+                  //         fit: BoxFit.fill,
+                  //         width: MediaQuery.sizeOf(context).width / 2,
+                  //         height: MediaQuery.sizeOf(context).height / 5,
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          // Navigator.push(
-                          //         context,
-                          //         PageTransition(
-                          //             child: const GameView(),
-                          //             type: PageTransitionType
-                          //                 .leftToRightWithFade))
-                          //     .then((_) {
-                          //   SystemChrome.setEnabledSystemUIMode(
-                          //       SystemUiMode.immersiveSticky);
-                          // });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => GameView(
-                                playerResponse: widget.playerResponse,
-                                buttonId: 100,
-                              ),
-                            ),
-                          ).then((_) {
-                            SystemChrome.setEnabledSystemUIMode(
-                                SystemUiMode.immersiveSticky);
-                          });
-                        },
+                        onTap: balance! >= 100
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GameView(
+                                      playerResponse: widget.playerResponse,
+                                      buttonId: 100,
+                                    ),
+                                  ),
+                                ).then((_) {
+                                  SystemChrome.setEnabledSystemUIMode(
+                                      SystemUiMode.immersiveSticky);
+                                });
+                              }
+                            : null, // Disabled if balance < 100
                         child: Image.asset(
+                          balance >= 100
+                              ? "assets/images/lobby/100 jeton.png"
+                              : "assets/images/new_lobby/100 Jeton bw.png",
                           fit: BoxFit.fill,
-                          "assets/images/lobby/100 jeton.png",
                           width: MediaQuery.sizeOf(context).width / 2,
                           height: MediaQuery.sizeOf(context).height / 5,
                         ),
                       ),
+
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GameView(
-                                  playerResponse: widget.playerResponse,
-                                  buttonId: 200,
-                                ),
-                              ));
-                        },
+                        onTap: balance! >= 200
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GameView(
+                                      playerResponse: widget.playerResponse,
+                                      buttonId: 200,
+                                    ),
+                                  ),
+                                ).then((_) {
+                                  SystemChrome.setEnabledSystemUIMode(
+                                      SystemUiMode.immersiveSticky);
+                                });
+                              }
+                            : null,
                         child: Image.asset(
-                          "assets/images/lobby/200 jeton.png",
+                          balance >= 200
+                              ? "assets/images/lobby/200 jeton.png"
+                              : "assets/images/new_lobby/200 Jeton bw.png",
                           fit: BoxFit.fill,
                           width: MediaQuery.sizeOf(context).width / 2,
                           height: MediaQuery.sizeOf(context).height / 5,
                         ),
-                      )
+                      ),
+
+                      // GestureDetector(
+                      //   onTap: balance! >= 200
+                      //       ? () {
+                      //           Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //               builder: (context) => GameView(
+                      //                 playerResponse: widget.playerResponse,
+                      //                 buttonId: 200,
+                      //               ),
+                      //             ),
+                      //           );
+                      //         }
+                      //       : null,
+                      //   child: Image.asset(
+                      //     balance >= 200
+                      //         ? "assets/images/lobby/200 jeton.png"
+                      //         : "assets/images/new_lobby/200 Jeton bw.png",
+                      //     fit: BoxFit.fill,
+                      //     width: MediaQuery.sizeOf(context).width / 2,
+                      //     height: MediaQuery.sizeOf(context).height / 5,
+                      //   ),
+                      // ),
                     ],
                   ),
+
                   Row(
                     children: [
-                      Image.asset(
-                        "assets/images/lobby/500 jeton.png",
-                        width: MediaQuery.sizeOf(context).width / 2,
-                        height: MediaQuery.sizeOf(context).height / 5,
-                        fit: BoxFit.fill,
-                      ),
                       GestureDetector(
-                        onTap: () {
-                          print("clicked");
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return ChartLineWidget();
-                            },
-                          );
-                        },
+                        onTap: balance! >= 500
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GameView(
+                                      playerResponse: widget.playerResponse,
+                                      buttonId: 500,
+                                    ),
+                                  ),
+                                ).then((_) {
+                                  SystemChrome.setEnabledSystemUIMode(
+                                      SystemUiMode.immersiveSticky);
+                                });
+                              }
+                            : null,
                         child: Image.asset(
-                          "assets/images/lobby/1000 jeton.png",
+                          balance >= 500
+                              ? "assets/images/new_lobby/500 Jeton (3).png"
+                              : "assets/images/new_lobby/500 Jeton bw.png",
+                          fit: BoxFit.fill,
                           width: MediaQuery.sizeOf(context).width / 2,
                           height: MediaQuery.sizeOf(context).height / 5,
-                          fit: BoxFit.fill,
                         ),
-                      )
+                      ),
+                      GestureDetector(
+                        onTap: balance! >= 1000
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GameView(
+                                      playerResponse: widget.playerResponse,
+                                      buttonId: 1000,
+                                    ),
+                                  ),
+                                ).then((_) {
+                                  SystemChrome.setEnabledSystemUIMode(
+                                      SystemUiMode.immersiveSticky);
+                                });
+                              }
+                            : null,
+                        child: Image.asset(
+                          balance >= 1000
+                              ? "assets/images/new_lobby/1000 Jeton (3).png"
+                              : "assets/images/new_lobby/1000 Jeton bw (1).png",
+                          fit: BoxFit.fill,
+                          width: MediaQuery.sizeOf(context).width / 2,
+                          height: MediaQuery.sizeOf(context).height / 5,
+                        ),
+                      ),
                     ],
                   ),
                 ],

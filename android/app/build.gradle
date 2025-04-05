@@ -5,12 +5,12 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-def keystorePropertiesFile = rootProject.file("key.properties")
-def keystoreProperties = new Properties()
-
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
+//def keystorePropertiesFile = rootProject.file("key.properties")
+//def keystoreProperties = new Properties()
+//
+//if (keystorePropertiesFile.exists()) {
+//    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+//}
 android {
     namespace = "com.example.pokerpad"
     compileSdk = flutter.compileSdkVersion
@@ -43,18 +43,18 @@ android {
     //     }
     // }
 
-    signingConfigs {
-        release {
-            storeFile keystorePropertiesFile.exists() ? file("${rootProject.projectDir}/app/key.jks") : null
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile keystorePropertiesFile.exists() ? file("${rootProject.projectDir}/app/key.jks") : null
+//            storePassword keystoreProperties['storePassword']
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//        }
+//    }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
 }

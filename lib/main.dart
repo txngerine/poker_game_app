@@ -26,6 +26,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => RegisterProvider()),
     ChangeNotifierProvider(create: (_) => CountryProvider()),
     ChangeNotifierProvider(create: (_) => ChartController()),
+    // ChangeNotifierProvider(create: (_) => BalanceProvider()),
   ], child: const MyApp()));
 
   // runApp(DevicePreview(
