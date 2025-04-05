@@ -79,7 +79,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const ProfileButtonWidget();
+                          return ProfileButtonWidget(userData: widget.playerResponse?.data ??
+          Data(nickname: '', email: '', phone: '',),);
                         },
                       );
                     },

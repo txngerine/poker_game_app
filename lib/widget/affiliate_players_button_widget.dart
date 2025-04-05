@@ -364,43 +364,46 @@ class _AffiliatePlayersButtonWidgetState
                             "assets/images/affiliate screen/search frame.png"),
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const SizedBox(width: 3),
-                        SizedBox(
-                          width: 80,
-                          height: 50,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: TextField(
-                              controller: _searchController,
-                              decoration: const InputDecoration(
-                                hintText: "   SEARCH",
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(width: 3),
+                          SizedBox(
+                            width: 80,
+                            height: 50,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: const InputDecoration(
+                                  hintText: "   SEARCH",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                  ),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 10),
+                                  border: InputBorder.none,
                                 ),
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 10),
-                                border: InputBorder.none,
+                                style: const TextStyle(color: Colors.white70),
+                                onChanged: (value) {
+                                  setState(() {
+                                    searchQuery = value;
+                                  });
+                                },
                               ),
-                              style: const TextStyle(color: Colors.white70),
-                              onChanged: (value) {
-                                setState(() {
-                                  searchQuery = value;
-                                });
-                              },
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 20),
-                        _buildSortButton("TRANSFER"),
-                        _buildSortButton("BALANCE"),
-                        _buildSortButton("WINNINGS"),
-                        _buildSortButton("RAKE"),
-                        _buildSortButton("COMMISSION"),
-                      ],
+                          const SizedBox(width: 20),
+                          _buildSortButton("TRANSFER"),
+                          _buildSortButton("BALANCE"),
+                          _buildSortButton("WINNINGS"),
+                          _buildSortButton("RAKE"),
+                          _buildSortButton("COMMISSION"),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -451,28 +454,58 @@ class _AffiliatePlayersButtonWidgetState
       ),
     );
   }
-
-  Widget _buildSortButton(String field) {
-    return GestureDetector(
-      onTap: () {
-        sortByField(field);
-      },
-      child: Row(
-        children: [
-          BuildSubHeadingText(
-            text: field,
-            color: Colors.white,
-            fontSize: 10,
-          ),
-          Icon(
-            (sortField == field)
-                ? (isAscending ? Icons.arrow_upward : Icons.arrow_downward)
-                : Icons.sort,
-            color: Colors.white,
-            size: 12,
-          ),
-        ],
-      ),
+Widget _buildSortButton(String field) {
+  if (field == "TRANSFER") {
+    return BuildSubHeadingText(
+      text: field,
+      color: Colors.white,
+      fontSize: 10,
     );
   }
+
+  return GestureDetector(
+    onTap: () {
+      setState(() {
+        // If already selected, reset sortField to null to show text only
+        if (sortField == field) {
+          sortField = null;
+        } else {
+          sortByField(field);
+        }
+      });
+    },
+    child: Row(
+      children: [
+        Container(
+          height: 40,
+          width: 80,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BuildSubHeadingText(
+                text: field,
+                color: Colors.white,
+                fontSize: 10,
+              ),
+              if (sortField == field) ...[
+                const SizedBox(height: 4),
+                if (isAscending) // Show the image only when sorting is active
+                  Container(
+                    width: 70,
+                    height: 10,
+                    child: Image.asset(
+                      "assets/images/selection_triangle.png",
+                      height: 10,
+                      width: 10,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
+    }
