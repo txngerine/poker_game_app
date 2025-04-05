@@ -79,8 +79,14 @@ class _LobbyPageState extends State<LobbyPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return ProfileButtonWidget(userData: widget.playerResponse?.data ??
-          Data(nickname: '', email: '', phone: '',),);
+                          return ProfileButtonWidget(
+                            userData: widget.playerResponse?.data ??
+                                Data(
+                                  nickname: '',
+                                  email: '',
+                                  phone: '',
+                                ),
+                          );
                         },
                       );
                     },
@@ -164,75 +170,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       imgPath: "assets/images/new_lobby/Privte Passive.png"),
                 ],
               ),
-              // Stack(
-              //   children: [
-              //     Image.asset("assets/images/lobby/Table Header (1).png"),
-              //     Row(
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-              //       children: [
-              //         Image.asset(
-              //             alignment: Alignment.center,
-              //             // height: MediaQuery.sizeOf(context).height / 15,
-              //             width: MediaQuery.of(context).size.width / 4,
-              //             "assets/images/lobby/holdem button active.png"),
-              //         Image.asset(
-              //             width: MediaQuery.of(context).size.width / 5,
-              //             "assets/images/lobby/omaha butoon passive.png"),
-              //         const Spacer(),
-              //         Image.asset(
-              //             width: MediaQuery.of(context).size.width / 2.3,
-              //             "assets/images/lobby/auto top up button  active.png"),
-              //       ],
-              //     )
-              //   ],
-              // ),
               Column(
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //             builder: (context) => GameView(
-                  //               playerResponse: widget.playerResponse,
-                  //               buttonId: 100,
-                  //             ),
-                  //           ),
-                  //         ).then((_) {
-                  //           SystemChrome.setEnabledSystemUIMode(
-                  //               SystemUiMode.immersiveSticky);
-                  //         });
-                  //       },
-                  //       child: Image.asset(
-                  //         fit: BoxFit.fill,
-                  //         "assets/images/lobby/100 jeton.png",
-                  //         width: MediaQuery.sizeOf(context).width / 2,
-                  //         height: MediaQuery.sizeOf(context).height / 5,
-                  //       ),
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //             context,
-                  //             MaterialPageRoute(
-                  //               builder: (context) => GameView(
-                  //                 playerResponse: widget.playerResponse,
-                  //                 buttonId: 200,
-                  //               ),
-                  //             ));
-                  //       },
-                  //       child: Image.asset(
-                  //         "assets/images/lobby/200 jeton.png",
-                  //         fit: BoxFit.fill,
-                  //         width: MediaQuery.sizeOf(context).width / 2,
-                  //         height: MediaQuery.sizeOf(context).height / 5,
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -262,7 +201,6 @@ class _LobbyPageState extends State<LobbyPage> {
                           height: MediaQuery.sizeOf(context).height / 5,
                         ),
                       ),
-
                       GestureDetector(
                         onTap: balance! >= 200
                             ? () {
@@ -289,33 +227,8 @@ class _LobbyPageState extends State<LobbyPage> {
                           height: MediaQuery.sizeOf(context).height / 5,
                         ),
                       ),
-
-                      // GestureDetector(
-                      //   onTap: balance! >= 200
-                      //       ? () {
-                      //           Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //               builder: (context) => GameView(
-                      //                 playerResponse: widget.playerResponse,
-                      //                 buttonId: 200,
-                      //               ),
-                      //             ),
-                      //           );
-                      //         }
-                      //       : null,
-                      //   child: Image.asset(
-                      //     balance >= 200
-                      //         ? "assets/images/lobby/200 jeton.png"
-                      //         : "assets/images/new_lobby/200 Jeton bw.png",
-                      //     fit: BoxFit.fill,
-                      //     width: MediaQuery.sizeOf(context).width / 2,
-                      //     height: MediaQuery.sizeOf(context).height / 5,
-                      //   ),
-                      // ),
                     ],
                   ),
-
                   Row(
                     children: [
                       GestureDetector(
