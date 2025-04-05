@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final loginResponseModel = loginResponseModelFromJson(jsonString);
+
 import 'dart:convert';
 
 LoginResponseModel loginResponseModelFromJson(String str) =>
@@ -46,18 +50,16 @@ class Data {
   final int? rakePendingRate;
   final String? usertype;
   final String? addressStatus;
-  final String? idStatus;
-  final String? faceStatus;
-  final String? walletAddress;
+  final dynamic walletAddress;
   final int? timeLeft;
   final String? appVersion;
   final String? appUrl;
   final String? holemGameVersion;
   final String? holdemGameUrl;
-  final int? selfAffiliateId;
   final String? message;
   final String? type;
   final String? title;
+  final Kyc? kyc;
 
   Data({
     this.id,
@@ -78,18 +80,16 @@ class Data {
     this.rakePendingRate,
     this.usertype,
     this.addressStatus,
-    this.idStatus,
-    this.faceStatus,
     this.walletAddress,
     this.timeLeft,
     this.appVersion,
     this.appUrl,
     this.holemGameVersion,
     this.holdemGameUrl,
-    this.selfAffiliateId,
     this.message,
     this.type,
     this.title,
+    this.kyc,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -113,18 +113,16 @@ class Data {
         rakePendingRate: json["rake_pending_rate"],
         usertype: json["usertype"],
         addressStatus: json["address_status"],
-        idStatus: json["id_status"],
-        faceStatus: json["face_status"],
         walletAddress: json["wallet_address"],
         timeLeft: json["time_left"],
         appVersion: json["app_version"],
         appUrl: json["app_url"],
         holemGameVersion: json["holem_game_version"],
         holdemGameUrl: json["holdem_game_url"],
-        selfAffiliateId: json["self_affiliate_id"],
         message: json["message"],
         type: json["type"],
         title: json["title"],
+        kyc: json["kyc"] == null ? null : Kyc.fromJson(json["kyc"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -146,17 +144,35 @@ class Data {
         "rake_pending_rate": rakePendingRate,
         "usertype": usertype,
         "address_status": addressStatus,
-        "id_status": idStatus,
-        "face_status": faceStatus,
         "wallet_address": walletAddress,
         "time_left": timeLeft,
         "app_version": appVersion,
         "app_url": appUrl,
         "holem_game_version": holemGameVersion,
         "holdem_game_url": holdemGameUrl,
-        "self_affiliate_id": selfAffiliateId,
         "message": message,
         "type": type,
         "title": title,
+        "kyc": kyc?.toJson(),
+      };
+}
+
+class Kyc {
+  final String? idStatus;
+  final String? faceStatus;
+
+  Kyc({
+    this.idStatus,
+    this.faceStatus,
+  });
+
+  factory Kyc.fromJson(Map<String, dynamic> json) => Kyc(
+        idStatus: json["id_status"],
+        faceStatus: json["face_status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id_status": idStatus,
+        "face_status": faceStatus,
       };
 }

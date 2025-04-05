@@ -156,8 +156,6 @@
 //   );
 // }
 
-
-
 //   // Widget _buildKYCVerificationTitle() {
 //   //   String assetPath = kycStatus == "VERIFIED"
 //   //       ? "assets/images/profilebutton/name_field.png"
@@ -234,8 +232,6 @@
 //   );
 // }
 
-
-
 //   Widget _buildKYCRow(String leftText) {
 //     return Row(
 //       children: [
@@ -304,7 +300,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
@@ -325,7 +320,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
   @override
   void initState() {
     super.initState();
-    kycStatus = widget.userData.faceStatus ?? "PENDING";
+    // kycStatus = widget.userData.faceStatus ?? "PENDING";
+    kycStatus = widget.userData.kyc?.faceStatus ?? "pending";
   }
 
   @override
@@ -405,7 +401,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: AssetImage("assets/images/profilebutton/mail_phone_field.png"),
+                image: AssetImage(
+                    "assets/images/profilebutton/mail_phone_field.png"),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -425,7 +422,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: AssetImage("assets/images/profilebutton/mail_phone_field.png"),
+                image: AssetImage(
+                    "assets/images/profilebutton/mail_phone_field.png"),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
