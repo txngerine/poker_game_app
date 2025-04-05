@@ -104,7 +104,7 @@ class _AffiliatePlayerProfileViewState
                           width: 10,
                         ),
                         BuildTextWidget(
-                          text: "808 643 3988",
+                          text: widget.playerResponse!.data!.phone ?? "PENDING",
                           color: Colors.white,
                         )
                       ],
@@ -123,7 +123,7 @@ class _AffiliatePlayerProfileViewState
                           width: 10,
                         ),
                         BuildTextWidget(
-                          text: "tryme4@gmail.com",
+                          text: widget.playerResponse!.data!.email ?? "PENDING",
                           color: Colors.white,
                         )
                       ],
