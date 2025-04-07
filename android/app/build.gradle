@@ -4,19 +4,11 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
-<<<<<<< HEAD
 
 // def keystorePropertiesFile = rootProject.file("key.properties")
 // def keystoreProperties = new Properties()
 
 // if (keystorePropertiesFile.exists()) {
-=======
-//key
-//def keystorePropertiesFile = rootProject.file("key.properties")
-//def keystoreProperties = new Properties()
-//
-//if (keystorePropertiesFile.exists()) {
->>>>>>> 9184ae89659a28c02974f489c98d88559cdbbcf1
 //    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 // }
 android {
@@ -43,7 +35,6 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
-<<<<<<< HEAD
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
@@ -51,15 +42,6 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
-=======
-     buildTypes {
-         release {
-             // TODO: Add your own signing config for the release build.
-             // Signing with the debug keys for now, so `flutter run --release` works.
-             signingConfig = signingConfigs.debug
-         }
-     }
->>>>>>> 9184ae89659a28c02974f489c98d88559cdbbcf1
 
 //    signingConfigs {
 //        release {
@@ -69,21 +51,12 @@ android {
 //            keyPassword keystoreProperties['keyPassword']
 //        }
 //    }
-<<<<<<< HEAD
 
 //     buildTypes {
 //         release {
 //             signingConfig signingConfigs.release
 //         }
 //     }
-=======
-//
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.release
-//        }
-//    }
->>>>>>> 9184ae89659a28c02974f489c98d88559cdbbcf1
 }
 
 flutter {

@@ -240,15 +240,14 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/affiliate_bonuse_button_widget.dart';
-import 'package:pokerpad/widget/affiliate_players_listview.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/affiliated_button_provider.dart';
+import 'affiliate_players_listview.dart';
+// import 'temp.dart';
 
 class AffiliatePlayersButtonWidget extends StatefulWidget {
   const AffiliatePlayersButtonWidget({super.key});
@@ -396,7 +395,7 @@ class _AffiliatePlayersButtonWidgetState
                               ),
                             ),
                           ),
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 60),
                           _buildSortButton("TRANSFER"),
                           _buildSortButton("BALANCE"),
                           _buildSortButton("WINNINGS"),
@@ -408,10 +407,10 @@ class _AffiliatePlayersButtonWidgetState
                   ),
                 ),
               ),
-              AffiliatePlayersListview(
+              AffiliatePlayersListviews(
                 searchQuery: searchQuery,
-                sortField: sortField,
-                isAscending: isAscending,
+                sortField: sortField ?? 'id',
+                isAscending: sortField == null ? true : isAscending,
               ),
             ],
           ),
@@ -454,10 +453,20 @@ class _AffiliatePlayersButtonWidgetState
       ),
     );
   }
-Widget _buildSortButton(String field) {
-  if (field == "TRANSFER") {
+
+  Widget _buildSortButton(String fieldLabel) {
+  final fieldMapping = {
+    "BALANCE": "balance",
+    "WINNINGS": "totalWon",
+    "RAKE": "totalRake",
+    "COMMISSION": "commission",
+  };
+
+  final actualField = fieldMapping[fieldLabel];
+
+  if (fieldLabel == "TRANSFER") {
     return BuildSubHeadingText(
-      text: field,
+      text: fieldLabel,
       color: Colors.white,
       fontSize: 10,
     );
@@ -466,46 +475,42 @@ Widget _buildSortButton(String field) {
   return GestureDetector(
     onTap: () {
       setState(() {
-        // If already selected, reset sortField to null to show text only
-        if (sortField == field) {
-          sortField = null;
+        if (sortField == actualField) {
+          isAscending = !isAscending;
         } else {
-          sortByField(field);
+          sortField = actualField;
+          isAscending = true;
         }
       });
     },
-    child: Row(
-      children: [
-        Container(
-          height: 40,
-          width: 80,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BuildSubHeadingText(
-                text: field,
-                color: Colors.white,
-                fontSize: 10,
-              ),
-              if (sortField == field) ...[
-                const SizedBox(height: 4),
-                if (isAscending) // Show the image only when sorting is active
-                  Container(
-                    width: 70,
-                    height: 10,
-                    child: Image.asset(
-                      "assets/images/selection_triangle.png",
-                      height: 10,
-                      width: 10,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-              ],
-            ],
+    child: Container(
+      height: 40,
+      width: 80,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BuildSubHeadingText(
+            text: fieldLabel,
+            color: Colors.white,
+            fontSize: 10,
           ),
-        ),
-      ],
+          if (sortField == actualField) ...[
+            const SizedBox(height: 4),
+            Container(
+              width: 70,
+              height: 10,
+              child: Image.asset(
+                "assets/images/selection_triangle.png",
+                height: 10,
+                width: 10,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
+        ],
+      ),
     ),
   );
 }
-    }
+
+}
