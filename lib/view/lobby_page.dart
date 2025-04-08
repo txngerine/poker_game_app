@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokerpad/controller/rat_hole_controller.dart';
 import 'package:pokerpad/model/login_response_model.dart';
+import 'package:pokerpad/model/rat_hole_request_model.dart';
+import 'package:pokerpad/model/rat_hole_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
@@ -44,11 +47,50 @@ class _LobbyPageState extends State<LobbyPage> {
     super.dispose();
   }
 
+  bool isLoading = false;
+  final RatHoleController ratHoleController = RatHoleController();
+  Future<bool> ratHole(String buyIn) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      RatHoleRequestModel request = RatHoleRequestModel(
+          roomId: '16',
+          playerId: widget.playerResponse!.data?.id,
+          buyIn: buyIn);
+      RatHoleResponseModel? response =
+          await ratHoleController.checkRatHole(request);
+      if (response?.status == "OK") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.greenAccent,
+            content: Text(response!.status ?? "okay")));
+
+        print("rathole successfully");
+        return true;
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              child:
+                  Image.asset("assets/images/rathole/no retholing popup.png"),
+            );
+          },
+        );
+        return false;
+      }
+    } catch (e) {
+      print("error$e");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
     final balance = loginProvider.playerBalance;
-    print(widget.playerResponse!.data?.nickname);
+    print(widget.playerResponse!.data?.id);
     print("playerBalance:${widget.playerResponse!.data?.balance}");
     print("walletAddress:${widget.playerResponse!.data?.walletAddress}");
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -79,8 +121,14 @@ class _LobbyPageState extends State<LobbyPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return ProfileButtonWidget(userData: widget.playerResponse?.data ??
-          Data(nickname: '', email: '', phone: '',),);
+                          return ProfileButtonWidget(
+                            userData: widget.playerResponse?.data ??
+                                Data(
+                                  nickname: '',
+                                  email: '',
+                                  phone: '',
+                                ),
+                          );
                         },
                       );
                     },
@@ -164,81 +212,16 @@ class _LobbyPageState extends State<LobbyPage> {
                       imgPath: "assets/images/new_lobby/Privte Passive.png"),
                 ],
               ),
-              // Stack(
-              //   children: [
-              //     Image.asset("assets/images/lobby/Table Header (1).png"),
-              //     Row(
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-              //       children: [
-              //         Image.asset(
-              //             alignment: Alignment.center,
-              //             // height: MediaQuery.sizeOf(context).height / 15,
-              //             width: MediaQuery.of(context).size.width / 4,
-              //             "assets/images/lobby/holdem button active.png"),
-              //         Image.asset(
-              //             width: MediaQuery.of(context).size.width / 5,
-              //             "assets/images/lobby/omaha butoon passive.png"),
-              //         const Spacer(),
-              //         Image.asset(
-              //             width: MediaQuery.of(context).size.width / 2.3,
-              //             "assets/images/lobby/auto top up button  active.png"),
-              //       ],
-              //     )
-              //   ],
-              // ),
               Column(
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //             builder: (context) => GameView(
-                  //               playerResponse: widget.playerResponse,
-                  //               buttonId: 100,
-                  //             ),
-                  //           ),
-                  //         ).then((_) {
-                  //           SystemChrome.setEnabledSystemUIMode(
-                  //               SystemUiMode.immersiveSticky);
-                  //         });
-                  //       },
-                  //       child: Image.asset(
-                  //         fit: BoxFit.fill,
-                  //         "assets/images/lobby/100 jeton.png",
-                  //         width: MediaQuery.sizeOf(context).width / 2,
-                  //         height: MediaQuery.sizeOf(context).height / 5,
-                  //       ),
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //             context,
-                  //             MaterialPageRoute(
-                  //               builder: (context) => GameView(
-                  //                 playerResponse: widget.playerResponse,
-                  //                 buttonId: 200,
-                  //               ),
-                  //             ));
-                  //       },
-                  //       child: Image.asset(
-                  //         "assets/images/lobby/200 jeton.png",
-                  //         fit: BoxFit.fill,
-                  //         width: MediaQuery.sizeOf(context).width / 2,
-                  //         height: MediaQuery.sizeOf(context).height / 5,
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
                         onTap: balance! >= 100
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("100");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -262,10 +245,11 @@ class _LobbyPageState extends State<LobbyPage> {
                           height: MediaQuery.sizeOf(context).height / 5,
                         ),
                       ),
-
                       GestureDetector(
                         onTap: balance! >= 200
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("200");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -289,38 +273,15 @@ class _LobbyPageState extends State<LobbyPage> {
                           height: MediaQuery.sizeOf(context).height / 5,
                         ),
                       ),
-
-                      // GestureDetector(
-                      //   onTap: balance! >= 200
-                      //       ? () {
-                      //           Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //               builder: (context) => GameView(
-                      //                 playerResponse: widget.playerResponse,
-                      //                 buttonId: 200,
-                      //               ),
-                      //             ),
-                      //           );
-                      //         }
-                      //       : null,
-                      //   child: Image.asset(
-                      //     balance >= 200
-                      //         ? "assets/images/lobby/200 jeton.png"
-                      //         : "assets/images/new_lobby/200 Jeton bw.png",
-                      //     fit: BoxFit.fill,
-                      //     width: MediaQuery.sizeOf(context).width / 2,
-                      //     height: MediaQuery.sizeOf(context).height / 5,
-                      //   ),
-                      // ),
                     ],
                   ),
-
                   Row(
                     children: [
                       GestureDetector(
                         onTap: balance! >= 500
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("500");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -346,7 +307,9 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                       GestureDetector(
                         onTap: balance! >= 1000
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("1000");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
