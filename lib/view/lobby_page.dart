@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokerpad/controller/rat_hole_controller.dart';
 import 'package:pokerpad/model/login_response_model.dart';
+import 'package:pokerpad/model/rat_hole_request_model.dart';
+import 'package:pokerpad/model/rat_hole_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
@@ -44,11 +47,50 @@ class _LobbyPageState extends State<LobbyPage> {
     super.dispose();
   }
 
+  bool isLoading = false;
+  final RatHoleController ratHoleController = RatHoleController();
+  Future<bool> ratHole(String buyIn) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      RatHoleRequestModel request = RatHoleRequestModel(
+          roomId: '16',
+          playerId: widget.playerResponse!.data?.id,
+          buyIn: buyIn);
+      RatHoleResponseModel? response =
+          await ratHoleController.checkRatHole(request);
+      if (response?.status == "OK") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.greenAccent,
+            content: Text(response!.status ?? "okay")));
+
+        print("rathole successfully");
+        return true;
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              child:
+                  Image.asset("assets/images/rathole/no retholing popup.png"),
+            );
+          },
+        );
+        return false;
+      }
+    } catch (e) {
+      print("error$e");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
     final balance = loginProvider.playerBalance;
-    print(widget.playerResponse!.data?.nickname);
+    print(widget.playerResponse!.data?.id);
     print("playerBalance:${widget.playerResponse!.data?.balance}");
     print("walletAddress:${widget.playerResponse!.data?.walletAddress}");
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -177,7 +219,9 @@ class _LobbyPageState extends State<LobbyPage> {
                     children: [
                       GestureDetector(
                         onTap: balance! >= 100
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("100");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -203,7 +247,9 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                       GestureDetector(
                         onTap: balance! >= 200
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("200");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -233,7 +279,9 @@ class _LobbyPageState extends State<LobbyPage> {
                     children: [
                       GestureDetector(
                         onTap: balance! >= 500
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("500");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -259,7 +307,9 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                       GestureDetector(
                         onTap: balance! >= 1000
-                            ? () {
+                            ? () async {
+                                bool success = await ratHole("1000");
+                                if (!mounted || !success) return;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
