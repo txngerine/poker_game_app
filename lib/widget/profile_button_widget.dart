@@ -876,8 +876,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
+
+import '../view/phone_number_page.dart';
 
 enum KycStatus { verified, pending, tryAgain, unknown }
 
@@ -1042,24 +1045,29 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                   widget.userData.phone ?? "",
                   style: const TextStyle(color: Colors.white70, fontSize: 12),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isEditing = !_isEditing;
-                    });
-                  },
-                  child: CircleAvatar(
-                    radius: 23,
-                    backgroundColor: Colors.transparent,
-                    child: Image.asset(
-                      _isEditing
-                          ? "assets/images/profilebutton/edit_button_active.png"
-                          : "assets/images/profilebutton/edit_button_passive.png",
-                      width: 50,
-                      height: 50,
-                    ),
-                  ),
-                ),
+               GestureDetector(
+  onTap: () {
+    setState(() {
+      _isEditing = !_isEditing;
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PhoneNumberPage(),
+    ));
+  },
+  child: CircleAvatar(
+    radius: 23,
+    backgroundColor: Colors.transparent,
+    child: Image.asset(
+      _isEditing
+          ? "assets/images/profilebutton/edit_button_active.png"
+          : "assets/images/profilebutton/edit_button_passive.png",
+      width: 50,
+      height: 50,
+    ),
+  ),
+),
+
               ],
             ),
           ),
