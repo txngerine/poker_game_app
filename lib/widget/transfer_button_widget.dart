@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:pokerpad/widget/custom_transfer_text_field.dart';
+import 'package:pokerpad/widget/transfer_history_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'build_button_image_widget.dart';
@@ -38,24 +39,24 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
             return StatefulBuilder(
               builder: (context, setState) {
                 return Padding(
-                  padding: const EdgeInsets.only(top: 110),
+                  padding: const EdgeInsets.only(top: 50),
                   child: Dialog(
                     alignment: Alignment.topCenter,
                     backgroundColor: Colors.transparent,
                     child: SizedBox(
                       width: MediaQuery.sizeOf(context).width / 1,
-                      height: MediaQuery.sizeOf(context).height / 3,
+                      height: MediaQuery.sizeOf(context).height / 2,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           Image.asset(
                             width: MediaQuery.sizeOf(context).width,
                             height: MediaQuery.sizeOf(context).height,
-                            'assets/images/CASHIER Button/TRANSFER/bank frame.png',
+                            'assets/images/transfer (2)/bank frame (3).png',
                             fit: BoxFit.cover,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 60, top: 13),
+                            padding: const EdgeInsets.only(top: 58, left: 10),
                             child: Column(
                               children: [
                                 Row(
@@ -73,7 +74,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                         const BuildTextWidget(
                                           text: "Forgot Password",
                                           color: Colors.white,
-                                          fontSize: 10,
+                                          fontSize: 13,
                                         ),
                                         Row(
                                           children: [
@@ -96,7 +97,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                             const BuildTextWidget(
                                               text: "Remember Password",
                                               color: Colors.white,
-                                              fontSize: 10,
+                                              fontSize: 13,
                                             ),
                                           ],
                                         ),
@@ -105,23 +106,34 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              2.9,
+                                              2.4,
                                         )
                                       ],
                                     ),
                                     Image.asset(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                3.1,
-                                        "assets/images/CASHIER Button/TRANSFER/avatar frame (1).png"),
+                                                2.4,
+                                        "assets/images/transfer (2)/avatar frame (4).png"),
                                   ],
                                 ),
                                 Row(
                                   children: [
-                                    Image.asset(
-                                      "assets/images/CASHIER Button/TRANSFER/history button.png",
-                                      width: MediaQuery.of(context).size.width /
-                                          2.9,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return const TransferHistoryWidget();
+                                          },
+                                        );
+                                      },
+                                      child: Image.asset(
+                                        "assets/images/CASHIER Button/TRANSFER/history button.png",
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.4,
+                                      ),
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -132,7 +144,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                         "assets/images/CASHIER Button/TRANSFER/transfer button.png",
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                2.9,
+                                                2.4,
                                       ),
                                     )
                                   ],

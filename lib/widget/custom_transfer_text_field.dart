@@ -16,7 +16,7 @@ class CustomTransferTextField extends StatelessWidget {
         // Background Image
         Image.asset(
           "assets/images/cashier/withdraw/withdraw amount-password.png",
-          width: MediaQuery.sizeOf(context).width / 2.9,
+          width: MediaQuery.sizeOf(context).width / 2.4,
           fit: BoxFit.cover,
         ),
 

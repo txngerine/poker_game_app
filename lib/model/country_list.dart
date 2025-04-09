@@ -998,7 +998,7 @@ List<Country> countries = [
       dialCode: "+44"),
   Country(
       flag: "assets/images/Country Flags/United_States_of_America_1.png",
-      name: "United States America",
+      name: "United States of America",
       dialCode: "+1"),
   Country(
       flag: "assets/images/Country Flags/Uruguay_598.png",
