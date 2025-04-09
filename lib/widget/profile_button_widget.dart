@@ -876,11 +876,12 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/phone_number.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
+import 'package:provider/provider.dart';
 
-import '../view/phone_number_page.dart';
+import '../provider/country_provider.dart';
+import 'phonenumber_popup.dart';
 
 enum KycStatus { verified, pending, tryAgain, unknown }
 
@@ -1045,16 +1046,34 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                   widget.userData.phone ?? "",
                   style: const TextStyle(color: Colors.white70, fontSize: 12),
                 ),
-               GestureDetector(
+            GestureDetector(
   onTap: () {
-    setState(() {
-      _isEditing = !_isEditing;
-    });
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PhoneNumberPage(),
-    ));
-  },
+  showPhoneNumberPopup(
+    context,
+    
+    phoneNumber: widget.userData.phone ?? '',
+    // onPhoneNumberUpdated: (updatedPhone) {
+    //   setState(() {
+    //     widget.userData.phone = updatedPhone;
+    //     _isEditing = false;
+    //   });
+    // },
+
+    onPhoneNumberUpdated: (updatedPhone) async {
+  final provider = Provider.of<CountryProvider>(context, listen: false);
+  await provider.updatePhoneNumbe(context, updatedPhone);
+  setState(() {
+    widget.userData.phone = updatedPhone;
+    _isEditing = false;
+  });
+},
+
+  );
+  setState(() {
+    _isEditing = !_isEditing;
+  });
+},
+
   child: CircleAvatar(
     radius: 23,
     backgroundColor: Colors.transparent,

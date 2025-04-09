@@ -121,4 +121,50 @@ class CountryProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> updatePhoneNumbe(BuildContext context, String newPhoneNumber) async {
+  final id = SignupController.userId;
+  final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$id";
+
+  print("🔄 Updating phone number at: $url");
+
+  _isLoading = true;
+  notifyListeners();
+
+  try {
+    if (_deviceId == "Fetching...") {
+      await _getStoredDeviceId();
+    }
+
+    final response = await Dio().put(
+      url,
+      data: {
+        "phone": newPhoneNumber,
+        "ph_country_code": _countryCode,
+        "country": _countryName,
+        "deviceId": _deviceId,
+      },
+      options: Options(headers: {
+        "Content-Type": "application/json",
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("✅ Phone number updated successfully: ${response.data}");
+      _phoneNumber = newPhoneNumber;
+      _apiResponse = "Phone updated: ${response.data}";
+      notifyListeners();
+    } else {
+      print("⚠️ Failed to update phone: ${response.statusCode} - ${response.data}");
+      _apiResponse = "Error: ${response.data}";
+    }
+  } catch (e) {
+    print("❌ Exception while updating phone: $e");
+    _apiResponse = "Exception: $e";
+  } finally {
+    _isLoading = false;
+    notifyListeners();
+  }
+}
+
 }
