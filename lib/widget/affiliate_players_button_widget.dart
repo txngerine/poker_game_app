@@ -428,11 +428,11 @@ class _AffiliatePlayersButtonWidgetState
     return ClipRRect(
       child: Container(
         width: width / 2.1,
-        height: 50,
+        height: 70,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(assetPath),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: Row(
