@@ -44,7 +44,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Stack(
@@ -123,7 +123,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                         width: width / 9,
                                                         height: height / 17,
                                                         "assets/images/affiliate screen/winning player (1).png"),
-                                                    Column(
+                                                    const Column(
                                                       children: [
                                                         BuildSubHeadingText(
                                                           text: "id#:123",
@@ -141,17 +141,17 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                     ),
                                                   ],
                                                 ),
-                                                BuildSubHeadingText(
+                                                const BuildSubHeadingText(
                                                   text: "15:38(pt)",
                                                   color: Colors.white,
                                                   fontSize: 10,
                                                 ),
-                                                BuildSubHeadingText(
+                                                const BuildSubHeadingText(
                                                   text: "2/13/2025",
                                                   color: Colors.white,
                                                   fontSize: 10,
                                                 ),
-                                                BuildSubHeadingText(
+                                                const BuildSubHeadingText(
                                                   text: "\$43,638",
                                                   color: Colors.green,
                                                   fontSize: 10,
@@ -174,9 +174,14 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                         Image.asset(
                             width: width / 2.4,
                             "assets/images/transfer (2)/transferhistory/history active (1).png"),
-                        Image.asset(
-                          "assets/images/transfer (2)/transferhistory/transfer passive (1).png",
-                          width: width / 2.4,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Image.asset(
+                            "assets/images/transfer (2)/transferhistory/transfer passive (1).png",
+                            width: width / 2.4,
+                          ),
                         )
                       ],
                     )
