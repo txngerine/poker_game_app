@@ -121,10 +121,12 @@ class CountryProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  Future<void> updatePhoneNumbe(BuildContext context, String newPhoneNumber) async {
-  final id = SignupController.userId;
-  final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$id";
+Future<void> updatePhoneNumbe(
+  BuildContext context,
+  int userId,
+  String newPhoneNumber,
+) async {
+  final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$userId";
 
   print("🔄 Updating phone number at: $url");
 
@@ -166,5 +168,6 @@ class CountryProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+
 
 }
