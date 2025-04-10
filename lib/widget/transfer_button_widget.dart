@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:pokerpad/widget/custom_transfer_text_field.dart';
+import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
 import 'package:pokerpad/widget/transfer_history_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -71,10 +72,20 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                           hintText: "Password",
                                           keyboardType: TextInputType.text,
                                         ),
-                                        const BuildTextWidget(
-                                          text: "Forgot Password",
-                                          color: Colors.white,
-                                          fontSize: 13,
+                                        GestureDetector(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return const TransferForgotPasswordWidget();
+                                              },
+                                            );
+                                          },
+                                          child: const BuildTextWidget(
+                                            text: "Forgot Password",
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                          ),
                                         ),
                                         Row(
                                           children: [
