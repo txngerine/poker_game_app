@@ -89,7 +89,7 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
             width: ScreenSize.screenWidth,
             height: ScreenSize.screenHeight,
             child: Image.asset(
-              "assets/images/background.jpg",
+              "assets/images/lobby/lobby pattern.png",
               fit: BoxFit.cover,
             ),
           ),

@@ -125,7 +125,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.jpg"),
+                image: AssetImage("assets/images/lobby/lobby pattern.png"),
                 fit: BoxFit.cover,
               ),
             ),
