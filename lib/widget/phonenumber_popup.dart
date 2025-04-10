@@ -52,112 +52,116 @@ class PhoneNumberPopupContent extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final countryProvider = Provider.of<CountryProvider>(context);
 
-    return Stack(
+    return Column(
       children: [
-        Container(
-          width: width,
-          height: height / 1.4,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/phonenumbpopupassets/phone_number_bg.png"),
-              fit: BoxFit.cover,
+        Stack(
+          children: [
+            Container(
+              width: width,
+              height: height / 1.6,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/phonenumbpopupassets/phone_number_bg.png"),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 30),
+                  BuildTextWidget(
+                    text: "Phone Number",
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 50),
+                  Image.asset("assets/images/phonenumbpopupassets/phone_icon.png"),
+                  const SizedBox(height: 100),
+                  Container(
+                    width: width / 1.5,
+                    height: 50,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            countryProvider.resetFilteredCountries();
+                            Future.delayed(const Duration(milliseconds: 300), () {
+                              showCountryPickerPopup(context);
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            height: 55,
+                            width: 110,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/phonenumbpopupassets/country_selection.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset(
+                                  countryProvider.countryFlag,
+                                  width: 33,
+                                  height: 33,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  countryProvider.countryCode,
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                image: AssetImage("assets/images/phonenumbpopupassets/number_field.png"),
+                                fit: BoxFit.fill,
+                              ),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: TextFormField(
+                              controller: phoneController,
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.phone,
+                              style: const TextStyle(fontSize: 12, color: Colors.white),
+                              decoration: const InputDecoration(
+                                hintText: "Phone Number",
+                                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: height / 8),
+                  GestureDetector(
+                   onTap: () async {
+          await countryProvider.updatePhoneNumbe(context, userId, phoneController.text);
+          onPhoneNumberSaved(phoneController.text);
+          Navigator.pop(context);
+        },
+                    child: Image.asset(
+                      width: width / 1.5,
+                      "assets/images/phonenumbpopupassets/confirm_button_black.png",
+                    ),
+                  )
+                ],
+              ),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 30),
-              BuildTextWidget(
-                text: "Phone Number",
-                fontSize: 28,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
-              ),
-              const SizedBox(height: 50),
-              Image.asset("assets/images/phonenumbpopupassets/phone_icon.png"),
-              const SizedBox(height: 100),
-              Container(
-                width: width / 1.5,
-                height: 50,
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        countryProvider.resetFilteredCountries();
-                        Future.delayed(const Duration(milliseconds: 300), () {
-                          showCountryPickerPopup(context);
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        height: 55,
-                        width: 110,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/phonenumbpopupassets/country_selection.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              countryProvider.countryFlag,
-                              width: 33,
-                              height: 33,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              countryProvider.countryCode,
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage("assets/images/phonenumbpopupassets/number_field.png"),
-                            fit: BoxFit.fill,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: TextFormField(
-                          controller: phoneController,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.phone,
-                          style: const TextStyle(fontSize: 12, color: Colors.white),
-                          decoration: const InputDecoration(
-                            hintText: "Phone Number",
-                            hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: height / 8),
-              GestureDetector(
-               onTap: () async {
-  await countryProvider.updatePhoneNumbe(context, userId, phoneController.text);
-  onPhoneNumberSaved(phoneController.text);
-  Navigator.pop(context);
-},
-                child: Image.asset(
-                  width: width / 1.5,
-                  "assets/images/phonenumbpopupassets/confirm_button_black.png",
-                ),
-              )
-            ],
-          ),
+          ],
         ),
       ],
     );
@@ -245,7 +249,7 @@ class CountryPickerPopupContent extends StatelessWidget {
           // List of Countries
           Container(
             width: width / 1.4,
-            height: height / 1.3,
+            height: height / 1.33,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/phonenumbpopupassets/2nd_lavel.png"),
