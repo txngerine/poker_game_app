@@ -120,6 +120,7 @@ class _LobbyPageState extends State<LobbyPage> {
                     onTap: () {
                       showDialog(
                         context: context,
+                        barrierColor: Colors.grey.withOpacity(0.5),
                         builder: (context) {
                           return ProfileButtonWidget(
                             userData: widget.playerResponse?.data ??
