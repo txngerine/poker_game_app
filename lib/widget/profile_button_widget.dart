@@ -378,9 +378,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
+import '../popups/faceidentity_dark.dart';
+import '../popups/kyc_identity_camera_page_dark.dart';
 import '../provider/country_provider.dart';
 import 'phonenumber_popup.dart';
 
@@ -688,52 +691,189 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
   }
 }
 
-// POPUP: Face Check
+//popup face
 void showFaceCheckPopup(BuildContext context) {
   showDialog(
     context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Text('Face Check'),
-      content: const Text('Upload your face photo for KYC verification.'),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Close'),
+    barrierDismissible: false,
+    builder: (context) => Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF4A4A4A),
+              Color(0xFF1C1C1C),
+            ],
+          ),
         ),
-        ElevatedButton(
-          onPressed: () {
-            // Implement face check logic
-            Navigator.pop(context);
-          },
-          child: const Text('Submit'),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Face Check',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Instructions:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              '• Face clearly visible\n'
+              '• Bright environment\n'
+              '• No accessories\n'
+              '• Upright posture',
+              style: TextStyle(
+                fontSize: 14,
+                height: 1.5,
+                color: Color(0xFFE0E0E0),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Face must match Proof of Identity',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 24),
+           InkWell(
+             onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const FaceIdentityPage(),
+                                type: PageTransitionType.rightToLeftWithFade));
+                      },
+              child: Container(width: 300,height: 60,
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
+                child: Center(
+                  child: const Text(
+                    'LET’S TAKE A PHOTO',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     ),
   );
 }
 
-// POPUP: Proof of Identity
+
 void showProofOfIdentityPopup(BuildContext context) {
   showDialog(
     context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Text('Proof of Identity'),
-      content: const Text('Upload ID (passport, driver’s license, etc.) for KYC.'),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Close'),
+    barrierDismissible: false,
+    builder: (context) => Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF4A4A4A),
+              Color(0xFF1C1C1C),
+            ],
+          ),
         ),
-        ElevatedButton(
-          onPressed: () {
-            // Implement proof of identity logic
-            Navigator.pop(context);
-          },
-          child: const Text('Submit'),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Proof of Identity',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Examples:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              '• Government-Issued ID\n'
+              '• Passport\n'
+              '• National ID Card\n'
+              '• Driver’s License',
+              style: TextStyle(
+                fontSize: 14,
+                height: 1.5,
+                color: Color(0xFFE0E0E0),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'ID picture and information\nmust be clearly visible',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 24),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KycVerifyCameraPageDark(),
+                  ),
+                );
+              },
+              child: Container(width: 300,height: 60,
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
+                child: Center(
+                  child: const Text(
+                    'LET’S TAKE A PHOTO',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     ),
   );
 }
