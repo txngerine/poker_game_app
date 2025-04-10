@@ -425,40 +425,45 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      backgroundColor: const Color(0xFF3C3D37),
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        width: width * 0.9,
-        decoration: BoxDecoration(
-          color: const Color(0xFF2F2F2F),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildNameIDSection(),
-            const SizedBox(height: 10),
-            _buildEmailPhoneSection(),
-            const SizedBox(height: 20),
-            _buildKYCVerificationTitle(),
-            const SizedBox(height: 10),
-            Column(
+    return Column(
+      children: [
+        SizedBox(height: 105),
+        Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          backgroundColor: const Color(0xFF3C3D37),
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            width: width * 0.9,
+            decoration: BoxDecoration(
+              color: const Color(0xFF2F2F2F),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                _buildKYCRow("FACE CHECK", faceStatus, () {
-                  showFaceCheckPopup(context);
-                }),
+                _buildNameIDSection(),
                 const SizedBox(height: 10),
-                _buildKYCRow("PROOF OF IDENTITY", idStatus, () {
-                  showProofOfIdentityPopup(context);
-                }),
+                _buildEmailPhoneSection(),
+                const SizedBox(height: 20),
+                _buildKYCVerificationTitle(),
+                const SizedBox(height: 10),
+                Column(
+                  children: [
+                    _buildKYCRow("FACE CHECK", faceStatus, () {
+                      showFaceCheckPopup(context);
+                    }),
+                    const SizedBox(height: 10),
+                    _buildKYCRow("PROOF OF IDENTITY", idStatus, () {
+                      showProofOfIdentityPopup(context);
+                    }),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
