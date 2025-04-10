@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/widget/transfer_text_field_widget.dart';
 
 import '../controller/resetpassword_controller.dart';
+import '../model/login_response_model.dart';
 import '../model/resetpassword_request_model.dart';
-import '../view/login_page.dart';
 import 'build_text_widget.dart';
 
 class TransferForgotPasswordWidget extends StatefulWidget {
-  const TransferForgotPasswordWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const TransferForgotPasswordWidget({super.key, this.playerResponse});
 
   @override
   State<TransferForgotPasswordWidget> createState() =>
@@ -54,13 +55,22 @@ class _TransferForgotPasswordWidgetState
     }
 
     final requestModel = ResetPasswordRequestModel(
-      email: "",
+      // email: "gamer100@gmail.com",
+      // newPassword: "Gamer@12a",
+      // confirmPassword: "Gamer@12a",
+      // otp: "123456"
+      email: widget.playerResponse?.data!.email ?? "",
       otp: otpCode,
       newPassword: newPasswordController.text,
       confirmPassword: confirmPasswordController.text,
     );
 
     try {
+      print("Sending reset password request...");
+      print("Email: ${requestModel.email}");
+      print("OTP: ${requestModel.otp}");
+      print("New Password: ${requestModel.newPassword}");
+      print("Confirm Password: ${requestModel.confirmPassword}");
       final response =
           await _resetPasswordController.resetPassword(requestModel);
 
@@ -68,7 +78,8 @@ class _TransferForgotPasswordWidgetState
         isLoading = false;
       });
 
-      if (response?.status?.trim().toUpperCase() == "OK") {
+      if (response?.status == "OK") {
+        print("Password updated successfully");
         String successMessage =
             response?.data?['message'] ?? "Password updated successfully";
 
@@ -85,14 +96,16 @@ class _TransferForgotPasswordWidgetState
           ),
         );
 
-        Navigator.push(
-          context,
-          PageTransition(
-            child: const LoginPage(),
-            type: PageTransitionType.rightToLeftWithFade,
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   PageTransition(
+        //     child: const LoginPage(),
+        //     type: PageTransitionType.rightToLeftWithFade,
+        //   ),
+        // );
       } else {
+        print("error message: ");
+        print(response?.message);
         setState(() {
           errorMessage = response?.message ?? "Invalid verification code";
         });
@@ -379,7 +392,6 @@ class _TransferForgotPasswordWidgetState
                             )
                           : const SizedBox(),
                     ),
-
                     GestureDetector(
                       onTap: () {
                         resetPassword();
@@ -389,40 +401,6 @@ class _TransferForgotPasswordWidgetState
                         width: width / 1.6,
                       ),
                     ),
-
-                    // Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     GestureDetector(
-                    //       onTap: () {
-                    //         Navigator.push(
-                    //           context,
-                    //           PageTransition(
-                    //             child: const LoginPage(),
-                    //             type: PageTransitionType.leftToRightWithFade,
-                    //           ),
-                    //         );
-                    //       },
-                    //       child: Image.asset(
-                    //         "assets/images/verifyemail/back button.png",
-                    //         width: width / 2.8,
-                    //       ),
-                    //     ),
-                    //     isLoading
-                    //         ? SizedBox(
-                    //             width: width / 2.8,
-                    //             child: const Center(
-                    //                 child: CircularProgressIndicator()))
-                    //         : GestureDetector(
-                    //             onTap: resetPassword,
-                    //             child: Image.asset(
-                    //               "assets/images/verifyemail/confirm button (1).png",
-                    //               width: width / 2.8,
-                    //             ),
-                    //           ),
-                    //   ],
-                    // )
                   ],
                 ),
               )

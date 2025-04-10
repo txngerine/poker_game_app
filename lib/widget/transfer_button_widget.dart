@@ -6,10 +6,13 @@ import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
 import 'package:pokerpad/widget/transfer_history_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../model/login_response_model.dart';
 import 'build_button_image_widget.dart';
 
 class TransferButtonWidget extends StatefulWidget {
-  const TransferButtonWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const TransferButtonWidget({super.key, this.playerResponse});
 
   @override
   State<TransferButtonWidget> createState() => _TransferButtonWidgetState();
@@ -77,7 +80,10 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                             showDialog(
                                               context: context,
                                               builder: (context) {
-                                                return const TransferForgotPasswordWidget();
+                                                return TransferForgotPasswordWidget(
+                                                  playerResponse:
+                                                      widget.playerResponse,
+                                                );
                                               },
                                             );
                                           },
