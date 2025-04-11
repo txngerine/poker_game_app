@@ -116,15 +116,16 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(1.0),
                                             child: CircleAvatar(
-                                              radius: 23.5,
-                                              backgroundColor: Colors.grey[300],
-                                              backgroundImage: AssetImage(player
-                                                      .photo ??
-                                                  "assets/images/lobby/top winners/villain avatar holder.png"),
-                                              onBackgroundImageError: (_, __) {
-                                                // Handle image error if needed
-                                              },
-                                            ),
+  radius: 23.5,
+  backgroundColor: Colors.grey[300],
+  backgroundImage: player.photo != null && player.photo!.isNotEmpty
+      ? NetworkImage(player.photo!)
+      : const AssetImage("assets/images/lobby/top winners/villain avatar holder.png") as ImageProvider,
+  onBackgroundImageError: (_, __) {
+    // Handle image error if needed
+  },
+),
+
                                           ),
                                         ),
                                         const SizedBox(width: 8),

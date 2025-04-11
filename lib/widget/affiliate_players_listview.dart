@@ -638,6 +638,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../model/affiliate_player_model_resp.dart';
 import 'build_sub_heading_text.dart';
@@ -698,14 +699,12 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
 
         List<Datum> players = snapshot.data ?? [];
 
-        // Filter by search query
         List<Datum> filteredPlayers = players
             .where((p) => (p.playerNickname ?? "")
                 .toLowerCase()
                 .contains(widget.searchQuery.toLowerCase()))
             .toList();
 
-        // Sort logic
         if (widget.sortField != null) {
           filteredPlayers.sort((a, b) {
             final aVal = _getSortValue(a, widget.sortField!);
@@ -718,7 +717,6 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
             return 0;
           });
         } else {
-          // Default sort by playerId ascending
           filteredPlayers.sort((a, b) {
             final aId = a.playerId ?? 0;
             final bId = b.playerId ?? 0;
@@ -742,7 +740,7 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
             ),
-            height: height / 1.560,
+            height: height / 1.678,
             width: width,
             child: ListView.builder(
               itemCount: filteredPlayers.length,
@@ -809,12 +807,12 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                               ),
                               _buildPlayerStat(
                                   player.balance ?? "-", Colors.white70, 9),
-                              _buildPlayerStat("\$${player.totalWon ?? '0'}",
-                                  Colors.green, 9),
-                              _buildPlayerStat("\$${player.totalRake ?? '0'}",
-                                  Colors.white70, 9),
-                              _buildPlayerStat("\$${player.commission ?? '0'}",
-                                  Colors.white70, 9),
+                              _buildPlayerStat(
+                                  "\$${player.totalWon ?? '0'}", Colors.green, 9),
+                              _buildPlayerStat(
+                                  "\$${player.totalRake ?? '0'}", Colors.white70, 9),
+                              _buildPlayerStat(
+                                  "\$${player.commission ?? '0'}", Colors.white70, 9),
                               const SizedBox(width: 15),
                             ],
                           ),
