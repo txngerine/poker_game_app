@@ -70,7 +70,7 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                                 showDialog(
                       context: context,
                       builder: (context) {
-                       return ChartLineWidget(
+                      return ChartLineWidget(
                         );
                       },
                     );
