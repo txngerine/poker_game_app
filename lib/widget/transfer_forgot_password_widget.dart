@@ -5,6 +5,7 @@ import 'package:pokerpad/widget/transfer_text_field_widget.dart';
 import '../controller/resetpassword_controller.dart';
 import '../model/login_response_model.dart';
 import '../model/resetpassword_request_model.dart';
+import 'build_sub_heading_text.dart';
 import 'build_text_widget.dart';
 
 class TransferForgotPasswordWidget extends StatefulWidget {
@@ -82,6 +83,60 @@ class _TransferForgotPasswordWidgetState
         print("Password updated successfully");
         String successMessage =
             response?.data?['message'] ?? "Password updated successfully";
+
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext imageDialogContext) {
+            return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.of(imageDialogContext).pop(); // Close image dialog
+                Navigator.of(context)
+                    .pop(); // Close TransferForgotPasswordWidget
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 150),
+                child: Dialog(
+                  alignment: Alignment.topCenter,
+                  backgroundColor: Colors.transparent,
+                  insetPadding: EdgeInsets.zero,
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        width: MediaQuery.of(context).size.width / 1.7,
+                        "assets/images/transfer (2)/successful popup.png",
+                        fit: BoxFit.contain,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 70, left: 70),
+                        child: Column(
+                          children: [
+                            BuildSubHeadingText(
+                              text: "password successfully",
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              "Your new password is \nnow effective",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -392,15 +447,19 @@ class _TransferForgotPasswordWidgetState
                             )
                           : const SizedBox(),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        resetPassword();
-                      },
-                      child: Image.asset(
-                        "assets/images/passwordchangeFromTransferpage/proceed (1).png",
-                        width: width / 1.6,
-                      ),
-                    ),
+                    isLoading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              resetPassword();
+                            },
+                            child: Image.asset(
+                              "assets/images/passwordchangeFromTransferpage/proceed (1).png",
+                              width: width / 1.6,
+                            ),
+                          ),
                   ],
                 ),
               )

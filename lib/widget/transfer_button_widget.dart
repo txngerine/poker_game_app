@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/controller/forgot_password_controller.dart';
+import 'package:pokerpad/model/forgot_password_model.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:pokerpad/widget/custom_transfer_text_field.dart';
@@ -20,6 +22,46 @@ class TransferButtonWidget extends StatefulWidget {
 
 class _TransferButtonWidgetState extends State<TransferButtonWidget> {
   bool isMarked = false;
+  bool isLoading = false;
+  ForgotPasswordController forgotPasswordController =
+      ForgotPasswordController();
+
+  Future<void> forgotPassword() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final request = ForgotPasswordRequestModel(
+      email: widget.playerResponse?.data?.email ?? "",
+    );
+
+    try {
+      final response = await ForgotPasswordController().forgotPassword(request);
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        print("okkkkkkkkkkkkkkkkk");
+        showDialog(
+          context: context,
+          builder: (context) {
+            return TransferForgotPasswordWidget(
+              playerResponse: widget.playerResponse,
+            );
+          },
+        );
+      }
+    } catch (e, stackTrace) {
+      setState(() {
+        isLoading = false;
+      });
+      debugPrint('Forgot password error: $e');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
   void toggleMarker() {
     setState(() {
       isMarked = !isMarked;
@@ -75,24 +117,27 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                           hintText: "Password",
                                           keyboardType: TextInputType.text,
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return TransferForgotPasswordWidget(
-                                                  playerResponse:
-                                                      widget.playerResponse,
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: const BuildTextWidget(
-                                            text: "Forgot Password",
-                                            color: Colors.white,
-                                            fontSize: 13,
-                                          ),
-                                        ),
+                                        isLoading
+                                            ? CircularProgressIndicator()
+                                            : GestureDetector(
+                                                onTap: () {
+                                                  forgotPassword();
+                                                  // showDialog(
+                                                  //   context: context,
+                                                  //   builder: (context) {
+                                                  //     return TransferForgotPasswordWidget(
+                                                  //       playerResponse:
+                                                  //           widget.playerResponse,
+                                                  //     );
+                                                  //   },
+                                                  // );
+                                                },
+                                                child: const BuildTextWidget(
+                                                  text: "Forgot Password",
+                                                  color: Colors.white,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
                                         Row(
                                           children: [
                                             GestureDetector(
