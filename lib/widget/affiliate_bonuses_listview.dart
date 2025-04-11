@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'bonuses_2k_button_widget.dart';
+import 'chart_line_widget.dart';
 
 class AffiliateBonusesListview extends StatefulWidget {
   final String searchQuery;
@@ -63,9 +64,21 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 15, left: 3),
-                            child: Image.asset(
-                              "assets/images/Affiliate/bonus/winning player frame.png",
-                              width: width / 5.5,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle tap event
+                                showDialog(
+                      context: context,
+                      builder: (context) {
+                       return ChartLineWidget(
+                        );
+                      },
+                    );
+                              },
+                              child: Image.asset(
+                                "assets/images/Affiliate/bonus/winning player frame.png",
+                                width: width / 5.5,
+                              ),
                             ),
                           ),
                           Column(
