@@ -695,7 +695,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
 void showFaceCheckPopup(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: true,
     builder: (context) => Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -784,11 +784,10 @@ void showFaceCheckPopup(BuildContext context) {
   );
 }
 
-
 void showProofOfIdentityPopup(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: true, // Allows tap outside to dismiss
     builder: (context) => Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -806,7 +805,8 @@ void showProofOfIdentityPopup(BuildContext context) {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(
-          mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
@@ -857,10 +857,20 @@ void showProofOfIdentityPopup(BuildContext context) {
                   ),
                 );
               },
-              child: Container(width: 300,height: 60,
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
-                child: Center(
-                  child: const Text(
+              child: Container(
+                width: 300,
+                height: 60,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      "assets/images/phonenumbpopupassets/confirmco.png",
+                    ),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Center(
+                  child: Text(
                     'LET’S TAKE A PHOTO',
                     style: TextStyle(
                       fontSize: 14,

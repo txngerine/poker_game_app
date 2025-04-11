@@ -96,7 +96,7 @@ class _ChartLineWidgetState extends State<ChartLineWidget> {
         ),
         Positioned(
           top: 15,
-          left: 251,
+          left: 257.9,
           child: Container(decoration: BoxDecoration(
   gradient: const LinearGradient(
             colors: [
