@@ -775,10 +775,38 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(1.0),
-                                    child: Image.asset(
-                                      "assets/images/affiliate screen/losing player (1).png",
-                                      width: width / 10,
-                                    ),
+                                    child: SizedBox(
+  width: width / 10,
+  height: width / 10,
+  child: Stack(
+    alignment: Alignment.center,
+    children: [
+      Image.asset(
+        "assets/images/affiliate screen/losing player (1).png",
+        width: width / 10,
+        height: width / 10,
+        fit: BoxFit.cover,
+      ),
+      ClipOval(
+        child: (player.avatar != null && player.avatar!.isNotEmpty)
+            ? Image.network(
+                player.avatar!,
+                width: width / 13,
+                height: width / 13,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => const Icon(
+                  Icons.error,
+                  color: Colors.red,
+                  size: 16,
+                ),
+              )
+            : const SizedBox.shrink(),
+      ),
+    ],
+  ),
+),
+
+
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 13),
