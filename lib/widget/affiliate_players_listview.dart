@@ -114,8 +114,6 @@
 //   }
 // }
 
-
-
 // import 'package:flutter/material.dart';
 // import 'build_sub_heading_text.dart';
 
@@ -261,7 +259,6 @@
 //     );
 //   }
 // }
-
 
 // // ignore_for_file: unused_import
 
@@ -436,9 +433,6 @@
 //     );
 //   }
 // }
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
@@ -642,10 +636,8 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import '../model/affiliate_player_model_resp.dart';
 import 'build_sub_heading_text.dart';
@@ -678,7 +670,8 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
 
   Future<List<Datum>> fetchAffiliatePlayers() async {
     final response = await http.get(
-      Uri.parse('http://3.6.170.253:1080/server.php/api/v1/affiliate-players/1'),
+      Uri.parse(
+          'http://3.6.170.253:1080/server.php/api/v1/affiliate-players/1'),
     );
 
     if (response.statusCode == 200) {
@@ -727,11 +720,10 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
         } else {
           // Default sort by playerId ascending
           filteredPlayers.sort((a, b) {
-  final aId = a.playerId ?? 0;
-  final bId = b.playerId ?? 0;
-  return aId.compareTo(bId);
-});
-
+            final aId = a.playerId ?? 0;
+            final bId = b.playerId ?? 0;
+            return aId.compareTo(bId);
+          });
         }
 
         if (filteredPlayers.isEmpty) {
@@ -815,10 +807,14 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                                   width: 40,
                                 ),
                               ),
-                              _buildPlayerStat(player.balance ?? "-", Colors.white70, 9),
-                              _buildPlayerStat("\$${player.totalWon ?? '0'}", Colors.green, 9),
-                              _buildPlayerStat("\$${player.totalRake ?? '0'}", Colors.white70, 9),
-                              _buildPlayerStat("\$${player.commission ?? '0'}", Colors.white70, 9),
+                              _buildPlayerStat(
+                                  player.balance ?? "-", Colors.white70, 9),
+                              _buildPlayerStat("\$${player.totalWon ?? '0'}",
+                                  Colors.green, 9),
+                              _buildPlayerStat("\$${player.totalRake ?? '0'}",
+                                  Colors.white70, 9),
+                              _buildPlayerStat("\$${player.commission ?? '0'}",
+                                  Colors.white70, 9),
                               const SizedBox(width: 15),
                             ],
                           ),

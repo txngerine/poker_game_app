@@ -455,62 +455,61 @@ class _AffiliatePlayersButtonWidgetState
   }
 
   Widget _buildSortButton(String fieldLabel) {
-  final fieldMapping = {
-    "BALANCE": "balance",
-    "WINNINGS": "totalWon",
-    "RAKE": "totalRake",
-    "COMMISSION": "commission",
-  };
+    final fieldMapping = {
+      "BALANCE": "balance",
+      "WINNINGS": "totalWon",
+      "RAKE": "totalRake",
+      "COMMISSION": "commission",
+    };
 
-  final actualField = fieldMapping[fieldLabel];
+    final actualField = fieldMapping[fieldLabel];
 
-  if (fieldLabel == "TRANSFER") {
-    return BuildSubHeadingText(
-      text: fieldLabel,
-      color: Colors.white,
-      fontSize: 10,
+    if (fieldLabel == "TRANSFER") {
+      return BuildSubHeadingText(
+        text: fieldLabel,
+        color: Colors.white,
+        fontSize: 10,
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (sortField == actualField) {
+            isAscending = !isAscending;
+          } else {
+            sortField = actualField;
+            isAscending = true;
+          }
+        });
+      },
+      child: Container(
+        height: 40,
+        width: 80,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BuildSubHeadingText(
+              text: fieldLabel,
+              color: Colors.white,
+              fontSize: 10,
+            ),
+            if (sortField == actualField) ...[
+              const SizedBox(height: 4),
+              Container(
+                width: 70,
+                height: 10,
+                child: Image.asset(
+                  "assets/images/selection_triangle.png",
+                  height: 10,
+                  width: 10,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
-
-  return GestureDetector(
-    onTap: () {
-      setState(() {
-        if (sortField == actualField) {
-          isAscending = !isAscending;
-        } else {
-          sortField = actualField;
-          isAscending = true;
-        }
-      });
-    },
-    child: Container(
-      height: 40,
-      width: 80,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BuildSubHeadingText(
-            text: fieldLabel,
-            color: Colors.white,
-            fontSize: 10,
-          ),
-          if (sortField == actualField) ...[
-            const SizedBox(height: 4),
-            Container(
-              width: 70,
-              height: 10,
-              child: Image.asset(
-                "assets/images/selection_triangle.png",
-                height: 10,
-                width: 10,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ],
-      ),
-    ),
-  );
-}
-
 }
