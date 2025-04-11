@@ -209,13 +209,14 @@ class CountryPickerPopupContent extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 10),
+          
+          const SizedBox(height: 40),
           BuildTextWidget(
             text: "Country Code",
             fontSize: 28,
             fontWeight: FontWeight.w900,
             color: Colors.white,
           ),
-          const SizedBox(height: 40),
 
           // Search Field
           SizedBox(

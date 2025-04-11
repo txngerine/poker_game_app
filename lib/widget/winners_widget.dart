@@ -3,6 +3,7 @@ import 'package:pokerpad/widget/monthly_winners_view_widget.dart';
 import 'package:pokerpad/widget/yearly_winners_view.dart';
 
 import 'build_sub_heading_text.dart';
+import 'chart_line_widget.dart';
 
 class WinnersWidget extends StatefulWidget {
   const WinnersWidget({super.key});
@@ -131,9 +132,19 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(2.0),
-                              child: Image.asset(
-                                width: width / 9,
-                                "assets/images/lobby/top winners/hero avatar holder.png",
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const ChartLineWidget();
+                                    },
+                                  );
+                                },
+                                child: Image.asset(
+                                  width: width / 9,
+                                  "assets/images/lobby/top winners/hero avatar holder.png",
+                                ),
                               ),
                             ),
                             const BuildSubHeadingText(
