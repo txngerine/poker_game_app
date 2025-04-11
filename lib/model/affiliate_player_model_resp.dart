@@ -37,6 +37,7 @@ class Datum {
     int? playerId;
     String? email;
     int? isVip;
+    String? avatar;
     String? commission;
     String? totalBet;
     String? totalWon;
@@ -51,6 +52,7 @@ class Datum {
         this.playerId,
         this.email,
         this.isVip,
+        this.avatar,
         this.commission,
         this.totalBet,
         this.totalWon,
@@ -66,6 +68,7 @@ class Datum {
         playerId: json["player_id"],
         email: json["email"],
         isVip: json["is_vip"],
+        avatar: json["avatar"],
         commission: json["commission"],
         totalBet: json["total_bet"],
         totalWon: json["total_won"],
@@ -81,6 +84,7 @@ class Datum {
         "player_id": playerId,
         "email": email,
         "is_vip": isVip,
+        "avatar": avatar,
         "commission": commission,
         "total_bet": totalBet,
         "total_won": totalWon,
