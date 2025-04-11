@@ -114,6 +114,8 @@
 //   }
 // }
 
+
+
 // import 'package:flutter/material.dart';
 // import 'build_sub_heading_text.dart';
 
@@ -259,6 +261,7 @@
 //     );
 //   }
 // }
+
 
 // // ignore_for_file: unused_import
 
@@ -433,6 +436,9 @@
 //     );
 //   }
 // }
+
+
+
 
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
@@ -642,6 +648,7 @@ import 'dart:convert';
 
 import '../model/affiliate_player_model_resp.dart';
 import 'build_sub_heading_text.dart';
+import 'chart_line_widget.dart';
 
 class AffiliatePlayersListviews extends StatefulWidget {
   final String searchQuery;
@@ -769,34 +776,48 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(1.0),
-                                    child: SizedBox(
-  width: width / 10,
-  height: width / 10,
-  child: Stack(
-    alignment: Alignment.center,
-    children: [
-      Image.asset(
-        "assets/images/affiliate screen/losing player (1).png",
-        width: width / 10,
-        height: width / 10,
-        fit: BoxFit.cover,
-      ),
-      ClipOval(
-        child: (player.avatar != null && player.avatar!.isNotEmpty)
-            ? Image.network(
-                player.avatar!,
-                width: width / 13,
-                height: width / 13,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => const Icon(
-                  Icons.error,
-                  color: Colors.red,
-                  size: 16,
-                ),
-              )
-            : const SizedBox.shrink(),
-      ),
-    ],
+                                    child: GestureDetector(
+  onTap: () {
+    // 👇 Your action here
+    print("Avatar tapped: ${player.playerNickname}");
+    showDialog(
+                      context: context,
+                      builder: (context) {
+                       return ChartLineWidget(
+                        );
+                      },
+                    );
+    // You can navigate or show a dialog, etc.
+  },
+  child: SizedBox(
+    width: width / 10,
+    height: width / 10,
+    child: Stack(
+      alignment: Alignment.center,
+      children: [
+        Image.asset(
+          "assets/images/affiliate screen/losing player (1).png",
+          width: width / 10,
+          height: width / 10,
+          fit: BoxFit.cover,
+        ),
+        ClipOval(
+          child: (player.avatar != null && player.avatar!.isNotEmpty)
+              ? Image.network(
+                  player.avatar!,
+                  width: width / 13,
+                  height: width / 13,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.error,
+                    color: Colors.red,
+                    size: 16,
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    ),
   ),
 ),
 
