@@ -108,6 +108,7 @@ class LoginProvider extends ChangeNotifier {
       isLoading = false;
       this.errorMessage = null;
       notifyListeners();
+      print("balance;${playerBalance}");
 
       final appVersionStr = playerDetails?.data?.appVersion ?? "0";
       final appVersion = int.tryParse(appVersionStr) ?? 0;

@@ -183,7 +183,9 @@ class _LobbyPageState extends State<LobbyPage> {
                   CashierButtonWidget(
                     playerResponse: widget.playerResponse,
                   ),
-                  const TransferButtonWidget(),
+                  TransferButtonWidget(
+                    playerResponse: widget.playerResponse,
+                  ),
                 ],
               ),
               Row(
