@@ -307,23 +307,30 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                           fontSize: 12,
                                         ),
                                       ],
-                                    ),
-                                    BuildSubHeadingText(
-                                      text: "${report.rank ?? index + 1}",
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                    ),
-                                    const SizedBox(width: 10),
+                                    ),Row(mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 50,
+                                          child: BuildSubHeadingText(
+                                            text: "${report.rank ?? index + 1}",
+                                            color: Colors.black,
+                                            fontSize: 12,textAlign: TextAlign.start,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 45),
                                     BuildSubHeadingText(
                                       text: "\$${report.hourlyWin ?? "0"}",
                                       color: Colors.black,
                                       fontSize: 12,
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 80),
                                     BuildSubHeadingText(
                                       text: "\$${report.totalWin ?? "0"}",
                                       color: Colors.black,
                                       fontSize: 12,
+                                    ),
+                                    const SizedBox(width: 50),
+                                      ],
                                     ),
                                   ],
                                 ),

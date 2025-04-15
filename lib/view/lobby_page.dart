@@ -199,7 +199,9 @@ class _LobbyPageState extends State<LobbyPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const TopWinnersViewWidget()
+                  TopWinnersViewWidget(
+                    id:widget.playerResponse!.data?.id
+                  )
                 ],
               ),
               const SizedBox(
