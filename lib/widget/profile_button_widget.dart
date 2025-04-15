@@ -756,18 +756,18 @@ void showFaceCheckPopup(BuildContext context) {
             ),
             const SizedBox(height: 24),
            InkWell(
-             onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: const FaceIdentityPage(),
-                                type: PageTransitionType.rightToLeftWithFade));
-                      },
+            //  onTap: () {
+            //             Navigator.push(
+            //                 context,
+            //                 PageTransition(
+            //                     child: const FaceIdentityPage(),
+            //                     type: PageTransitionType.rightToLeftWithFade));
+            //           },
               child: Container(width: 300,height: 60,
                 decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
                 child: Center(
                   child: const Text(
-                    'LET’S TAKE A PHOTO',
+                    'LET’S TAKE A SELFIE',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -850,12 +850,12 @@ void showProofOfIdentityPopup(BuildContext context) {
             const SizedBox(height: 24),
             InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => KycVerifyCameraPageDark(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => KycVerifyCameraPageDark(),
+                //   ),
+                // );
               },
               child: Container(
                 width: 300,
