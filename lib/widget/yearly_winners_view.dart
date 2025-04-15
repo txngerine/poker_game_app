@@ -170,7 +170,6 @@
 
 
 
-
 import 'package:flutter/material.dart';
 import '../model/leaderboard_yearly_model.dart';
 import '../services/api_service.dart';
@@ -178,7 +177,9 @@ import 'build_sub_heading_text.dart';
 import 'chart_line_widget.dart';
 
 class YearlyWinnersView extends StatefulWidget {
-  const YearlyWinnersView({super.key});
+  final String id; // Accept the id parameter
+
+  const YearlyWinnersView({super.key, required this.id}); // Pass the id to the constructor
 
   @override
   State<YearlyWinnersView> createState() => _YearlyWinnersViewState();
@@ -199,7 +200,8 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
 
   Future<void> _fetchLeaderboard() async {
     try {
-      LeaderboardYearly? leaderboard = await _apiService.fetchLeaderboardYear();
+      // Use widget.id to fetch leaderboard data
+      LeaderboardYearly? leaderboard = await _apiService.fetchLeaderboardYear(widget.id);
       if (leaderboard != null && leaderboard.data != null) {
         setState(() {
           _reports = leaderboard.data?.report ?? [];

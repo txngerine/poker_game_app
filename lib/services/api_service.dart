@@ -146,26 +146,52 @@ class ApiService {
   }
 
   // Generic method to fetch leaderboard data
-  Future<T?> _fetchLeaderboard<T>(String endpoint, T Function(dynamic) fromJson) async {
-    try {
-      final response = await _dio.get(endpoint);
-      if (response.statusCode == 200) {
-        return fromJson(response.data);
-      } else {
-        print('Error: ${response.statusCode}');
-        return null;
-      }
-    } catch (e) {
-      print('API Error: ${_handleError(e)}');
+//   Future<T?> _fetchLeaderboard<T>(String endpoint, T Function(dynamic) fromJson) async {
+//     try {
+//       final response = await _dio.get(endpoint);
+//       if (response.statusCode == 200) {
+//         return fromJson(response.data);
+//       } else {
+//         print('Error: ${response.statusCode}');
+//         return null;
+//       }
+//     } catch (e) {
+//       print('API Error: ${_handleError(e)}');
+//       return null;
+//     }
+//   }
+
+//   // Fetch Monthly Leaderboard
+//   Future<LeaderboardMonthly?> fetchLeaderboard() =>
+//       _fetchLeaderboard('monthly-report/1', (data) => LeaderboardMonthly.fromJson(data));
+
+//   // Fetch Yearly Leaderboard
+//   Future<LeaderboardYearly?> fetchLeaderboardYear() =>
+//       _fetchLeaderboard('yearly-report/1', (data) => LeaderboardYearly.fromJson(data));
+// }
+
+
+// Generic method to fetch leaderboard data
+Future<T?> _fetchLeaderboard<T>(String endpoint, T Function(dynamic) fromJson, {required String id}) async {
+  try {
+    final response = await _dio.get('$endpoint/$id');
+    if (response.statusCode == 200) {
+      return fromJson(response.data);
+    } else {
+      print('Error: ${response.statusCode}');
       return null;
     }
+  } catch (e) {
+    print('API Error: ${_handleError(e)}');
+    return null;
   }
+}
 
-  // Fetch Monthly Leaderboard
-  Future<LeaderboardMonthly?> fetchLeaderboard() =>
-      _fetchLeaderboard('monthly-report/1', (data) => LeaderboardMonthly.fromJson(data));
+// Fetch Monthly Leaderboard
+Future<LeaderboardMonthly?> fetchLeaderboard(String id) =>
+    _fetchLeaderboard('monthly-report', (data) => LeaderboardMonthly.fromJson(data), id: id);
 
-  // Fetch Yearly Leaderboard
-  Future<LeaderboardYearly?> fetchLeaderboardYear() =>
-      _fetchLeaderboard('yearly-report/1', (data) => LeaderboardYearly.fromJson(data));
+// Fetch Yearly Leaderboard
+Future<LeaderboardYearly?> fetchLeaderboardYear(String id) =>
+    _fetchLeaderboard('yearly-report', (data) => LeaderboardYearly.fromJson(data), id: id);
 }

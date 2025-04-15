@@ -85,7 +85,6 @@
 // }
 
 
-
 // To parse this JSON data, do
 //
 //     final leaderboardYearly = leaderboardYearlyFromJson(jsonString);
@@ -176,7 +175,7 @@ class Report {
     int? playerId;
     String? nickname;
     String? totalWin;
-    int? hourlyWin;
+    String? hourlyWin;
     int? rank;
     String? photo;
 
@@ -207,6 +206,3 @@ class Report {
         "photo": photo,
     };
 }
-
-
-
