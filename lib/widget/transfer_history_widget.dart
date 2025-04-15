@@ -9,6 +9,28 @@ class TransferHistoryWidget extends StatefulWidget {
 }
 
 class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
+  final TextEditingController searchController = TextEditingController();
+
+  List<String> allNames = [];
+  List<String> filteredNames = [];
+
+  @override
+  void initState() {
+    super.initState();
+    allNames = List.generate(10, (index) => "charlie${index + 1}");
+    filteredNames = List.from(allNames);
+
+    searchController.addListener(() {
+      setState(() {
+        filteredNames = allNames
+            .where((name) => name
+                .toLowerCase()
+                .contains(searchController.text.toLowerCase()))
+            .toList();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -52,39 +74,54 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                   Image.asset(
                                       width: width / 1.1,
                                       "assets/images/transfer (2)/transferhistory/search tab (1).png"),
-                                  const Padding(
-                                    padding: EdgeInsets.only(
+                                  Padding(
+                                    padding: const EdgeInsets.only(
                                         top: 25, left: 35, right: 35),
                                     child: Row(
                                       children: [
-                                        SizedBox(
-                                          width: 20,
+                                        const SizedBox(
+                                          width: 18,
                                         ),
-                                        BuildSubHeadingText(
-                                          text: "search",
-                                          fontSize: 10,
-                                          color: Colors.white,
+                                        Material(
+                                          color: Colors.transparent,
+                                          child: SizedBox(
+                                            width: 60,
+                                            height: 14,
+                                            child: TextField(
+                                              controller: searchController,
+                                              cursorColor: Colors.white,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10),
+                                              decoration: const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: "SEARCH",
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.white)),
+                                            ),
+                                          ),
                                         ),
-                                        SizedBox(
-                                          width: 95,
+                                        const SizedBox(
+                                          width: 75,
                                         ),
-                                        BuildSubHeadingText(
+                                        const BuildSubHeadingText(
                                           text: "time",
                                           fontSize: 10,
                                           color: Colors.white,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 100,
                                         ),
-                                        BuildSubHeadingText(
+                                        const BuildSubHeadingText(
                                           text: "date",
                                           fontSize: 10,
                                           color: Colors.white,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 80,
                                         ),
-                                        BuildSubHeadingText(
+                                        const BuildSubHeadingText(
                                           text: "amount",
                                           fontSize: 10,
                                           color: Colors.white,
@@ -103,7 +140,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                   ),
                                   child: ListView.builder(
                                     padding: const EdgeInsets.only(top: 12),
-                                    itemCount: 10,
+                                    itemCount: filteredNames.length,
                                     itemBuilder: (context, index) {
                                       return Stack(
                                         children: [
@@ -123,15 +160,17 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                         width: width / 9,
                                                         height: height / 17,
                                                         "assets/images/affiliate screen/winning player (1).png"),
-                                                    const Column(
+                                                    Column(
                                                       children: [
                                                         BuildSubHeadingText(
-                                                          text: "id#:123",
+                                                          text:
+                                                              "id#:12${index + 1}",
                                                           color: Colors.white,
                                                           fontSize: 10,
                                                         ),
                                                         BuildSubHeadingText(
-                                                          text: "charlie",
+                                                          text: filteredNames[
+                                                              index],
                                                           color: Colors.white,
                                                           fontSize: 10,
                                                           fontWeight:

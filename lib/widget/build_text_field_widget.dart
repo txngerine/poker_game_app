@@ -10,6 +10,7 @@ class BuildTextFieldWidget extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
+  final Color? filledColor;
 
   const BuildTextFieldWidget({
     super.key,
@@ -21,6 +22,7 @@ class BuildTextFieldWidget extends StatelessWidget {
     this.hintText,
     this.validator,
     this.inputFormatters,
+    this.filledColor,
   });
 
   @override
@@ -63,7 +65,7 @@ class BuildTextFieldWidget extends StatelessWidget {
                           const BorderSide(color: Colors.black26, width: 2),
                     ),
                     filled: true,
-                    fillColor: Colors.white70,
+                    fillColor: filledColor ?? Colors.white70,
                     errorStyle:
                         const TextStyle(height: 0), // Hide error text spacing
                     helperText: '', // Maintain consistent height

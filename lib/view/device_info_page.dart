@@ -6,10 +6,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokerpad/constants/screen_size.dart';
-import 'package:pokerpad/widget/elevated_button_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widget/build_sub_heading_text.dart';
+import '../widget/build_text_field_widget.dart';
 import 'login_page.dart';
 
 class DeviceInfoPage extends StatefulWidget {
@@ -21,6 +20,8 @@ class DeviceInfoPage extends StatefulWidget {
 
 class _DeviceInfoPageState extends State<DeviceInfoPage> {
   final TextEditingController passwordController = TextEditingController();
+  bool passwordVisible = false;
+  String? _errorText;
   String _deviceDetails = "Device information";
   //PP1PPS4FMS68
   String _deviceId = "";
@@ -64,7 +65,9 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
 
   Future<void> _registerDevice() async {
     if (passwordController.text.isEmpty) {
-      _showErrorDialog("Password cannot be empty.");
+      setState(() {
+        _errorText = "Password cannot be empty.";
+      });
       return;
     }
 
@@ -107,13 +110,19 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
             MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
-          _showErrorDialog("Incorrect Password! Try again.");
+          setState(() {
+            _errorText = "Access code invalid. Please try again..";
+          });
         }
       } else {
-        _showErrorDialog("Registration Failed! Try again.");
+        setState(() {
+          _errorText = "Access code invalid. Please try again.";
+        });
       }
     } catch (e) {
-      _showErrorDialog("Network Error! Check your connection.");
+      setState(() {
+        _errorText = "Network Error! Check your connection.";
+      });
     } finally {
       setState(() {
         isLoading = false;
@@ -157,100 +166,109 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
     debugPrint("Retrieved Device ID: $_deviceId");
   }
 
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        elevation: 10,
-        title: const BuildSubHeadingText(
-          text: "Error Message",
-          color: Colors.black,
-        ),
-        content: Text(message),
-        actions: [
-          TextButton(
-              style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Color(0xff3D3D3D))),
-              onPressed: () => Navigator.of(context).pop(),
-              child: const BuildSubHeadingText(
-                text: "OK",
-                fontSize: 12,
-                color: Colors.white,
-              ))
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Image.asset(
             width: ScreenSize.screenWidth,
             height: ScreenSize.screenHeight,
-            "assets/images/background.jpg",
+            "assets/images/invitation screen/invitation bg.png",
             fit: BoxFit.cover,
           ),
-          Center(
-            child: isLoading // Only show the body when loading is false
-                ? const CircularProgressIndicator(
-                    color: Color(0xff3D3D3D),
-                  )
-                : SizedBox(
-                    width: ScreenSize.screenWidth / 2,
-                    height: ScreenSize.screenHeight / 3.5,
-                    child: Card(
-                      elevation: 10,
-                      color: const Color(0xffF5F5F5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 10),
-                          const BuildSubHeadingText(
-                            text: "Register Device",
-                            fontSize: 25,
-                          ),
-                          const SizedBox(height: 20),
-                          BuildSubHeadingText(
-                            text: "Device id : $_deviceId",
-                            fontSize: 14,
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.all(28.0),
-                              child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: passwordController,
-                                  decoration: InputDecoration(
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                      hintText: "Enter Password",
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      focusColor: Colors.grey,
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12))))),
-                          const SizedBox(height: 30),
-                          SizedBox(
-                            width: ScreenSize.screenWidth / 5,
-                            child: ElevatedButtonCustom(
-                              color: const Color(0xff3D3D3D),
-                              text: "submit",
-                              textColor: Colors.white,
-                              onPress: () async {
-                                await _registerDevice();
-                              },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 160, left: 37),
+                child: SizedBox(
+                  width: width / 1.14,
+                  child: BuildTextFieldWidget(
+                    filledColor: Colors.white,
+                    labelText: "access code",
+                    hintText: "access code",
+                    controller: passwordController,
+                    obscureText: passwordVisible,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter your password";
+                      }
+                      return null;
+                    },
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                        });
+                      },
+                      child: passwordVisible
+                          ? Image.asset(
+                              "assets/images/Artboard 28.png",
+                              width: 47,
+                            )
+                          : Image.asset(
+                              "assets/images/Artboard 29.png",
+                              width: 47,
                             ),
-                          )
-                        ],
-                      ),
                     ),
                   ),
-          )
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 125, left: 35),
+                child: SizedBox(
+                  width: width / 1.27,
+                  height: 50, // Ensuring consistent height
+                  child: _errorText != null
+                      ? Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/verifyemail/alert frame.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _errorText!,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(), // Empty SizedBox maintains the height
+                ),
+              ),
+              SizedBox(
+                height: height / 6,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 35),
+                child: GestureDetector(
+                  onTap: () async {
+                    await _registerDevice();
+                  },
+                  child: Image.asset(
+                      "assets/images/invitation screen/invitation_proceed.png",
+                      width: width / 1.27),
+                ),
+              )
+            ],
+          ),
+          if (isLoading)
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(color: Color(0xff3D3D3D)),
+              ),
+            ),
         ],
       ),
     );
