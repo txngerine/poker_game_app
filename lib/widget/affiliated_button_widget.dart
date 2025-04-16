@@ -19,26 +19,26 @@ class AffiliatedButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         provider.setClicked(true);
-        // showDialog(
-        //   barrierDismissible: false,
-        //   context: context,
-        //   builder: (BuildContext context) {
-        //     return const AffiliatePlayerViewWidget();
-        //   },
-        // );
         showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            // affiliate player view function
-            return userType == "AFFILIATE"
-                ?  AffiliatePlayersButtonWidget()
-                : AffiliatePlayerProfileView(
-                    playerResponse: playerResponse,
-                  );
+            return const AffiliatePlayersButtonWidget();
           },
-        ).then((_) {
-          provider.setClicked(false);
-        });
+        );
+        // showDialog(
+        //   context: context,
+        //   builder: (BuildContext context) {
+        //     // affiliate player view function
+        //     return userType == "AFFILIATE"
+        //         ?  AffiliatePlayersButtonWidget()
+        //         : AffiliatePlayerProfileView(
+        //             playerResponse: playerResponse,
+        //           );
+        //   },
+        // ).then((_) {
+        //   provider.setClicked(false);
+        // });
       },
       child: BuildButtonImageWidget(
         imgPath: provider.isClicked

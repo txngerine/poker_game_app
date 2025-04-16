@@ -91,7 +91,7 @@ class ChartController with ChangeNotifier {
   String countryFlag = ''; // New field for country flag
 
   final String apiUrl =
-      'http://3.6.170.253:1080/server.php/api/v1/graph-report/1?XDEBUG_SESSION_START=netbeans-xdebug';
+      'http://3.6.170.253:1080/server.php/api/v1/graph-report/385?XDEBUG_SESSION_START=netbeans-xdebug';
 
   /// Fetch Data from API with retry logic
   Future<void> fetchGraphData({int retries = 3}) async {
