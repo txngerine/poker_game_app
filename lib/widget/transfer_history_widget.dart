@@ -82,23 +82,29 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                         const SizedBox(
                                           width: 18,
                                         ),
-                                        Material(
-                                          color: Colors.transparent,
-                                          child: SizedBox(
-                                            width: 60,
-                                            height: 14,
-                                            child: TextField(
-                                              controller: searchController,
-                                              cursorColor: Colors.white,
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 10),
-                                              decoration: const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: "SEARCH",
-                                                  hintStyle: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.white)),
+                                        SizedBox(
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: SizedBox(
+                                              width: 67,
+                                              height: 17,
+                                              child: TextField(
+                                                textAlign: TextAlign.center,
+                                                controller: searchController,
+                                                cursorColor: Colors.white,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10),
+                                                decoration:
+                                                    const InputDecoration(
+                                                        border:
+                                                            InputBorder.none,
+                                                        hintText: "SEARCH",
+                                                        hintStyle: TextStyle(
+                                                            fontSize: 10,
+                                                            color:
+                                                                Colors.white)),
+                                              ),
                                             ),
                                           ),
                                         ),
