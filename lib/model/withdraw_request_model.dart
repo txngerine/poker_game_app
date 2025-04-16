@@ -1,8 +1,7 @@
-// To parse this JSON data, do
-//
-//     final withdrawRequestModel = withdrawRequestModelFromJson(jsonString);
-
 import 'dart:convert';
+
+// To parse this JSON data, do:
+// final withdrawRequestModel = withdrawRequestModelFromJson(jsonString);
 
 WithdrawRequestModel withdrawRequestModelFromJson(String str) =>
     WithdrawRequestModel.fromJson(json.decode(str));
@@ -16,6 +15,7 @@ class WithdrawRequestModel {
   final String? currency;
   final String? network;
   final int? chips;
+  final String? toAc; // New field
 
   WithdrawRequestModel({
     this.playerId,
@@ -23,6 +23,7 @@ class WithdrawRequestModel {
     this.currency,
     this.network,
     this.chips,
+    this.toAc,
   });
 
   factory WithdrawRequestModel.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +33,7 @@ class WithdrawRequestModel {
         currency: json["currency"],
         network: json["network"],
         chips: json["chips"],
+        toAc: json["to_ac"], // Parsing new field
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,5 +42,6 @@ class WithdrawRequestModel {
         "currency": currency,
         "network": network,
         "chips": chips,
+        "to_ac": toAc, // Serializing new field
       };
 }

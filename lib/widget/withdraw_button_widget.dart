@@ -6,9 +6,12 @@ import 'package:pokerpad/model/withdraw_request_model.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/view/qr_scan_page.dart';
+import 'package:pokerpad/view/withdraw_forgot_password.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/forgot_password_controller.dart';
+import '../model/forgot_password_model.dart';
 import '../model/login_response_model.dart';
 
 class WithdrawButtonWidget extends StatefulWidget {
@@ -28,13 +31,19 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
   final MobileScannerController controller = MobileScannerController();
   int selectedButton = 1;
   bool isLoading = false;
+  bool isForgotLoading = false;
   TextEditingController withdrawAmountController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final CashierController cashierController = CashierController();
+  ForgotPasswordController forgotPasswordController =
+      ForgotPasswordController();
+
   String? errorMessage;
 
   Future<void> withDrawAmount() async {
     print("id:${widget.playerResponse?.data!.id}");
+    final qrProvider =
+        Provider.of<QrProvider>(context, listen: false); // Add this
 
     if (!mounted) return; // Prevents setState after widget is disposed
 
@@ -43,15 +52,16 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
     });
 
     final request = WithdrawRequestModel(
-      playerId: widget.playerResponse?.data!.id.toString(),
-      currency: "usdc",
-      network: "solana",
-      password: passwordController.text,
-      chips: int.tryParse(withdrawAmountController.text) ?? 0,
-    );
+        playerId: widget.playerResponse?.data!.id.toString(),
+        currency: "usdc",
+        network: "solana",
+        password: passwordController.text,
+        chips: int.tryParse(withdrawAmountController.text) ?? 0,
+        toAc: qrProvider.scannedCode);
 
     try {
       final response = await cashierController.postWithdraw(request);
+      print("response:${response.data}");
 
       if (!mounted) return; // Prevents further execution if widget is disposed
 
@@ -116,6 +126,42 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
       );
 
       print("API Error: $e");
+    }
+  }
+
+  Future<void> forgotPassword() async {
+    setState(() {
+      isForgotLoading = true;
+    });
+
+    final request = ForgotPasswordRequestModel(
+      email: widget.playerResponse?.data?.email ?? "",
+    );
+
+    try {
+      final response = await ForgotPasswordController().forgotPassword(request);
+
+      setState(() {
+        isForgotLoading = false;
+      });
+
+      if (response != null) {
+        print("okkkkkkkkkkkkkkkkk");
+        showDialog(
+          context: context,
+          builder: (context) {
+            return WithdrawForgotPassword(
+              playerResponse: widget.playerResponse,
+            );
+          },
+        );
+      }
+    } catch (e, stackTrace) {
+      setState(() {
+        isForgotLoading = false;
+      });
+      debugPrint('Forgot password error: $e');
+      debugPrintStack(stackTrace: stackTrace);
     }
   }
 
@@ -247,11 +293,21 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                 ),
                               ],
                             ),
-                            const Text(
-                              "Forgot Password?",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
-                            ),
+                            isForgotLoading
+                                ? SizedBox(
+                                    height: 17,
+                                    width: 15,
+                                    child: CircularProgressIndicator())
+                                : GestureDetector(
+                                    onTap: () {
+                                      forgotPassword();
+                                    },
+                                    child: const Text(
+                                      "Forgot Password?",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    ),
+                                  ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
