@@ -31,37 +31,37 @@ class _DeviceInfoPageState extends State<DeviceInfoPage> {
   @override
   void initState() {
     super.initState();
-
-    _checkStoredDevice();
+    _getDeviceInfo();
+    // _checkStoredDevice();
   }
 
-  Future<void> _checkStoredDevice() async {
-    // Adding delay to simulate the check process
-    await Future.delayed(const Duration(seconds: 2));
-
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? storedDeviceId = pref.getString("device_id");
-
-    debugPrint("Stored Device ID: $storedDeviceId");
-
-    // This check should happen after device ID is registered/stored
-    if (storedDeviceId != null && storedDeviceId.isNotEmpty) {
-      setState(() {
-        _deviceId = storedDeviceId;
-      });
-
-      // Navigate after the delay to show the body widget first
-      Future.delayed(Duration.zero, () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-        );
-      });
-    } else {
-      // Only fetch the device info if no ID is found
-      await _getDeviceInfo();
-    }
-  }
+  // Future<void> _checkStoredDevice() async {
+  //   // Adding delay to simulate the check process
+  //   // await Future.delayed(const Duration(seconds: 2));
+  //
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String? storedDeviceId = pref.getString("device_id");
+  //
+  //   debugPrint("Stored Device ID: $storedDeviceId");
+  //
+  //   // This check should happen after device ID is registered/stored
+  //   if (storedDeviceId != null && storedDeviceId.isNotEmpty) {
+  //     setState(() {
+  //       _deviceId = storedDeviceId;
+  //     });
+  //
+  //     // Navigate after the delay to show the body widget first
+  //     Future.delayed(Duration.zero, () {
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => const LoginPage()),
+  //       );
+  //     });
+  //   } else {
+  //     // Only fetch the device info if no ID is found
+  //     await _getDeviceInfo();
+  //   }
+  // }
 
   Future<void> _registerDevice() async {
     if (passwordController.text.isEmpty) {

@@ -130,17 +130,17 @@ class LoginProvider extends ChangeNotifier {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.green,
-          content: const Text("Login Successful",
-              style: TextStyle(color: Colors.white)),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 10,
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: Colors.green,
+      //     content: const Text("Login Successful",
+      //         style: TextStyle(color: Colors.white)),
+      //   ),
+      // );
       Navigator.pushReplacement(
         context,
         PageTransition(
