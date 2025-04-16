@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokerpad/controller/forgot_password_controller.dart';
+import 'package:pokerpad/controller/transfer_controller.dart';
 import 'package:pokerpad/model/forgot_password_model.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
@@ -7,6 +9,7 @@ import 'package:pokerpad/widget/transfer_history_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../model/login_response_model.dart';
+import '../model/transfer_request_model.dart';
 import 'build_button_image_widget.dart';
 import 'build_text_widget.dart';
 import 'custom_transfer_text_field.dart';
@@ -23,8 +26,12 @@ class TransferButtonWidget extends StatefulWidget {
 class _TransferButtonWidgetState extends State<TransferButtonWidget> {
   bool isMarked = false;
   bool isLoading = false;
-  ForgotPasswordController forgotPasswordController =
+  final ForgotPasswordController forgotPasswordController =
       ForgotPasswordController();
+  TransferController transferController = TransferController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController playerIdController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
 
   Future<void> forgotPassword() async {
     setState(() {
@@ -66,6 +73,69 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
     setState(() {
       isMarked = !isMarked;
     });
+  }
+
+  Future<void> transferAmount() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final request = TransferRequestModel(
+      from: widget.playerResponse?.data?.id.toString(),
+      to: playerIdController.text.trim(),
+      chips: amountController.text.trim(),
+      password: passwordController.text,
+    );
+
+    try {
+      final response = await transferController.amountTransfer(request);
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response?.status == "OK") {
+        Navigator.pop(context);
+        // Show success message or update UI
+        print("Transfer successful: ${response?.data?.balance}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 1),
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: CupertinoColors.activeGreen,
+            content: Text(
+              "Success!: ${response?.status}, ID: ${response?.data?.balance ?? "N/A"}",
+            ),
+          ),
+        );
+      } else {
+        final errorMessage = response?.messages?["from"] ??
+            response?.messages?["error"] ??
+            "Transfer failed";
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Transfer Failed"),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              )
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print("Transfer API error: $e");
+    }
   }
 
   @override
@@ -263,11 +333,14 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                   children: [
                                     Column(
                                       children: [
-                                        const CustomTransferTextField(
+                                        CustomTransferTextField(
+                                            controller: playerIdController,
                                             hintText: "Transfer Player ID:"),
-                                        const CustomTransferTextField(
+                                        CustomTransferTextField(
+                                            controller: amountController,
                                             hintText: "Transfer to Amount\$:"),
-                                        const CustomTransferTextField(
+                                        CustomTransferTextField(
+                                          controller: passwordController,
                                           hintText: "Password",
                                           keyboardType: TextInputType.text,
                                         ),
@@ -344,7 +417,8 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.pop(context);
+                                        // Navigator.pop(context);
+                                        transferAmount();
                                         // provider.setClick(false);
                                       },
                                       child: Image.asset(

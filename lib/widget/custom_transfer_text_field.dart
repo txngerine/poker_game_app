@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomTransferTextField extends StatelessWidget {
   final String hintText;
+  final TextEditingController? controller;
   final TextInputType? keyboardType;
   const CustomTransferTextField(
-      {super.key, required this.hintText, this.keyboardType});
+      {super.key, required this.hintText, this.keyboardType, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class CustomTransferTextField extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width /
                 3.5, // To fit inside the image
             child: TextField(
+              controller: controller,
               style: const TextStyle(
                 fontSize: 12,
                 color: Colors.white,
