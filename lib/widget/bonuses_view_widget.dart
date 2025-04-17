@@ -202,23 +202,24 @@ class _BonusesViewWidgetState extends State<BonusesViewWidget> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
-                                                  Bonuses2kButtonWidget(),
+                                                  BonusesButtonWidget(label: "\$2k"),
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-                                                  Bonuses2kButtonWidget(),
+                                                  BonusesButtonWidget(label: "\$4k"),
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-                                                  Bonuses2kButtonWidget(),
+                                                  BonusesButtonWidget(label: "\$6k"),
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-                                                  Bonuses2kButtonWidget(),
+                                                  BonusesButtonWidget(label: "\$6k"),
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-                                                  Bonuses2kButtonWidget(),
+BonusesButtonWidget(label: "\$10k"),
+
                                                 ],
                                               ),
                                               Padding(
