@@ -19,7 +19,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
   final TextEditingController searchController = TextEditingController();
   List<Datum> transferList = [];
   List<Datum> filteredTransferList = [];
-
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -60,15 +60,20 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
           setState(() {
             transferList = transferHistory.data?.data ?? [];
             filteredTransferList = List.from(transferList);
+            isLoading = false;
           });
         } else {
           print("❌ API returned failure: ${transferHistory.status}");
+          setState(() {
+            isLoading = false;
+          });
         }
-      } else {
-        print("❌ HTTP Error: ${response.statusCode}");
       }
     } catch (e) {
       print("❗ Exception occurred while fetching history: $e");
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -185,138 +190,157 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                     borderRadius: BorderRadius.circular(20),
                                     color: Colors.transparent,
                                   ),
-                                  child: ListView.builder(
-                                    padding: const EdgeInsets.only(top: 12),
-                                    itemCount: filteredTransferList.length,
-                                    itemBuilder: (context, index) {
-                                      final item = filteredTransferList[index];
-                                      final createdAt = item.createdAt;
+                                  child: isLoading
+                                      ? Center(
+                                          child: CircularProgressIndicator())
+                                      : ListView.builder(
+                                          padding:
+                                              const EdgeInsets.only(top: 12),
+                                          itemCount:
+                                              filteredTransferList.length,
+                                          itemBuilder: (context, index) {
+                                            final item =
+                                                filteredTransferList[index];
+                                            final createdAt = item.createdAt;
 
-                                      final formattedDate = createdAt != null
-                                          ? DateFormat('dd-MM-yyyy')
-                                              .format(createdAt)
-                                          : '';
-                                      final formattedTime = createdAt != null
-                                          ? DateFormat('HH:mm:ss')
-                                              .format(createdAt)
-                                          : '';
-                                      print(nicknameValues
-                                          .reverse[item.nickname]);
+                                            final formattedDate =
+                                                createdAt != null
+                                                    ? DateFormat('dd-MM-yyyy')
+                                                        .format(createdAt)
+                                                    : '';
+                                            final formattedTime =
+                                                createdAt != null
+                                                    ? DateFormat('HH:mm:ss')
+                                                        .format(createdAt)
+                                                    : '';
+                                            print(nicknameValues
+                                                .reverse[item.nickname]);
 
-                                      return Stack(
-                                        children: [
-                                          Image.asset(
-                                              "assets/images/transfer (2)/transferhistory/player frame (3).png"),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 5, right: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            return Stack(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      width: width / 9,
-                                                      height: height / 17,
-                                                      decoration: BoxDecoration(
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  "assets/images/affiliate screen/winning player (1).png"))),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                bottom: 3),
-                                                        child: Center(
-                                                          child: ClipOval(
-                                                            child:
-                                                                Image.network(
-                                                              item.avatar ?? "",
-                                                              width:
-                                                                  width / 14.5,
-                                                              height:
-                                                                  height / 22.6,
-                                                              fit: BoxFit.cover,
-                                                              errorBuilder: (context,
-                                                                      error,
-                                                                      stackTrace) =>
-                                                                  Icon(Icons
-                                                                      .person),
+                                                Image.asset(
+                                                    "assets/images/transfer (2)/transferhistory/player frame (3).png"),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 5, right: 20),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            width: width / 9,
+                                                            height: height / 17,
+                                                            decoration: BoxDecoration(
+                                                                image: DecorationImage(
+                                                                    image: AssetImage(
+                                                                        "assets/images/affiliate screen/winning player (1).png"))),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      bottom:
+                                                                          3),
+                                                              child: Center(
+                                                                child: ClipOval(
+                                                                  child: Image
+                                                                      .network(
+                                                                    item.avatar ??
+                                                                        "",
+                                                                    width:
+                                                                        width /
+                                                                            14.5,
+                                                                    height:
+                                                                        height /
+                                                                            22.6,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    errorBuilder: (context,
+                                                                            error,
+                                                                            stackTrace) =>
+                                                                        Icon(Icons
+                                                                            .person),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width / 8,
-                                                      child: Column(
-                                                        children: [
-                                                          BuildSubHeadingText(
-                                                            text: item
-                                                                .playerIdRef
-                                                                .toString(),
-                                                            // "id#:12${index + 1}",
-                                                            color: Colors.white,
-                                                            fontSize: 10,
-                                                          ),
-                                                          BuildSubHeadingText(
-                                                            text: nicknameValues
-                                                                .reverse[item
-                                                                    .nickname]
-                                                                .toString(),
-                                                            // filteredNames[
-                                                            //     index],
-                                                            color: Colors.white,
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight.w100,
+                                                          SizedBox(
+                                                            width: width / 8,
+                                                            child: Column(
+                                                              children: [
+                                                                BuildSubHeadingText(
+                                                                  text: item
+                                                                      .playerIdRef
+                                                                      .toString(),
+                                                                  // "id#:12${index + 1}",
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 10,
+                                                                ),
+                                                                BuildSubHeadingText(
+                                                                  text: nicknameValues
+                                                                      .reverse[item
+                                                                          .nickname]
+                                                                      .toString(),
+                                                                  // filteredNames[
+                                                                  //     index],
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w100,
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width: 15,
-                                                ),
-                                                SizedBox(
-                                                  width: width / 6,
-                                                  child: BuildSubHeadingText(
-                                                    text: formattedTime,
-                                                    // "15:38(pt)",
-                                                    color: Colors.white,
-                                                    fontSize: 10,
+                                                      SizedBox(
+                                                        width: 15,
+                                                      ),
+                                                      SizedBox(
+                                                        width: width / 6,
+                                                        child:
+                                                            BuildSubHeadingText(
+                                                          text: formattedTime,
+                                                          // "15:38(pt)",
+                                                          color: Colors.white,
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: width / 7,
+                                                        child:
+                                                            BuildSubHeadingText(
+                                                          text: formattedDate,
+                                                          // "2/13/2025",
+                                                          color: Colors.white,
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      BuildSubHeadingText(
+                                                        text: "\$${item.chip}",
+                                                        color: Colors.green,
+                                                        fontSize: 10,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      )
+                                                    ],
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: width / 7,
-                                                  child: BuildSubHeadingText(
-                                                    text: formattedDate,
-                                                    // "2/13/2025",
-                                                    color: Colors.white,
-                                                    fontSize: 10,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                BuildSubHeadingText(
-                                                  text: "\$${item.chip}",
-                                                  color: Colors.green,
-                                                  fontSize: 10,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
                                                 )
                                               ],
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    },
-                                  ))
+                                            );
+                                          },
+                                        ))
                             ],
                           ),
                         ),
