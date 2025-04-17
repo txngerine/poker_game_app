@@ -25,10 +25,11 @@ class TransferController {
         return TransferResponseModel.fromJson(response.data);
       } else {
         print("fail transfer controller");
-        return TransferResponseModel(
-          status: "FAIL",
-          messages: {"error": response.statusMessage ?? "Unknown API Error"},
-        );
+        // return TransferResponseModel(
+        //   status: "FAIL",
+        //   messages: {"error": response.statusMessage ?? "Unknown API Error"},
+        // );
+        return TransferResponseModel.fromJson(response.data);
       }
     } catch (e) {
       print("Exception: $e");

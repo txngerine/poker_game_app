@@ -1,8 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pokerpad/model/get_transfer_history_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 
+import '../model/login_response_model.dart';
+
 class TransferHistoryWidget extends StatefulWidget {
-  const TransferHistoryWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const TransferHistoryWidget({super.key, this.playerResponse});
 
   @override
   State<TransferHistoryWidget> createState() => _TransferHistoryWidgetState();
@@ -10,25 +17,59 @@ class TransferHistoryWidget extends StatefulWidget {
 
 class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
   final TextEditingController searchController = TextEditingController();
-
-  List<String> allNames = [];
-  List<String> filteredNames = [];
+  List<Datum> transferList = [];
+  List<Datum> filteredTransferList = [];
 
   @override
   void initState() {
     super.initState();
-    allNames = List.generate(10, (index) => "charlie${index + 1}");
-    filteredNames = List.from(allNames);
-
+    getTransferHistory();
+    print("id:${widget.playerResponse?.data?.id}");
     searchController.addListener(() {
       setState(() {
-        filteredNames = allNames
-            .where((name) => name
-                .toLowerCase()
-                .contains(searchController.text.toLowerCase()))
-            .toList();
+        filteredTransferList = transferList.where((item) {
+          final nickname =
+              nicknameValues.reverse[item.nickname]?.toLowerCase() ?? '';
+          return nickname.contains(searchController.text.toLowerCase());
+        }).toList();
       });
     });
+  }
+
+  Future<void> getTransferHistory() async {
+    final playerId = widget.playerResponse?.data?.id;
+
+    if (playerId == null) {
+      print("Player ID is null. Cannot fetch transfer history.");
+      return;
+    }
+
+    final url =
+        "http://3.6.170.253:1080/server.php/api/v1/player-transfer-history/$playerId";
+    print("Requesting URL: $url");
+
+    try {
+      final response = await Dio().get(url);
+
+      if (response.statusCode == 200) {
+        final transferHistory = GetTransferHistoryModel.fromJson(response.data);
+
+        if (transferHistory.status == "OK") {
+          print("✅ Transfer History Loaded Successfully");
+
+          setState(() {
+            transferList = transferHistory.data?.data ?? [];
+            filteredTransferList = List.from(transferList);
+          });
+        } else {
+          print("❌ API returned failure: ${transferHistory.status}");
+        }
+      } else {
+        print("❌ HTTP Error: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("❗ Exception occurred while fetching history: $e");
+    }
   }
 
   @override
@@ -146,8 +187,22 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                   ),
                                   child: ListView.builder(
                                     padding: const EdgeInsets.only(top: 12),
-                                    itemCount: filteredNames.length,
+                                    itemCount: filteredTransferList.length,
                                     itemBuilder: (context, index) {
+                                      final item = filteredTransferList[index];
+                                      final createdAt = item.createdAt;
+
+                                      final formattedDate = createdAt != null
+                                          ? DateFormat('dd-MM-yyyy')
+                                              .format(createdAt)
+                                          : '';
+                                      final formattedTime = createdAt != null
+                                          ? DateFormat('HH:mm:ss')
+                                              .format(createdAt)
+                                          : '';
+                                      print(nicknameValues
+                                          .reverse[item.nickname]);
+
                                       return Stack(
                                         children: [
                                           Image.asset(
@@ -162,45 +217,99 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Image.asset(
-                                                        width: width / 9,
-                                                        height: height / 17,
-                                                        "assets/images/affiliate screen/winning player (1).png"),
-                                                    Column(
-                                                      children: [
-                                                        BuildSubHeadingText(
-                                                          text:
-                                                              "id#:12${index + 1}",
-                                                          color: Colors.white,
-                                                          fontSize: 10,
+                                                    Container(
+                                                      width: width / 9,
+                                                      height: height / 17,
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  "assets/images/affiliate screen/winning player (1).png"))),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 3),
+                                                        child: Center(
+                                                          child: ClipOval(
+                                                            child:
+                                                                Image.network(
+                                                              item.avatar ?? "",
+                                                              width:
+                                                                  width / 14.5,
+                                                              height:
+                                                                  height / 22.6,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context,
+                                                                      error,
+                                                                      stackTrace) =>
+                                                                  Icon(Icons
+                                                                      .person),
+                                                            ),
+                                                          ),
                                                         ),
-                                                        BuildSubHeadingText(
-                                                          text: filteredNames[
-                                                              index],
-                                                          color: Colors.white,
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w100,
-                                                        ),
-                                                      ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: width / 8,
+                                                      child: Column(
+                                                        children: [
+                                                          BuildSubHeadingText(
+                                                            text: item
+                                                                .playerIdRef
+                                                                .toString(),
+                                                            // "id#:12${index + 1}",
+                                                            color: Colors.white,
+                                                            fontSize: 10,
+                                                          ),
+                                                          BuildSubHeadingText(
+                                                            text: nicknameValues
+                                                                .reverse[item
+                                                                    .nickname]
+                                                                .toString(),
+                                                            // filteredNames[
+                                                            //     index],
+                                                            color: Colors.white,
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.w100,
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
-                                                const BuildSubHeadingText(
-                                                  text: "15:38(pt)",
-                                                  color: Colors.white,
-                                                  fontSize: 10,
+                                                SizedBox(
+                                                  width: 15,
                                                 ),
-                                                const BuildSubHeadingText(
-                                                  text: "2/13/2025",
-                                                  color: Colors.white,
-                                                  fontSize: 10,
+                                                SizedBox(
+                                                  width: width / 6,
+                                                  child: BuildSubHeadingText(
+                                                    text: formattedTime,
+                                                    // "15:38(pt)",
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                  ),
                                                 ),
-                                                const BuildSubHeadingText(
-                                                  text: "\$43,638",
+                                                SizedBox(
+                                                  width: width / 7,
+                                                  child: BuildSubHeadingText(
+                                                    text: formattedDate,
+                                                    // "2/13/2025",
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                BuildSubHeadingText(
+                                                  text: "\$${item.chip}",
                                                   color: Colors.green,
                                                   fontSize: 10,
                                                 ),
+                                                SizedBox(
+                                                  width: 5,
+                                                )
                                               ],
                                             ),
                                           )

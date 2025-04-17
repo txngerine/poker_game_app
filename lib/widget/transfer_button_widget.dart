@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokerpad/controller/forgot_password_controller.dart';
 import 'package:pokerpad/controller/transfer_controller.dart';
 import 'package:pokerpad/model/forgot_password_model.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
+import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
 import 'package:pokerpad/widget/transfer_history_widget.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +26,14 @@ class TransferButtonWidget extends StatefulWidget {
 class _TransferButtonWidgetState extends State<TransferButtonWidget> {
   bool isMarked = false;
   bool isLoading = false;
+  bool isTransferLoading = false;
   final ForgotPasswordController forgotPasswordController =
       ForgotPasswordController();
   TransferController transferController = TransferController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController playerIdController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
+  String? errorMessage;
 
   Future<void> forgotPassword() async {
     setState(() {
@@ -75,253 +77,131 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
     });
   }
 
-  Future<void> transferAmount() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    final request = TransferRequestModel(
-      from: widget.playerResponse?.data?.id.toString(),
-      to: playerIdController.text.trim(),
-      chips: amountController.text.trim(),
-      password: passwordController.text,
-    );
-
-    try {
-      final response = await transferController.amountTransfer(request);
-
-      setState(() {
-        isLoading = false;
-      });
-
-      if (response?.status == "OK") {
-        Navigator.pop(context);
-        // Show success message or update UI
-        print("Transfer successful: ${response?.data?.balance}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 1),
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.activeGreen,
-            content: Text(
-              "Success!: ${response?.status}, ID: ${response?.data?.balance ?? "N/A"}",
-            ),
-          ),
-        );
-      } else {
-        final errorMessage = response?.messages?["from"] ??
-            response?.messages?["error"] ??
-            "Transfer failed";
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Transfer Failed"),
-            content: Text(errorMessage),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("OK"),
-              )
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      print("Transfer API error: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<TransferButtonProvider>(context);
     return GestureDetector(
-      // onTap: () {
-      //   provider.setClick(true);
-      //   showDialog(
-      //     barrierDismissible: true,
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       bool isMarked = false; // Local state for dialog
-      //
-      //       return StatefulBuilder(
-      //         builder: (context, setState) {
-      //           return Padding(
-      //             padding: const EdgeInsets.only(top: 50),
-      //             child: Dialog(
-      //               alignment: Alignment.topCenter,
-      //               backgroundColor: Colors.transparent,
-      //               child: SizedBox(
-      //                 width: MediaQuery.sizeOf(context).width / 1,
-      //                 height: MediaQuery.sizeOf(context).height / 2,
-      //                 child: Stack(
-      //                   alignment: Alignment.center,
-      //                   children: [
-      //                     Image.asset(
-      //                       width: MediaQuery.sizeOf(context).width,
-      //                       height: MediaQuery.sizeOf(context).height,
-      //                       'assets/images/transfer (2)/bank frame (3).png',
-      //                       fit: BoxFit.cover,
-      //                     ),
-      //                     Padding(
-      //                       padding: const EdgeInsets.only(top: 58, left: 10),
-      //                       child: Column(
-      //                         children: [
-      //                           Row(
-      //                             children: [
-      //                               Column(
-      //                                 children: [
-      //                                   const CustomTransferTextField(
-      //                                       hintText: "Transfer Player ID:"),
-      //                                   const CustomTransferTextField(
-      //                                       hintText: "Transfer to Amount\$:"),
-      //                                   const CustomTransferTextField(
-      //                                     hintText: "Password",
-      //                                     keyboardType: TextInputType.text,
-      //                                   ),
-      //                                   isLoading
-      //                                       ? const CircularProgressIndicator()
-      //                                       : GestureDetector(
-      //                                           onTap: () {
-      //                                             forgotPassword();
-      //                                             // showDialog(
-      //                                             //   context: context,
-      //                                             //   builder: (context) {
-      //                                             //     return TransferForgotPasswordWidget(
-      //                                             //       playerResponse:
-      //                                             //           widget.playerResponse,
-      //                                             //     );
-      //                                             //   },
-      //                                             // );
-      //                                           },
-      //                                           child: const BuildTextWidget(
-      //                                             text: "Forgot Password",
-      //                                             color: Colors.white,
-      //                                             fontSize: 13,
-      //                                           ),
-      //                                         ),
-      //                                   Row(
-      //                                     children: [
-      //                                       GestureDetector(
-      //                                         onTap: () {
-      //                                           setState(() {
-      //                                             isMarked = !isMarked;
-      //                                           });
-      //                                         },
-      //                                         child: Image.asset(
-      //                                           width: MediaQuery.of(context)
-      //                                                   .size
-      //                                                   .width /
-      //                                               24,
-      //                                           isMarked
-      //                                               ? "assets/images/CASHIER Button/TRANSFER/black check.png"
-      //                                               : "assets/images/CASHIER Button/TRANSFER/black check emty.png",
-      //                                         ),
-      //                                       ),
-      //                                       const BuildTextWidget(
-      //                                         text: "Remember Password",
-      //                                         color: Colors.white,
-      //                                         fontSize: 13,
-      //                                       ),
-      //                                     ],
-      //                                   ),
-      //                                   Image.asset(
-      //                                     "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png",
-      //                                     width: MediaQuery.of(context)
-      //                                             .size
-      //                                             .width /
-      //                                         2.4,
-      //                                   )
-      //                                 ],
-      //                               ),
-      //                               Image.asset(
-      //                                   width:
-      //                                       MediaQuery.of(context).size.width /
-      //                                           2.4,
-      //                                   "assets/images/transfer (2)/avatar frame (4).png"),
-      //                             ],
-      //                           ),
-      //                           Row(
-      //                             children: [
-      //                               GestureDetector(
-      //                                 onTap: () {
-      //                                   showDialog(
-      //                                     context: context,
-      //                                     builder: (context) {
-      //                                       return const TransferHistoryWidget();
-      //                                     },
-      //                                   );
-      //                                 },
-      //                                 child: Image.asset(
-      //                                   "assets/images/CASHIER Button/TRANSFER/history button.png",
-      //                                   width:
-      //                                       MediaQuery.of(context).size.width /
-      //                                           2.4,
-      //                                 ),
-      //                               ),
-      //                               GestureDetector(
-      //                                 onTap: () {
-      //                                   Navigator.pop(context);
-      //                                   provider.setClick(false);
-      //                                 },
-      //                                 child: Image.asset(
-      //                                   "assets/images/CASHIER Button/TRANSFER/transfer button.png",
-      //                                   width:
-      //                                       MediaQuery.of(context).size.width /
-      //                                           2.4,
-      //                                 ),
-      //                               )
-      //                             ],
-      //                           )
-      //                         ],
-      //                       ),
-      //                     )
-      //                   ],
-      //                 ),
-      //               ),
-      //             ),
-      //           );
-      //         },
-      //       );
-      //     },
-      //   );
-      // },
       onTap: () {
         final provider =
             Provider.of<TransferButtonProvider>(context, listen: false);
 
-        provider.setClick(true); // Make button active
+        provider.setClick(true);
 
         showDialog(
           barrierDismissible: true,
           context: context,
           builder: (BuildContext context) {
             bool isMarked = false;
+            bool isLoading = false;
+            String? errorMessage;
+
+            Future<void> transferAmount(StateSetter setDialogState) async {
+              setDialogState(() {
+                isTransferLoading = true;
+                errorMessage = null;
+              });
+
+              final request = TransferRequestModel(
+                from: widget.playerResponse?.data?.id.toString(),
+                to: playerIdController.text.trim(),
+                chips: amountController.text.trim(),
+                password: passwordController.text,
+              );
+
+              try {
+                final response =
+                    await transferController.amountTransfer(request);
+
+                setDialogState(() {
+                  isTransferLoading = false;
+                });
+
+                if (response?.status == "OK") {
+                  showDialog(
+                    context: context,
+                    builder: (_) => Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 150),
+                          child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                width: width / 1.4,
+                                height: height / 3,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/transfer (2)/successful popup.png"),
+                                      fit: BoxFit.cover),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 90,
+                                    ),
+                                    BuildSubHeadingText(
+                                      text: "TRANSFER SUCCESSFUL",
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    BuildTextWidget(
+                                      align: TextAlign.center,
+                                      text:
+                                          "You transfer the amount \n \$${amountController.text} to Player ID${playerIdController.text}",
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    )
+                                  ],
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  if (response?.status == "FAIL") {
+                    setDialogState(() {
+                      errorMessage = response?.messages?["to"] ??
+                          response?.messages?["from"] ??
+                          response?.messages?["error"] ??
+                          "Transfer failed";
+                    });
+                  }
+                }
+              } catch (e) {
+                setDialogState(() {
+                  isTransferLoading = false;
+                  errorMessage = "Unexpected error occurred.";
+                });
+              }
+            }
 
             return StatefulBuilder(
-              builder: (context, setState) {
+              builder: (context, setDialogState) {
+                final width = MediaQuery.sizeOf(context).width;
+                final height = MediaQuery.sizeOf(context).height;
+
                 return Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: Dialog(
                     alignment: Alignment.topCenter,
                     backgroundColor: Colors.transparent,
                     child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width / 1,
-                      height: MediaQuery.sizeOf(context).height / 2,
+                      width: width,
+                      height: height / 2,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           Image.asset(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: MediaQuery.sizeOf(context).height,
+                            width: width,
+                            height: height,
                             'assets/images/transfer (2)/bank frame (3).png',
                             fit: BoxFit.cover,
                           ),
@@ -347,9 +227,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                         isLoading
                                             ? const CircularProgressIndicator()
                                             : GestureDetector(
-                                                onTap: () {
-                                                  forgotPassword();
-                                                },
+                                                onTap: () => forgotPassword(),
                                                 child: const BuildTextWidget(
                                                   text: "Forgot Password",
                                                   color: Colors.white,
@@ -360,15 +238,12 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                setState(() {
+                                                setDialogState(() {
                                                   isMarked = !isMarked;
                                                 });
                                               },
                                               child: Image.asset(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    24,
+                                                width: width / 24,
                                                 isMarked
                                                     ? "assets/images/CASHIER Button/TRANSFER/black check.png"
                                                     : "assets/images/CASHIER Button/TRANSFER/black check emty.png",
@@ -381,20 +256,46 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                             ),
                                           ],
                                         ),
-                                        Image.asset(
-                                          "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png",
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2.4,
-                                        )
+                                        Container(
+                                          width: width / 2.4,
+                                          height: height / 12,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png",
+                                              ),
+                                            ),
+                                          ), // No background when there's no error
+                                          child: isTransferLoading
+                                              ? const Center(
+                                                  child: SizedBox(
+                                                      width: 20,
+                                                      height: 20,
+                                                      child:
+                                                          CircularProgressIndicator()))
+                                              : (errorMessage != null &&
+                                                      errorMessage!.isNotEmpty)
+                                                  ? Center(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5.0),
+                                                        child: BuildTextWidget(
+                                                          text: errorMessage!,
+                                                          align:
+                                                              TextAlign.center,
+                                                          fontSize: 15,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : null, // Empty container when no error
+                                        ),
                                       ],
                                     ),
                                     Image.asset(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.4,
-                                        "assets/images/transfer (2)/avatar frame (4).png"),
+                                      width: width / 2.4,
+                                      "assets/images/transfer (2)/avatar frame (4).png",
+                                    ),
                                   ],
                                 ),
                                 Row(
@@ -403,29 +304,23 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                       onTap: () {
                                         showDialog(
                                           context: context,
-                                          builder: (context) {
-                                            return const TransferHistoryWidget();
-                                          },
+                                          builder: (context) =>
+                                              TransferHistoryWidget(
+                                                  playerResponse:
+                                                      widget.playerResponse),
                                         );
                                       },
                                       child: Image.asset(
                                         "assets/images/CASHIER Button/TRANSFER/history button.png",
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.4,
+                                        width: width / 2.4,
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: () {
-                                        // Navigator.pop(context);
-                                        transferAmount();
-                                        // provider.setClick(false);
-                                      },
+                                      onTap: () =>
+                                          transferAmount(setDialogState),
                                       child: Image.asset(
                                         "assets/images/CASHIER Button/TRANSFER/transfer button.png",
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.4,
+                                        width: width / 2.4,
                                       ),
                                     )
                                   ],
