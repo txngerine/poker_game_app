@@ -15,7 +15,7 @@ class AffiliateBonusButtonWidget extends StatefulWidget {
 
 class _AffiliateBonusButtonWidgetState
     extends State<AffiliateBonusButtonWidget> {
-      final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   String searchQuery = "";
   @override
   Widget build(BuildContext context) {
@@ -249,7 +249,9 @@ class _AffiliateBonusButtonWidgetState
                   ),
                 ),
               ),
-              AffiliateBonusesListview(searchQuery: searchQuery,)
+              AffiliateBonusesListview(
+                searchQuery: searchQuery,
+              )
             ],
           ),
         ),

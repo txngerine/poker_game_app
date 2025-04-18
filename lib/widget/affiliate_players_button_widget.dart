@@ -330,13 +330,16 @@ class _AffiliatePlayersButtonWidgetState
                   GestureDetector(
                     onTap: () {
                       provider.toggleBonusClicked(true);
+
                       showDialog(
-                        barrierDismissible: false,
+                        barrierDismissible: true,
                         context: context,
                         builder: (context) {
-                          return const AffiliateBonusButtonWidget();
+                          return AffiliateBonusButtonWidget();
                         },
-                      );
+                      ).then((_) {
+                        provider.toggleBonusClicked(false);
+                      });
                     },
                     child: Image.asset(
                       width: width / 4.2,

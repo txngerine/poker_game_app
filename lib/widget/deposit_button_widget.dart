@@ -29,7 +29,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
         alignment: Alignment.topCenter,
         backgroundColor: Colors.transparent,
         child: SizedBox(
-          // height: MediaQuery.sizeOf(context).height / 2,
+          height: MediaQuery.sizeOf(context).height / 2,
           width: MediaQuery.sizeOf(context).width,
           child: Stack(
             children: [
@@ -210,9 +210,11 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                 //navigate to withdraw page
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    // Navigator.pop(context);
+                                    provider.setClicked(true);
+
                                     showDialog(
-                                      barrierDismissible: false,
+                                      barrierDismissible: true,
                                       context: context,
                                       builder: (context) {
                                         return WithdrawButtonWidget(
@@ -232,7 +234,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.pop(context);
-                                    provider.setClicked(false);
+                                    provider.setClicked(true);
                                   },
                                   child: Image.asset(
                                       width: MediaQuery.sizeOf(context).width /

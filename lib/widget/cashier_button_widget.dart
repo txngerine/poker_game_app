@@ -27,13 +27,23 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
         provider.setClicked(true);
         showDialog(
           context: context,
-          barrierDismissible: false,
+          barrierDismissible: true,
           builder: (BuildContext context) {
-            return DepositButtonWidget(
+            return StatefulBuilder(
+              builder: (context, setDialogState) {
+                return DepositButtonWidget(
+                  playerResponse: widget.playerResponse,
+                );
+              },
+            );
+
+            DepositButtonWidget(
               playerResponse: widget.playerResponse,
             );
           },
-        );
+        ).then((_) {
+          provider.setClicked(false);
+        });
       },
       child: BuildButtonImageWidget(
         imgPath: provider.isClicked
