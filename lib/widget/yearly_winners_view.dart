@@ -167,9 +167,6 @@
 //   }
 // }
 
-
-
-
 // import 'package:flutter/material.dart';
 // import '../model/leaderboard_yearly_model.dart';
 // import '../services/api_service.dart';
@@ -343,11 +340,8 @@
 //   }
 // }
 
-
-
-
-
 import 'package:flutter/material.dart';
+
 import '../model/leaderboard_yearly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
@@ -386,7 +380,8 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
         final thumbAvailableHeight = viewport - thumbHeight;
 
         setState(() {
-          _thumbTop = (_scrollController.offset / scrollExtent) * thumbAvailableHeight;
+          _thumbTop =
+              (_scrollController.offset / scrollExtent) * thumbAvailableHeight;
         });
       }
     });
@@ -400,7 +395,8 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
 
   Future<void> _fetchLeaderboard() async {
     try {
-      LeaderboardYearly? leaderboard = await _apiService.fetchLeaderboardYear(widget.id);
+      LeaderboardYearly? leaderboard =
+          await _apiService.fetchLeaderboardYear(widget.id);
       if (leaderboard != null && leaderboard.data != null) {
         setState(() {
           _reports = leaderboard.data?.report ?? [];
@@ -489,9 +485,11 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                 fit: BoxFit.cover,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 12.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -499,15 +497,20 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                           onTap: () {
                                             showDialog(
                                               context: context,
-                                              builder: (context) => const ChartLineWidget(),
+                                              builder: (context) =>
+                                                  const ChartLineWidget(),
                                             );
                                           },
                                           child: CircleAvatar(
                                             radius: 23.5,
                                             backgroundColor: Colors.grey[300],
-                                            backgroundImage: report.photo != null && report.photo!.isNotEmpty
+                                            backgroundImage: report.photo !=
+                                                        null &&
+                                                    report.photo!.isNotEmpty
                                                 ? NetworkImage(report.photo!)
-                                                : const AssetImage("assets/images/lobby/top winners/villain avatar holder.png") as ImageProvider,
+                                                : const AssetImage(
+                                                        "assets/images/lobby/top winners/villain avatar holder.png")
+                                                    as ImageProvider,
                                           ),
                                         ),
                                         const SizedBox(width: 8),
@@ -519,7 +522,8 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                       ],
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
                                           width: 50,
@@ -558,14 +562,16 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                       right: 4,
                       child: GestureDetector(
                         onVerticalDragStart: _onDragStart,
-                        onVerticalDragUpdate: (details) => _onDragUpdate(details, height / 1.28),
+                        onVerticalDragUpdate: (details) =>
+                            _onDragUpdate(details, height / 1.28),
                         onVerticalDragEnd: _onDragEnd,
                         child: Container(
                           width: 20,
                           height: thumbHeight,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/images/scrollwheel.png"),
+                              image:
+                                  AssetImage("assets/images/scrollwheel.png"),
                               fit: BoxFit.fill,
                             ),
                           ),
