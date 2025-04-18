@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:pokerpad/model/get_affiliate_player_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 
@@ -17,14 +19,70 @@ class AffiliatePlayerProfileView extends StatefulWidget {
 class _AffiliatePlayerProfileViewState
     extends State<AffiliatePlayerProfileView> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAffiliatePlayer();
+  }
+
+  GetAffiliatePlayerModel? affiliatePlayerData;
+
+  bool isLoading = true;
+
+  Future<void> getAffiliatePlayer() async {
+    final playerId = widget.playerResponse?.data?.id;
+
+    if (playerId == null) {
+      print("Player ID is null. Cannot fetch transfer history.");
+      return;
+    }
+
+    final url = "http://3.6.170.253:1080/server.php/api/v1/affiliate/$playerId";
+    try {
+      final response = await Dio().get(url);
+      print(url);
+      if (response.statusCode == 200) {
+        final affiliatePlayer = GetAffiliatePlayerModel.fromJson(response.data);
+        if (affiliatePlayer.status == "OK") {
+          setState(() {
+            affiliatePlayerData = affiliatePlayer;
+            isLoading = false;
+          });
+          // print(affiliatePlayer.data?.id);
+          print(affiliatePlayer.data?.about ?? "noo");
+          print("✅ Affiliate Player Loaded Successfully");
+        } else {
+          print("❌ API returned failure: ${affiliatePlayer.status}");
+
+          setState(() {
+            isLoading = false;
+          });
+        }
+      }
+    } catch (e) {
+      print("❗ Exception occurred while fetching history: $e");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final player = affiliatePlayerData?.data;
+    print(player?.id);
+
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 120),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             width: width / 1,
             height: height / 1.6,
             child: Image.asset(
@@ -35,37 +93,46 @@ class _AffiliatePlayerProfileViewState
           Positioned(
             top: 83,
             left: 55,
-            child: Container(
-              height: height / 3.2,
-              width: width / 2.5,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          widget.playerResponse!.data!.lobbyAvatar.toString())),
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.greenAccent),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BuildSubHeadingText(
-                      text: widget.playerResponse!.data!.nickname.toString(),
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w100,
+            child: player == null
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 150, left: 30),
+                    child: Center(
+                        child: BuildSubHeadingText(
+                      text: "No affiliate data found.",
+                      color: Colors.white70,
+                      fontSize: 13,
+                    )),
+                  )
+                : Container(
+                    height: height / 3.2,
+                    width: width / 2.5,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(player.avatar.toString())),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.transparent),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BuildSubHeadingText(
+                            text: player.name.toString(),
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w100,
+                          ),
+                          BuildSubHeadingText(
+                            text: "ID:${player.id.toString()}",
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ],
+                      ),
                     ),
-                    BuildSubHeadingText(
-                      text: "ID:${widget.playerResponse!.data!.id.toString()}",
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w100,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
           Positioned(
             top: 83,
@@ -79,18 +146,22 @@ class _AffiliatePlayerProfileViewState
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.black12),
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Column(
                   children: [
-                    const BuildTextWidget(
-                      text:
-                          "Affiliate partners are independent entities and do not act as employees or representatives of PokerPad Ltd."
-                          "Consequently, PokerPad Ltd. disclaims any liability for outcomers resulting from user interactions with affiliate partners,encompassing any ransactions and agreements.",
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
                     SizedBox(
+                      width: width / 2.9,
+                      height: height / 4.4,
+                      child: BuildTextWidget(
+                        align: TextAlign.start,
+                        maxLines: 11,
+                        text: player?.about ?? "Not Found",
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -100,16 +171,17 @@ class _AffiliatePlayerProfileViewState
                             width: 15,
                             height: 20,
                             "assets/images/playerAffiliate/phone icon (1).png"),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         BuildTextWidget(
-                          text: widget.playerResponse!.data!.phone ?? "PENDING",
+                          fontSize: 12,
+                          text: player?.phone ?? "Not Found",
                           color: Colors.white,
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
@@ -119,16 +191,17 @@ class _AffiliatePlayerProfileViewState
                             width: 15,
                             height: 20,
                             "assets/images/playerAffiliate/mail icon (1).png"),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         BuildTextWidget(
-                          text: widget.playerResponse!.data!.email ?? "PENDING",
+                          fontSize: 12,
+                          text: player?.email ?? "Not Found",
                           color: Colors.white,
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     // BuildTextWidget(
@@ -152,7 +225,7 @@ class _AffiliatePlayerProfileViewState
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.black12),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BuildSubHeadingText(

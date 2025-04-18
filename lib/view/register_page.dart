@@ -357,7 +357,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               )
                             : const SizedBox(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       registerProvider.isLoading

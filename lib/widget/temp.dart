@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import '../model/affiliate_player_model_resp.dart';
 import 'build_sub_heading_text.dart';
-import 'transfer_button_widget.dart';
 
 class AffiliatePlayersListviews extends StatefulWidget {
   final String searchQuery;

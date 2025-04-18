@@ -50,7 +50,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 30),
-                BuildTextWidget(
+                const BuildTextWidget(
                   text: "Phone Number",
                   fontSize: 28,
                   fontWeight: FontWeight.w900,
@@ -61,7 +61,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 const SizedBox(height: 100),
 
                 // Country Code Picker + Phone Number Input
-                Container(
+                SizedBox(
                   width: width / 1.5,
                   height: 50,
                   child: Row(
@@ -76,7 +76,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           height: 55,
                           width: 110,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                   "assets/images/phone&country/code text field (1).png"),
@@ -101,7 +101,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                 style: const TextStyle(
                                     fontSize: 12, color: Colors.black),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 4,
                               ),
                             ],
@@ -116,7 +116,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                           width: 150,
                           child: Container(
                             decoration: BoxDecoration(
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                 image: AssetImage(
                                     "assets/images/phone&country/country text field.png"),
                                 fit: BoxFit.fill,
@@ -202,13 +202,13 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                     text: "Country Code",
                     fontSize: 28,
                     fontWeight: FontWeight.w900,
                     color: Colors.black54,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   // BuildTextWidget(
@@ -265,7 +265,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                   Container(
                     width: width / 1.4,
                     height: height / 1.3,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
                               "assets/images/phone&country/country code frame.png"),
@@ -289,11 +289,11 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                     final country =
                                         provider.filteredCountries[index];
                                     return ListTile(
-                                      contentPadding: EdgeInsets.all(5),
+                                      contentPadding: const EdgeInsets.all(5),
                                       leading: Container(
                                         width: 68,
                                         height: 68,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           image: DecorationImage(
                                             image: AssetImage(
                                                 "assets/images/phone&country/flag holder.png"),

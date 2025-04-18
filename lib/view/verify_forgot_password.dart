@@ -177,7 +177,7 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
           Container(
             width: width,
             height: height / 1.4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
                     AssetImage("assets/images/phone&country/log-reg frame.png"),
@@ -196,7 +196,7 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                   text: "A 6-digit code has been sent to your email.",
                   color: Colors.black,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -224,12 +224,12 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                             maxLength: 1,
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               counterText: "",
 
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none,
-                              contentPadding: const EdgeInsets.all(
+                              contentPadding: EdgeInsets.all(
                                   15), // Ensures text stays centered
                             ),
                             onChanged: (value) {
@@ -358,7 +358,7 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(

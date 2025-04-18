@@ -131,7 +131,7 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
                                 "assets/images/gender&avatar/gender icon.png",
                               ),
                               const SizedBox(height: 100),
-                              BuildTextWidget(
+                              const BuildTextWidget(
                                 text: "Select your gender",
                                 fontSize: 20,
                               ),

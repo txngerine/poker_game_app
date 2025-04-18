@@ -6,11 +6,11 @@ class KYCImagePopup extends StatelessWidget {
   final Image faceImage;
 
   const KYCImagePopup({
-    Key? key,
+    super.key,
     required this.onRetake,
     required this.onSubmit,
     required this.faceImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class KYCImagePopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'Face Check',
               style: TextStyle(
                 fontSize: 20.0,
@@ -41,11 +41,11 @@ class KYCImagePopup extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: onRetake,
-                  child: Text('Retake'),
+                  child: const Text('Retake'),
                 ),
                 ElevatedButton(
                   onPressed: onSubmit,
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
               ],
             ),

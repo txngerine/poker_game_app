@@ -309,7 +309,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
                                     ],
                                   ),
                                   isForgotLoading
-                                      ? SizedBox(
+                                      ? const SizedBox(
                                           height: 17,
                                           width: 15,
                                           child: CircularProgressIndicator())

@@ -451,7 +451,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
-    final thumbHeight = _getThumbHeight(height / 1.28);
+    final thumbHeight = _getThumbHeight(height / 2.28);
 
     return SizedBox(
       height: height / 1.28,

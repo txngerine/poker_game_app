@@ -335,7 +335,7 @@ class _AffiliatePlayersButtonWidgetState
                         barrierDismissible: true,
                         context: context,
                         builder: (context) {
-                          return AffiliateBonusButtonWidget();
+                          return const AffiliateBonusButtonWidget();
                         },
                       ).then((_) {
                         provider.toggleBonusClicked(false);
@@ -486,7 +486,7 @@ class _AffiliatePlayersButtonWidgetState
           }
         });
       },
-      child: Container(
+      child: SizedBox(
         height: 40,
         width: 80,
         child: Column(
@@ -499,7 +499,7 @@ class _AffiliatePlayersButtonWidgetState
             ),
             if (sortField == actualField) ...[
               const SizedBox(height: 4),
-              Container(
+              SizedBox(
                 width: 70,
                 height: 10,
                 child: Image.asset(

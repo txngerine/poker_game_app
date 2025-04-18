@@ -27,26 +27,26 @@ class _AccessoriesPageState extends State<AccessoriesPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildHeadingWidget(text: "Accessories"),
-              SizedBox(
+              const BuildHeadingWidget(text: "Accessories"),
+              const SizedBox(
                 height: 60,
               ),
               Image.asset(
                   width: width / 5,
                   "assets/images/gender&avatar/accessories icon.png"),
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildTextWidget(
+              const BuildTextWidget(
                 align: TextAlign.center,
                 text:
                     'Remove accessories that\n cover your face, like hats, \n sunglasses, or scarves. ',
                 fontSize: 20,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 130,
               ),
               Row(

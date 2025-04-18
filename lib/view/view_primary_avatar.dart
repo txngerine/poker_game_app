@@ -89,11 +89,11 @@ class _ViewPrimaryAvatarState extends State<ViewPrimaryAvatar> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
-                BuildHeadingWidget(text: "Pick primary Avatar"),
-                SizedBox(
+                const BuildHeadingWidget(text: "Pick primary Avatar"),
+                const SizedBox(
                   height: 60,
                 ),
                 Stack(
@@ -134,7 +134,7 @@ class _ViewPrimaryAvatarState extends State<ViewPrimaryAvatar> {
                       Navigator.push(
                           context,
                           PageTransition(
-                              child: PickAvatarPage(),
+                              child: const PickAvatarPage(),
                               type: PageTransitionType.leftToRightWithFade));
                     },
                     child: Image.asset(
@@ -152,7 +152,7 @@ class _ViewPrimaryAvatarState extends State<ViewPrimaryAvatar> {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: PickSecondaryAvatar(),
+                                    child: const PickSecondaryAvatar(),
                                     type: PageTransitionType
                                         .leftToRightWithFade));
                           },

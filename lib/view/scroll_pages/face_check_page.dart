@@ -27,26 +27,26 @@ class _FaceCheckPageState extends State<FaceCheckPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildHeadingWidget(text: "Face Check"),
-              SizedBox(
+              const BuildHeadingWidget(text: "Face Check"),
+              const SizedBox(
                 height: 40,
               ),
               Image.asset(
                   width: width / 5,
                   "assets/images/gender&avatar/face unlock icon.png"),
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildTextWidget(
+              const BuildTextWidget(
                 align: TextAlign.center,
                 text:
                     'Let\'s take a "passport-style" \n photo to capture your \nface biometrics!',
                 fontSize: 20,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
               Row(

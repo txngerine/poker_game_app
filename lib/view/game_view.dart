@@ -514,7 +514,7 @@ class _GameViewState extends State<GameView> {
         child: SizedBox(
           child: GestureDetector(
             onTap: () {}, // Prevent closing when tapping inside content
-            child: ChartLineWidget(),
+            child: const ChartLineWidget(),
           ),
         ),
       ),

@@ -13,7 +13,7 @@ class _BuildHeadingWidgetState extends State<BuildHeadingWidget> {
   Widget build(BuildContext context) {
     return Text(
       widget.text,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 28,
         fontWeight: FontWeight.w900,
         color: Colors.black54,

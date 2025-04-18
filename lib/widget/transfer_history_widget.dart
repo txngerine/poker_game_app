@@ -191,7 +191,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                     color: Colors.transparent,
                                   ),
                                   child: isLoading
-                                      ? Center(
+                                      ? const Center(
                                           child: CircularProgressIndicator())
                                       : ListView.builder(
                                           padding:
@@ -234,7 +234,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                           Container(
                                                             width: width / 9,
                                                             height: height / 17,
-                                                            decoration: BoxDecoration(
+                                                            decoration: const BoxDecoration(
                                                                 image: DecorationImage(
                                                                     image: AssetImage(
                                                                         "assets/images/affiliate screen/winning player (1).png"))),
@@ -261,7 +261,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                                     errorBuilder: (context,
                                                                             error,
                                                                             stackTrace) =>
-                                                                        Icon(Icons
+                                                                        const Icon(Icons
                                                                             .person),
                                                                   ),
                                                                 ),
@@ -300,7 +300,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 15,
                                                       ),
                                                       SizedBox(
@@ -323,7 +323,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                           fontSize: 10,
                                                         ),
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 5,
                                                       ),
                                                       BuildSubHeadingText(
@@ -331,7 +331,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                         color: Colors.green,
                                                         fontSize: 10,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 5,
                                                       )
                                                     ],

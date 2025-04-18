@@ -92,11 +92,11 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
-                BuildHeadingWidget(text: "Pick secondary Avatar"),
-                SizedBox(
+                const BuildHeadingWidget(text: "Pick secondary Avatar"),
+                const SizedBox(
                   height: 60,
                 ),
                 Stack(
@@ -137,7 +137,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PickSecondaryAvatar(),
+                            builder: (context) => const PickSecondaryAvatar(),
                           ));
                     },
                     child: Image.asset(
@@ -151,7 +151,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
                     child: isLoading
                         ? SizedBox(
                             width: width / 2.5,
-                            child: Center(
+                            child: const Center(
                               child: CircularProgressIndicator(),
                             ),
                           )

@@ -168,9 +168,6 @@
 //   }
 // }
 
-
-
-
 // import 'package:flutter/material.dart';
 // import '../model/leaderboard_monthly_model.dart';
 // import '../services/api_service.dart';
@@ -349,11 +346,8 @@
 //   }
 // }
 
-
-
-
-
 import 'package:flutter/material.dart';
+
 import '../model/leaderboard_monthly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
@@ -365,7 +359,8 @@ class MonthlyWinnersViewWidget extends StatefulWidget {
   const MonthlyWinnersViewWidget({super.key, required this.id});
 
   @override
-  State<MonthlyWinnersViewWidget> createState() => _MonthlyWinnersViewWidgetState();
+  State<MonthlyWinnersViewWidget> createState() =>
+      _MonthlyWinnersViewWidgetState();
 }
 
 class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
@@ -392,7 +387,8 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
         final thumbAvailableHeight = viewport - thumbHeight;
 
         setState(() {
-          _thumbTop = (_scrollController.offset / scrollExtent) * thumbAvailableHeight;
+          _thumbTop =
+              (_scrollController.offset / scrollExtent) * thumbAvailableHeight;
         });
       }
     });
@@ -406,7 +402,8 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
 
   Future<void> _fetchLeaderboard() async {
     try {
-      LeaderboardMonthly? leaderboard = await _apiService.fetchLeaderboard(widget.id);
+      LeaderboardMonthly? leaderboard =
+          await _apiService.fetchLeaderboard(widget.id);
       if (leaderboard != null && leaderboard.data != null) {
         setState(() {
           _reports = leaderboard.data?.report ?? [];
@@ -461,7 +458,7 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
-    final viewportHeight = height / 1.28;
+    final viewportHeight = height / 2.28;
     final thumbHeight = _getThumbHeight(viewportHeight);
 
     return SizedBox(
@@ -495,9 +492,11 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                 fit: BoxFit.cover,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 12.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -505,15 +504,20 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                           onTap: () {
                                             showDialog(
                                               context: context,
-                                              builder: (_) => const ChartLineWidget(),
+                                              builder: (_) =>
+                                                  const ChartLineWidget(),
                                             );
                                           },
                                           child: CircleAvatar(
                                             radius: 23.5,
                                             backgroundColor: Colors.grey[300],
-                                            backgroundImage: report.photo != null && report.photo!.isNotEmpty
+                                            backgroundImage: report.photo !=
+                                                        null &&
+                                                    report.photo!.isNotEmpty
                                                 ? NetworkImage(report.photo!)
-                                                : const AssetImage("assets/images/lobby/top winners/villain avatar holder.png") as ImageProvider,
+                                                : const AssetImage(
+                                                        "assets/images/lobby/top winners/villain avatar holder.png")
+                                                    as ImageProvider,
                                           ),
                                         ),
                                         const SizedBox(width: 8),
@@ -563,14 +567,16 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                       right: 4,
                       child: GestureDetector(
                         onVerticalDragStart: _onDragStart,
-                        onVerticalDragUpdate: (details) => _onDragUpdate(details, viewportHeight),
+                        onVerticalDragUpdate: (details) =>
+                            _onDragUpdate(details, viewportHeight),
                         onVerticalDragEnd: _onDragEnd,
                         child: Container(
                           width: 20,
                           height: thumbHeight,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/images/scrollwheel.png"),
+                              image:
+                                  AssetImage("assets/images/scrollwheel.png"),
                               fit: BoxFit.fill,
                             ),
                           ),

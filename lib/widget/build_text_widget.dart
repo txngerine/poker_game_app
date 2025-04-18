@@ -7,6 +7,7 @@ class BuildTextWidget extends StatelessWidget {
   final double? fontSize;
   final String text;
   final Color? color;
+  final int? maxLines;
 
   const BuildTextWidget({
     super.key,
@@ -15,11 +16,13 @@ class BuildTextWidget extends StatelessWidget {
     this.fontWeight,
     this.align,
     this.color,
+    this.maxLines,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
+      maxLines: maxLines,
       text,
       textAlign: align,
       style: GoogleFonts.roboto(

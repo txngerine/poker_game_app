@@ -250,7 +250,7 @@ class _WithdrawForgotPasswordState extends State<WithdrawForgotPassword> {
                       text: "A 6-digit code has been sent to your email.",
                       color: Colors.white,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     Row(
@@ -417,7 +417,7 @@ class _WithdrawForgotPasswordState extends State<WithdrawForgotPassword> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 9,
                     ),
                     SizedBox(

@@ -89,7 +89,7 @@ class _NamePageState extends State<NamePage> {
           Container(
             width: width,
             height: height / 1.4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
                     AssetImage("assets/images/phone&country/log-reg frame.png"),
@@ -103,7 +103,7 @@ class _NamePageState extends State<NamePage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                     text: "Choose Your Nickname",
                     fontSize: 28,
                     fontWeight: FontWeight.w900,
@@ -113,7 +113,7 @@ class _NamePageState extends State<NamePage> {
                     height: 80,
                   ),
                   Image.asset("assets/images/nickname/nickname icon.png"),
-                  SizedBox(
+                  const SizedBox(
                     height: 80,
                   ),
                   SizedBox(
@@ -123,7 +123,7 @@ class _NamePageState extends State<NamePage> {
                       width: width / 1.5,
                       height: 50,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage(
                               "assets/images/phone&country/country text field.png"),
                           fit: BoxFit.fill,
@@ -165,7 +165,7 @@ class _NamePageState extends State<NamePage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   SizedBox(
@@ -189,7 +189,7 @@ class _NamePageState extends State<NamePage> {
                           )
                         : const SizedBox(), // Empty SizedBox maintains the height
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   isLoading
@@ -205,7 +205,7 @@ class _NamePageState extends State<NamePage> {
                                 "assets/images/phone&country/confirm button (1).png"),
                           ),
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                 ],

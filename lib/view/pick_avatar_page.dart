@@ -85,10 +85,10 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
-                BuildHeadingWidget(text: "Pick primary Avatar"),
+                const BuildHeadingWidget(text: "Pick primary Avatar"),
                 Stack(
                   alignment: Alignment.center,
                   children: [
@@ -163,7 +163,7 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
                     );
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
               ],

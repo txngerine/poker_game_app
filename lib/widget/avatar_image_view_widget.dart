@@ -35,7 +35,7 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                       return ChartLineWidget(
+                       return const ChartLineWidget(
                         );
                       },
                     );

@@ -369,7 +369,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../model/bonus_model_response.dart';
 import 'bonuses_2k_button_widget.dart';
 import 'chart_line_widget.dart';
@@ -461,7 +460,7 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => ChartLineWidget(),
+                                      builder: (context) => const ChartLineWidget(),
                                     );
                                   },
                                   child: Stack(

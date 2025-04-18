@@ -81,7 +81,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       Navigator.push(
           context,
           PageTransition(
-              child: ImageScrollPage(),
+              child: const ImageScrollPage(),
               type: PageTransitionType.rightToLeftWithFade));
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -120,7 +120,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           Container(
             width: width,
             height: height / 1.4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
                     AssetImage("assets/images/phone&country/log-reg frame.png"),
@@ -180,12 +180,12 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                               maxLength: 1,
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 counterText: "",
 
                                 enabledBorder: InputBorder.none,
                                 focusedBorder: InputBorder.none,
-                                contentPadding: const EdgeInsets.all(
+                                contentPadding: EdgeInsets.all(
                                     15), // Ensures text stays centered
                               ),
                               onChanged: (value) {
@@ -230,7 +230,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                   //     ),
                   //   ),
                   // ],
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -266,8 +266,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       isLoading
                           ? SizedBox(
                               width: width / 2.8,
-                              child: Center(
-                                  child: const CircularProgressIndicator()))
+                              child: const Center(
+                                  child: CircularProgressIndicator()))
                           : GestureDetector(
                               onTap: verify,
                               child: Image.asset(

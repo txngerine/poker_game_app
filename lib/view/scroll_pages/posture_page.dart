@@ -26,17 +26,17 @@ class _PosturePageState extends State<PosturePage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildHeadingWidget(text: "Posture"),
-              SizedBox(
+              const BuildHeadingWidget(text: "Posture"),
+              const SizedBox(
                 height: 40,
               ),
               Image.asset(
                   width: width / 5,
                   "assets/images/gender&avatar/posture icon.png"),
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
               const Text.rich(
@@ -59,7 +59,7 @@ class _PosturePageState extends State<PosturePage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
               Row(

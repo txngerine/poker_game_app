@@ -132,7 +132,7 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
                 height: height / 1.2,
                 fit: BoxFit.cover,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Row(
@@ -143,7 +143,7 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PYICameraPage(),
+                            builder: (context) => const PYICameraPage(),
                           ));
                     },
                     child: Image.asset(
@@ -158,8 +158,8 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
                     child: isUploading
                         ? SizedBox(
                             width: width / 2.3,
-                            child: Center(
-                                child: const CircularProgressIndicator()))
+                            child: const Center(
+                                child: CircularProgressIndicator()))
                         : Image.asset(
                             "assets/images/confirm (6).png",
                             width: width / 2.3,

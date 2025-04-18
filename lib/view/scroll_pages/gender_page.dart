@@ -88,24 +88,24 @@ class _GenderPageState extends State<GenderPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildHeadingWidget(text: "Gender"),
-              SizedBox(
+              const BuildHeadingWidget(text: "Gender"),
+              const SizedBox(
                 height: 40,
               ),
               Image.asset(
                   width: width / 5,
                   "assets/images/gender&avatar/gender icon.png"),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
-              BuildTextWidget(
+              const BuildTextWidget(
                 text: "select your gender",
                 fontSize: 20,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 70,
               ),
               Row(
@@ -130,7 +130,7 @@ class _GenderPageState extends State<GenderPage> {
                       const BuildTextWidget(text: "Male    ")
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 80,
                   ),
                   Row(
@@ -156,7 +156,7 @@ class _GenderPageState extends State<GenderPage> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
               Row(

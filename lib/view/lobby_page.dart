@@ -249,7 +249,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: balance! >= 200
+                        onTap: balance >= 200
                             ? () async {
                                 bool success = await ratHole("200");
                                 if (!mounted || !success) return;
@@ -281,7 +281,7 @@ class _LobbyPageState extends State<LobbyPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: balance! >= 500
+                        onTap: balance >= 500
                             ? () async {
                                 bool success = await ratHole("500");
                                 if (!mounted || !success) return;
@@ -309,7 +309,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: balance! >= 1000
+                        onTap: balance >= 1000
                             ? () async {
                                 bool success = await ratHole("1000");
                                 if (!mounted || !success) return;

@@ -106,9 +106,9 @@ class LoginProvider extends ChangeNotifier {
               0;
 
       isLoading = false;
-      this.errorMessage = null;
+      errorMessage = null;
       notifyListeners();
-      print("balance;${playerBalance}");
+      print("balance;$playerBalance");
 
       final appVersionStr = playerDetails?.data?.appVersion ?? "0";
       final appVersion = int.tryParse(appVersionStr) ?? 0;
@@ -190,7 +190,7 @@ class LoginProvider extends ChangeNotifier {
               ),
             ));
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text("Redirecting to signup..."),
             backgroundColor: Colors.blue,
           ),

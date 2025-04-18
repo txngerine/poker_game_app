@@ -46,39 +46,39 @@ class _ProofOfIdentityScreenState extends State<ProofOfIdentityScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
-                  BuildHeadingWidget(text: "Prove your Identity"),
-                  SizedBox(
+                  const BuildHeadingWidget(text: "Prove your Identity"),
+                  const SizedBox(
                     height: 40,
                   ),
                   Image.asset(
                       width: width / 5, "assets/images/identity_icon.png"),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                       fontSize: 20,
                       align: TextAlign.start,
                       text: "Provide a document that\nverifies your identity."),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                       fontSize: 20,
                       align: TextAlign.start,
                       text:
                           "Examples:\n• Government-Issued ID\n• Passport\n• National ID Card\n• Driver's License"),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                       fontSize: 20,
                       align: TextAlign.start,
                       text:
                           "ID picture and information\n must be clearly visible"),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],

@@ -11,7 +11,7 @@ class QrPage extends StatefulWidget {
 class _QrPageState extends State<QrPage> {
   @override
   Widget build(BuildContext context) {
-    final String qrData = "13u25FPoSLJ4bGQfGYvM6uFZi9zD6UEM1g98Y7x9KKJU";
+    const String qrData = "13u25FPoSLJ4bGQfGYvM6uFZi9zD6UEM1g98Y7x9KKJU";
 
     return Scaffold(
       body: Center(

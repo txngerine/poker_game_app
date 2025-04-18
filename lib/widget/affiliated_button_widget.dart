@@ -31,7 +31,7 @@ class AffiliatedButtonWidget extends StatelessWidget {
           builder: (BuildContext context) {
             // affiliate player view function
             return userType == "AFFILIATE"
-                ?  AffiliatePlayersButtonWidget()
+                ?  const AffiliatePlayersButtonWidget()
                 : AffiliatePlayerProfileView(
                     playerResponse: playerResponse,
                   );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProofOfIdentificationPopup extends StatelessWidget {
+  const ProofOfIdentificationPopup({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -12,32 +14,32 @@ class ProofOfIdentificationPopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'Proof of Identification',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'Please upload a valid proof of identification to proceed.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.0),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 // Handle file upload
               },
-              child: Text('Upload Document'),
+              child: const Text('Upload Document'),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ],
         ),

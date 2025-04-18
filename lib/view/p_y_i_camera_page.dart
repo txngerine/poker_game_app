@@ -115,7 +115,7 @@ class _PYICameraPageState extends State<PYICameraPage> {
                           child: CircularProgressIndicator(color: Colors.white),
                         ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 GestureDetector(

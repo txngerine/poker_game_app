@@ -26,17 +26,17 @@ class _LightPageState extends State<LightPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
-              BuildHeadingWidget(text: "Light"),
-              SizedBox(
+              const BuildHeadingWidget(text: "Light"),
+              const SizedBox(
                 height: 40,
               ),
               Image.asset(
                   width: width / 5,
                   "assets/images/gender&avatar/light icon.png"),
-              SizedBox(
+              const SizedBox(
                 height: 90,
               ),
               const Text.rich(
@@ -57,7 +57,7 @@ class _LightPageState extends State<LightPage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 110,
               ),
               Row(

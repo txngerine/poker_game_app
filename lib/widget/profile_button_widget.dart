@@ -378,12 +378,9 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
-import '../popups/faceidentity_dark.dart';
-import '../popups/kyc_identity_camera_page_dark.dart';
 import '../provider/country_provider.dart';
 import 'phonenumber_popup.dart';
 
@@ -430,7 +427,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
 
     return Column(
       children: [
-        SizedBox(height: 105),
+        const SizedBox(height: 105),
         Dialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           backgroundColor: const Color(0xFF3C3D37),
@@ -764,9 +761,9 @@ void showFaceCheckPopup(BuildContext context) {
             //                     type: PageTransitionType.rightToLeftWithFade));
             //           },
               child: Container(width: 300,height: 60,
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
-                child: Center(
-                  child: const Text(
+                decoration: BoxDecoration(image: const DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
+                child: const Center(
+                  child: Text(
                     'LET’S TAKE A SELFIE',
                     style: TextStyle(
                       fontSize: 14,

@@ -173,9 +173,9 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                               child: _isUploading
                                   ? SizedBox(
                                       width: width / 2.3,
-                                      child: Center(
+                                      child: const Center(
                                           child:
-                                              const CircularProgressIndicator()))
+                                              CircularProgressIndicator()))
                                   : Image.asset(
                                       "assets/images/confirm (6).png",
                                       width: width / 2.3,

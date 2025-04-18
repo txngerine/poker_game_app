@@ -130,7 +130,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                               child: Container(
                                 width: width / 1.4,
                                 height: height / 3,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
                                           "assets/images/transfer (2)/successful popup.png"),
@@ -140,15 +140,15 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 90,
                                     ),
-                                    BuildSubHeadingText(
+                                    const BuildSubHeadingText(
                                       text: "TRANSFER SUCCESSFUL",
                                       color: Colors.white,
                                       fontSize: 20,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     BuildTextWidget(
@@ -278,7 +278,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                   ? Center(
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsets.all(5.0),
+                                                            const EdgeInsets.all(5.0),
                                                         child: BuildTextWidget(
                                                           text: errorMessage!,
                                                           align:

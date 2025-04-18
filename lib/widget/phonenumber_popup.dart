@@ -38,12 +38,11 @@ class PhoneNumberPopupContent extends StatelessWidget {
   final int userId;
 
   PhoneNumberPopupContent({
-    Key? key,
+    super.key,
     required String initialPhone,
     required this.userId,
     required this.onPhoneNumberSaved,
-  })  : phoneController = TextEditingController(text: initialPhone),
-        super(key: key);
+  })  : phoneController = TextEditingController(text: initialPhone);
 
 
   @override
@@ -70,7 +69,7 @@ class PhoneNumberPopupContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 30),
-                  BuildTextWidget(
+                  const BuildTextWidget(
                     text: "Phone Number",
                     fontSize: 28,
                     fontWeight: FontWeight.w900,
@@ -79,7 +78,7 @@ class PhoneNumberPopupContent extends StatelessWidget {
                   const SizedBox(height: 50),
                   Image.asset("assets/images/phonenumbpopupassets/phone_icon.png"),
                   const SizedBox(height: 100),
-                  Container(
+                  SizedBox(
                     width: width / 1.5,
                     height: 50,
                     child: Row(
@@ -211,7 +210,7 @@ class CountryPickerPopupContent extends StatelessWidget {
           const SizedBox(height: 10),
           
           const SizedBox(height: 40),
-          BuildTextWidget(
+          const BuildTextWidget(
             text: "Country Code",
             fontSize: 28,
             fontWeight: FontWeight.w900,
@@ -234,11 +233,11 @@ class CountryPickerPopupContent extends StatelessWidget {
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.text,
                 style: const TextStyle(fontSize: 14, color: Colors.white),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Enter country name",
-                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 15),
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 15),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(14),
+                  contentPadding: EdgeInsets.all(14),
                 ),
                 onChanged: provider.searchCountry,
               ),

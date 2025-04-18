@@ -123,7 +123,7 @@ class _TermsPageState extends State<TermsPage> {
           Container(
             width: width,
             height: height / 1.1,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage("assets/images/terms/terms bg.png")),
@@ -131,10 +131,10 @@ class _TermsPageState extends State<TermsPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                BuildHeadingWidget(text: "Terms and Conditions"),
+                const BuildHeadingWidget(text: "Terms and Conditions"),
                 const SizedBox(height: 45),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
                           "assets/images/terms/terms text field.png"),
@@ -150,7 +150,7 @@ class _TermsPageState extends State<TermsPage> {
                       child: Container(
                         padding: const EdgeInsets.all(
                             12.0), // Inner padding for better spacing
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: const BuildTextWidget(
                           fontSize: 15,
                           text:
@@ -270,10 +270,10 @@ class _TermsPageState extends State<TermsPage> {
                         acceptTerms();
                       },
                       child: isLoading
-                          ? Center(child: const CircularProgressIndicator())
+                          ? const Center(child: CircularProgressIndicator())
                           : Image.asset(
                               "assets/images/enter_pokerpad_button.png")))),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ],

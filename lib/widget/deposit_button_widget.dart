@@ -192,7 +192,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                             widget.playerResponse?.data
                                                     ?.walletAddress ??
                                                 "No address available",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 10,
                                               color: Colors.white,
                                               overflow: TextOverflow.clip,

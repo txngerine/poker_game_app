@@ -29,7 +29,7 @@ class CountryProvider extends ChangeNotifier {
 
   CountryProvider() {
     _getStoredDeviceId(); // Fetch stored Device ID on provider initialization
-    print("device id${_deviceId},number${phoneNumber}");
+    print("device id$_deviceId,number$phoneNumber");
   }
 
   Future<void> _getStoredDeviceId() async {
@@ -65,7 +65,7 @@ class CountryProvider extends ChangeNotifier {
     final id = SignupController.userId;
     print("userId$id");
     print("deviceId:$deviceId");
-    print("countryName:${_countryName}");
+    print("countryName:$_countryName");
     print(_countryCode);
     notifyListeners();
   }

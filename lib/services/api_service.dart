@@ -74,8 +74,8 @@ class ApiService {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: 'http://3.6.170.253:1080/server.php/api/v1/',
-      connectTimeout: Duration(seconds: 10),
-      receiveTimeout: Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
       headers: {
         "Content-Type": "application/json",
       },

@@ -84,10 +84,10 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
-                BuildHeadingWidget(text: "Pick secondary Avatar"),
+                const BuildHeadingWidget(text: "Pick secondary Avatar"),
                 Stack(
                   alignment: Alignment.center,
                   children: [
@@ -161,7 +161,7 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                     );
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
               ],
@@ -193,7 +193,7 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
                   "assets/images/pokerPadArt/retake selfie.png",
                   height: 15,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 )
               ],

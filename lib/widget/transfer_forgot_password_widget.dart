@@ -252,7 +252,7 @@ class _TransferForgotPasswordWidgetState
                       text: "A 6-digit code has been sent to your email.",
                       color: Colors.white,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     Row(
@@ -419,7 +419,7 @@ class _TransferForgotPasswordWidgetState
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 9,
                     ),
                     SizedBox(
