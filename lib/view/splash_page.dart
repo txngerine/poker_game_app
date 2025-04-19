@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _checkDeviceAndNavigate() async {
     await Future.delayed(const Duration(seconds: 6)); // optional splash delay
-    if (!mounted) return; // 💡 Prevent navigation if widget is disposed
+    // if (!mounted) return;
 
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? storedDeviceId = pref.getString("device_id");

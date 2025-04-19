@@ -7,6 +7,7 @@ import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
 import 'package:pokerpad/widget/transfer_history_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/login_response_model.dart';
 import '../model/transfer_request_model.dart';
@@ -35,6 +36,32 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
   final TextEditingController amountController = TextEditingController();
   String? errorMessage;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedPassword();
+  }
+
+  Future<void> _loadSavedPassword() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedPassword = prefs.getString('remembered_password');
+    if (savedPassword != null) {
+      setState(() {
+        passwordController.text = savedPassword;
+        isMarked = true;
+      });
+    }
+  }
+
+  Future<void> _rememberPassword(String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (isMarked) {
+      await prefs.setString('remembered_password', password);
+    } else {
+      await prefs.remove('remembered_password');
+    }
+  }
+
   Future<void> forgotPassword() async {
     setState(() {
       isLoading = true;
@@ -52,7 +79,6 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
       });
 
       if (response != null) {
-        print("okkkkkkkkkkkkkkkkk");
         showDialog(
           context: context,
           builder: (context) {
@@ -86,14 +112,12 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
       onTap: () {
         final provider =
             Provider.of<TransferButtonProvider>(context, listen: false);
-
         provider.setClick(true);
 
         showDialog(
           barrierDismissible: true,
           context: context,
           builder: (BuildContext context) {
-            bool isMarked = false;
             bool isLoading = false;
             String? errorMessage;
 
@@ -119,6 +143,8 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                 });
 
                 if (response?.status == "OK") {
+                  await _rememberPassword(passwordController.text);
+
                   showDialog(
                     context: context,
                     builder: (_) => Stack(
@@ -126,54 +152,50 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                         Padding(
                           padding: const EdgeInsets.only(top: 150),
                           child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                width: width / 1.4,
-                                height: height / 3,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/transfer (2)/successful popup.png"),
-                                      fit: BoxFit.cover),
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              width: width / 1.4,
+                              height: height / 3,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/transfer (2)/successful popup.png"),
+                                  fit: BoxFit.cover,
                                 ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(
-                                      height: 90,
-                                    ),
-                                    const BuildSubHeadingText(
-                                      text: "TRANSFER SUCCESSFUL",
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    BuildTextWidget(
-                                      align: TextAlign.center,
-                                      text:
-                                          "You transfer the amount \n \$${amountController.text} to Player ID${playerIdController.text}",
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    )
-                                  ],
-                                ),
-                              )),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 90),
+                                  const BuildSubHeadingText(
+                                    text: "TRANSFER SUCCESSFUL",
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  BuildTextWidget(
+                                    align: TextAlign.center,
+                                    text:
+                                        "You transfer the amount \n \$${amountController.text} to Player ID${playerIdController.text}",
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   );
-                } else {
-                  if (response?.status == "FAIL") {
-                    setDialogState(() {
-                      errorMessage = response?.messages?["to"] ??
-                          response?.messages?["from"] ??
-                          response?.messages?["error"] ??
-                          "Transfer failed";
-                    });
-                  }
+                } else if (response?.status == "FAIL") {
+                  setDialogState(() {
+                    errorMessage = response?.messages?["to"] ??
+                        response?.messages?["from"] ??
+                        response?.messages?["error"] ??
+                        "Transfer failed";
+                  });
                 }
               } catch (e) {
                 setDialogState(() {
@@ -237,10 +259,17 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                         Row(
                                           children: [
                                             GestureDetector(
-                                              onTap: () {
+                                              onTap: () async {
                                                 setDialogState(() {
                                                   isMarked = !isMarked;
                                                 });
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                if (!isMarked) {
+                                                  await prefs.remove(
+                                                      'remembered_password');
+                                                }
                                               },
                                               child: Image.asset(
                                                 width: width / 24,
@@ -262,10 +291,9 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png",
-                                              ),
+                                                  "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png"),
                                             ),
-                                          ), // No background when there's no error
+                                          ),
                                           child: isTransferLoading
                                               ? const Center(
                                                   child: SizedBox(
@@ -278,7 +306,8 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                   ? Center(
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets.all(5.0),
+                                                            const EdgeInsets
+                                                                .all(5.0),
                                                         child: BuildTextWidget(
                                                           text: errorMessage!,
                                                           align:
@@ -288,7 +317,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                         ),
                                                       ),
                                                     )
-                                                  : null, // Empty container when no error
+                                                  : null,
                                         ),
                                       ],
                                     ),
