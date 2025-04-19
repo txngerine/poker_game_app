@@ -1,20 +1,28 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../provider/country_provider.dart';
 import '../widget/build_text_widget.dart';
 
-void showPhoneNumberPopup(BuildContext context, {required String phoneNumber,required Function(String) onPhoneNumberUpdated, required int userId,}) {
+void showPhoneNumberPopup(
+  BuildContext context, {
+  required String phoneNumber,
+  required Function(String) onPhoneNumberUpdated,
+  required int userId,
+}) {
   showDialog(
     context: context,
     barrierDismissible: true,
     builder: (context) {
-      return Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.all(10),
-        child:  PhoneNumberPopupContent(
-          initialPhone: phoneNumber,
-          onPhoneNumberSaved: onPhoneNumberUpdated, userId: userId,
+      return Material(
+        type: MaterialType.transparency,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 67),
+          child: PhoneNumberPopupContent(
+            initialPhone: phoneNumber,
+            onPhoneNumberSaved: onPhoneNumberUpdated,
+            userId: userId,
+          ),
         ),
       );
     },
@@ -42,8 +50,7 @@ class PhoneNumberPopupContent extends StatelessWidget {
     required String initialPhone,
     required this.userId,
     required this.onPhoneNumberSaved,
-  })  : phoneController = TextEditingController(text: initialPhone);
-
+  }) : phoneController = TextEditingController(text: initialPhone);
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +63,12 @@ class PhoneNumberPopupContent extends StatelessWidget {
         Stack(
           children: [
             Container(
-              width: width,
+              width: width / 1.4,
               height: height / 1.6,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/phonenumbpopupassets/phone_number_bg.png"),
+                  image: AssetImage(
+                      "assets/images/phonenumbpopupassets/phone_number_bg.png"),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -68,25 +76,26 @@ class PhoneNumberPopupContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 30),
                   const BuildTextWidget(
                     text: "Phone Number",
-                    fontSize: 28,
+                    fontSize: 23,
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
                   ),
-                  const SizedBox(height: 50),
-                  Image.asset("assets/images/phonenumbpopupassets/phone_icon.png"),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 30),
+                  Image.asset(
+                      "assets/images/phonenumbpopupassets/phone_icon.png"),
+                  const SizedBox(height: 60),
                   SizedBox(
-                    width: width / 1.5,
+                    width: width / 1.7,
                     height: 50,
                     child: Row(
                       children: [
                         GestureDetector(
                           onTap: () {
                             countryProvider.resetFilteredCountries();
-                            Future.delayed(const Duration(milliseconds: 300), () {
+                            Future.delayed(const Duration(milliseconds: 300),
+                                () {
                               showCountryPickerPopup(context);
                             });
                           },
@@ -96,7 +105,8 @@ class PhoneNumberPopupContent extends StatelessWidget {
                             width: 110,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage("assets/images/phonenumbpopupassets/country_selection.png"),
+                                image: AssetImage(
+                                    "assets/images/phonenumbpopupassets/country_selection.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -123,7 +133,8 @@ class PhoneNumberPopupContent extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               image: const DecorationImage(
-                                image: AssetImage("assets/images/phonenumbpopupassets/number_field.png"),
+                                image: AssetImage(
+                                    "assets/images/phonenumbpopupassets/number_field.png"),
                                 fit: BoxFit.fill,
                               ),
                               borderRadius: BorderRadius.circular(30),
@@ -132,12 +143,15 @@ class PhoneNumberPopupContent extends StatelessWidget {
                               controller: phoneController,
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.phone,
-                              style: const TextStyle(fontSize: 12, color: Colors.white),
+                              style: const TextStyle(
+                                  fontSize: 12, color: Colors.white),
                               decoration: const InputDecoration(
                                 hintText: "Phone Number",
-                                hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                                hintStyle:
+                                    TextStyle(color: Colors.grey, fontSize: 12),
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 15),
                               ),
                             ),
                           ),
@@ -145,15 +159,16 @@ class PhoneNumberPopupContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: height / 8),
+                  SizedBox(height: height / 9),
                   GestureDetector(
-                   onTap: () async {
-          await countryProvider.updatePhoneNumbe(context, userId, phoneController.text);
-          onPhoneNumberSaved(phoneController.text);
-          Navigator.pop(context);
-        },
+                    onTap: () async {
+                      await countryProvider.updatePhoneNumbe(
+                          context, userId, phoneController.text);
+                      onPhoneNumberSaved(phoneController.text);
+                      Navigator.pop(context);
+                    },
                     child: Image.asset(
-                      width: width / 1.5,
+                      width: width / 1.8,
                       "assets/images/phonenumbpopupassets/confirm_button_black.png",
                     ),
                   )
@@ -166,7 +181,6 @@ class PhoneNumberPopupContent extends StatelessWidget {
     );
   }
 }
-
 
 void showCountryPickerPopup(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
@@ -189,7 +203,8 @@ class CountryPickerPopupContent extends StatelessWidget {
   final double width;
   final double height;
 
-  const CountryPickerPopupContent({required this.width, required this.height, super.key});
+  const CountryPickerPopupContent(
+      {required this.width, required this.height, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +223,7 @@ class CountryPickerPopupContent extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 10),
-          
+
           const SizedBox(height: 40),
           const BuildTextWidget(
             text: "Country Code",
@@ -224,7 +239,8 @@ class CountryPickerPopupContent extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: AssetImage("assets/images/phonenumbpopupassets/countru_search_field.png"),
+                  image: AssetImage(
+                      "assets/images/phonenumbpopupassets/countru_search_field.png"),
                   fit: BoxFit.fill,
                 ),
                 borderRadius: BorderRadius.circular(20),
@@ -252,7 +268,8 @@ class CountryPickerPopupContent extends StatelessWidget {
             height: height / 1.33,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/phonenumbpopupassets/2nd_lavel.png"),
+                image: AssetImage(
+                    "assets/images/phonenumbpopupassets/2nd_lavel.png"),
                 fit: BoxFit.fill,
               ),
             ),
@@ -260,7 +277,8 @@ class CountryPickerPopupContent extends StatelessWidget {
               builder: (context, provider, child) {
                 return provider.filteredCountries.isEmpty
                     ? const Center(
-                        child: Text("No Results Found", style: TextStyle(fontSize: 16, color: Colors.grey)))
+                        child: Text("No Results Found",
+                            style: TextStyle(fontSize: 16, color: Colors.grey)))
                     : Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: ListView.builder(
@@ -275,7 +293,8 @@ class CountryPickerPopupContent extends StatelessWidget {
                                 height: 68,
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage("assets/images/phonenumbpopupassets/flag_field.png"),
+                                    image: AssetImage(
+                                        "assets/images/phonenumbpopupassets/flag_field.png"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -298,7 +317,8 @@ class CountryPickerPopupContent extends StatelessWidget {
                               ),
                               trailing: Text(
                                 country.dialCode,
-                                style: const TextStyle(fontSize: 16, color: Colors.white),
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
                               ),
                               onTap: () {
                                 provider.selectCountry(country);

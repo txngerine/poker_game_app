@@ -1,4 +1,3 @@
-
 // import 'package:flutter/material.dart';
 // import 'package:pokerpad/model/login_response_model.dart';
 // import 'package:pokerpad/widget/build_sub_heading_text.dart';
@@ -43,7 +42,6 @@
 //       return KycStatus.unknown;
 //   }
 // }
-
 
 //   KycStatus _getNextStatus(KycStatus current) {
 //     switch (current) {
@@ -190,7 +188,6 @@
 //   });
 // },
 
-
 //   child: CircleAvatar(
 //     radius: 23,
 //     backgroundColor: Colors.transparent,
@@ -323,9 +320,6 @@
 //   }
 // }
 
-
-
-
 // void showFaceCheckPopup(BuildContext context) {
 //   showDialog(
 //     context: context,
@@ -374,13 +368,11 @@
 //   );
 // }
 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
+
 import '../provider/country_provider.dart';
 import 'phonenumber_popup.dart';
 
@@ -429,7 +421,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
       children: [
         const SizedBox(height: 105),
         Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           backgroundColor: const Color(0xFF3C3D37),
           child: Container(
             padding: const EdgeInsets.all(15),
@@ -507,7 +500,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: AssetImage("assets/images/profilebutton/mail_phone_field.png"),
+                image: AssetImage(
+                    "assets/images/profilebutton/mail_phone_field.png"),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -527,7 +521,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                image: AssetImage("assets/images/profilebutton/mail_phone_field.png"),
+                image: AssetImage(
+                    "assets/images/profilebutton/mail_phone_field.png"),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -546,8 +541,10 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                       userId: widget.userData.id ?? 0,
                       phoneNumber: widget.userData.phone ?? '',
                       onPhoneNumberUpdated: (updatedPhone) async {
-                        final provider = Provider.of<CountryProvider>(context, listen: false);
-                        await provider.updatePhoneNumbe(context, widget.userData.id ?? 0, updatedPhone);
+                        final provider = Provider.of<CountryProvider>(context,
+                            listen: false);
+                        await provider.updatePhoneNumbe(
+                            context, widget.userData.id ?? 0, updatedPhone);
                         setState(() {
                           widget.userData.phone = updatedPhone;
                           _isEditing = false;
@@ -593,13 +590,15 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
         break;
       case KycStatus.pending:
         assetPath = "assets/images/profilebutton/profile_alerts.png";
-        titleText = "Thank you for your submission! Your KYC verification is currently in progress. Please be patient as our team reviews your documents.";
+        titleText =
+            "Thank you for your submission! Your KYC verification is currently in progress. Please be patient as our team reviews your documents.";
         textColor = Colors.black;
         fontSize = 10;
         break;
       case KycStatus.tryAgain:
         assetPath = "assets/images/profilebutton/profile_alerts.png";
-        titleText = "We're sorry, but your KYC verification was not successful. Please review the requirements and try again.";
+        titleText =
+            "We're sorry, but your KYC verification was not successful. Please review the requirements and try again.";
         textColor = Colors.black;
         fontSize = 10;
         break;
@@ -752,16 +751,25 @@ void showFaceCheckPopup(BuildContext context) {
               ),
             ),
             const SizedBox(height: 24),
-           InkWell(
-            //  onTap: () {
-            //             Navigator.push(
-            //                 context,
-            //                 PageTransition(
-            //                     child: const FaceIdentityPage(),
-            //                     type: PageTransitionType.rightToLeftWithFade));
-            //           },
-              child: Container(width: 300,height: 60,
-                decoration: BoxDecoration(image: const DecorationImage(image: AssetImage("assets/images/phonenumbpopupassets/confirmco.png"),fit: BoxFit.fill,),borderRadius: BorderRadius.circular(20),),
+            InkWell(
+              //  onTap: () {
+              //             Navigator.push(
+              //                 context,
+              //                 PageTransition(
+              //                     child: const FaceIdentityPage(),
+              //                     type: PageTransitionType.rightToLeftWithFade));
+              //           },
+              child: Container(
+                width: 300,
+                height: 60,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage(
+                        "assets/images/phonenumbpopupassets/confirmco.png"),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: const Center(
                   child: Text(
                     'LET’S TAKE A SELFIE',
