@@ -369,10 +369,13 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/model/login_response_model.dart';
+import 'package:pokerpad/popups/kyc_identity_camera_page_dark.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
 
+import '../popups/faceidentity_dark.dart';
 import '../provider/country_provider.dart';
 import 'phonenumber_popup.dart';
 
@@ -752,13 +755,13 @@ void showFaceCheckPopup(BuildContext context) {
             ),
             const SizedBox(height: 24),
             InkWell(
-              //  onTap: () {
-              //             Navigator.push(
-              //                 context,
-              //                 PageTransition(
-              //                     child: const FaceIdentityPage(),
-              //                     type: PageTransitionType.rightToLeftWithFade));
-              //           },
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const FaceIdentityPage(),
+                        type: PageTransitionType.rightToLeftWithFade));
+              },
               child: Container(
                 width: 300,
                 height: 60,
@@ -855,12 +858,12 @@ void showProofOfIdentityPopup(BuildContext context) {
             const SizedBox(height: 24),
             InkWell(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => KycVerifyCameraPageDark(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KycVerifyCameraPageDark(),
+                  ),
+                );
               },
               child: Container(
                 width: 300,

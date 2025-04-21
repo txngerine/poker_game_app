@@ -176,10 +176,6 @@
 //   }
 // }
 
-
-
-
-
 import 'dart:io';
 import 'dart:math' as math;
 
@@ -289,6 +285,7 @@ class _FaceIdentityPageState extends State<FaceIdentityPage> {
     final height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: _isCameraInitialized
           ? Stack(
               children: [
@@ -332,6 +329,14 @@ class _FaceIdentityPageState extends State<FaceIdentityPage> {
                         GestureDetector(
                           onTap: () {
                             captureImage();
+                            // Navigator.push(
+                            //   context,
+                            //   PageTransition(
+                            //     child: ImagePreviewScreenDark(
+                            //         imagePath: _imagePath.toString()),
+                            //     type: PageTransitionType.rightToLeftWithFade,
+                            //   ),
+                            // );
                             setState(() {
                               print(_imagePath);
                             });

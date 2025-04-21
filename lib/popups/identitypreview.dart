@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
-import 'package:pokerpad/view/front_camera_page.dart';
+import 'package:pokerpad/popups/faceidentity_dark.dart';
+import 'package:pokerpad/view/kyc_pick_avatar_page.dart';
 import 'package:pokerpad/view/name_page.dart';
 
 class ImagePreviewScreenDark extends StatefulWidget {
@@ -69,7 +70,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       // print(response.body);
       // Check response
       if (response.statusCode == 200) {
-        // log("Image uploaded successfully: ${response.body}");
+        log("Image uploaded successfully: ${response.body}");
         Navigator.push(
             context,
             PageTransition(
@@ -90,7 +91,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
         print("000000000000000000000");
         print(response.statusCode);
         print(response.body);
-        // log("Failed to upload image: ${response.statusCode}");
+        log("Failed to upload image: ${response.statusCode}");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
             shape: RoundedRectangleBorder(
@@ -120,6 +121,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Container(
@@ -158,7 +160,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const FrontCameraPage(),
+                                          const FaceIdentityPage(),
                                     ));
                               },
                               child: Image.asset(
@@ -169,13 +171,19 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                             GestureDetector(
                               onTap: () {
                                 uploadImage();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const KycPickAvatarPage()
+                                        // KycLoadingAvatarPage(),
+                                        ));
                               },
                               child: _isUploading
                                   ? SizedBox(
                                       width: width / 2.3,
                                       child: const Center(
-                                          child:
-                                              CircularProgressIndicator()))
+                                          child: CircularProgressIndicator()))
                                   : Image.asset(
                                       "assets/images/confirm (6).png",
                                       width: width / 2.3,
