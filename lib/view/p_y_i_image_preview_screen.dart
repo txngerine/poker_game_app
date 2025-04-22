@@ -10,7 +10,7 @@ import 'package:pokerpad/view/terms_page.dart';
 
 import '../constants/screen_size.dart';
 import '../controller/signup_controller.dart';
-import 'p_y_i_camera_page.dart';
+import '../popups/kyc_identity_camera_page_dark.dart';
 
 class PYIImagePreviewScreen extends StatefulWidget {
   final String imagePath;
@@ -119,7 +119,7 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
             width: ScreenSize.screenWidth,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.jpg"),
+                image: AssetImage("assets/images/lobby/lobby pattern.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -143,7 +143,8 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PYICameraPage(),
+                            builder: (context) =>
+                                const KycVerifyCameraPageDark(),
                           ));
                     },
                     child: Image.asset(

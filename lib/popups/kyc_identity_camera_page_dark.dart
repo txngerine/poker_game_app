@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/kyc_image_preview_page.dart';
+import 'package:pokerpad/view/p_y_i_image_preview_screen.dart';
 
 import '../constants/screen_size.dart';
 
@@ -9,7 +9,8 @@ class KycVerifyCameraPageDark extends StatefulWidget {
   const KycVerifyCameraPageDark({super.key});
 
   @override
-  State<KycVerifyCameraPageDark> createState() => _KycVerifyCameraPageDarkState();
+  State<KycVerifyCameraPageDark> createState() =>
+      _KycVerifyCameraPageDarkState();
 }
 
 class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
@@ -61,10 +62,10 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
           _imagePath = file.path;
         });
         debugPrint("Image captured at path: ${file.path}");
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             PageTransition(
-                child: KycImagePreviewPage(
+                child: PYIImagePreviewScreen(
                   imagePath: file.path,
                 ),
                 type: PageTransitionType.rightToLeftWithFade));
@@ -82,6 +83,9 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -97,23 +101,12 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/images/kyc/proof of rewsidence.png",
-                  height: 55,
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "Make sure that everything is clearly readable in this photo.\nMake sure all four corners of the document are visible.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 13),
-                ),
-                const SizedBox(height: 20),
                 Container(
-                  height: 490,
-                  width: 450,
+                  height: height / 1.15,
+                  width: width,
                   decoration: BoxDecoration(
-                    color: Colors.white70,
-                    border: Border.all(color: Colors.white70),
+                    color: Colors.black,
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: _isCameraInitialized
@@ -122,8 +115,8 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
                             Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: SizedBox(
-                                  height: 490,
-                                  width: 450,
+                                  height: height,
+                                  width: width,
                                   child: CameraPreview(_cameraController)),
                             ),
                             // Align(
@@ -159,26 +152,60 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    GestureDetector(
-                        onTap: () {
-                          captureImage();
-                          setState(() {
-                            print(_imagePath);
-                          });
-                        },
-                        child: Image.asset(
-                          "assets/images/confirm.png",
-                          height: 57,
-                        )),
-                    GestureDetector(
-                        onTap: () {
-                          _cameraController.dispose();
-                          initializeCamera();
-                        },
-                        child: Image.asset(
-                          "assets/images/retake.png",
-                          height: 57,
-                        )),
+                    // GestureDetector(
+                    //     onTap: () {
+                    //       captureImage();
+                    //       setState(() {
+                    //         print(_imagePath);
+                    //       });
+                    //     },
+                    //     child: Image.asset(
+                    //       "assets/images/confirm.png",
+                    //       height: 57,
+                    //     )),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                captureImage();
+                                // Navigator.push(
+                                //   context,
+                                //   PageTransition(
+                                //     child: ImagePreviewScreenDark(
+                                //         imagePath: _imagePath.toString()),
+                                //     type: PageTransitionType.rightToLeftWithFade,
+                                //   ),
+                                // );
+                                setState(() {
+                                  print(_imagePath);
+                                });
+                              },
+                              child: Image.asset(
+                                "assets/images/shutter_button_black.png",
+                                height: height / 11,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // GestureDetector(
+                    //     onTap: () {
+                    //       _cameraController.dispose();
+                    //       initializeCamera();
+                    //     },
+                    //     child: Image.asset(
+                    //       "assets/images/retake.png",
+                    //       height: 57,
+                    //     )),
                   ],
                 ),
               ],

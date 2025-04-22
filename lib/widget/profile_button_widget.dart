@@ -801,7 +801,8 @@ void showProofOfIdentityPopup(BuildContext context) {
       child: Container(
         width: 300,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(35),
+          border: Border.all(color: Color(0xFF4A4A4A), width: 3),
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

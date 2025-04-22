@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field, unused_local_variable
-
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -11,8 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/popups/faceidentity_dark.dart';
-import 'package:pokerpad/view/kyc_pick_avatar_page.dart';
-import 'package:pokerpad/view/name_page.dart';
+import 'package:pokerpad/view/kyc_loading_avatar_page.dart';
 
 class ImagePreviewScreenDark extends StatefulWidget {
   final String imagePath;
@@ -43,10 +40,9 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       // Convert the image to Base64
       String base64String = base64Encode(_imageFile.readAsBytesSync());
       _base64String = base64String;
-      // log("Base64 String: $_base64String");
+      log("Base64 String: $_base64String");
       // Get the userId from SignupController
       String userId = SignupController.userId.toString();
-
       // API URL
       String apiUrl =
           "http://3.6.170.253:1080/server.php/api/v1/players/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
@@ -54,27 +50,27 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       Map<String, dynamic> requestBody = {
         "photo": base64String,
         "id": userId,
-        "deviceId": 1
+        "deviceId": "H6KJC8C4Y9"
       };
-      // print("00000");
-      // print(apiUrl);
-      // print(userId);
-      // print(requestBody["id"]);
+      print("00000");
+      print(apiUrl);
+      print(userId);
+      print(requestBody["id"]);
       final response = await http.put(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(requestBody),
       );
 
-      // log("Response: ${response.body}");
-      // print(response.body);
+      log("Response: ${response.body}");
+      print(response.body);
       // Check response
       if (response.statusCode == 200) {
         log("Image uploaded successfully: ${response.body}");
         Navigator.push(
             context,
             PageTransition(
-                child: const NamePage(),
+                child: const KycLoadingAvatarPage(),
                 type: PageTransitionType.rightToLeftWithFade));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
@@ -150,7 +146,6 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                           ),
                         ),
                         const SizedBox(height: 30),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -171,13 +166,13 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                             GestureDetector(
                               onTap: () {
                                 uploadImage();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const KycPickAvatarPage()
-                                        // KycLoadingAvatarPage(),
-                                        ));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             const KycPickAvatarPage()
+                                //         // KycLoadingAvatarPage(),
+                                //         ));
                               },
                               child: _isUploading
                                   ? SizedBox(
@@ -191,21 +186,6 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                             )
                           ],
                         )
-
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     Navigator.pop(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => const FrontCameraPage(),
-                        //       ),
-                        //     );
-                        //   },
-                        //   child: Image.asset(
-                        //     "assets/images/retake.png",
-                        //     height: 57,
-                        //   ),
-                        // ),
                       ],
                     )
                   : const Text("No image captured."),
