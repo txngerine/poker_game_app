@@ -3,6 +3,7 @@ import 'package:pokerpad/controller/forgot_password_controller.dart';
 import 'package:pokerpad/controller/transfer_controller.dart';
 import 'package:pokerpad/model/forgot_password_model.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
+import 'package:pokerpad/view/kyc_info_popUp.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
 import 'package:pokerpad/widget/transfer_history_widget.dart';
@@ -209,159 +210,170 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
               builder: (context, setDialogState) {
                 final width = MediaQuery.sizeOf(context).width;
                 final height = MediaQuery.sizeOf(context).height;
+                final kyc = widget.playerResponse?.data?.kyc;
+                final idRejected = kyc?.idStatus?.toLowerCase() == 'rejected';
+                final faceRejected =
+                    kyc?.faceStatus?.toLowerCase() == 'rejected';
 
-                return Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Dialog(
-                    alignment: Alignment.topCenter,
-                    backgroundColor: Colors.transparent,
-                    child: SizedBox(
-                      width: width,
-                      height: height / 2,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            width: width,
-                            height: height,
-                            'assets/images/transfer (2)/bank frame (3).png',
-                            fit: BoxFit.cover,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 58, left: 10),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        CustomTransferTextField(
-                                            controller: playerIdController,
-                                            hintText: "Transfer Player ID:"),
-                                        CustomTransferTextField(
-                                            controller: amountController,
-                                            hintText: "Transfer to Amount\$:"),
-                                        CustomTransferTextField(
-                                          controller: passwordController,
-                                          hintText: "Password",
-                                          keyboardType: TextInputType.text,
-                                        ),
-                                        isLoading
-                                            ? const CircularProgressIndicator()
-                                            : GestureDetector(
-                                                onTap: () => forgotPassword(),
-                                                child: const BuildTextWidget(
-                                                  text: "Forgot Password",
-                                                  color: Colors.white,
-                                                  fontSize: 13,
+                if (idRejected || faceRejected) {
+                  return KycInfoPopup();
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Dialog(
+                      alignment: Alignment.topCenter,
+                      backgroundColor: Colors.transparent,
+                      child: SizedBox(
+                        width: width,
+                        height: height / 2,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              width: width,
+                              height: height,
+                              'assets/images/transfer (2)/bank frame (3).png',
+                              fit: BoxFit.cover,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 58, left: 10),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          CustomTransferTextField(
+                                              controller: playerIdController,
+                                              hintText: "Transfer Player ID:"),
+                                          CustomTransferTextField(
+                                              controller: amountController,
+                                              hintText:
+                                                  "Transfer to Amount\$:"),
+                                          CustomTransferTextField(
+                                            controller: passwordController,
+                                            hintText: "Password",
+                                            keyboardType: TextInputType.text,
+                                          ),
+                                          isLoading
+                                              ? const CircularProgressIndicator()
+                                              : GestureDetector(
+                                                  onTap: () => forgotPassword(),
+                                                  child: const BuildTextWidget(
+                                                    text: "Forgot Password",
+                                                    color: Colors.white,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                          Row(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  setDialogState(() {
+                                                    isMarked = !isMarked;
+                                                  });
+                                                  final prefs =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  if (!isMarked) {
+                                                    await prefs.remove(
+                                                        'remembered_password');
+                                                  }
+                                                },
+                                                child: Image.asset(
+                                                  width: width / 24,
+                                                  isMarked
+                                                      ? "assets/images/CASHIER Button/TRANSFER/black check.png"
+                                                      : "assets/images/CASHIER Button/TRANSFER/black check emty.png",
                                                 ),
                                               ),
-                                        Row(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () async {
-                                                setDialogState(() {
-                                                  isMarked = !isMarked;
-                                                });
-                                                final prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
-                                                if (!isMarked) {
-                                                  await prefs.remove(
-                                                      'remembered_password');
-                                                }
-                                              },
-                                              child: Image.asset(
-                                                width: width / 24,
-                                                isMarked
-                                                    ? "assets/images/CASHIER Button/TRANSFER/black check.png"
-                                                    : "assets/images/CASHIER Button/TRANSFER/black check emty.png",
+                                              const BuildTextWidget(
+                                                text: "Remember Password",
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            width: width / 2.4,
+                                            height: height / 12,
+                                            decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png"),
                                               ),
                                             ),
-                                            const BuildTextWidget(
-                                              text: "Remember Password",
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: width / 2.4,
-                                          height: height / 12,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                  "assets/images/CASHIER Button/TRANSFER/transfer alert holder.png"),
-                                            ),
-                                          ),
-                                          child: isTransferLoading
-                                              ? const Center(
-                                                  child: SizedBox(
-                                                      width: 20,
-                                                      height: 20,
-                                                      child:
-                                                          CircularProgressIndicator()))
-                                              : (errorMessage != null &&
-                                                      errorMessage!.isNotEmpty)
-                                                  ? Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
-                                                        child: BuildTextWidget(
-                                                          text: errorMessage!,
-                                                          align:
-                                                              TextAlign.center,
-                                                          fontSize: 15,
-                                                          color: Colors.black,
+                                            child: isTransferLoading
+                                                ? const Center(
+                                                    child: SizedBox(
+                                                        width: 20,
+                                                        height: 20,
+                                                        child:
+                                                            CircularProgressIndicator()))
+                                                : (errorMessage != null &&
+                                                        errorMessage!
+                                                            .isNotEmpty)
+                                                    ? Center(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(5.0),
+                                                          child:
+                                                              BuildTextWidget(
+                                                            text: errorMessage!,
+                                                            align: TextAlign
+                                                                .center,
+                                                            fontSize: 15,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                  : null,
+                                                      )
+                                                    : null,
+                                          ),
+                                        ],
+                                      ),
+                                      Image.asset(
+                                        width: width / 2.4,
+                                        "assets/images/transfer (2)/avatar frame (4).png",
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                TransferHistoryWidget(
+                                                    playerResponse:
+                                                        widget.playerResponse),
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          "assets/images/CASHIER Button/TRANSFER/history button.png",
+                                          width: width / 2.4,
                                         ),
-                                      ],
-                                    ),
-                                    Image.asset(
-                                      width: width / 2.4,
-                                      "assets/images/transfer (2)/avatar frame (4).png",
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              TransferHistoryWidget(
-                                                  playerResponse:
-                                                      widget.playerResponse),
-                                        );
-                                      },
-                                      child: Image.asset(
-                                        "assets/images/CASHIER Button/TRANSFER/history button.png",
-                                        width: width / 2.4,
                                       ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () =>
-                                          transferAmount(setDialogState),
-                                      child: Image.asset(
-                                        "assets/images/CASHIER Button/TRANSFER/transfer button.png",
-                                        width: width / 2.4,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                                      GestureDetector(
+                                        onTap: () =>
+                                            transferAmount(setDialogState),
+                                        child: Image.asset(
+                                          "assets/images/CASHIER Button/TRANSFER/transfer button.png",
+                                          width: width / 2.4,
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
               },
             );
           },

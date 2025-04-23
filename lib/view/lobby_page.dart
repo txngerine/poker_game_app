@@ -91,6 +91,8 @@ class _LobbyPageState extends State<LobbyPage> {
     final loginProvider = Provider.of<LoginProvider>(context);
     final balance = loginProvider.playerBalance;
     print(widget.playerResponse!.data?.id);
+    print("kyc id:${widget.playerResponse?.data?.kyc?.idStatus}");
+    print("kyc face:${widget.playerResponse?.data?.kyc?.faceStatus}");
     print("playerBalance:${widget.playerResponse!.data?.balance}");
     print("walletAddress:${widget.playerResponse!.data?.walletAddress}");
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -120,7 +122,7 @@ class _LobbyPageState extends State<LobbyPage> {
                     onTap: () {
                       showDialog(
                         context: context,
-                        barrierColor: Colors.grey.withOpacity(0.5),
+                        // barrierColor: Colors.grey.withOpacity(0.5),
                         builder: (context) {
                           return ProfileButtonWidget(
                             userData: widget.playerResponse?.data ??
@@ -170,8 +172,18 @@ class _LobbyPageState extends State<LobbyPage> {
                     child: const BuildIconImageWidget(
                         imgName: "assets/images/lobby/info button active.png"),
                   ),
-                  const BuildIconImageWidget(
-                      imgName: "assets/images/lobby/Logo active (1).png"),
+                  GestureDetector(
+                    onTap: () {
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return const KycInfoPopup();
+                      //   },
+                      // );
+                    },
+                    child: const BuildIconImageWidget(
+                        imgName: "assets/images/lobby/Logo active (1).png"),
+                  ),
                 ],
               ),
               Row(

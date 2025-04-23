@@ -429,8 +429,11 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
           backgroundColor: const Color(0xFF3C3D37),
           child: Container(
             padding: const EdgeInsets.all(15),
-            width: width * 0.9,
+            width: width,
             decoration: BoxDecoration(
+              // image: DecorationImage(
+              //     image:
+              //         AssetImage("assets/images/profilebutton/bank_frame.png")),
               color: const Color(0xFF2F2F2F),
               borderRadius: BorderRadius.circular(20),
             ),
