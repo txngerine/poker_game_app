@@ -125,6 +125,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         // barrierColor: Colors.grey.withOpacity(0.5),
                         builder: (context) {
                           return ProfileButtonWidget(
+                            playerResponse: widget.playerResponse,
                             userData: widget.playerResponse?.data ??
                                 Data(
                                   nickname: '',

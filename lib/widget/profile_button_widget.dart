@@ -382,9 +382,12 @@ import 'phonenumber_popup.dart';
 enum KycStatus { verified, pending, tryAgain, unknown }
 
 class ProfileButtonWidget extends StatefulWidget {
+  final LoginResponseModel? playerResponse;
+
   final Data userData;
 
-  const ProfileButtonWidget({super.key, required this.userData});
+  const ProfileButtonWidget(
+      {super.key, required this.userData, this.playerResponse});
 
   @override
   State<ProfileButtonWidget> createState() => _ProfileButtonWidgetState();
@@ -450,7 +453,10 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                 Column(
                   children: [
                     _buildKYCRow("FACE CHECK", faceStatus, () {
-                      showFaceCheckPopup(context);
+                      print(
+                          "Player response before popup: ${widget.playerResponse?.data?.id}");
+
+                      showFaceCheckPopup(context, widget.playerResponse!);
                     }),
                     const SizedBox(height: 10),
                     _buildKYCRow("PROOF OF IDENTITY", idStatus, () {
@@ -694,7 +700,8 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
 }
 
 //popup face
-void showFaceCheckPopup(BuildContext context) {
+void showFaceCheckPopup(
+    BuildContext context, LoginResponseModel playerResponse) {
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -762,7 +769,9 @@ void showFaceCheckPopup(BuildContext context) {
                 Navigator.push(
                     context,
                     PageTransition(
-                        child: const FaceIdentityPage(),
+                        child: FaceIdentityPage(
+                          playerResponse: playerResponse,
+                        ),
                         type: PageTransitionType.rightToLeftWithFade));
               },
               child: Container(

@@ -184,10 +184,13 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../model/login_response_model.dart';
 import 'identitypreview.dart';
 
 class FaceIdentityPage extends StatefulWidget {
-  const FaceIdentityPage({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const FaceIdentityPage({super.key, this.playerResponse});
 
   @override
   State<FaceIdentityPage> createState() => _FaceIdentityPageState();
@@ -261,7 +264,10 @@ class _FaceIdentityPageState extends State<FaceIdentityPage> {
         Navigator.push(
           context,
           PageTransition(
-            child: ImagePreviewScreenDark(imagePath: newImagePath),
+            child: ImagePreviewScreenDark(
+              imagePath: newImagePath,
+              playerResponse: widget.playerResponse,
+            ),
             type: PageTransitionType.rightToLeftWithFade,
           ),
         );
@@ -338,7 +344,7 @@ class _FaceIdentityPageState extends State<FaceIdentityPage> {
                             //   ),
                             // );
                             setState(() {
-                              print(_imagePath);
+                              print("image path:$_imagePath");
                             });
                           },
                           child: Image.asset(

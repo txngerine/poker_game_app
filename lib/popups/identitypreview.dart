@@ -7,14 +7,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/popups/faceidentity_dark.dart';
 import 'package:pokerpad/view/kyc_loading_avatar_page.dart';
 
+import '../model/login_response_model.dart';
+
 class ImagePreviewScreenDark extends StatefulWidget {
+  final LoginResponseModel? playerResponse;
+
   final String imagePath;
 
-  const ImagePreviewScreenDark({super.key, required this.imagePath});
+  const ImagePreviewScreenDark(
+      {super.key, required this.imagePath, this.playerResponse});
 
   @override
   State<ImagePreviewScreenDark> createState() => _ImagePreviewScreenDarkState();
@@ -29,6 +33,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
   void initState() {
     super.initState();
     _imageFile = File(widget.imagePath);
+    print("image path::$_imageFile");
   }
 
   Future<void> uploadImage() async {
@@ -42,7 +47,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       _base64String = base64String;
       log("Base64 String: $_base64String");
       // Get the userId from SignupController
-      String userId = SignupController.userId.toString();
+      String? userId = widget.playerResponse?.data?.id.toString();
       // API URL
       String apiUrl =
           "http://3.6.170.253:1080/server.php/api/v1/players/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
@@ -50,12 +55,14 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       Map<String, dynamic> requestBody = {
         "photo": base64String,
         "id": userId,
-        "deviceId": "H6KJC8C4Y9"
+        "compare": 1
       };
       print("00000");
+      print("Compare value: ${requestBody['compare']}");
+
+      log("Request Body (JSON): ${jsonEncode(requestBody)}");
       print(apiUrl);
       print(userId);
-      print(requestBody["id"]);
       final response = await http.put(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
