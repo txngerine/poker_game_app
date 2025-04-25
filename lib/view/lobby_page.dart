@@ -20,6 +20,7 @@ import 'package:provider/provider.dart';
 import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
 import '../widget/chat_support_widget.dart';
+import 'kyc_info_popUp.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
@@ -236,6 +237,20 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: balance! >= 100
                             ? () async {
+                                final kyc = widget.playerResponse?.data?.kyc;
+                                final idRejected =
+                                    kyc?.idStatus?.toLowerCase() == 'rejected';
+                                final faceRejected =
+                                    kyc?.faceStatus?.toLowerCase() ==
+                                        'rejected';
+
+                                if (idRejected || faceRejected) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const KycInfoPopup(),
+                                  );
+                                  return;
+                                }
                                 bool success = await ratHole("100");
                                 if (!mounted || !success) return;
                                 Navigator.push(
@@ -264,6 +279,20 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: balance >= 200
                             ? () async {
+                                final kyc = widget.playerResponse?.data?.kyc;
+                                final idRejected =
+                                    kyc?.idStatus?.toLowerCase() == 'rejected';
+                                final faceRejected =
+                                    kyc?.faceStatus?.toLowerCase() ==
+                                        'rejected';
+
+                                if (idRejected || faceRejected) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const KycInfoPopup(),
+                                  );
+                                  return;
+                                }
                                 bool success = await ratHole("200");
                                 if (!mounted || !success) return;
                                 Navigator.push(
