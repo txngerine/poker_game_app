@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pokerpad/provider/affiliated_button_provider.dart';
+import 'package:pokerpad/provider/avatar_provider.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/country_provider.dart';
 import 'package:pokerpad/provider/currency_button_provider.dart';
 import 'package:pokerpad/provider/login_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/provider/register_provider.dart';
+import 'package:pokerpad/provider/second_avatar_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/splash_page.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +28,8 @@ void main() async {
     ChangeNotifierProvider(create: (_) => RegisterProvider()),
     ChangeNotifierProvider(create: (_) => CountryProvider()),
     ChangeNotifierProvider(create: (_) => ChartController()),
+    ChangeNotifierProvider(create: (_) => AvatarProvider()),
+    ChangeNotifierProvider(create: (_) => SecondAvatarProvider()),
     // ChangeNotifierProvider(create: (_) => BalanceProvider()),
   ], child: const MyApp()));
 

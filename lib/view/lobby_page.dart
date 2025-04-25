@@ -5,13 +5,13 @@ import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/model/rat_hole_request_model.dart';
 import 'package:pokerpad/model/rat_hole_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
+import 'package:pokerpad/view/kyc_pick_avatar_page.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
 import 'package:pokerpad/widget/build_button_image_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
-import 'package:pokerpad/widget/info_button_widget.dart';
 import 'package:pokerpad/widget/profile_button_widget.dart';
 import 'package:pokerpad/widget/top_winners_view_widget.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
@@ -167,7 +167,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const InfoButtonWidget();
+                          // return const InfoButtonWidget();
+                          return KycPickAvatarPage();
                         },
                       );
                     },

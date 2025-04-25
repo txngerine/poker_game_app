@@ -77,7 +77,9 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
         Navigator.push(
             context,
             PageTransition(
-                child: const KycLoadingAvatarPage(),
+                child: KycLoadingAvatarPage(
+                  playerResponse: widget.playerResponse,
+                ),
                 type: PageTransitionType.rightToLeftWithFade));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
@@ -103,7 +105,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: CupertinoColors.destructiveRed,
             content: const Text(
-              "Face not detected. Please ensure your face is clearly visible, well-lit, and positioned directly in front of the camera.",
+              "Compare image failed.",
               style: TextStyle(color: Colors.white),
             )));
       }

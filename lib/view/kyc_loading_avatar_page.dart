@@ -1,29 +1,33 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/pick_avatar_page.dart';
+import 'package:pokerpad/controller/kyc_avatar_controller.dart';
+import 'package:pokerpad/view/kyc_pick_avatar_page.dart';
 
 import '../constants/screen_size.dart';
-import '../controller/get_avatar_controller.dart';
+import '../model/login_response_model.dart';
 import '../widget/build_heading_widget.dart';
 
 class KycLoadingAvatarPage extends StatefulWidget {
-  const KycLoadingAvatarPage({super.key});
+  final LoginResponseModel? playerResponse;
+  const KycLoadingAvatarPage({super.key, this.playerResponse});
 
   @override
   State<KycLoadingAvatarPage> createState() => _KycLoadingAvatarPageState();
 }
 
 class _KycLoadingAvatarPageState extends State<KycLoadingAvatarPage> {
-  final GetAvatarController _getAvatarController = GetAvatarController();
+  late final KycAvatarController _kycAvatarController;
   bool isLoading = true;
   late Timer _timer; // Declare Timer for periodic refresh
 
   @override
   void initState() {
     super.initState();
-
+    // _kycAvatarController =
+    //     KycAvatarController(loginResponseModel: widget.playerResponse);
     // Start the periodic timer to refresh every 5 seconds
     _timer = Timer.periodic(const Duration(seconds: 20), (_) {
       fetchAvatarData();
@@ -39,40 +43,111 @@ class _KycLoadingAvatarPageState extends State<KycLoadingAvatarPage> {
     super.dispose();
   }
 
+  // Future<void> fetchAvatarData() async {
+  //   setState(() {
+  //     isLoading = true; // Trigger a rebuild and show loading state
+  //   });
+  //
+  //   final avatarData = await _kycAvatarController.getAvatar();
+  //   if (avatarData != null && avatarData.status == "OK") {
+  //     print("Avatar fetched successfully: ${avatarData.status}");
+  //     _timer.cancel();
+  //     Navigator.push(
+  //       context,
+  //       PageTransition(
+  //         child: KycPickAvatarPage(
+  //           playerResponse: widget.playerResponse,
+  //         ),
+  //         type: PageTransitionType.rightToLeftWithFade,
+  //       ),
+  //     );
+  //   } else {
+  //     print("Avatar data fetch failed.");
+  //     if (avatarData == null) {
+  //       print("Avatar data is null.");
+  //     } else {
+  //       print("Avatar status: ${avatarData.status}");
+  //     }
+  //
+  //     setState(() {
+  //       isLoading = false; // Stop loading after trying to fetch the data
+  //     });
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //           duration: Duration(seconds: 2),
+  //           content: Text("Please wait... Your avatar is being generated")),
+  //     );
+  //   }
+  // }
   Future<void> fetchAvatarData() async {
+    print("===> fetchAvatarData called");
+
     setState(() {
-      isLoading = true; // Trigger a rebuild and show loading state
+      isLoading = true;
     });
 
-    final avatarData = await _getAvatarController.getAvatar();
-    if (avatarData != null && avatarData.status == "OK") {
-      print("Avatar fetched successfully: ${avatarData.status}");
-      _timer.cancel();
-      Navigator.push(
-        context,
-        PageTransition(
-          child: const PickAvatarPage(),
-          type: PageTransitionType.rightToLeftWithFade,
+    final userId = widget.playerResponse?.data?.id;
+    print("===> userId: $userId");
+    if (userId == null) {
+      print("User ID is null");
+      return;
+    }
+
+    final url =
+        "http://3.6.170.253:1080/server.php/api/v1/avatar-list/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
+
+    print("===> Fetching avatar from URL: $url");
+
+    try {
+      final response = await Dio().get(
+        url,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
         ),
       );
-    } else {
-      print("Avatar data fetch failed.");
-      if (avatarData == null) {
-        print("Avatar data is null.");
+
+      print("===> Response status code: ${response.statusCode}");
+      print("===> Response body: ${response.data}");
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        if (data["status"] == "OK") {
+          print("===> Avatar status OK. Navigating...");
+          _timer.cancel();
+          Navigator.push(
+            context,
+            PageTransition(
+              child: KycPickAvatarPage(playerResponse: widget.playerResponse),
+              type: PageTransitionType.rightToLeftWithFade,
+            ),
+          );
+          return;
+        } else {
+          print("===> Avatar status not OK: ${data["status"]}");
+        }
       } else {
-        print("Avatar status: ${avatarData.status}");
+        print("===> HTTP error: ${response.statusCode}");
       }
-
-      setState(() {
-        isLoading = false; // Stop loading after trying to fetch the data
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            duration: Duration(seconds: 2),
-            content: Text("Please wait... Your avatar is being generated")),
-      );
+    } catch (e) {
+      print("===> Exception: $e");
     }
+
+    print("===> Showing snackBar and stopping loading...");
+
+    setState(() {
+      isLoading = false;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text("Please wait... Your avatar is being generated"),
+      ),
+    );
   }
 
   @override
