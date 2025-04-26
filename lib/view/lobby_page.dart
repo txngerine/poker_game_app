@@ -185,14 +185,14 @@ class _LobbyPageState extends State<LobbyPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ProfileButtonPage(
-                            playerResponse: widget.playerResponse,
-                          );
-                        },
-                      );
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return ProfileButtonPage(
+                      //       playerResponse: widget.playerResponse,
+                      //     );
+                      //   },
+                      // );
                     },
                     child: const BuildIconImageWidget(
                         imgName: "assets/images/lobby/Logo active (1).png"),
