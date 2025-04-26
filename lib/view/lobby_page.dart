@@ -5,6 +5,7 @@ import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/model/rat_hole_request_model.dart';
 import 'package:pokerpad/model/rat_hole_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
+import 'package:pokerpad/view/profile_button_page.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
 import 'package:pokerpad/widget/build_button_image_widget.dart';
@@ -184,12 +185,14 @@ class _LobbyPageState extends State<LobbyPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (context) {
-                      //     return const KycInfoPopup();
-                      //   },
-                      // );
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ProfileButtonPage(
+                            playerResponse: widget.playerResponse,
+                          );
+                        },
+                      );
                     },
                     child: const BuildIconImageWidget(
                         imgName: "assets/images/lobby/Logo active (1).png"),
