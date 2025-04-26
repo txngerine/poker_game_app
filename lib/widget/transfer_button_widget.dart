@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/login_response_model.dart';
 import '../model/transfer_request_model.dart';
+import '../provider/login_provider.dart';
 import 'build_button_image_widget.dart';
 import 'build_text_widget.dart';
 import 'custom_transfer_text_field.dart';
@@ -109,6 +110,8 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<TransferButtonProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context);
+
     return GestureDetector(
       onTap: () {
         final provider =
@@ -210,10 +213,16 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
               builder: (context, setDialogState) {
                 final width = MediaQuery.sizeOf(context).width;
                 final height = MediaQuery.sizeOf(context).height;
-                final kyc = widget.playerResponse?.data?.kyc;
-                final idRejected = kyc?.idStatus?.toLowerCase() == 'rejected';
-                final faceRejected =
-                    kyc?.faceStatus?.toLowerCase() == 'rejected';
+                // final kyc = widget.playerResponse?.data?.kyc;
+                // final idRejected = kyc?.idStatus?.toLowerCase() == 'rejected';
+                // final faceRejected =
+                //     kyc?.faceStatus?.toLowerCase() == 'rejected';
+                final kyc = loginProvider.kycStatus;
+                final idStatus = kyc["id"]?.toLowerCase();
+                final photoStatus = kyc["photo"]?.toLowerCase();
+
+                final idRejected = idStatus == 'rejected';
+                final faceRejected = photoStatus == 'rejected';
 
                 if (idRejected || faceRejected) {
                   return KycInfoPopup();

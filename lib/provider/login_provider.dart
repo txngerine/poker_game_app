@@ -29,6 +29,7 @@ class LoginProvider extends ChangeNotifier {
   String _deviceId = "Fetching..";
   double downloadProgress = 0.0;
   int? playerBalance;
+  Map<String, dynamic> kycStatus = {};
   String? errorMessage;
   LoginProvider() {
     _getStoredDeviceId();
@@ -76,6 +77,10 @@ class LoginProvider extends ChangeNotifier {
             _updatePlayerBalance(response);
             break;
 
+          case "KYC_STATUS":
+            _updateKycStatus(response);
+            break;
+
           default:
             print("Unhandled WebSocket message: $response");
             break;
@@ -104,6 +109,11 @@ class LoginProvider extends ChangeNotifier {
           double.tryParse(playerDetails?.data?.balance.toString() ?? '0')
                   ?.toInt() ??
               0;
+      // Set initial KYC status from login response
+      kycStatus = {
+        "id": playerDetails?.data?.kyc?.idStatus ?? "Unknown",
+        "photo": playerDetails?.data?.kyc?.faceStatus ?? "Unknown",
+      };
 
       isLoading = false;
       errorMessage = null;
@@ -130,21 +140,11 @@ class LoginProvider extends ChangeNotifier {
         return;
       }
 
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     elevation: 10,
-      //     shape:
-      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      //     behavior: SnackBarBehavior.floating,
-      //     backgroundColor: Colors.green,
-      //     content: const Text("Login Successful",
-      //         style: TextStyle(color: Colors.white)),
-      //   ),
-      // );
       Navigator.pushReplacement(
         context,
         PageTransition(
           child: LobbyPage(
+            kycStatus: Map<String, String>.from(kycStatus),
             playerResponse: playerDetails,
             playerBalance: playerDetails?.data?.balance.toString(),
             avatar: playerDetails!.data!.lobbyAvatar ?? "",
@@ -158,13 +158,6 @@ class LoginProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text(this.errorMessage!),
-      //     backgroundColor: Colors.red,
-      //   ),
-      // );
-      // Login failed, check if redirect is required
       bool shouldRedirect = response["data"]["data"]["redirect"] ?? false;
       int? affiliateId = response["data"]["data"]["affiliate_id"];
       String errorMessage = response["data"]["message"] ?? "Login Failed";
@@ -222,6 +215,20 @@ class LoginProvider extends ChangeNotifier {
         : (response["balance"] as num?)?.toInt() ?? 0;
     notifyListeners();
     print("Player Balance Updated: $playerBalance");
+  }
+
+  void _updateKycStatus(Map<String, dynamic> response) {
+    final idStatus = response["id"] is String ? response["id"] : "Unknown";
+    final photoStatus =
+        response["photo"] is String ? response["photo"] : "Unknown";
+
+    kycStatus = {
+      "id": idStatus,
+      "photo": photoStatus,
+    };
+
+    notifyListeners();
+    print("KYC Status Updated: $kycStatus");
   }
 
   Future<void> downloadAndInstallApk(

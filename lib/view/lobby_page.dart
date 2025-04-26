@@ -5,7 +5,6 @@ import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/model/rat_hole_request_model.dart';
 import 'package:pokerpad/model/rat_hole_response_model.dart';
 import 'package:pokerpad/view/game_view.dart';
-import 'package:pokerpad/view/kyc_pick_avatar_page.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
 import 'package:pokerpad/widget/build_button_image_widget.dart';
@@ -20,14 +19,21 @@ import 'package:provider/provider.dart';
 import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
 import '../widget/chat_support_widget.dart';
+import '../widget/info_button_widget.dart';
 import 'kyc_info_popUp.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
   final String? avatar;
+  final Map<String, String>? kycStatus;
+
   final LoginResponseModel? playerResponse;
   const LobbyPage(
-      {super.key, this.playerBalance, this.avatar, this.playerResponse});
+      {super.key,
+      this.playerBalance,
+      this.avatar,
+      this.playerResponse,
+      this.kycStatus});
 
   @override
   State<LobbyPage> createState() => _LobbyPageState();
@@ -91,11 +97,12 @@ class _LobbyPageState extends State<LobbyPage> {
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
     final balance = loginProvider.playerBalance;
+    final kyc = loginProvider.kycStatus;
+    final idStatus = kyc["id"];
+    final photoStatus = kyc["photo"];
+    print("kyc Status : id=$idStatus photo=$photoStatus");
     print(widget.playerResponse!.data?.id);
-    print("kyc id:${widget.playerResponse?.data?.kyc?.idStatus}");
-    print("kyc face:${widget.playerResponse?.data?.kyc?.faceStatus}");
     print("playerBalance:${widget.playerResponse!.data?.balance}");
-    print("walletAddress:${widget.playerResponse!.data?.walletAddress}");
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(
@@ -167,8 +174,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          // return const InfoButtonWidget();
-                          return KycPickAvatarPage();
+                          return const InfoButtonWidget();
+                          // return KycPickAvatarPage();
                         },
                       );
                     },
@@ -238,12 +245,18 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: balance! >= 100
                             ? () async {
-                                final kyc = widget.playerResponse?.data?.kyc;
-                                final idRejected =
-                                    kyc?.idStatus?.toLowerCase() == 'rejected';
-                                final faceRejected =
-                                    kyc?.faceStatus?.toLowerCase() ==
-                                        'rejected';
+                                // final kyc = widget.playerResponse?.data?.kyc;
+                                // final idRejected =
+                                //     kyc?.idStatus?.toLowerCase() == 'rejected';
+                                // final faceRejected =
+                                //     kyc?.faceStatus?.toLowerCase() ==
+                                //         'rejected';
+                                final kyc = loginProvider.kycStatus;
+                                final idStatus = kyc["id"]?.toLowerCase();
+                                final photoStatus = kyc["photo"]?.toLowerCase();
+
+                                final idRejected = idStatus == 'rejected';
+                                final faceRejected = photoStatus == 'rejected';
 
                                 if (idRejected || faceRejected) {
                                   showDialog(
@@ -280,12 +293,12 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: balance >= 200
                             ? () async {
-                                final kyc = widget.playerResponse?.data?.kyc;
-                                final idRejected =
-                                    kyc?.idStatus?.toLowerCase() == 'rejected';
-                                final faceRejected =
-                                    kyc?.faceStatus?.toLowerCase() ==
-                                        'rejected';
+                                final kyc = loginProvider.kycStatus;
+                                final idStatus = kyc["id"]?.toLowerCase();
+                                final photoStatus = kyc["photo"]?.toLowerCase();
+
+                                final idRejected = idStatus == 'rejected';
+                                final faceRejected = photoStatus == 'rejected';
 
                                 if (idRejected || faceRejected) {
                                   showDialog(
@@ -326,6 +339,20 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: balance >= 500
                             ? () async {
+                                final kyc = loginProvider.kycStatus;
+                                final idStatus = kyc["id"]?.toLowerCase();
+                                final photoStatus = kyc["photo"]?.toLowerCase();
+
+                                final idRejected = idStatus == 'rejected';
+                                final faceRejected = photoStatus == 'rejected';
+
+                                if (idRejected || faceRejected) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const KycInfoPopup(),
+                                  );
+                                  return;
+                                }
                                 bool success = await ratHole("500");
                                 if (!mounted || !success) return;
                                 Navigator.push(
@@ -354,6 +381,20 @@ class _LobbyPageState extends State<LobbyPage> {
                       GestureDetector(
                         onTap: balance >= 1000
                             ? () async {
+                                final kyc = loginProvider.kycStatus;
+                                final idStatus = kyc["id"]?.toLowerCase();
+                                final photoStatus = kyc["photo"]?.toLowerCase();
+
+                                final idRejected = idStatus == 'rejected';
+                                final faceRejected = photoStatus == 'rejected';
+
+                                if (idRejected || faceRejected) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const KycInfoPopup(),
+                                  );
+                                  return;
+                                }
                                 bool success = await ratHole("1000");
                                 if (!mounted || !success) return;
                                 Navigator.push(

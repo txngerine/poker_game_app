@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
+import 'package:pokerpad/provider/login_provider.dart';
 import 'package:pokerpad/view/kyc_info_popUp.dart';
 import 'package:pokerpad/widget/deposit_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -23,13 +24,13 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final provider = Provider.of<CashierButtonProvider>(context);
-    print("kyc id:${widget.playerResponse?.data?.kyc?.idStatus}");
-    print("kyc face:${widget.playerResponse?.data?.kyc?.faceStatus}");
+    final loginProvider = Provider.of<LoginProvider>(context);
+
     return GestureDetector(
       onTap: () {
-        final kyc = widget.playerResponse?.data?.kyc;
-        final idRejected = kyc?.idStatus?.toLowerCase() == 'rejected';
-        final faceRejected = kyc?.faceStatus?.toLowerCase() == 'rejected';
+        // final kyc = widget.playerResponse?.data?.kyc;
+        // final idRejected = kyc?.idStatus?.toLowerCase() == 'rejected';
+        // final faceRejected = kyc?.faceStatus?.toLowerCase() == 'rejected';
         provider.setClicked(true);
         showDialog(
           context: context,
@@ -37,6 +38,12 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
           builder: (BuildContext context) {
             return StatefulBuilder(
               builder: (context, setDialogState) {
+                final kyc = loginProvider.kycStatus;
+                final idStatus = kyc["id"]?.toLowerCase();
+                final photoStatus = kyc["photo"]?.toLowerCase();
+
+                final idRejected = idStatus == 'rejected';
+                final faceRejected = photoStatus == 'rejected';
                 if (idRejected || faceRejected) {
                   return const KycInfoPopup();
                 } else {
