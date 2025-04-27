@@ -12,8 +12,6 @@ import 'package:pokerpad/widget/build_button_image_widget.dart';
 import 'package:pokerpad/widget/build_icon_image_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/cashier_button_widget.dart';
-import 'package:pokerpad/widget/profile_button_widget.dart';
-import 'package:pokerpad/widget/top_winners_view_widget.dart';
 import 'package:pokerpad/widget/transfer_button_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +19,14 @@ import '../constants/screen_size.dart';
 import '../provider/login_provider.dart';
 import '../widget/chat_support_widget.dart';
 import '../widget/info_button_widget.dart';
+import '../widget/top_winners_view_widget.dart';
 import 'kyc_info_popUp.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
   final String? avatar;
   final Map<String, String>? kycStatus;
+  final Map<String, String>? avatarStatus;
 
   final LoginResponseModel? playerResponse;
   const LobbyPage(
@@ -34,7 +34,8 @@ class LobbyPage extends StatefulWidget {
       this.playerBalance,
       this.avatar,
       this.playerResponse,
-      this.kycStatus});
+      this.kycStatus,
+      this.avatarStatus});
 
   @override
   State<LobbyPage> createState() => _LobbyPageState();
@@ -57,6 +58,7 @@ class _LobbyPageState extends State<LobbyPage> {
 
   bool isLoading = false;
   final RatHoleController ratHoleController = RatHoleController();
+
   Future<bool> ratHole(String buyIn) async {
     setState(() {
       isLoading = true;
@@ -99,11 +101,14 @@ class _LobbyPageState extends State<LobbyPage> {
     final loginProvider = Provider.of<LoginProvider>(context);
     final balance = loginProvider.playerBalance;
     final kyc = loginProvider.kycStatus;
+    final avatarStatus = loginProvider.updateAvatar;
+    final lobbyAvatarStatus = avatarStatus["avatar"];
     final idStatus = kyc["id"];
     final photoStatus = kyc["photo"];
     print("kyc Status : id=$idStatus photo=$photoStatus");
     print(widget.playerResponse!.data?.id);
     print("playerBalance:${widget.playerResponse!.data?.balance}");
+    print("update lobby avatar:: lobby=$lobbyAvatarStatus");
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(
@@ -129,18 +134,28 @@ class _LobbyPageState extends State<LobbyPage> {
                   const ChatSupportWidget(),
                   GestureDetector(
                     onTap: () {
+                      // showDialog(
+                      //   context: context,
+                      //   // barrierColor: Colors.grey.withOpacity(0.5),
+                      //   builder: (context) {
+                      //     return
+                      //       ProfileButtonWidget(
+                      //       playerResponse: widget.playerResponse,
+                      //       userData: widget.playerResponse?.data ??
+                      //           Data(
+                      //             nickname: '',
+                      //             email: '',
+                      //             phone: '',
+                      //           ),
+                      //     );
+                      //   },
+                      // );
+
                       showDialog(
                         context: context,
-                        // barrierColor: Colors.grey.withOpacity(0.5),
                         builder: (context) {
-                          return ProfileButtonWidget(
+                          return ProfileButtonPage(
                             playerResponse: widget.playerResponse,
-                            userData: widget.playerResponse?.data ??
-                                Data(
-                                  nickname: '',
-                                  email: '',
-                                  phone: '',
-                                ),
                           );
                         },
                       );
@@ -184,16 +199,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         imgName: "assets/images/lobby/info button active.png"),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (context) {
-                      //     return ProfileButtonPage(
-                      //       playerResponse: widget.playerResponse,
-                      //     );
-                      //   },
-                      // );
-                    },
+                    onTap: () {},
                     child: const BuildIconImageWidget(
                         imgName: "assets/images/lobby/Logo active (1).png"),
                   ),

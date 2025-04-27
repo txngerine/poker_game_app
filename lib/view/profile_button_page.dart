@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/view/proof_of_identity_popUp.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
 
 import '../model/login_response_model.dart';
 import '../provider/login_provider.dart';
+import 'face_check_popUp.dart';
 
 class ProfileButtonPage extends StatefulWidget {
   final LoginResponseModel? playerResponse;
@@ -209,22 +211,32 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                             SizedBox(
                               width: 2,
                             ),
-                            Container(
-                              height: height / 15,
-                              width: width / 2.4,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/profilebutton/kyc_field.png"),
-                                  fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const FaceCheckPopup();
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: height / 15,
+                                width: width / 2.4,
+                                decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/profilebutton/kyc_field.png"),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
+                                child: Center(
+                                    child: BuildSubHeadingText(
+                                  text: "FACE CHECK",
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                )),
                               ),
-                              child: Center(
-                                  child: BuildSubHeadingText(
-                                text: "FACE CHECK",
-                                fontSize: 14,
-                                color: Colors.white,
-                              )),
                             ),
                             SizedBox(
                               width: 14,
@@ -248,22 +260,34 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                             SizedBox(
                               width: 2,
                             ),
-                            Container(
-                              height: height / 15,
-                              width: width / 2.4,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/profilebutton/kyc_field.png"),
-                                  fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ProofOfIdentityPopup(
+                                      playerResponse: widget.playerResponse,
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: height / 15,
+                                width: width / 2.4,
+                                decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/profilebutton/kyc_field.png"),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
+                                child: Center(
+                                    child: BuildSubHeadingText(
+                                  text: "PROOF OF IDENTITY",
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                )),
                               ),
-                              child: Center(
-                                  child: BuildSubHeadingText(
-                                text: "PROOF OF IDENTITY",
-                                fontSize: 14,
-                                color: Colors.white,
-                              )),
                             ),
                             SizedBox(
                               width: 14,

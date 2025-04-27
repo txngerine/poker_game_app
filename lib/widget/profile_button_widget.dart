@@ -460,7 +460,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
                     }),
                     const SizedBox(height: 10),
                     _buildKYCRow("PROOF OF IDENTITY", idStatus, () {
-                      showProofOfIdentityPopup(context);
+                      showProofOfIdentityPopup(context, widget.playerResponse!);
                     }),
                   ],
                 ),
@@ -804,7 +804,8 @@ void showFaceCheckPopup(
   );
 }
 
-void showProofOfIdentityPopup(BuildContext context) {
+void showProofOfIdentityPopup(
+    BuildContext context, LoginResponseModel playerResponse) {
   showDialog(
     context: context,
     barrierDismissible: true, // Allows tap outside to dismiss
@@ -874,7 +875,9 @@ void showProofOfIdentityPopup(BuildContext context) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => KycVerifyCameraPageDark(),
+                    builder: (context) => KycVerifyCameraPageDark(
+                      playerResponse: playerResponse,
+                    ),
                   ),
                 );
               },

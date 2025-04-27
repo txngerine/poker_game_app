@@ -4,9 +4,12 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/p_y_i_image_preview_screen.dart';
 
 import '../constants/screen_size.dart';
+import '../model/login_response_model.dart';
 
 class KycVerifyCameraPageDark extends StatefulWidget {
-  const KycVerifyCameraPageDark({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const KycVerifyCameraPageDark({super.key, this.playerResponse});
 
   @override
   State<KycVerifyCameraPageDark> createState() =>
@@ -66,6 +69,7 @@ class _KycVerifyCameraPageDarkState extends State<KycVerifyCameraPageDark> {
             context,
             PageTransition(
                 child: PYIImagePreviewScreen(
+                  playerResponse: widget.playerResponse,
                   imagePath: file.path,
                 ),
                 type: PageTransitionType.rightToLeftWithFade));

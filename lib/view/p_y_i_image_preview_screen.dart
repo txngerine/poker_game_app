@@ -6,16 +6,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/terms_page.dart';
 
 import '../constants/screen_size.dart';
-import '../controller/signup_controller.dart';
-import '../popups/kyc_identity_camera_page_dark.dart';
+import '../model/login_response_model.dart';
+import 'lobby_page.dart';
 
 class PYIImagePreviewScreen extends StatefulWidget {
+  final LoginResponseModel? playerResponse;
+
   final String imagePath;
 
-  const PYIImagePreviewScreen({super.key, required this.imagePath});
+  const PYIImagePreviewScreen(
+      {super.key, required this.imagePath, this.playerResponse});
 
   @override
   State<PYIImagePreviewScreen> createState() => _PYIImagePreviewScreenState();
@@ -42,9 +44,10 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
       _base64String = base64String;
       log("Base64 String: $_base64String");
       //get userId
-      String userId = SignupController.userId.toString();
+      String? userId = widget.playerResponse?.data?.id.toString();
       String apiUrl =
           "http://3.6.170.253:1080/server.php/api/v1/player/save-id/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
+      print("url...${apiUrl}");
       Map<String, dynamic> requestBody = {
         "photo": base64String,
         "id": userId,
@@ -65,11 +68,16 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
       // Check response
       if (response.statusCode == 200) {
         log("Image uploaded successfully: ${response.body}");
-        Navigator.push(
-            context,
-            PageTransition(
-                child: const TermsPage(),
-                type: PageTransitionType.rightToLeftWithFade));
+        Navigator.pushAndRemoveUntil(
+          context,
+          PageTransition(
+            child: LobbyPage(
+              playerResponse: widget.playerResponse!,
+            ),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+          (route) => false, // Remove all previous routes
+        );
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
             shape: RoundedRectangleBorder(
@@ -82,7 +90,8 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
               style: TextStyle(color: Colors.white),
             )));
       } else {
-        log("Failed to upload image: ${response.statusCode}");
+        log("Failed to upload image: statusCode =${response.statusCode}");
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             elevation: 10,
             shape: RoundedRectangleBorder(
@@ -140,12 +149,12 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const KycVerifyCameraPageDark(),
-                          ));
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) =>
+                      //           const KycVerifyCameraPageDark(),
+                      //     ));
                     },
                     child: Image.asset(
                       "assets/images/retake (6).png",

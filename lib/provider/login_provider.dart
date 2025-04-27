@@ -21,6 +21,8 @@ class LoginProvider extends ChangeNotifier {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  int? _playerId;
+  int? get playerId => _playerId;
 
   WebSocketChannel? _channel;
   bool isLoading = false;
@@ -30,11 +32,17 @@ class LoginProvider extends ChangeNotifier {
   double downloadProgress = 0.0;
   int? playerBalance;
   Map<String, dynamic> kycStatus = {};
+  Map<String, dynamic> updateAvatar = {};
   String? errorMessage;
   LoginProvider() {
     _getStoredDeviceId();
   }
   String get deviceId => _deviceId;
+
+  void setPlayerId(int? id) {
+    _playerId = id;
+    notifyListeners();
+  }
 
   Future<void> _getStoredDeviceId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -81,6 +89,9 @@ class LoginProvider extends ChangeNotifier {
             _updateKycStatus(response);
             break;
 
+          case "PROFILE_AVATAR":
+            _updatePlayerAvatar(response);
+            break;
           default:
             print("Unhandled WebSocket message: $response");
             break;
@@ -115,6 +126,11 @@ class LoginProvider extends ChangeNotifier {
         "photo": playerDetails?.data?.kyc?.faceStatus ?? "Unknown",
       };
 
+      updateAvatar = {
+        "lobby_avatar": playerDetails?.data?.lobbyAvatar ?? "Unknown",
+        "avatar": playerDetails?.data?.avatar ?? "Unknown",
+      };
+
       isLoading = false;
       errorMessage = null;
       notifyListeners();
@@ -145,6 +161,7 @@ class LoginProvider extends ChangeNotifier {
         PageTransition(
           child: LobbyPage(
             kycStatus: Map<String, String>.from(kycStatus),
+            avatarStatus: Map<String, String>.from(updateAvatar),
             playerResponse: playerDetails,
             playerBalance: playerDetails?.data?.balance.toString(),
             avatar: playerDetails!.data!.lobbyAvatar ?? "",
@@ -229,6 +246,21 @@ class LoginProvider extends ChangeNotifier {
 
     notifyListeners();
     print("KYC Status Updated: $kycStatus");
+  }
+
+  void _updatePlayerAvatar(Map<String, dynamic> response) {
+    final lobbyAvatar = response["lobby_avatar"] is String
+        ? response["lobby_avatar"]
+        : "Unknown";
+    final avatar =
+        response["avatar"] is String ? response["avatar"] : "Unknown";
+
+    updateAvatar = {
+      "lobby_avatar": lobbyAvatar,
+      "avatar": avatar,
+    };
+    notifyListeners();
+    print("Updater Avatar:$updateAvatar");
   }
 
   Future<void> downloadAndInstallApk(
