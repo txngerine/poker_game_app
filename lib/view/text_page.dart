@@ -11,7 +11,7 @@ class _TextPageState extends State<TextPage> {
   @override
   Widget build(BuildContext context) {
     // da ith nokk
-    // ith nirthikkoo...
+    // no change
     return Scaffold(
       body: SizedBox(
           height: double.infinity,
