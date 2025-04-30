@@ -203,8 +203,6 @@
 //   }
 // }
 
-
-
 // import 'package:flutter/material.dart';
 // import 'package:pokerpad/widget/monthly_winners_view_widget.dart';
 // import 'package:pokerpad/widget/yearly_winners_view.dart';
@@ -458,16 +456,15 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/monthly_winners_view_widget.dart';
 import 'package:pokerpad/widget/yearly_winners_view.dart';
+
+import '../model/leaderboard_monthly_model.dart';
 import '../model/leaderboard_yearly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
 import 'chart_line_widget.dart';
-import '../model/leaderboard_monthly_model.dart';
 
 class WinnersWidget extends StatefulWidget {
   final int id;
@@ -536,17 +533,19 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                           children: [
                             const SizedBox(width: 12),
                             CircleAvatar(
-                              radius: 20,
+                              radius: 24,
                               backgroundImage: photo != null && photo.isNotEmpty
                                   ? NetworkImage(photo)
-                                  : const AssetImage("assets/images/lobby/top winners/hero avatar holder.png") as ImageProvider,
+                                  : const AssetImage(
+                                          "assets/images/lobby/top winners/hero avatar holder.png")
+                                      as ImageProvider,
                               backgroundColor: Colors.grey[300],
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 5),
                     BuildSubHeadingText(
                       text: nickname,
                       fontSize: 14,
@@ -554,7 +553,7 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                     ),
                   ],
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 1),
                 BuildSubHeadingText(
                   text: "$rank",
                   fontSize: 14,
@@ -589,7 +588,8 @@ class _WinnersWidgetState extends State<WinnersWidget> {
     final currentYearlyUser = yearlyData?.data;
 
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: height / 15),
+      padding:
+          EdgeInsets.only(left: 20, right: 20, bottom: 10, top: height / 15),
       child: Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.zero,
@@ -599,7 +599,7 @@ class _WinnersWidgetState extends State<WinnersWidget> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             color: Colors.black,
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: isLoading
               ? const Center(child: CircularProgressIndicator())
@@ -616,7 +616,8 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                       const SizedBox(height: 20),
                       Stack(
                         children: [
-                          Image.asset("assets/images/lobby/top winners/Top Winners Header Button BG.png"),
+                          Image.asset(
+                              "assets/images/lobby/top winners/Top Winners Header Button BG.png"),
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Row(
@@ -674,20 +675,30 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                       ),
                       if (selectButton == 1 && currentMonthlyUser != null)
                         buildHeroPlayer(
-                          nickname: currentMonthlyUser.player?.nickname ?? "Unknown",
+                          nickname:
+                              currentMonthlyUser.player?.nickname ?? "Unknown",
                           rank: currentMonthlyUser.player?.rank ?? 0,
                           photo: currentMonthlyUser.player?.photo,
-                          hourlyWin: currentMonthlyUser.player?.hourlyWin?.toDouble() ?? 0.0,
-                          totalWin: currentMonthlyUser.player?.totalWin?.toDouble() ?? 0.0,
+                          hourlyWin: currentMonthlyUser.player?.hourlyWin
+                                  ?.toDouble() ??
+                              0.0,
+                          totalWin:
+                              currentMonthlyUser.player?.totalWin?.toDouble() ??
+                                  0.0,
                           width: width,
                         ),
                       if (selectButton == 2 && currentYearlyUser != null)
                         buildHeroPlayer(
-                          nickname: currentYearlyUser.player?.nickname ?? "Unknown",
+                          nickname:
+                              currentYearlyUser.player?.nickname ?? "Unknown",
                           rank: currentYearlyUser.player?.rank ?? 0,
                           photo: currentYearlyUser.player?.photo,
-                          hourlyWin: currentYearlyUser.player?.hourlyWin?.toDouble() ?? 0.0,
-                          totalWin: currentYearlyUser.player?.totalWin?.toDouble() ?? 0.0,
+                          hourlyWin:
+                              currentYearlyUser.player?.hourlyWin?.toDouble() ??
+                                  0.0,
+                          totalWin:
+                              currentYearlyUser.player?.totalWin?.toDouble() ??
+                                  0.0,
                           width: width,
                         ),
                       Padding(
@@ -699,7 +710,8 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: selectButton == 1
-                              ? MonthlyWinnersViewWidget(id: widget.id.toString())
+                              ? MonthlyWinnersViewWidget(
+                                  id: widget.id.toString())
                               : YearlyWinnersView(id: widget.id.toString()),
                         ),
                       ),
