@@ -212,14 +212,16 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                               width: 2,
                             ),
                             GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const FaceCheckPopup();
-                                  },
-                                );
-                              },
+                              onTap: photoStatus == "Rejected"
+                                  ? () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const FaceCheckPopup();
+                                        },
+                                      );
+                                    }
+                                  : null,
                               child: Container(
                                 height: height / 15,
                                 width: width / 2.4,
@@ -261,16 +263,19 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                               width: 2,
                             ),
                             GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return ProofOfIdentityPopup(
-                                      playerResponse: widget.playerResponse,
-                                    );
-                                  },
-                                );
-                              },
+                              onTap: idStatus == "Rejected"
+                                  ? () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return ProofOfIdentityPopup(
+                                            playerResponse:
+                                                widget.playerResponse,
+                                          );
+                                        },
+                                      );
+                                    }
+                                  : null,
                               child: Container(
                                 height: height / 15,
                                 width: width / 2.4,
