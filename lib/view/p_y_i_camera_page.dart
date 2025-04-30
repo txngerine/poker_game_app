@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/p_y_i_image_preview_screen.dart';
+import 'package:pokerpad/view/proof_of_identity_image_view_register.dart';
 
 import '../constants/screen_size.dart';
 
@@ -67,7 +67,7 @@ class _PYICameraPageState extends State<PYICameraPage> {
                 // child: KycIdentityImagePreview(
                 //   imagePath: file.path,
                 // ),
-                child: PYIImagePreviewScreen(imagePath: file.path),
+                child: ProofOfIdentityImageViewRegister(imagePath: file.path),
                 type: PageTransitionType.rightToLeftWithFade));
       }
     } catch (e) {

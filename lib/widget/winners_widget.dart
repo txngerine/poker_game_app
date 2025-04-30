@@ -531,15 +531,18 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                         },
                         child: Row(
                           children: [
-                            const SizedBox(width: 12),
-                            CircleAvatar(
-                              radius: 24,
-                              backgroundImage: photo != null && photo.isNotEmpty
-                                  ? NetworkImage(photo)
-                                  : const AssetImage(
-                                          "assets/images/lobby/top winners/hero avatar holder.png")
-                                      as ImageProvider,
-                              backgroundColor: Colors.grey[300],
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: CircleAvatar(
+                                radius: 24.5,
+                                backgroundImage: photo != null &&
+                                        photo.isNotEmpty
+                                    ? NetworkImage(photo)
+                                    : const AssetImage(
+                                            "assets/images/lobby/top winners/hero avatar holder.png")
+                                        as ImageProvider,
+                                backgroundColor: Colors.grey[300],
+                              ),
                             ),
                           ],
                         ),
@@ -565,13 +568,13 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                   fontSize: 14,
                   color: Colors.white,
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 30),
                 BuildSubHeadingText(
                   text: "\$${totalWin.toStringAsFixed(2)}",
                   fontSize: 14,
                   color: Colors.white,
                 ),
-                const SizedBox(width: 50),
+                const SizedBox(width: 60),
               ],
             ),
           ],

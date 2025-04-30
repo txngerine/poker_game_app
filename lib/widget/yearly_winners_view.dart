@@ -469,7 +469,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
               : Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 30),
+                      padding: const EdgeInsets.only(right: 3),
                       child: ListView.separated(
                         controller: _scrollController,
                         physics: const BouncingScrollPhysics(),
@@ -485,47 +485,48 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                 fit: BoxFit.cover,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 12.0),
+                                padding: EdgeInsets.all(9),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) =>
-                                                  const ChartLineWidget(),
-                                            );
-                                          },
-                                          child: CircleAvatar(
-                                            radius: 23.5,
-                                            backgroundColor: Colors.grey[300],
-                                            backgroundImage: report.photo !=
-                                                        null &&
-                                                    report.photo!.isNotEmpty
-                                                ? NetworkImage(report.photo!)
-                                                : const AssetImage(
-                                                        "assets/images/lobby/top winners/villain avatar holder.png")
-                                                    as ImageProvider,
+                                    Container(
+                                      width: width / 3.4,
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const ChartLineWidget(),
+                                              );
+                                            },
+                                            child: CircleAvatar(
+                                              radius: 25.5,
+                                              backgroundColor: Colors.grey[300],
+                                              backgroundImage: report.photo !=
+                                                          null &&
+                                                      report.photo!.isNotEmpty
+                                                  ? NetworkImage(report.photo!)
+                                                  : const AssetImage(
+                                                          "assets/images/lobby/top winners/villain avatar holder.png")
+                                                      as ImageProvider,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        BuildSubHeadingText(
-                                          text: report.nickname ?? "Unknown",
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                        ),
-                                      ],
+                                          const SizedBox(width: 8),
+                                          BuildSubHeadingText(
+                                            text: report.nickname ?? "Unknown",
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        SizedBox(
+                                        Container(
                                           width: 50,
                                           child: BuildSubHeadingText(
                                             text: "${report.rank ?? index + 1}",
@@ -534,19 +535,21 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                                             textAlign: TextAlign.start,
                                           ),
                                         ),
-                                        const SizedBox(width: 45),
-                                        BuildSubHeadingText(
-                                          text: "\$${report.hourlyWin ?? "0"}",
-                                          color: Colors.black,
-                                          fontSize: 12,
+                                        Container(
+                                          width: width / 3.3,
+                                          child: BuildSubHeadingText(
+                                            text:
+                                                "\$${report.hourlyWin ?? "0"}",
+                                            color: Colors.black,
+                                            textAlign: TextAlign.center,
+                                            fontSize: 12,
+                                          ),
                                         ),
-                                        const SizedBox(width: 80),
                                         BuildSubHeadingText(
                                           text: "\$${report.totalWin ?? "0"}",
                                           color: Colors.black,
                                           fontSize: 12,
                                         ),
-                                        const SizedBox(width: 50),
                                       ],
                                     ),
                                   ],
@@ -559,7 +562,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
                     ),
                     Positioned(
                       top: _thumbTop,
-                      right: 4,
+                      right: 0,
                       child: GestureDetector(
                         onVerticalDragStart: _onDragStart,
                         onVerticalDragUpdate: (details) =>
