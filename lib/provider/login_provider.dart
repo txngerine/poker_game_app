@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -116,10 +118,13 @@ class LoginProvider extends ChangeNotifier {
       Map<String, dynamic> response, BuildContext context) async {
     if (response["data"]["status"] == "OK") {
       playerDetails = LoginResponseModel.fromJson(response["data"]);
+      // ✅ Set the player ID so it's available globally
+      setPlayerId(playerDetails?.data?.id);
       playerBalance =
           double.tryParse(playerDetails?.data?.balance.toString() ?? '0')
                   ?.toInt() ??
               0;
+
       // Set initial KYC status from login response
       kycStatus = {
         "id": playerDetails?.data?.kyc?.idStatus ?? "Unknown",
@@ -363,6 +368,47 @@ class LoginProvider extends ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Forgot password request sent")),
     );
+  }
+
+// in profile proof of identity upload image
+  Future<bool> uploadIdImage(File imageFile) async {
+    try {
+      if (playerId == null) throw Exception("User ID is null");
+
+      final dio = Dio();
+
+      final base64String = base64Encode(await imageFile.readAsBytes());
+
+      final String apiUrl =
+          "http://3.6.170.253:1080/server.php/api/v1/player/save-id/$playerId?XDEBUG_SESSION_START=netbeans-xdebug";
+
+      final requestBody = {
+        "photo": base64String,
+        "id": playerId,
+        "deviceId": 1, // Consider replacing with your actual deviceId
+      };
+
+      final response = await dio.post(
+        apiUrl,
+        data: jsonEncode(requestBody),
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        log("Upload successful: ${response.data}");
+        return true;
+      } else {
+        log("Upload failed: ${response.statusCode} ${response.statusMessage}");
+        return false;
+      }
+    } catch (e) {
+      log("Upload error: $e");
+      return false;
+    }
   }
 
   void disposeResources() {
