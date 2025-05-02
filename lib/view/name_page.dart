@@ -39,6 +39,8 @@ class _NamePageState extends State<NamePage> {
       NameResponseModel? response = await _nameController.getName(request);
 
       if (response?.status == "OK") {
+        print("Step:${response?.data?.step}");
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: const Duration(milliseconds: 350),
             content: Text(response!.status)));

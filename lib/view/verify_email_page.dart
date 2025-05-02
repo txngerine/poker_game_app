@@ -67,6 +67,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     });
 
     if (response != null && response.status == "OK") {
+      print("Step:${response.data?.step}");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           elevation: 10,
           shape: RoundedRectangleBorder(

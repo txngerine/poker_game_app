@@ -52,6 +52,8 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
 
     if (response != null && response.status == "OK") {
       print(response.status);
+      print("Step:${response.data?.step}");
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(milliseconds: 350),

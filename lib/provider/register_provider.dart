@@ -108,6 +108,8 @@ class RegisterProvider extends ChangeNotifier {
       notifyListeners();
 
       if (response.status == "OK") {
+        print("Step:${response.step}");
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             elevation: 10,
