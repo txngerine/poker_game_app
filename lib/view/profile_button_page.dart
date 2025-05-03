@@ -212,7 +212,8 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                               width: 2,
                             ),
                             GestureDetector(
-                              onTap: photoStatus == "Rejected"
+                              onTap: (photoStatus == "Rejected" ||
+                                      photoStatus == "Pending")
                                   ? () {
                                       showDialog(
                                         context: context,
@@ -250,7 +251,9 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                                 image: DecorationImage(
                                   image: AssetImage(photoStatus == "Approved"
                                       ? "assets/images/profilebutton/verified_button.png"
-                                      : "assets/images/profilebutton/pending_notification.png"),
+                                      : photoStatus == "Rejected"
+                                          ? "assets/images/profilebutton/try_again_button.png"
+                                          : "assets/images/profilebutton/pending_notification.png"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -263,7 +266,8 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                               width: 2,
                             ),
                             GestureDetector(
-                              onTap: idStatus == "Rejected"
+                              onTap: (idStatus == "Rejected" ||
+                                      idStatus == "Pending")
                                   ? () {
                                       showDialog(
                                         context: context,
@@ -304,7 +308,9 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                                 image: DecorationImage(
                                   image: AssetImage(idStatus == "Approved"
                                       ? "assets/images/profilebutton/verified_button.png"
-                                      : "assets/images/profilebutton/pending_notification.png"),
+                                      : idStatus == "Rejected"
+                                          ? "assets/images/profilebutton/try_again_button.png"
+                                          : "assets/images/profilebutton/pending_notification.png"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
