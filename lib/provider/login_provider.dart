@@ -41,6 +41,9 @@ class LoginProvider extends ChangeNotifier {
   }
   String get deviceId => _deviceId;
 
+  // late int _avatarVersion = 0;
+  // int get avatarVersion => _avatarVersion;
+
   void setPlayerId(int? id) {
     _playerId = id;
     notifyListeners();
@@ -264,6 +267,8 @@ class LoginProvider extends ChangeNotifier {
       "lobby_avatar": lobbyAvatar,
       "avatar": avatar,
     };
+    // _avatarVersion = DateTime.now().millisecondsSinceEpoch; // Version update
+
     notifyListeners();
     print("Updater Avatar:$updateAvatar");
   }

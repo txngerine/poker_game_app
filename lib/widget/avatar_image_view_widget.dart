@@ -47,6 +47,19 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
                     );
                   },
                   child:
+                      // Consumer<LoginProvider>(
+                      //   builder: (context, provider, child) {
+                      //     final url =
+                      //         '${provider.updateAvatar["lobby_avatar"]}?v=${provider.avatarVersion}';
+                      //     return Image.network(
+                      //       url,
+                      //       errorBuilder: (context, error, stackTrace) {
+                      //         return Image.asset("assets/images/user_img.png");
+                      //       },
+                      //     );
+                      //   },
+                      // )
+
                       lobbyAvatarStatus != null && lobbyAvatarStatus.isNotEmpty
                           ? Image.network(
                               '${lobbyAvatarStatus}?v=${DateTime.now().millisecondsSinceEpoch}', // cache-buster added
