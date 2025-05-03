@@ -6,6 +6,7 @@ import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/country_provider.dart';
 import 'package:pokerpad/provider/currency_button_provider.dart';
 import 'package:pokerpad/provider/login_provider.dart';
+import 'package:pokerpad/provider/profile_country_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/provider/register_provider.dart';
 import 'package:pokerpad/provider/second_avatar_provider.dart';
@@ -30,6 +31,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => ChartController()),
     ChangeNotifierProvider(create: (_) => AvatarProvider()),
     ChangeNotifierProvider(create: (_) => SecondAvatarProvider()),
+    ChangeNotifierProvider(create: (_) => ProfileCountryProvider())
     // ChangeNotifierProvider(create: (_) => BalanceProvider()),
   ], child: const MyApp()));
 

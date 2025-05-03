@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/view/profile_phone_number.dart';
 import 'package:pokerpad/view/proof_of_identity_popUp.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
@@ -148,9 +149,22 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(left: 190, top: 1),
-                                  child: Image.asset(
-                                      width: 59,
-                                      "assets/images/profilebutton/edit_button_passive.png"),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return ProfilePhoneNumber(
+                                            playerResponse:
+                                                widget.playerResponse,
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Image.asset(
+                                        width: 59,
+                                        "assets/images/profilebutton/edit_button_passive.png"),
+                                  ),
                                 )
                               ],
                             )
