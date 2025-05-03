@@ -218,7 +218,10 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
-                                          return const FaceCheckPopup();
+                                          return FaceCheckPopup(
+                                            playerResponse:
+                                                widget.playerResponse,
+                                          );
                                         },
                                       );
                                     }

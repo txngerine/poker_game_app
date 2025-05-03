@@ -52,9 +52,9 @@ class _KycSecondaryAvatarState extends State<KycSecondaryAvatar> {
 
       if (response.statusCode == 200 &&
           response.data["status"].toString().toUpperCase() == "OK") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Avatar uploaded successfully")),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text("Avatar uploaded successfully")),
+        // );
         Navigator.pushAndRemoveUntil(
           context,
           PageTransition(
@@ -66,15 +66,15 @@ class _KycSecondaryAvatarState extends State<KycSecondaryAvatar> {
           (route) => false, // Remove all previous routes
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to upload avatar')),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text('Failed to upload avatar')),
+        // );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('An error occurred while uploading avatar')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //       content: Text('An error occurred while uploading avatar')),
+      // );
     } finally {
       setState(() => isLoading = false);
     }

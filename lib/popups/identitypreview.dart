@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
@@ -34,6 +33,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
     super.initState();
     _imageFile = File(widget.imagePath);
     print("image path::$_imageFile");
+    print("response:${widget.playerResponse?.data?.id}");
   }
 
   Future<void> uploadImage() async {
@@ -55,12 +55,11 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       Map<String, dynamic> requestBody = {
         "photo": base64String,
         "id": userId,
-        "compare": 1
       };
       print("00000");
       print("Compare value: ${requestBody['compare']}");
 
-      log("Request Body (JSON): ${jsonEncode(requestBody)}");
+      // log("Request Body (JSON): ${jsonEncode(requestBody)}");
       print(apiUrl);
       print(userId);
       final response = await http.put(
@@ -69,7 +68,7 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
         body: jsonEncode(requestBody),
       );
 
-      log("Response: ${response.body}");
+      // log("Response: ${response.body}");
       print(response.body);
       // Check response
       if (response.statusCode == 200) {
@@ -81,39 +80,39 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
                   playerResponse: widget.playerResponse,
                 ),
                 type: PageTransitionType.rightToLeftWithFade));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.activeGreen,
-            content: const Text(
-              "Image uploaded successfully!",
-              style: TextStyle(color: Colors.white),
-            )));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     elevation: 10,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.activeGreen,
+        //     content: const Text(
+        //       "Image uploaded successfully!",
+        //       style: TextStyle(color: Colors.white),
+        //     )));
       } else {
         print("000000000000000000000");
         print(response.statusCode);
         print(response.body);
         log("Failed to upload image: ${response.statusCode}");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.destructiveRed,
-            content: const Text(
-              "Compare image failed.",
-              style: TextStyle(color: Colors.white),
-            )));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     elevation: 10,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.destructiveRed,
+        //     content: const Text(
+        //       "Compare image failed.",
+        //       style: TextStyle(color: Colors.white),
+        //     )));
       }
     } catch (e) {
       log("Error uploading image: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to upload image.")),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text("Failed to upload image.")),
+      // );
     } finally {
       setState(() {
         _isUploading = false;

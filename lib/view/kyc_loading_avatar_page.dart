@@ -142,12 +142,12 @@ class _KycLoadingAvatarPageState extends State<KycLoadingAvatarPage> {
       isLoading = false;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        duration: Duration(seconds: 2),
-        content: Text("Please wait... Your avatar is being generated"),
-      ),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     duration: Duration(seconds: 2),
+    //     content: Text("Please wait... Your avatar is being generated"),
+    //   ),
+    // );
   }
 
   @override

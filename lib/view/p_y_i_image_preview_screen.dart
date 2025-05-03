@@ -158,33 +158,34 @@ class _PYIImagePreviewScreenState extends State<PYIImagePreviewScreen> {
           type: PageTransitionType.rightToLeftWithFade,
         ),
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.green,
-          content: const Text(
-            "Image uploaded successfully!",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 10,
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: Colors.green,
+      //     content: const Text(
+      //       "Image uploaded successfully!",
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //   ),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: const Text(
-            "ID not detected. Please ensure your ID is clearly visible.",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      );
+      print("id not detected");
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 10,
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: Colors.red,
+      //     content: const Text(
+      //       "ID not detected. Please ensure your ID is clearly visible.",
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //   ),
+      // );
     }
   }
 
