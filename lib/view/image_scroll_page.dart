@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/front_camera_page.dart';
@@ -54,31 +53,31 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
       print(response.status);
       print("Step:${response.data?.step}");
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(milliseconds: 350),
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: CupertinoColors.activeGreen,
-          content: Text(
-              "Success! Step: ${response.data!.step}, ID: ${response.data!.id}"),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     duration: const Duration(milliseconds: 350),
+      //     elevation: 10,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(24),
+      //     ),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: CupertinoColors.activeGreen,
+      //     content: Text(
+      //         "Success! Step: ${response.data!.step}, ID: ${response.data!.id}"),
+      //   ),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: CupertinoColors.destructiveRed,
-          content: Text("Error: ${response?.message ?? 'Unknown error'}"),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 10,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(24),
+      //     ),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: CupertinoColors.destructiveRed,
+      //     content: Text("Error: ${response?.message ?? 'Unknown error'}"),
+      //   ),
+      // );
     }
   }
 

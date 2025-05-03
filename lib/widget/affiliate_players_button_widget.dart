@@ -282,7 +282,7 @@ class _AffiliatePlayersButtonWidgetState
     final provider = Provider.of<AffiliatedButtonProvider>(context);
 
     return Padding(
-      padding: const EdgeInsets.only(top: 140),
+      padding: const EdgeInsets.only(top: 130),
       child: Container(
         width: width,
         height: height,

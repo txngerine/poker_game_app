@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
@@ -26,35 +25,35 @@ class _TermsPageState extends State<TermsPage> {
 
   Future<void> acceptTerms() async {
     if (!checker) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: CupertinoColors.destructiveRed,
-          content: const Text(
-            "Please confirm that you have read the Terms of Service",
-            style: TextStyle(color: Colors.white),
-          )));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //     elevation: 10,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(24),
+      //     ),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: CupertinoColors.destructiveRed,
+      //     content: const Text(
+      //       "Please confirm that you have read the Terms of Service",
+      //       style: TextStyle(color: Colors.white),
+      //     )));
 
       return;
     }
     if (!checker2) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: CupertinoColors.destructiveRed,
-          content: const Text(
-            "Please confirm that you have read the Terms of Service",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 10,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(24),
+      //     ),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: CupertinoColors.destructiveRed,
+      //     content: const Text(
+      //       "Please confirm that you have read the Terms of Service",
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //   ),
+      // );
       return;
     }
 
@@ -80,21 +79,21 @@ class _TermsPageState extends State<TermsPage> {
           ),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content:
-                Text('Failed to accept the terms. Please try again later.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content:
+        //         Text('Failed to accept the terms. Please try again later.'),
+        //     duration: Duration(seconds: 2),
+        //   ),
+        // );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An error occurred: $e'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('An error occurred: $e'),
+      //     duration: const Duration(seconds: 2),
+      //   ),
+      // );
     } finally {
       setState(() {
         isLoading = false;

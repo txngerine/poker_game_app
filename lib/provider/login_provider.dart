@@ -146,17 +146,17 @@ class LoginProvider extends ChangeNotifier {
       final appUrl = playerDetails?.data?.appUrl ?? "";
 
       if (appVersion > 2 && appUrl.isNotEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            elevation: 10,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.orange,
-            content:
-                const Text("A new update is available. Please update the app."),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     elevation: 10,
+        //     shape:
+        //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: Colors.orange,
+        //     content:
+        //         const Text("A new update is available. Please update the app."),
+        //   ),
+        // );
         await downloadAndInstallApk(appUrl, context);
         return;
       }
@@ -186,12 +186,12 @@ class LoginProvider extends ChangeNotifier {
       print(shouldRedirect);
       print(affiliateId);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage),
-          backgroundColor: Colors.yellow,
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(errorMessage),
+      //     backgroundColor: Colors.yellow,
+      //   ),
+      // );
 
       print(errorMessage);
 
@@ -204,27 +204,27 @@ class LoginProvider extends ChangeNotifier {
                 affiliateId: affiliateId,
               ),
             ));
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Redirecting to signup..."),
-            backgroundColor: Colors.blue,
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content: Text("Redirecting to signup..."),
+        //     backgroundColor: Colors.blue,
+        //   ),
+        // );
       }
     } else {
       isLoading = false;
       notifyListeners();
       String errorMessage = response["data"]["message"] ?? "Login failed.";
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.red,
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          behavior: SnackBarBehavior.floating,
-          content: Text(errorMessage),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     backgroundColor: Colors.red,
+      //     elevation: 10,
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      //     behavior: SnackBarBehavior.floating,
+      //     content: Text(errorMessage),
+      //   ),
+      // );
 
       _channel?.sink.close();
     }
@@ -278,11 +278,11 @@ class LoginProvider extends ChangeNotifier {
       if (await Permission.storage.request().isDenied ||
           await Permission.manageExternalStorage.request().isDenied ||
           await Permission.requestInstallPackages.request().isDenied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content:
-                  Text("Storage permission is required to update the app")),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //       content:
+        //           Text("Storage permission is required to update the app")),
+        // );
         isLoading = false;
         notifyListeners();
         return;
@@ -293,9 +293,9 @@ class LoginProvider extends ChangeNotifier {
       final apkPath = '${dir.path}/app-release.apk';
       final dio = Dio();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("App Updating, please wait...")),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text("App Updating, please wait...")),
+      // );
 
       // Download APK
       await dio.download(
@@ -313,15 +313,15 @@ class LoginProvider extends ChangeNotifier {
       // Install APK
       await OpenFilex.open(apkPath);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("App update complete!")),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text("App update complete!")),
+      // );
     } catch (e) {
       print("Error Downloading or Installing APK: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to update the app")),
-      );
-    } finally {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(content: Text("Failed to update the app")),
+      //   );
+      // } finally {
       isLoading = false;
       notifyListeners();
     }
@@ -361,13 +361,13 @@ class LoginProvider extends ChangeNotifier {
       isForgotLoading = false;
       notifyListeners();
       print('Error: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred, please try again')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('An error occurred, please try again')),
+      // );
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Forgot password request sent")),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(content: Text("Forgot password request sent")),
+    // );
   }
 
 // in profile proof of identity upload image

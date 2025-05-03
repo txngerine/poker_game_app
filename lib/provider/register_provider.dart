@@ -110,17 +110,17 @@ class RegisterProvider extends ChangeNotifier {
       if (response.status == "OK") {
         print("Step:${response.step}");
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            elevation: 10,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.activeGreen,
-            content: const Text("Signup Successfully",
-                style: TextStyle(color: Colors.white)),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     elevation: 10,
+        //     shape:
+        //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.activeGreen,
+        //     content: const Text("Signup Successfully",
+        //         style: TextStyle(color: Colors.white)),
+        //   ),
+        // );
         Navigator.push(
           context,
           PageTransition(
@@ -148,15 +148,15 @@ class RegisterProvider extends ChangeNotifier {
     } catch (e) {
       isLoading = false;
       notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          behavior: SnackBarBehavior.floating,
-          content: const Text("Error: Signup failed."),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     elevation: 10,
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      //     behavior: SnackBarBehavior.floating,
+      //     content: const Text("Error: Signup failed."),
+      //   ),
+      // );
     }
   }
 

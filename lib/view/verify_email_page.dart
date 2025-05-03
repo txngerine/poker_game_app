@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/verification_controller.dart';
@@ -68,17 +67,17 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
     if (response != null && response.status == "OK") {
       print("Step:${response.data?.step}");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: CupertinoColors.activeGreen,
-          content: const Text(
-            "Verification Successful",
-            style: TextStyle(color: Colors.white),
-          )));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //     elevation: 10,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(24),
+      //     ),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: CupertinoColors.activeGreen,
+      //     content: const Text(
+      //       "Verification Successful",
+      //       style: TextStyle(color: Colors.white),
+      //     )));
       Navigator.push(
           context,
           PageTransition(

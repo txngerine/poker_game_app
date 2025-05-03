@@ -30,30 +30,30 @@ class _ViewPrimaryAvatarState extends State<ViewPrimaryAvatar> {
       ChooseAvatarResponseModel? responseModel =
           await _chooseAvatarController.chooseAvatar(requestModel);
       if (responseModel != null && responseModel.status == "OK") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: const Duration(milliseconds: 350),
-            content:
-                Text("Avatar upload successfully ${responseModel.status}")));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     duration: const Duration(milliseconds: 350),
+        //     content:
+        //         Text("Avatar upload successfully ${responseModel.status}")));
         Navigator.push(
             context,
             PageTransition(
                 child: const PickSecondaryAvatar(),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to upload avatar'),
-            duration: Duration(milliseconds: 400),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content: Text('Failed to upload avatar'),
+        //     duration: Duration(milliseconds: 400),
+        //   ),
+        // );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('An error occurred while uploading avatar'),
-          duration: Duration(milliseconds: 400),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('An error occurred while uploading avatar'),
+      //     duration: Duration(milliseconds: 400),
+      //   ),
+      // );
     } finally {
       setState(() {
         isLoading = false;

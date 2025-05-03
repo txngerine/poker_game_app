@@ -41,9 +41,9 @@ class _NamePageState extends State<NamePage> {
       if (response?.status == "OK") {
         print("Step:${response?.data?.step}");
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: const Duration(milliseconds: 350),
-            content: Text(response!.status)));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     duration: const Duration(milliseconds: 350),
+        //     content: Text(response!.status)));
         Navigator.push(
             context,
             PageTransition(
@@ -57,12 +57,12 @@ class _NamePageState extends State<NamePage> {
         print(response?.status);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An error occurred: $e'),
-          duration: const Duration(milliseconds: 400),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('An error occurred: $e'),
+      //     duration: const Duration(milliseconds: 400),
+      //   ),
+      // );
     } finally {
       setState(() {
         isLoading = false;

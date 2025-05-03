@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
@@ -73,39 +72,39 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
             PageTransition(
                 child: const NamePage(),
                 type: PageTransitionType.rightToLeftWithFade));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.activeGreen,
-            content: const Text(
-              "Image uploaded successfully!",
-              style: TextStyle(color: Colors.white),
-            )));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     elevation: 10,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.activeGreen,
+        //     content: const Text(
+        //       "Image uploaded successfully!",
+        //       style: TextStyle(color: Colors.white),
+        //     )));
       } else {
         print("000000000000000000000");
         print(response.statusCode);
         print(response.body);
         // log("Failed to upload image: ${response.statusCode}");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.destructiveRed,
-            content: const Text(
-              "Face not detected. Please ensure your face is clearly visible, well-lit, and positioned directly in front of the camera.",
-              style: TextStyle(color: Colors.white),
-            )));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     elevation: 10,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.destructiveRed,
+        //     content: const Text(
+        //       "Face not detected. Please ensure your face is clearly visible, well-lit, and positioned directly in front of the camera.",
+        //       style: TextStyle(color: Colors.white),
+        //     )));
       }
     } catch (e) {
       log("Error uploading image: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to upload image.")),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text("Failed to upload image.")),
+      // );
     } finally {
       setState(() {
         _isUploading = false;
@@ -172,8 +171,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                                   ? SizedBox(
                                       width: width / 2.3,
                                       child: const Center(
-                                          child:
-                                              CircularProgressIndicator()))
+                                          child: CircularProgressIndicator()))
                                   : Image.asset(
                                       "assets/images/confirm (6).png",
                                       width: width / 2.3,

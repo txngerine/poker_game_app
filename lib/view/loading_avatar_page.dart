@@ -66,12 +66,12 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
       setState(() {
         isLoading = false; // Stop loading after trying to fetch the data
       });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            duration: Duration(seconds: 2),
-            content: Text("Please wait... Your avatar is being generated")),
-      );
+      //
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //       duration: Duration(seconds: 2),
+      //       content: Text("Please wait... Your avatar is being generated")),
+      // );
     }
   }
 

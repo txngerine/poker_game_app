@@ -71,9 +71,9 @@ class _LobbyPageState extends State<LobbyPage> {
       RatHoleResponseModel? response =
           await ratHoleController.checkRatHole(request);
       if (response?.status == "OK") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.greenAccent,
-            content: Text(response!.status ?? "okay")));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     backgroundColor: Colors.greenAccent,
+        //     content: Text(response!.status ?? "okay")));
 
         print("rathole successfully");
         return true;
