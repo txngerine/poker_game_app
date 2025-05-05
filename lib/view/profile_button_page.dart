@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../model/login_response_model.dart';
 import '../provider/login_provider.dart';
+import '../provider/profile_country_provider.dart';
 import 'face_check_popUp.dart';
 
 class ProfileButtonPage extends StatefulWidget {
@@ -137,13 +138,32 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                                     ),
                                   ),
                                   child: Center(
-                                    child: Text(
-                                      widget.playerResponse?.data!.phone
-                                              ?.toString() ??
-                                          "No phone",
-                                      style: const TextStyle(
-                                          color: Colors.white70, fontSize: 12),
+                                    child: Consumer<ProfileCountryProvider>(
+                                      builder: (context, countryProvider, _) {
+                                        final phone = countryProvider
+                                                .phoneNumber.isNotEmpty
+                                            ? "${countryProvider.countryCode} ${countryProvider.phoneNumber}"
+                                            : widget.playerResponse?.data
+                                                    ?.phone ??
+                                                "No phone";
+
+                                        return Text(
+                                          phone,
+                                          style: const TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 12,
+                                          ),
+                                        );
+                                      },
                                     ),
+
+                                    // Text(
+                                    //   widget.playerResponse?.data!.phone
+                                    //           ?.toString() ??
+                                    //       "No phone",
+                                    //   style: const TextStyle(
+                                    //       color: Colors.white70, fontSize: 12),
+                                    // ),
                                   ),
                                 ),
                                 Padding(
@@ -226,8 +246,7 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                               width: 2,
                             ),
                             GestureDetector(
-                              onTap: (photoStatus == "Rejected" ||
-                                      photoStatus == "Pending")
+                              onTap: (photoStatus == "Rejected")
                                   ? () {
                                       showDialog(
                                         context: context,
@@ -283,8 +302,7 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                               width: 2,
                             ),
                             GestureDetector(
-                              onTap: (idStatus == "Rejected" ||
-                                      idStatus == "Pending")
+                              onTap: (idStatus == "Rejected")
                                   ? () {
                                       showDialog(
                                         context: context,
