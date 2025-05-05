@@ -388,9 +388,7 @@ class _YearlyWinnersViewState extends State<YearlyWinnersView> {
   }
 
   double _getThumbHeight(double viewport) {
-    final contentHeight = _reports.length * 100.0;
-    final ratio = viewport / contentHeight;
-    return ratio * viewport;
+    return 80.0; // Set to your desired fixed height
   }
 
   Future<void> _fetchLeaderboard() async {
