@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controller/signup_controller.dart';
 import '../model/country_list.dart';
+import 'login_provider.dart';
 
 class ProfileCountryProvider extends ChangeNotifier {
   String _countryCode = "+1"; // Default country code
@@ -76,93 +78,65 @@ class ProfileCountryProvider extends ChangeNotifier {
   //Api call
 
   Future<void> sentPhoneNumber(BuildContext context) async {
-    final id = SignupController.userId;
-    final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$id";
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final id = loginProvider.playerId;
 
-    print("url:$url");
-    _isLoading = true;
-    notifyListeners();
-    try {
-      if (_deviceId == "Fetching...") {
-        _getStoredDeviceId();
-      }
-      //send api request
-      final response = await Dio().put(url,
-          data: {
-            "phone": _phoneNumber,
-            "ph_country_code": _countryCode,
-            "country": _countryName,
-            "deviceId": _deviceId
-          },
-          options: Options(headers: {
-            "Content-Type": "application/json",
-          }));
-      if (response.statusCode == 200) {
-        print("✅ API Success: ${response.data}");
-        _apiResponse = "Success: ${response.data}";
-        // Navigator.pushReplacement(
-        //   context,
-        //   PageTransition(
-        //     child: const LoadingAvatarPage(), // Ensure HomePage is imported
-        //     type: PageTransitionType.rightToLeftWithFade,
-        //   ),
-        // );
-      } else {
-        print("⚠️ API Error: ${response.statusCode} - ${response.data}");
-        _apiResponse = "Error: ${response.data}";
-      }
-    } catch (e) {
-      print("❌ API Request Failed: $e");
-      _apiResponse = "Exception: $e";
-    } finally {
-      _isLoading = false;
+    if (id == null) {
+      print("❌ Invalid Player ID");
+      _apiResponse = "Invalid Player ID";
       notifyListeners();
+      return;
     }
-  }
 
-  Future<void> updatePhoneNumbe(
-    BuildContext context,
-    int userId,
-    String newPhoneNumber,
-  ) async {
-    final String url =
-        "http://3.6.170.253:1080/server.php/api/v1/players/$userId";
-
-    print("🔄 Updating phone number at: $url");
+    final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$id";
+    print("🔗 API URL: $url");
 
     _isLoading = true;
     notifyListeners();
 
     try {
+      // Make sure deviceId is loaded
       if (_deviceId == "Fetching...") {
         await _getStoredDeviceId();
       }
 
+      // Make sure phone number is set (e.g. from text field)
+      if (_phoneNumber.isEmpty) {
+        print("⚠️ Phone number is empty. Aborting.");
+        _apiResponse = "Phone number is empty";
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      // Send the API request
       final response = await Dio().put(
         url,
         data: {
-          "phone": newPhoneNumber,
+          "phone": _phoneNumber,
           "ph_country_code": _countryCode,
           "country": _countryName,
-          "deviceId": _deviceId,
+          "profile": 1,
+          "deviceId": _deviceId
         },
-        options: Options(headers: {
-          "Content-Type": "application/json",
-        }),
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+        ),
       );
-
+      print(response);
       if (response.statusCode == 200) {
-        print("✅ Phone number updated successfully: ${response.data}");
-        _phoneNumber = newPhoneNumber;
-        _apiResponse = "Phone updated: ${response.data}";
-        notifyListeners();
+        print("✅ API Success: ${response.data}");
+        _apiResponse = "Success: ${response.data}";
+        Navigator.pop(context); // Close the dialog
       } else {
-        print(
-            "⚠️ Failed to update phone: ${response.statusCode} - ${response.data}");
-        _apiResponse = "Error: ${response.data}";
+        print("⚠️ API Error: ${response.statusCode} - ${response.data}");
+        _apiResponse = "Error: ${response.statusCode} - ${response.data}";
       }
     } catch (e) {
-      print("❌ Exception while updating phone: $e");
+      print("❌ API Request Failed: $e");
       _apiResponse = "Exception: $e";
     } finally {
       _isLoading = false;

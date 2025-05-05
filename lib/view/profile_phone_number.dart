@@ -22,8 +22,8 @@ class _ProfilePhoneNumberState extends State<ProfilePhoneNumber> {
     // TODO: implement initState
     super.initState();
     phoneController = TextEditingController(
-      text: widget.playerResponse?.data?.phone ?? '',
-    );
+        // text: widget.playerResponse?.data?.phone ?? '',
+        );
     print(widget.playerResponse?.data?.phone);
   }
 
@@ -108,7 +108,7 @@ class _ProfilePhoneNumberState extends State<ProfilePhoneNumber> {
                                     style: const TextStyle(
                                         fontSize: 12, color: Colors.white),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   )
                                 ],
@@ -149,7 +149,9 @@ class _ProfilePhoneNumberState extends State<ProfilePhoneNumber> {
                     SizedBox(height: height / 9),
                     GestureDetector(
                       onTap: () async {
-                        Navigator.pop(context);
+                        countryProvider
+                            .updatePhoneNumber(phoneController.text.trim());
+                        await countryProvider.sentPhoneNumber(context);
                       },
                       child: Image.asset(
                         width: width / 1.8,
