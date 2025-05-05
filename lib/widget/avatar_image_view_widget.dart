@@ -3,7 +3,6 @@ import 'package:pokerpad/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../model/login_response_model.dart';
-import 'chart_line_widget.dart';
 
 class AvatarImageViewWidget extends StatefulWidget {
   final String? avatar;
@@ -39,12 +38,12 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const ChartLineWidget();
-                      },
-                    );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) {
+                    //     return const ChartLineWidget();
+                    //   },
+                    // );
                   },
                   child:
                       // Consumer<LoginProvider>(

@@ -190,17 +190,12 @@
 //   }
 // }
 
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 // import 'dart:convert';
 // import '../model/bonus_model_response.dart';
 // import 'bonuses_2k_button_widget.dart';
 // import 'chart_line_widget.dart';
-
 
 // // API Call
 // Future<List<Datum>> fetchAffiliateBonuses() async {
@@ -365,17 +360,16 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import '../model/bonus_model_response.dart';
 import 'bonuses_2k_button_widget.dart';
-import 'chart_line_widget.dart';
 
 // API Call
 Future<List<Datum>> fetchAffiliateBonuses() async {
-  final response = await http.get(Uri.parse('http://3.6.170.253:1080/server.php/api/v1/affiliate-bonus-refresh/1'));
+  final response = await http.get(Uri.parse(
+      'http://3.6.170.253:1080/server.php/api/v1/affiliate-bonus-refresh/1'));
   if (response.statusCode == 200) {
     final bonusModelResp = bonusModelRespFromJson(response.body);
     return bonusModelResp.data ?? [];
@@ -391,7 +385,8 @@ class AffiliateBonusesListview extends StatefulWidget {
   const AffiliateBonusesListview({super.key, required this.searchQuery});
 
   @override
-  State<AffiliateBonusesListview> createState() => _AffiliateBonusesListviewState();
+  State<AffiliateBonusesListview> createState() =>
+      _AffiliateBonusesListviewState();
 }
 
 class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
@@ -421,8 +416,10 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
 
         final bonuses = snapshot.data!
             .where((bonus) =>
-                bonus.nickname?.toLowerCase().contains(widget.searchQuery.toLowerCase()) ?? false ||
-                bonus.id.toString().contains(widget.searchQuery))
+                bonus.nickname
+                    ?.toLowerCase()
+                    .contains(widget.searchQuery.toLowerCase()) ??
+                false || bonus.id.toString().contains(widget.searchQuery))
             .toList();
 
         return Padding(
@@ -436,7 +433,8 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
               itemCount: bonuses.length,
               itemBuilder: (context, index) {
                 final bonus = bonuses[index];
-                final totalBonusValue = double.tryParse(bonus.totalBonus ?? '0') ?? 0;
+                final totalBonusValue =
+                    double.tryParse(bonus.totalBonus ?? '0') ?? 0;
                 final progress = (totalBonusValue / 10000).clamp(0.0, 1.0);
 
                 return Column(
@@ -455,33 +453,36 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 15, left: 3),
+                                padding:
+                                    const EdgeInsets.only(top: 15, left: 3),
                                 child: GestureDetector(
                                   onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => const ChartLineWidget(),
-                                    );
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (context) => const ChartLineWidget(),
+                                    // );
                                   },
                                   child: Stack(
-  alignment: Alignment.center,
-  children: [
-    Image.asset(
-      "assets/images/Affiliate/bonus/winning player frame.png",
-      width: width / 5.5,
-    ),
-    if (bonus.avatar2 != 'https://api-poker.indrean.com//photo/noimage.png')
-      ClipOval(
-        child: Image.network(
-          bonus.avatar2 ?? '',
-          width: width / 7,
-          height: width / 6.5,
-          fit: BoxFit.fill,
-          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-        ),
-      ),
-  ],
-),
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/Affiliate/bonus/winning player frame.png",
+                                        width: width / 5.5,
+                                      ),
+                                      if (bonus.avatar2 !=
+                                          'https://api-poker.indrean.com//photo/noimage.png')
+                                        ClipOval(
+                                          child: Image.network(
+                                            bonus.avatar2 ?? '',
+                                            width: width / 7,
+                                            height: width / 6.5,
+                                            fit: BoxFit.fill,
+                                            errorBuilder: (_, __, ___) =>
+                                                const SizedBox.shrink(),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Column(
@@ -489,16 +490,25 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                                   const SizedBox(height: 10),
                                   Text(
                                     "ID:${bonus.id}",
-                                    style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   Text(
                                     bonus.nickname ?? '',
-                                    style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400),
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                   const SizedBox(height: 30),
                                   Text(
                                     'Bonus: ${bonus.totalBonus ?? ''}',
-                                    style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400),
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               ),
@@ -509,21 +519,23 @@ class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
                                     children: [
                                       const SizedBox(height: 20),
                                       const Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           BonusesButtonWidget(label: "\$2k"),
                                           SizedBox(width: 8),
-BonusesButtonWidget(label: "\$4k"),
-SizedBox(width: 8),
-BonusesButtonWidget(label: "\$6k"),
-SizedBox(width: 8),
-BonusesButtonWidget(label: "\$8k"),
-SizedBox(width: 8),
-BonusesButtonWidget(label: "\$10k"),
+                                          BonusesButtonWidget(label: "\$4k"),
+                                          SizedBox(width: 8),
+                                          BonusesButtonWidget(label: "\$6k"),
+                                          SizedBox(width: 8),
+                                          BonusesButtonWidget(label: "\$8k"),
+                                          SizedBox(width: 8),
+                                          BonusesButtonWidget(label: "\$10k"),
                                         ],
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(right: 12),
+                                        padding:
+                                            const EdgeInsets.only(right: 12),
                                         child: LinearProgressIndicator(
                                           value: progress,
                                           backgroundColor: Colors.grey,
@@ -534,7 +546,8 @@ BonusesButtonWidget(label: "\$10k"),
                                       const SizedBox(height: 5),
                                       Text(
                                         '${((progress * 100).clamp(0.0, 100.0)).toStringAsFixed(1)}%',
-                                        style: const TextStyle(color: Colors.white70),
+                                        style: const TextStyle(
+                                            color: Colors.white70),
                                       ),
                                     ],
                                   ),

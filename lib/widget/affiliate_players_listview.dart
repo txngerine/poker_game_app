@@ -114,8 +114,6 @@
 //   }
 // }
 
-
-
 // import 'package:flutter/material.dart';
 // import 'build_sub_heading_text.dart';
 
@@ -261,7 +259,6 @@
 //     );
 //   }
 // }
-
 
 // // ignore_for_file: unused_import
 
@@ -436,9 +433,6 @@
 //     );
 //   }
 // }
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
@@ -647,7 +641,6 @@ import 'package:http/http.dart' as http;
 
 import '../model/affiliate_player_model_resp.dart';
 import 'build_sub_heading_text.dart';
-import 'chart_line_widget.dart';
 
 class AffiliatePlayersListviews extends StatefulWidget {
   final String searchQuery;
@@ -776,51 +769,52 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                                   Padding(
                                     padding: const EdgeInsets.all(1.0),
                                     child: GestureDetector(
-  onTap: () {
-    // 👇 Your action here
-    print("Avatar tapped: ${player.playerNickname}");
-    showDialog(
-                      context: context,
-                      builder: (context) {
-                       return const ChartLineWidget(
-                        );
-                      },
-                    );
-    // You can navigate or show a dialog, etc.
-  },
-  child: SizedBox(
-    width: width / 10,
-    height: width / 10,
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        Image.asset(
-          "assets/images/affiliate screen/losing player (1).png",
-          width: width / 10,
-          height: width / 10,
-          fit: BoxFit.cover,
-        ),
-        ClipOval(
-          child: (player.avatar != null && player.avatar!.isNotEmpty)
-              ? Image.network(
-                  player.avatar!,
-                  width: width / 13,
-                  height: width / 13,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.error,
-                    color: Colors.red,
-                    size: 16,
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-      ],
-    ),
-  ),
-),
-
-
+                                      onTap: () {
+                                        print(
+                                            "Avatar tapped: ${player.playerNickname}");
+                                        // showDialog(
+                                        //                   context: context,
+                                        //                   builder: (context) {
+                                        //                    return const ChartLineWidget(
+                                        //                     );
+                                        //                   },
+                                        //                 );
+                                      },
+                                      child: SizedBox(
+                                        width: width / 10,
+                                        height: width / 10,
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/affiliate screen/losing player (1).png",
+                                              width: width / 10,
+                                              height: width / 10,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            ClipOval(
+                                              child: (player.avatar != null &&
+                                                      player.avatar!.isNotEmpty)
+                                                  ? Image.network(
+                                                      player.avatar!,
+                                                      width: width / 13,
+                                                      height: width / 13,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          const Icon(
+                                                        Icons.error,
+                                                        color: Colors.red,
+                                                        size: 16,
+                                                      ),
+                                                    )
+                                                  : const SizedBox.shrink(),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 13),
@@ -855,12 +849,12 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                               ),
                               _buildPlayerStat(
                                   player.balance ?? "-", Colors.white70, 9),
-                              _buildPlayerStat(
-                                  "\$${player.totalWon ?? '0'}", Colors.green, 9),
-                              _buildPlayerStat(
-                                  "\$${player.totalRake ?? '0'}", Colors.white70, 9),
-                              _buildPlayerStat(
-                                  "\$${player.commission ?? '0'}", Colors.white70, 9),
+                              _buildPlayerStat("\$${player.totalWon ?? '0'}",
+                                  Colors.green, 9),
+                              _buildPlayerStat("\$${player.totalRake ?? '0'}",
+                                  Colors.white70, 9),
+                              _buildPlayerStat("\$${player.commission ?? '0'}",
+                                  Colors.white70, 9),
                               const SizedBox(width: 15),
                             ],
                           ),

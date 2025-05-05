@@ -464,7 +464,6 @@ import '../model/leaderboard_monthly_model.dart';
 import '../model/leaderboard_yearly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
-import 'chart_line_widget.dart';
 
 class WinnersWidget extends StatefulWidget {
   final int id;
@@ -524,10 +523,10 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                       padding: const EdgeInsets.all(2.0),
                       child: GestureDetector(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const ChartLineWidget(),
-                          );
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) => const ChartLineWidget(),
+                          // );
                         },
                         child: Row(
                           children: [

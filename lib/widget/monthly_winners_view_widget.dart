@@ -351,7 +351,6 @@ import 'package:flutter/material.dart';
 import '../model/leaderboard_monthly_model.dart';
 import '../services/api_service.dart';
 import 'build_sub_heading_text.dart';
-import 'chart_line_widget.dart';
 
 class MonthlyWinnersViewWidget extends StatefulWidget {
   final String id;
@@ -502,11 +501,11 @@ class _MonthlyWinnersViewWidgetState extends State<MonthlyWinnersViewWidget> {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (_) =>
-                                                    const ChartLineWidget(),
-                                              );
+                                              // showDialog(
+                                              //   context: context,
+                                              //   builder: (_) =>
+                                              //       const ChartLineWidget(),
+                                              // );
                                             },
                                             child: CircleAvatar(
                                               radius: 25.5,
