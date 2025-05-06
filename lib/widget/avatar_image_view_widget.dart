@@ -36,49 +36,46 @@ class _AvatarImageViewWidgetState extends State<AvatarImageViewWidget> {
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (context) {
-                    //     return const ChartLineWidget();
-                    //   },
-                    // );
+                GestureDetector(onTap: () {
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (context) {
+                  //     return const ChartLineWidget();
+                  //   },
+                  // );
+                }, child: Consumer<LoginProvider>(
+                  builder: (context, provider, child) {
+                    final url =
+                        '${provider.updateAvatar["lobby_avatar"]}?v=${provider.avatarVersion}';
+                    return Image.network(
+                      url,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset("assets/images/user_img.png");
+                      },
+                    );
                   },
-                  child:
-                      // Consumer<LoginProvider>(
-                      //   builder: (context, provider, child) {
-                      //     final url =
-                      //         '${provider.updateAvatar["lobby_avatar"]}?v=${provider.avatarVersion}';
-                      //     return Image.network(
-                      //       url,
-                      //       errorBuilder: (context, error, stackTrace) {
-                      //         return Image.asset("assets/images/user_img.png");
-                      //       },
-                      //     );
-                      //   },
-                      // )
+                )
 
-                      lobbyAvatarStatus != null && lobbyAvatarStatus.isNotEmpty
-                          ? Image.network(
-                              '${lobbyAvatarStatus}?v=${DateTime.now().millisecondsSinceEpoch}', // cache-buster added
-                              width: MediaQuery.of(context).size.width / 2.1,
-                              height: MediaQuery.of(context).size.height / 2.7,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  "assets/images/user_img.png", // fallback image
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            )
-                          : Image.asset(
-                              "assets/images/user_img.png", // fallback if no avatar URL
-                              width: MediaQuery.of(context).size.width / 2.1,
-                              height: MediaQuery.of(context).size.height / 2.7,
-                              fit: BoxFit.cover,
-                            ),
-                ),
+                    // lobbyAvatarStatus != null && lobbyAvatarStatus.isNotEmpty
+                    //     ? Image.network(
+                    //         '${lobbyAvatarStatus}?v=${DateTime.now().millisecondsSinceEpoch}', // cache-buster added
+                    //         width: MediaQuery.of(context).size.width / 2.1,
+                    //         height: MediaQuery.of(context).size.height / 2.7,
+                    //         fit: BoxFit.cover,
+                    //         errorBuilder: (context, error, stackTrace) {
+                    //           return Image.asset(
+                    //             "assets/images/user_img.png", // fallback image
+                    //             fit: BoxFit.cover,
+                    //           );
+                    //         },
+                    //       )
+                    //     : Image.asset(
+                    //         "assets/images/user_img.png", // fallback if no avatar URL
+                    //         width: MediaQuery.of(context).size.width / 2.1,
+                    //         height: MediaQuery.of(context).size.height / 2.7,
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
