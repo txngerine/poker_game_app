@@ -291,7 +291,7 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                     );
                   } else if (selected_button == 3) {
-                    return Container(
+                    return SizedBox(
                       height: height / 2.5,
                       width: width,
                       child: Image.asset(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pokerpad/view/affiliate_transfer_popUp.dart';
 
 import '../model/affiliate_player_model_resp.dart';
 import '../model/login_response_model.dart';
+import '../view/affiliate_transfer_popUp.dart';
 import 'build_sub_heading_text.dart';
 
 class AffiliatePlayersListviews extends StatefulWidget {
@@ -220,7 +220,10 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return AffiliateTransferPopup();
+                                      return AffiliateTransferPopup(
+                                        playerResponse: widget.playerResponse,
+                                        playerId: player.playerId,
+                                      );
                                     },
                                   );
                                   print(

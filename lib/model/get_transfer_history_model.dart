@@ -64,12 +64,12 @@ class Data {
 }
 
 class Datum {
-  final Nickname? nickname;
+  final String? nickname;
   final String? avatar;
   final String? avatarThumb;
   final int? playerIdRef;
   final String? chip;
-  final Type? type;
+  final String? type;
   final DateTime? createdAt;
 
   Datum({
@@ -83,45 +83,24 @@ class Datum {
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        nickname: nicknameValues.map[json["nickname"]]!,
+        nickname: json["nickname"],
         avatar: json["avatar"],
         avatarThumb: json["avatar_thumb"],
         playerIdRef: json["player_id_ref"],
         chip: json["chip"],
-        type: typeValues.map[json["type"]]!,
+        type: json["type"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "nickname": nicknameValues.reverse[nickname],
+        "nickname": nickname,
         "avatar": avatar,
         "avatar_thumb": avatarThumb,
         "player_id_ref": playerIdRef,
         "chip": chip,
-        "type": typeValues.reverse[type],
+        "type": type,
         "created_at": createdAt?.toIso8601String(),
       };
-}
-
-enum Nickname { GAMER1, HAIGAMERA }
-
-final nicknameValues =
-    EnumValues({"Gamer1": Nickname.GAMER1, "haigamera": Nickname.HAIGAMERA});
-
-enum Type { TRANSFER }
-
-final typeValues = EnumValues({"Transfer": Type.TRANSFER});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
