@@ -584,6 +584,7 @@ class _WinnersWidgetState extends State<WinnersWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(monthlyData?.data?.month);
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     final currentMonthlyUser = monthlyData?.data;
@@ -611,7 +612,7 @@ class _WinnersWidgetState extends State<WinnersWidget> {
                       const SizedBox(height: 10),
                       BuildSubHeadingText(
                         text: selectButton == 1
-                            ? "Top February winners"
+                            ? "Top ${monthlyData?.data?.month} winners"
                             : "Top winners of 2025",
                         color: Colors.white,
                       ),
