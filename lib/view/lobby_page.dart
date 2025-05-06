@@ -4,7 +4,7 @@ import 'package:pokerpad/controller/rat_hole_controller.dart';
 import 'package:pokerpad/model/login_response_model.dart';
 import 'package:pokerpad/model/rat_hole_request_model.dart';
 import 'package:pokerpad/model/rat_hole_response_model.dart';
-import 'package:pokerpad/view/game_view.dart';
+import 'package:pokerpad/view/game_section_widget.dart';
 import 'package:pokerpad/view/profile_button_page.dart';
 import 'package:pokerpad/widget/affiliated_button_widget.dart';
 import 'package:pokerpad/widget/avatar_image_view_widget.dart';
@@ -20,7 +20,6 @@ import '../provider/login_provider.dart';
 import '../widget/chat_support_widget.dart';
 import '../widget/info_button_widget.dart';
 import '../widget/top_winners_view_widget.dart';
-import 'kyc_info_popUp.dart';
 
 class LobbyPage extends StatefulWidget {
   final String? playerBalance;
@@ -43,6 +42,7 @@ class LobbyPage extends StatefulWidget {
 
 class _LobbyPageState extends State<LobbyPage> {
   // String balance = "0.00";
+  int selected_button = 1;
   @override
   void initState() {
     // TODO: implement initState
@@ -109,6 +109,8 @@ class _LobbyPageState extends State<LobbyPage> {
     print(widget.playerResponse!.data?.id);
     print("playerBalance:${widget.playerResponse!.data?.balance}");
     print("update lobby avatar:: lobby=$lobbyAvatarStatus");
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(
@@ -236,203 +238,72 @@ class _LobbyPageState extends State<LobbyPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
-                  BuildButtonImageWidget(
-                      imgPath: "assets/images/new_lobby/Holdem Active.png"),
-                  BuildButtonImageWidget(
-                      imgPath: "assets/images/new_lobby/Omaha Passive.png"),
-                  BuildButtonImageWidget(
-                      imgPath: "assets/images/new_lobby/Privte Passive.png"),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => setState(() => selected_button = 1),
+                      child: BuildButtonImageWidget(
+                        imgPath: selected_button == 1
+                            ? "assets/images/new_lobby/Holdem Active.png"
+                            : "assets/images/new_lobby/Hodlem Passive.png",
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => setState(() => selected_button = 2),
+                      child: BuildButtonImageWidget(
+                        imgPath: selected_button == 2
+                            ? "assets/images/omaha_private/Omaha Active (1).png"
+                            : "assets/images/omaha_private/Omaha Passive (1).png",
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => setState(() => selected_button = 3),
+                      child: BuildButtonImageWidget(
+                        imgPath: selected_button == 3
+                            ? "assets/images/omaha_private/Private Active (1).png"
+                            : "assets/images/omaha_private/Privte Passive (1).png",
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: balance! >= 100
-                            ? () async {
-                                // final kyc = widget.playerResponse?.data?.kyc;
-                                // final idRejected =
-                                //     kyc?.idStatus?.toLowerCase() == 'rejected';
-                                // final faceRejected =
-                                //     kyc?.faceStatus?.toLowerCase() ==
-                                //         'rejected';
-                                final kyc = loginProvider.kycStatus;
-                                final idStatus = kyc["id"]?.toLowerCase();
-                                final photoStatus = kyc["photo"]?.toLowerCase();
-
-                                final idRejected = idStatus == 'rejected';
-                                final faceRejected = photoStatus == 'rejected';
-
-                                if (idRejected || faceRejected) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const KycInfoPopup(),
-                                  );
-                                  return;
-                                }
-                                bool success = await ratHole("100");
-                                if (!mounted || !success) return;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GameView(
-                                      playerResponse: widget.playerResponse,
-                                      buttonId: 100,
-                                    ),
-                                  ),
-                                ).then((_) {
-                                  SystemChrome.setEnabledSystemUIMode(
-                                      SystemUiMode.immersiveSticky);
-                                });
-                              }
-                            : null, // Disabled if balance < 100
-                        child: Image.asset(
-                          balance >= 100
-                              ? "assets/images/lobby/100 jeton.png"
-                              : "assets/images/new_lobby/100 Jeton bw.png",
-                          fit: BoxFit.fill,
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          height: MediaQuery.sizeOf(context).height / 5,
-                        ),
+              // GameSectionWidget(
+              //   playerResponse: widget.playerResponse,
+              // ),
+              Builder(
+                builder: (context) {
+                  if (selected_button == 1) {
+                    return GameSectionWidget(
+                      playerResponse: widget.playerResponse,
+                    );
+                  } else if (selected_button == 2) {
+                    return SizedBox(
+                      height: height / 2.5,
+                      width: width,
+                      child: Image.asset(
+                        "assets/images/omaha_private/Omaha_announcement.png",
+                        fit: BoxFit.fill,
                       ),
-                      GestureDetector(
-                        onTap: balance >= 200
-                            ? () async {
-                                final kyc = loginProvider.kycStatus;
-                                final idStatus = kyc["id"]?.toLowerCase();
-                                final photoStatus = kyc["photo"]?.toLowerCase();
-
-                                final idRejected = idStatus == 'rejected';
-                                final faceRejected = photoStatus == 'rejected';
-
-                                if (idRejected || faceRejected) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const KycInfoPopup(),
-                                  );
-                                  return;
-                                }
-                                bool success = await ratHole("200");
-                                if (!mounted || !success) return;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GameView(
-                                      playerResponse: widget.playerResponse,
-                                      buttonId: 200,
-                                    ),
-                                  ),
-                                ).then((_) {
-                                  SystemChrome.setEnabledSystemUIMode(
-                                      SystemUiMode.immersiveSticky);
-                                });
-                              }
-                            : null,
-                        child: Image.asset(
-                          balance >= 200
-                              ? "assets/images/lobby/200 jeton.png"
-                              : "assets/images/new_lobby/200 Jeton bw.png",
-                          fit: BoxFit.fill,
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          height: MediaQuery.sizeOf(context).height / 5,
-                        ),
+                    );
+                  } else if (selected_button == 3) {
+                    return Container(
+                      height: height / 2.5,
+                      width: width,
+                      child: Image.asset(
+                        "assets/images/omaha_private/Private_room_announcement.png",
+                        fit: BoxFit.fill,
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: balance >= 500
-                            ? () async {
-                                final kyc = loginProvider.kycStatus;
-                                final idStatus = kyc["id"]?.toLowerCase();
-                                final photoStatus = kyc["photo"]?.toLowerCase();
-
-                                final idRejected = idStatus == 'rejected';
-                                final faceRejected = photoStatus == 'rejected';
-
-                                if (idRejected || faceRejected) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const KycInfoPopup(),
-                                  );
-                                  return;
-                                }
-                                bool success = await ratHole("500");
-                                if (!mounted || !success) return;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GameView(
-                                      playerResponse: widget.playerResponse,
-                                      buttonId: 500,
-                                    ),
-                                  ),
-                                ).then((_) {
-                                  SystemChrome.setEnabledSystemUIMode(
-                                      SystemUiMode.immersiveSticky);
-                                });
-                              }
-                            : null,
-                        child: Image.asset(
-                          balance >= 500
-                              ? "assets/images/new_lobby/500 Jeton (3).png"
-                              : "assets/images/new_lobby/500 Jeton bw.png",
-                          fit: BoxFit.fill,
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          height: MediaQuery.sizeOf(context).height / 5,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: balance >= 1000
-                            ? () async {
-                                final kyc = loginProvider.kycStatus;
-                                final idStatus = kyc["id"]?.toLowerCase();
-                                final photoStatus = kyc["photo"]?.toLowerCase();
-
-                                final idRejected = idStatus == 'rejected';
-                                final faceRejected = photoStatus == 'rejected';
-
-                                if (idRejected || faceRejected) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const KycInfoPopup(),
-                                  );
-                                  return;
-                                }
-                                bool success = await ratHole("1000");
-                                if (!mounted || !success) return;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GameView(
-                                      playerResponse: widget.playerResponse,
-                                      buttonId: 1000,
-                                    ),
-                                  ),
-                                ).then((_) {
-                                  SystemChrome.setEnabledSystemUIMode(
-                                      SystemUiMode.immersiveSticky);
-                                });
-                              }
-                            : null,
-                        child: Image.asset(
-                          balance >= 1000
-                              ? "assets/images/new_lobby/1000 Jeton (3).png"
-                              : "assets/images/new_lobby/1000 Jeton bw (1).png",
-                          fit: BoxFit.fill,
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          height: MediaQuery.sizeOf(context).height / 5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ],
           )
         ],
