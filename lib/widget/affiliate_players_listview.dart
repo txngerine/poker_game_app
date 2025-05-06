@@ -3,9 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:pokerpad/view/affiliate_transfer_popUp.dart';
 
 import '../model/affiliate_player_model_resp.dart';
+import '../model/login_response_model.dart';
 import 'build_sub_heading_text.dart';
 
 class AffiliatePlayersListviews extends StatefulWidget {
+  final LoginResponseModel? playerResponse;
+
   final String searchQuery;
   final String? sortField;
   final bool isAscending;
@@ -15,6 +18,7 @@ class AffiliatePlayersListviews extends StatefulWidget {
     required this.searchQuery,
     this.sortField,
     this.isAscending = true,
+    this.playerResponse,
   });
 
   @override
@@ -39,9 +43,13 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
   }
 
   Future<List<Datum>> fetchAffiliatePlayers() async {
+    final affiliate_id =
+        widget.playerResponse?.data?.selfAffiliateId.toString();
+    final url =
+        'http://3.6.170.253:1080/server.php/api/v1/affiliate-players/$affiliate_id';
+    print("affiliate player:$url");
     final response = await http.get(
-      Uri.parse(
-          'http://3.6.170.253:1080/server.php/api/v1/affiliate-players/1'),
+      Uri.parse(url),
     );
 
     if (response.statusCode == 200) {

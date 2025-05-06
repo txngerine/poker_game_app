@@ -245,12 +245,15 @@ import 'package:pokerpad/widget/affiliate_bonuse_button_widget.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
 
+import '../model/login_response_model.dart';
 import '../provider/affiliated_button_provider.dart';
 import 'affiliate_players_listview.dart';
 // import 'temp.dart';
 
 class AffiliatePlayersButtonWidget extends StatefulWidget {
-  const AffiliatePlayersButtonWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const AffiliatePlayersButtonWidget({super.key, this.playerResponse});
 
   @override
   State<AffiliatePlayersButtonWidget> createState() =>
@@ -335,7 +338,8 @@ class _AffiliatePlayersButtonWidgetState
                         barrierDismissible: true,
                         context: context,
                         builder: (context) {
-                          return const AffiliateBonusButtonWidget();
+                          return AffiliateBonusButtonWidget(
+                              playerResponse: widget.playerResponse);
                         },
                       ).then((_) {
                         provider.toggleBonusClicked(false);
@@ -411,6 +415,7 @@ class _AffiliatePlayersButtonWidgetState
                 ),
               ),
               AffiliatePlayersListviews(
+                playerResponse: widget.playerResponse,
                 searchQuery: searchQuery,
                 sortField: sortField ?? 'id',
                 isAscending: sortField == null ? true : isAscending,

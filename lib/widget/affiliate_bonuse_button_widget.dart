@@ -260,18 +260,18 @@
 //   }
 // }
 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/affiliate_bonuses_listview.dart';
 import 'package:provider/provider.dart';
 
+import '../model/login_response_model.dart';
 import '../provider/affiliated_button_provider.dart';
 import 'build_sub_heading_text.dart';
 
 class AffiliateBonusButtonWidget extends StatefulWidget {
-  const AffiliateBonusButtonWidget({super.key});
+  final LoginResponseModel? playerResponse;
+
+  const AffiliateBonusButtonWidget({super.key, this.playerResponse});
 
   @override
   State<AffiliateBonusButtonWidget> createState() =>
@@ -305,7 +305,8 @@ class _AffiliateBonusButtonWidgetState
               height: height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/affiliate screen/aff_bg.png"),
+                  image:
+                      AssetImage("assets/images/affiliate screen/aff_bg.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -322,7 +323,8 @@ class _AffiliateBonusButtonWidgetState
                             height: 50,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage("assets/images/affiliate screen/aff_textfield1.png"),
+                                image: AssetImage(
+                                    "assets/images/affiliate screen/aff_textfield1.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -349,7 +351,8 @@ class _AffiliateBonusButtonWidgetState
                             height: 50,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage("assets/images/affiliate screen/aff_texfield2.png"),
+                                image: AssetImage(
+                                    "assets/images/affiliate screen/aff_texfield2.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -403,7 +406,8 @@ class _AffiliateBonusButtonWidgetState
                             height: 50,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage("assets/images/affiliate screen/aff_texfield2.png"),
+                                image: AssetImage(
+                                    "assets/images/affiliate screen/aff_texfield2.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -434,14 +438,16 @@ class _AffiliateBonusButtonWidgetState
                           height: height / 16,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/images/bonuses/referral_text field.png"),
+                              image: AssetImage(
+                                  "assets/images/bonuses/referral_text field.png"),
                             ),
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               BuildSubHeadingText(
-                                text: "REFER A FRIEND AND RECEIVE  A BONUS UP TO \$10,000",
+                                text:
+                                    "REFER A FRIEND AND RECEIVE  A BONUS UP TO \$10,000",
                                 color: Colors.black87,
                                 fontSize: 15,
                               ),
@@ -458,7 +464,8 @@ class _AffiliateBonusButtonWidgetState
                           height: height / 13,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/images/affiliate screen/search frame.png"),
+                              image: AssetImage(
+                                  "assets/images/affiliate screen/search frame.png"),
                             ),
                           ),
                           child: Row(
@@ -477,10 +484,12 @@ class _AffiliateBonusButtonWidgetState
                                         color: Colors.white,
                                         fontSize: 11,
                                       ),
-                                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       border: InputBorder.none,
                                     ),
-                                    style: const TextStyle(color: Colors.white70),
+                                    style:
+                                        const TextStyle(color: Colors.white70),
                                     onChanged: (value) {
                                       setState(() {
                                         searchQuery = value;
@@ -513,6 +522,7 @@ class _AffiliateBonusButtonWidgetState
                       ),
                     ),
                     AffiliateBonusesListview(
+                      playerResponse: widget.playerResponse,
                       searchQuery: searchQuery,
                     ),
                   ],

@@ -364,25 +364,19 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/bonus_model_response.dart';
+import '../model/login_response_model.dart';
 import 'bonuses_2k_button_widget.dart';
 
 // API Call
-Future<List<Datum>> fetchAffiliateBonuses() async {
-  final response = await http.get(Uri.parse(
-      'http://3.6.170.253:1080/server.php/api/v1/affiliate-bonus-refresh/1'));
-  if (response.statusCode == 200) {
-    final bonusModelResp = bonusModelRespFromJson(response.body);
-    return bonusModelResp.data ?? [];
-  } else {
-    throw Exception('Failed to load bonuses');
-  }
-}
 
 // Widget
 class AffiliateBonusesListview extends StatefulWidget {
+  final LoginResponseModel? playerResponse;
+
   final String searchQuery;
 
-  const AffiliateBonusesListview({super.key, required this.searchQuery});
+  const AffiliateBonusesListview(
+      {super.key, required this.searchQuery, this.playerResponse});
 
   @override
   State<AffiliateBonusesListview> createState() =>
@@ -391,6 +385,20 @@ class AffiliateBonusesListview extends StatefulWidget {
 
 class _AffiliateBonusesListviewState extends State<AffiliateBonusesListview> {
   late Future<List<Datum>> futureBonuses;
+  Future<List<Datum>> fetchAffiliateBonuses() async {
+    final affiliate_id =
+        widget.playerResponse?.data?.selfAffiliateId.toString();
+    final url =
+        'http://3.6.170.253:1080/server.php/api/v1/affiliate-bonus-refresh/$affiliate_id';
+    print("affiliate bonus id:$url");
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final bonusModelResp = bonusModelRespFromJson(response.body);
+      return bonusModelResp.data ?? [];
+    } else {
+      throw Exception('Failed to load bonuses');
+    }
+  }
 
   @override
   void initState() {
