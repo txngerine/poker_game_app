@@ -521,6 +521,8 @@ class _GameViewState extends State<GameView> {
     );
   }
 
+  bool isGameLoading = true; // For overlaying the GIF
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -531,18 +533,11 @@ class _GameViewState extends State<GameView> {
       child: Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
-          child: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(color: Colors.white),
-                )
-              : serverUrl == null
-                  ? const Center(
-                      child: Text(
-                        "Failed to load content",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-                  : InAppWebView(
+          child: isLoading || serverUrl == null
+              ? Center(child: Image.asset("assets/Gifs/Crystal_PP.gif"))
+              : Stack(
+                  children: [
+                    InAppWebView(
                       initialUrlRequest: URLRequest(url: WebUri(serverUrl!)),
                       initialSettings: InAppWebViewSettings(
                         javaScriptEnabled: true,
@@ -570,6 +565,11 @@ class _GameViewState extends State<GameView> {
                                   _navigateToChartPage(
                                       context, message["data"][1]);
                                   break;
+                                case "gameLoaded":
+                                  setState(() {
+                                    isGameLoading = false;
+                                  });
+                                  break;
                                 default:
                                   debugPrint(
                                       "Unknown action: ${message["action"]}");
@@ -578,19 +578,29 @@ class _GameViewState extends State<GameView> {
                           },
                         );
 
-                        // Inject JavaScript to enable console logging
                         controller.evaluateJavascript(source: '''
-                          (function() {
-                            console.log = (function(oldLog) {
-                              return function(message) {
-                                oldLog(message);
-                                window.flutter_inappwebview.callHandler('FlutterChannel', { "action": "log", "message": message });
-                              };
-                            })(console.log);
-                          })();
-                        ''');
+                  (function() {
+                    console.log = (function(oldLog) {
+                      return function(message) {
+                        oldLog(message);
+                        window.flutter_inappwebview.callHandler('FlutterChannel', { "action": "log", "message": message });
+                      };
+                    })(console.log);
+                  })();
+                ''');
                       },
                     ),
+
+                    // Overlay GIF while game is loading
+                    if (isLoading || isGameLoading)
+                      Container(
+                        color: Colors.black,
+                        child: Center(
+                          child: Image.asset("assets/Gifs/Crystal_PP.gif"),
+                        ),
+                      ),
+                  ],
+                ),
         ),
       ),
     );
